@@ -1,7 +1,7 @@
-Area Model Common
+Solar System Common
 ================
 
-"Area Model Common" contains code for use by multiple Area Model sims (Area Model: Algebra, Area Model: Decimals, Area Model: Introduction and Area Model: Multiplication)
+"Solar System Common" contains code for use by My Solar System and Kepler's Laws
 
 ### License
-See the <a href="https://github.com/phetsims/area-model-common/blob/master/LICENSE" target="_blank">LICENSE</a>
+See the <a href="https://github.com/phetsims/solar-system-common/blob/master/LICENSE" target="_blank">LICENSE</a>
