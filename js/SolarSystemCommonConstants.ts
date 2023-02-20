@@ -63,5 +63,5 @@ const SolarSystemCommonConstants = {
   MIN_ORBITAL_DIVISIONS: 2
 };
 
-solarSystemCommon.register( 'MySolarSystemConstants', SolarSystemCommonConstants );
+solarSystemCommon.register( 'SolarSystemCommonConstants', SolarSystemCommonConstants );
 export default SolarSystemCommonConstants;
