@@ -23,13 +23,13 @@ import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
-import BodySoundManager from '../view/BodySoundManager.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import LabMode from './LabMode.js';
 import optionize from '../../../phet-core/js/optionize.js';
+import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 
 const timeFormatter = new Map<TimeSpeed, number>( [
   [ TimeSpeed.FAST, 7 / 4 ],
@@ -60,15 +60,14 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
   // order.
   public readonly bodies: ObservableArray<Body> = createObservableArray();
   public readonly availableBodies = [
-    new Body( 200, new Vector2( 0, 0 ), new Vector2( 0, -5 ), SolarSystemCommonColors.firstBodyColorProperty ),
-    new Body( 10, new Vector2( 200, 0 ), new Vector2( 0, 100 ), SolarSystemCommonColors.secondBodyColorProperty ),
-    new Body( 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), SolarSystemCommonColors.thirdBodyColorProperty ),
-    new Body( 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), SolarSystemCommonColors.fourthBodyColorProperty )
+    new Body( 0, 200, new Vector2( 0, 0 ), new Vector2( 0, -5 ), SolarSystemCommonColors.firstBodyColorProperty ),
+    new Body( 1, 10, new Vector2( 200, 0 ), new Vector2( 0, 100 ), SolarSystemCommonColors.secondBodyColorProperty ),
+    new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), SolarSystemCommonColors.thirdBodyColorProperty ),
+    new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), SolarSystemCommonColors.fourthBodyColorProperty )
   ];
 
   public readonly centerOfMass: CenterOfMass;
   public readonly systemCenteredProperty;
-  public readonly bodySoundManager: BodySoundManager;
 
   public numberOfActiveBodiesProperty: NumberProperty;
   public engine: EngineType;
@@ -96,6 +95,9 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
   public readonly isLab: boolean;
   public readonly labModeProperty: EnumerationProperty<LabMode>;
 
+  public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
+  public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
+
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
     { mass: 200, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -5 ), active: true },
@@ -111,8 +113,6 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     }, providedOptions );
 
     const tandem = options.tandem;
-
-    this.bodySoundManager = new BodySoundManager( this );
 
     this.isLab = options.isLab;
     this.labModeProperty = new EnumerationProperty( LabMode.SUN_PLANET, {
@@ -139,10 +139,6 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     } );
 
     this.availableBodies.forEach( body => {
-      body.collidedEmitter.addListener( () => {
-        this.bodySoundManager.playBodyRemovedSound( 2 );
-      } );
-
       Multilink.lazyMultilink(
         [ body.userControlledPositionProperty, body.userControlledVelocityProperty, body.userControlledMassProperty ],
         ( userControlledPosition: boolean, userControlledVelocity: boolean, userControlledMass: boolean ) => {
@@ -259,17 +255,10 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.centerOfMass.update();
   }
 
-  public removeLastBody(): void {
-    const numberOfActiveBodies = this.bodies.length - 1;
-    const lastBody = this.bodies[ numberOfActiveBodies ];
-    lastBody.isActiveProperty.value = false;
-    this.saveStartingBodyState();
-  }
-
   /**
    * Adds the next available body to the system and checks that is doesn't collide with any other bodies.
    */
-  public addBody(): void {
+  public addNextBody(): void {
     const newBody = this.availableBodies.find( body => !body.isActiveProperty.value );
     if ( newBody ) {
       newBody.reset();
@@ -277,6 +266,17 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
       newBody.isActiveProperty.value = true;
     }
     this.saveStartingBodyState();
+
+    this.bodyAddedEmitter.emit();
+  }
+
+  public removeLastBody(): void {
+    const numberOfActiveBodies = this.bodies.length - 1;
+    const lastBody = this.bodies[ numberOfActiveBodies ];
+    lastBody.isActiveProperty.value = false;
+    this.saveStartingBodyState();
+
+    this.bodyRemovedEmitter.emit();
   }
 
   public reset(): void {
@@ -312,7 +312,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.engine.update( this.bodies );
     this.centerOfMass.update();
 
-    // If position or velocity of Center of Mass is different than 0, then the system is not centered
+    // If position or velocity of Center of Mass is different from 0, then the system is not centered
     if ( this.centerOfMass.positionProperty.value.magnitude > 0.01 || this.centerOfMass.velocityProperty.value.magnitude > 0.01 ) {
       this.systemCenteredProperty.value = false;
     }
@@ -339,11 +339,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.update();
 
     if ( this.isPlayingProperty.value ) {
-      this.bodySoundManager.playSounds();
       this.stepOnce( dt );
-    }
-    else {
-      this.bodySoundManager.stop();
     }
   }
 

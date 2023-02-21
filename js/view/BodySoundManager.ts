@@ -11,10 +11,6 @@ import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import soundConstants from '../../../tambo/js/soundConstants.js';
 import Utils from '../../../dot/js/Utils.js';
-import Bodies_Brass_C3_mp3 from '../../../my-solar-system/sounds/Bodies_Brass_C3_mp3.js';
-import Bodies_Flute_g3_mp3 from '../../../my-solar-system/sounds/Bodies_Flute_g3_mp3.js';
-import Bodies_Strings_e3_v2_mp3 from '../../../my-solar-system/sounds/Bodies_Strings_e3_v2_mp3.js';
-import Bodies_Woodwinds_e3_mp3 from '../../../my-solar-system/sounds/Bodies_Woodwinds_e3_mp3.js';
 import Bodies_Collide_Absorb_2_to_1_mp3 from '../../../my-solar-system/sounds/Bodies_Collide_Absorb_2_to_1_mp3.js';
 import Bodies_Collide_Absorb_3_to_2_mp3 from '../../../my-solar-system/sounds/Bodies_Collide_Absorb_3_to_2_mp3.js';
 import Bodies_Collide_Absorb_4_to_3_mp3 from '../../../my-solar-system/sounds/Bodies_Collide_Absorb_4_to_3_mp3.js';
@@ -28,13 +24,6 @@ import Metronome_Sound_Reverb_1_mp3 from '../../../my-solar-system/sounds/Metron
 import Metronome_Sound_Reverb_2_mp3 from '../../../my-solar-system/sounds/Metronome_Sound_Reverb_2_mp3.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-
-const bodiesSounds = [
-  Bodies_Brass_C3_mp3,
-  Bodies_Woodwinds_e3_mp3,
-  Bodies_Strings_e3_v2_mp3,
-  Bodies_Flute_g3_mp3
-];
 
 const bodyNumberSounds = [
   Mass_Selection_1_mp3,
@@ -65,7 +54,6 @@ const METRONOME = [ 7, 0, 0, 0, 0, 0 ]; // METRONOME
 
 export default class BodySoundManager {
   private readonly model: CommonModel;
-  public readonly bodySoundClips: SoundClip[];
   private readonly bodyNumberSoundClips: SoundClip[];
   private readonly collisionSoundClips: SoundClip[];
   private readonly metronomeSoundClips: SoundClip[];
@@ -73,47 +61,21 @@ export default class BodySoundManager {
   public constructor( model: CommonModel ) {
     this.model = model;
 
-    const DEFAULT_OUTPUT_LEVEL = 0.1;
-
-    // Create the sound generators for the bodies, they are added to the soundManager in the ScreenView
-    this.bodySoundClips = bodiesSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: DEFAULT_OUTPUT_LEVEL,
-      loop: true
-    } ) );
-
     this.bodyNumberSoundClips = bodyNumberSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: DEFAULT_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
     this.collisionSoundClips = collisionSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: DEFAULT_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
     this.metronomeSoundClips = metronomeSounds.map( sound => new SoundClip( sound, {
       rateChangesAffectPlayingSounds: false
     } ) );
 
-    // BodySoundClips are added in the ScreenView because they have an associated view node
     this.bodyNumberSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
     this.collisionSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
     this.metronomeSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
-  }
-
-  public playSounds(): void {
-    //REVIEW: This makes a lot of assumptions (that bodies are always in the same order). Is that OK to do?
-    //REVIEW: Why not loop through availableBodies and check if they are each active?
-    //REVIEW: On further thought, why don't we tag the sound generators ON the bodies themselves? Then we can just loop
-    //REVIEW: through the bodies and play the sound generators that are active.
-    for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
-      if ( i < this.model.numberOfActiveBodiesProperty.value ) {
-        const body = this.model.bodies.get( i );
-        this.bodySoundClips[ i ].setOutputLevel( body.accelerationProperty.value.magnitude / 2000 );
-        this.bodySoundClips[ i ].play();
-      }
-      else {
-        this.bodySoundClips[ i ].stop();
-      }
-    }
   }
 
   public playBodyAddedSound( bodyNumber: number ): void {
@@ -146,10 +108,6 @@ export default class BodySoundManager {
     bigSound.setPlaybackRate( Math.pow( soundConstants.TWELFTH_ROOT_OF_TWO, METRONOME[ i ] ) * divisionOffset );
     bigSound.setOutputLevel( Utils.clamp( Utils.linear( 100, 500, 0, 1, semiMajorAxis ), 0, 1 ) );
     bigSound.play();
-  }
-
-  public stop(): void {
-    this.bodySoundClips.forEach( sound => sound.stop() );
   }
 }
 

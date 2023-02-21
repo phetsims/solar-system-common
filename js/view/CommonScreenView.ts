@@ -30,7 +30,6 @@ import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import Body from '../model/Body.js';
 import DraggableVectorNode, { DraggableVectorNodeOptions } from './DraggableVectorNode.js';
 import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
-import soundManager from '../../../tambo/js/soundManager.js';
 import PatternStringProperty from '../../../axon/js/PatternStringProperty.js';
 import NumberDisplay from '../../../scenery-phet/js/NumberDisplay.js';
 import Panel from '../../../sun/js/Panel.js';
@@ -38,6 +37,7 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import BodySoundManager from './BodySoundManager.js';
 
 
 type SelfOptions = {
@@ -55,6 +55,8 @@ class CommonScreenView extends ScreenView {
 
   protected readonly timeBox: Panel;
 
+  protected readonly bodySoundManager: BodySoundManager;
+
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
 
   // View position of where the geometrical center of the orbit is located
@@ -66,7 +68,7 @@ class CommonScreenView extends ScreenView {
   // Tracks only the vertical bounds and constrains them to layoutBounds
   protected readonly availableBoundsProperty: TReadOnlyProperty<Bounds2>;
 
-  public constructor( model: CommonModel, providedOptions: CommonScreenViewOptions ) {
+  public constructor( public readonly model: CommonModel, providedOptions: CommonScreenViewOptions ) {
     super( providedOptions );
 
     this.availableBoundsProperty = new DerivedProperty(
@@ -82,9 +84,12 @@ class CommonScreenView extends ScreenView {
     this.addChild( this.interfaceLayer );
     this.addChild( this.topLayer );
 
-    model.bodySoundManager.bodySoundClips.forEach( sound => soundManager.addSoundGenerator( sound, {
-      associatedViewNode: this
-    } ) );
+    this.bodySoundManager = new BodySoundManager( model );
+    model.availableBodies.forEach( body => {
+      body.collidedEmitter.addListener( () => {
+        this.bodySoundManager.playBodyRemovedSound( 2 );
+      } );
+    } );
 
     this.orbitalCenterProperty = new Vector2Property( this.layoutBounds.center );
 

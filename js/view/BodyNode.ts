@@ -26,6 +26,19 @@ import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import Bodies_Brass_C3_mp3 from '../../../my-solar-system/sounds/Bodies_Brass_C3_mp3.js';
+import Bodies_Flute_g3_mp3 from '../../../my-solar-system/sounds/Bodies_Flute_g3_mp3.js';
+import Bodies_Strings_e3_v2_mp3 from '../../../my-solar-system/sounds/Bodies_Strings_e3_v2_mp3.js';
+import Bodies_Woodwinds_e3_mp3 from '../../../my-solar-system/sounds/Bodies_Woodwinds_e3_mp3.js';
+import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../tambo/js/soundManager.js';
+
+const bodySounds = [
+  Bodies_Brass_C3_mp3,
+  Bodies_Woodwinds_e3_mp3,
+  Bodies_Strings_e3_v2_mp3,
+  Bodies_Flute_g3_mp3
+];
 
 type SelfOptions = {
   draggable?: boolean;
@@ -33,16 +46,19 @@ type SelfOptions = {
   valuesVisibleProperty?: TReadOnlyProperty<boolean>;
   rectangleOptions?: RectangleOptions;
   textOptions?: TextOptions;
+
+  // If a soundViewNode is provided, we'll hook up a soundClip to it and play sounds when it is visible
+  soundViewNode?: Node | null;
 };
 
 export type BodyNodeOptions = SelfOptions & StrictOmit<ShadedSphereNodeOptions, 'cursor'>;
 
 export default class BodyNode extends ShadedSphereNode {
-  public readonly body: Body;
-
   private readonly disposeBodyNode: () => void;
 
-  public constructor( body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: BodyNodeOptions ) {
+  public readonly soundClip: SoundClip;
+
+  public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: BodyNodeOptions ) {
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
       draggable: true,
 
@@ -57,6 +73,8 @@ export default class BodyNode extends ShadedSphereNode {
         fill: new Color( 0, 0, 0, 0.5 )
       },
 
+      soundViewNode: null,
+
       textOptions: {
         fill: 'white', // Not a colorProperty because it is not dynamic
         maxWidth: 200,
@@ -69,6 +87,16 @@ export default class BodyNode extends ShadedSphereNode {
     super( 1, options );
 
     this.body = body;
+
+    this.soundClip = new SoundClip( bodySounds[ body.index ], {
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL,
+      loop: true
+    } );
+    if ( options.soundViewNode ) {
+      soundManager.addSoundGenerator( this.soundClip, {
+        associatedViewNode: options.soundViewNode
+      } );
+    }
 
     const radiusMultilink = Multilink.multilink(
       [ body.radiusProperty, modelViewTransformProperty ],
@@ -156,7 +184,26 @@ export default class BodyNode extends ShadedSphereNode {
       velocityValueProperty.dispose();
       valueNode.dispose();
       cueingArrowsNode.dispose();
+      this.stopSound();
+      if ( options.soundViewNode ) {
+        soundManager.removeSoundGenerator( this.soundClip );
+      }
+      this.soundClip.dispose();
     };
+  }
+
+  public playSound(): void {
+    if ( this.body.isActiveProperty.value ) {
+      this.soundClip.setOutputLevel( this.body.accelerationProperty.value.magnitude / 2000 );
+      this.soundClip.play();
+    }
+    else {
+      this.soundClip.stop();
+    }
+  }
+
+  public stopSound(): void {
+    this.soundClip.stop();
   }
 
   public override dispose(): void {

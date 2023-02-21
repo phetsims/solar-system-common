@@ -48,7 +48,7 @@ class Body {
 
   private pathDistance = 0;
 
-  public constructor( initialMass: number, initialPosition: Vector2, initialVelocity: Vector2, colorProperty: TReadOnlyProperty<Color> ) {
+  public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2, initialVelocity: Vector2, colorProperty: TReadOnlyProperty<Color> ) {
     this.massProperty = new NumberProperty( initialMass );
     this.radiusProperty = new NumberProperty( 1 );
     this.positionProperty = new Vector2Property( initialPosition );
