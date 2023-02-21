@@ -56,6 +56,8 @@ const SolarSystemCommonConstants = {
 
   NUM_BODIES: 4,
 
+  CHECKBOX_SPACING: 7,
+
   // Multipliers that modify the numeric value shown in Number Displays
   POSITION_MULTIPLIER: 0.01,
   VELOCITY_MULTIPLIER: 0.2109,

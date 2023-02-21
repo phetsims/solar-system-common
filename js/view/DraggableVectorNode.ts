@@ -28,6 +28,8 @@ export type DraggableVectorNodeOptions = SelfOptions & VectorNodeOptions;
 
 export default class DraggableVectorNode extends VectorNode {
 
+  private readonly disposeDraggableVectorNode: () => void;
+
   public constructor(
     body: Body,
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
@@ -121,14 +123,23 @@ export default class DraggableVectorNode extends VectorNode {
     grabArea.moveToBack();
     text.moveToBack();
 
-    //REVIEW: is this a persistent type that doesn't get disposed? Need to document if so
-    //ANSWER: Isn't this disposed by the syncronizer?
-
     // For PhET-iO, when the node does not support input, don't show the drag circle
-    this.inputEnabledProperty.link( ( inputEnabled: boolean ) => {
+    const onInputEnabled = ( inputEnabled: boolean ) => {
       grabArea.visible = inputEnabled;
       text.visible = inputEnabled;
-    } );
+    };
+    this.inputEnabledProperty.link( onInputEnabled );
+
+    this.disposeDraggableVectorNode = () => {
+      this.inputEnabledProperty.unlink( onInputEnabled );
+      dragListener.dispose();
+    };
+  }
+
+  public override dispose(): void {
+    this.disposeDraggableVectorNode();
+
+    super.dispose();
   }
 }
 

@@ -12,6 +12,7 @@ import { combineOptions } from '../../../phet-core/js/optionize.js';
 import { Node } from '../../../scenery/js/imports.js';
 import Property from '../../../axon/js/Property.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 export default class SolarSystemCommonCheckbox extends Checkbox {
 
@@ -21,7 +22,7 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
       checkboxColor: SolarSystemCommonColors.foregroundProperty,
       checkboxColorBackground: SolarSystemCommonColors.backgroundProperty,
       touchAreaXDilation: 5,
-      touchAreaYDilation: 2.5 //REVIEW: Have this be half of the spacing between the checkboxes (programmatically)
+      touchAreaYDilation: SolarSystemCommonConstants.CHECKBOX_SPACING / 2
     }, providedOptions ) );
   }
 }

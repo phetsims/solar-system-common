@@ -147,8 +147,7 @@ class CommonScreenView extends ScreenView {
 
     const timeControlNode = new SolarSystemCommonTimeControlNode( model,
     {
-      //REVIEW: Seems a bit weird to pass `undefined` through here. Should we || null it?
-      enabledProperty: providedOptions.playingAllowedProperty,
+      enabledProperty: providedOptions.playingAllowedProperty || null,
       restartListener: () => model.restart(),
       stepForwardListener: () => model.stepOnce( 1 / 4 ),
       tandem: providedOptions.tandem.createTandem( 'timeControlNode' )
@@ -185,8 +184,6 @@ class CommonScreenView extends ScreenView {
 
     this.timeBox = new Panel( new VBox( {
       children: [ clockNode, timeControlNode ],
-      //REVIEW: Why is this commented out?
-      // layoutOptions: { yAlign: 'bottom', column: 1 },
       spacing: 10
     } ), SolarSystemCommonConstants.CONTROL_PANEL_OPTIONS );
 
@@ -218,11 +215,6 @@ class CommonScreenView extends ScreenView {
     );
 
     this.interfaceLayer.addChild( resetAllButtonBox );
-  }
-
-  //REVIEW: Perhaps making CommonScreenView an abstract class (and making this method abstract) would be appropriate
-  public update(): void {
-    // See subclass for implementation
   }
 }
 

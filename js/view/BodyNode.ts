@@ -29,14 +29,8 @@ import solarSystemCommon from '../solarSystemCommon.js';
 
 type SelfOptions = {
   draggable?: boolean;
-
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
-
   valuesVisibleProperty?: TReadOnlyProperty<boolean>;
-
-  //REVIEW: UPDATE: It looks like we'll want to pass in dragBoundsProperty, so maybe:
-  //REVIEW: UPDATE: type SelfOptions = { draggable?: boolean, dragBoundsProperty?: TReadOnlyProperty<Bounds2> }
-
   rectangleOptions?: RectangleOptions;
   textOptions?: TextOptions;
 };
