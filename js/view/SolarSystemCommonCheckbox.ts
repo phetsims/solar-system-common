@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 /**
  * Checkbox with common options for the my-solar-system and keplers-laws sims
