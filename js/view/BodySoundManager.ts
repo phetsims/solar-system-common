@@ -27,6 +27,7 @@ import Metronome_Sound_2_mp3 from '../../../my-solar-system/sounds/Metronome_Sou
 import Metronome_Sound_Reverb_1_mp3 from '../../../my-solar-system/sounds/Metronome_Sound_Reverb_1_mp3.js';
 import Metronome_Sound_Reverb_2_mp3 from '../../../my-solar-system/sounds/Metronome_Sound_Reverb_2_mp3.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 const bodiesSounds = [
   Bodies_Brass_C3_mp3,
@@ -103,7 +104,7 @@ export default class BodySoundManager {
     //REVIEW: Why not loop through availableBodies and check if they are each active?
     //REVIEW: On further thought, why don't we tag the sound generators ON the bodies themselves? Then we can just loop
     //REVIEW: through the bodies and play the sound generators that are active.
-    for ( let i = 0; i < 4; i++ ) {
+    for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
       if ( i < this.model.numberOfActiveBodiesProperty.value ) {
         const body = this.model.bodies.get( i );
         this.bodySoundClips[ i ].setOutputLevel( body.accelerationProperty.value.magnitude / 2000 );

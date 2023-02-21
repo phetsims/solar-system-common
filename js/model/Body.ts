@@ -73,7 +73,7 @@ class Body {
     this.velocityProperty.reset();
     this.accelerationProperty.reset();
     this.forceProperty.reset();
-    this.movedProperty.reset(); //REVIEW: movedProperty shouldn't reappear on restarts
+    this.movedProperty.reset();
     this.clearPath();
   }
 
@@ -85,16 +85,11 @@ class Body {
     const pathPoint = this.positionProperty.value;
 
     // Only add or remove points if the body is effectively moving
-    //REVIEW: Are we always guaranteed pathPoints? It seems easier to have a conditional here if there IS another pathPoint
-    //REVIEW: ACTUALLY, that should be added, AND we should probably not be doing an instance equality check.
-    //REVIEW: new Vector2( 0, 0 ) !== new Vector2( 0, 0 ) is true, so this guard does not do much at all to help us
-    //REVIEW: use .equals() instead.
-    if ( pathPoint !== this.pathPoints[ this.pathPoints.length - 1 ] ) {
+    if ( this.pathPoints.length === 0 || !pathPoint.equals( this.pathPoints[ this.pathPoints.length - 1 ] ) ) {
       this.pathPoints.push( pathPoint );
 
       // Add the length to the tracked path length
-      //REVIEW: Shouldn't this be >= 2? Does this omit the distance of the first two points?
-      if ( this.pathPoints.length > 2 ) {
+      if ( this.pathPoints.length >= 2 ) {
         this.pathDistance += pathPoint.distance( this.pathPoints[ this.pathPoints.length - 2 ] );
       }
 

@@ -29,6 +29,7 @@ import Multilink from '../../../axon/js/Multilink.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import LabMode from './LabMode.js';
+import optionize from '../../../phet-core/js/optionize.js';
 
 const timeFormatter = new Map<TimeSpeed, number>( [
   [ TimeSpeed.FAST, 7 / 4 ],
@@ -40,6 +41,8 @@ type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
   isLab: boolean;
   tandem: Tandem;
+  timeScale?: number;
+  timeMultiplier?: number;
 };
 
 export type BodyInfo = {
@@ -101,11 +104,17 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
   protected defaultBodyState: BodyInfo[];
 
   protected constructor( providedOptions: CommonModelOptions<EngineType> ) {
-    const tandem = providedOptions.tandem;
+
+    const options = optionize<CommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
+      timeScale: 1,
+      timeMultiplier: SolarSystemCommonConstants.TIME_MULTIPLIER
+    }, providedOptions );
+
+    const tandem = options.tandem;
 
     this.bodySoundManager = new BodySoundManager( this );
 
-    this.isLab = providedOptions.isLab;
+    this.isLab = options.isLab;
     this.labModeProperty = new EnumerationProperty( LabMode.SUN_PLANET, {
       tandem: tandem.createTandem( 'labModeProperty' )
     } );
@@ -150,14 +159,14 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.loadBodyStates( this.startingBodyState );
     this.followCenterOfMass();
     this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length );
-    this.engine = providedOptions.engineFactory( this.bodies );
+    this.engine = options.engineFactory( this.bodies );
     this.engine.reset();
 
 
     // Time settings
     // timeScale controls the velocity of time
-    this.timeScale = 1.0; //REVIEW: I would definitely use the options pattern here, instead of relying on mutation. Have keplers pass in a different timeScale, and set the default in the options
-    this.timeMultiplier = SolarSystemCommonConstants.TIME_MULTIPLIER; //REVIEW: same here;
+    this.timeScale = options.timeScale;
+    this.timeMultiplier = options.timeMultiplier;
     this.timeProperty = new NumberProperty( 0 );
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
@@ -215,8 +224,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
    * Sets the available bodies initial states according to bodiesInfo
    */
   public loadBodyStates( bodiesInfo: BodyInfo[] ): void {
-    //REVIEW: factor out NUM_BODIES to somewhere common, instead of specifying 4 everywhere
-    for ( let i = 0; i < 4; i++ ) {
+    for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
       const bodyInfo = bodiesInfo[ i ];
 
       if ( bodyInfo ) {
