@@ -39,8 +39,8 @@ export default class SolarSystemCommonSlider extends HSlider {
         middleMovingDownSoundPlayer: massSliderSoundClip,
         numberOfMiddleThresholds: 10,
         // This mapping function the same as in Greenhouse
-        middleMovingUpPlaybackRateMapper: ( value: number ) => 0.5 + ( value - range.min ) / range.getLength(),
-        middleMovingDownPlaybackRateMapper: ( value: number ) => 0.4 + ( value - range.min ) / range.getLength()
+        middleMovingUpPlaybackRateMapper: ( value: number ) => 0.5 + ( range.max - value ) / range.getLength(),
+        middleMovingDownPlaybackRateMapper: ( value: number ) => 0.4 + ( range.max - value ) / range.getLength()
       }
     }, providedOptions );
     super( valueProperty, range, options );

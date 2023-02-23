@@ -15,6 +15,7 @@ const SolarSystemCommonConstants = {
   MARGIN: 15,
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
+  MAX_WIDTH: 200,
 
   CONTROL_PANEL_OPTIONS: {
     stroke: null,
@@ -22,7 +23,6 @@ const SolarSystemCommonConstants = {
     cornerRadius: 5,
     xMargin: 10,
     yMargin: 10,
-    maxWidth: 200,
     layoutOptions: {
       stretch: true
     }

@@ -23,7 +23,7 @@ import solarSystemCommon from '../solarSystemCommon.js';
 
 // constants
 const TEXT_OPTIONS = combineOptions<TextOptions>( {
-  maxWidth: 200
+  maxWidth: SolarSystemCommonConstants.MAX_WIDTH
 }, SolarSystemCommonConstants.TEXT_OPTIONS );
 
 const createVisibilityInformationCheckboxes = ( model: CommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
