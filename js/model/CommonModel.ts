@@ -16,7 +16,6 @@ import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
 import createObservableArray, { ObservableArray } from '../../../axon/js/createObservableArray.js';
 import Engine from './Engine.js';
-import CenterOfMass from './CenterOfMass.js';
 import Range from '../../../dot/js/Range.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
@@ -65,9 +64,6 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), SolarSystemCommonColors.thirdBodyColorProperty ),
     new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), SolarSystemCommonColors.fourthBodyColorProperty )
   ];
-
-  public readonly centerOfMass: CenterOfMass;
-  public readonly systemCenteredProperty;
 
   public numberOfActiveBodiesProperty: NumberProperty;
   public engine: EngineType;
@@ -151,9 +147,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
       );
     } );
 
-    this.centerOfMass = new CenterOfMass( this.bodies );
     this.loadBodyStates( this.startingBodyState );
-    this.followCenterOfMass();
     this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length );
     this.engine = options.engineFactory( this.bodies );
     this.engine.reset();
@@ -175,28 +169,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.measuringTapeVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'measuringTapeVisibleProperty' ) } );
     this.valuesVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'valuesVisibleProperty' ) } );
     this.moreDataProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'moreDataProperty' ) } );
-    this.systemCenteredProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'systemCenteredProperty' ) } );
     this.realUnitsProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'realUnitsProperty' ) } );
-
-    // Re-center the bodies and set Center of Mass speed to 0 when the systemCentered option is selected
-    this.systemCenteredProperty.link( systemCentered => {
-      const wasPlayingBefore = this.isPlayingProperty.value;
-      if ( systemCentered ) {
-        this.isPlayingProperty.value = false; // Pause the sim
-        this.centerOfMass.update();
-        const centerOfMassPosition = this.centerOfMass.positionProperty.value;
-        const centerOfMassVelocity = this.centerOfMass.velocityProperty.value;
-        this.bodies.forEach( body => {
-          body.clearPath();
-          body.positionProperty.set( body.positionProperty.value.minus( centerOfMassPosition ) );
-          body.velocityProperty.set( body.velocityProperty.value.minus( centerOfMassVelocity ) );
-        } );
-        this.saveStartingBodyState();
-      }
-      if ( wasPlayingBefore ) {
-        this.isPlayingProperty.value = true; // Resume the sim
-      }
-    } );
 
     this.zoomLevelProperty = new NumberProperty( 2, {
       range: new Range( 0, 4 ),
@@ -238,21 +211,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
       }
     }
 
-    // Update Center of Mass
-    this.centerOfMass.update();
-
     this.saveStartingBodyState();
-  }
-
-  public followCenterOfMass(): void {
-    // Make the center of mass fixed, but not necessarily centered
-    const centerOfMassVelocity = this.centerOfMass.velocityProperty.value;
-    this.bodies.forEach( body => {
-      body.velocityProperty.set( body.velocityProperty.value.minus( centerOfMassVelocity ) );
-    } );
-
-    // Update Center of Mass to avoid system's initial movement
-    this.centerOfMass.update();
   }
 
   /**
@@ -290,7 +249,6 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.measuringTapeVisibleProperty.reset();
     this.valuesVisibleProperty.reset();
     this.moreDataProperty.reset();
-    this.centerOfMass.visibleProperty.reset();
     this.realUnitsProperty.reset();
 
     this.restart();
@@ -310,13 +268,6 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
    */
   public update(): void {
     this.engine.update( this.bodies );
-    this.centerOfMass.update();
-
-    // If position or velocity of Center of Mass is different from 0, then the system is not centered
-    if ( this.centerOfMass.positionProperty.value.magnitude > 0.01 || this.centerOfMass.velocityProperty.value.magnitude > 0.01 ) {
-      this.systemCenteredProperty.value = false;
-    }
-
     this.numberOfActiveBodiesProperty.value = this.bodies.length;
   }
 

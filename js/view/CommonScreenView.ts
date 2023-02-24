@@ -16,7 +16,6 @@ import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import GridNode from '../../../scenery-phet/js/GridNode.js';
 import SolarSystemCommonTimeControlNode from './SolarSystemCommonTimeControlNode.js';
-import CenterOfMassNode from './CenterOfMassNode.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import CommonModel from '../model/CommonModel.js';
@@ -124,11 +123,6 @@ class CommonScreenView extends ScreenView {
         combineOptions<DraggableVectorNodeOptions>( { fill: PhetColorScheme.VELOCITY }, options )
       );
     };
-
-    // Center of Mass Node =====================================================================================================
-
-    const centerOfMassNode = new CenterOfMassNode( model.centerOfMass, this.modelViewTransformProperty );
-    this.componentsLayer.addChild( centerOfMassNode );
 
     // UI Elements ===================================================================================================
 
