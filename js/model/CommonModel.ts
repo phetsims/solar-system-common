@@ -58,12 +58,8 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
   // Bodies will consist of all bodies from availableBodies that have isActiveProperty.value === true, and will be in
   // order.
   public readonly bodies: ObservableArray<Body> = createObservableArray();
-  public readonly availableBodies = [
-    new Body( 0, 200, new Vector2( 0, 0 ), new Vector2( 0, -5 ), SolarSystemCommonColors.firstBodyColorProperty ),
-    new Body( 1, 10, new Vector2( 200, 0 ), new Vector2( 0, 100 ), SolarSystemCommonColors.secondBodyColorProperty ),
-    new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), SolarSystemCommonColors.thirdBodyColorProperty ),
-    new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), SolarSystemCommonColors.fourthBodyColorProperty )
-  ];
+  public readonly availableBodies: Body[];
+  public readonly userControlledProperty = new BooleanProperty( false );
 
   public numberOfActiveBodiesProperty: NumberProperty;
   public engine: EngineType;
@@ -115,6 +111,13 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
       tandem: tandem.createTandem( 'labModeProperty' )
     } );
 
+    this.availableBodies = [
+      new Body( 0, 200, new Vector2( 0, 0 ), new Vector2( 0, -5 ), this.userControlledProperty, SolarSystemCommonColors.firstBodyColorProperty ),
+      new Body( 1, 10, new Vector2( 200, 0 ), new Vector2( 0, 100 ), this.userControlledProperty, SolarSystemCommonColors.secondBodyColorProperty ),
+      new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.thirdBodyColorProperty ),
+      new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.fourthBodyColorProperty )
+    ];
+
     // Define the default mode the bodies will show up in
     this.defaultBodyState = this.availableBodies.map( body => body.info );
 
@@ -143,6 +146,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
           }
           this.saveStartingBodyState();
           this.userInteractingEmitter.emit();
+          this.userControlledProperty.value = true;
         }
       );
     } );
@@ -160,6 +164,10 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.timeProperty = new NumberProperty( 0 );
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
+
+    this.isPlayingProperty.lazyLink( () => {
+      this.userControlledProperty.value = true;
+    } );
 
     // Visibility properties for checkboxes
     this.pathVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
@@ -250,6 +258,7 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
     this.valuesVisibleProperty.reset();
     this.moreDataProperty.reset();
     this.realUnitsProperty.reset();
+    this.userControlledProperty.reset();
 
     this.restart();
   }

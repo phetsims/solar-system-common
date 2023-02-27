@@ -171,7 +171,7 @@ export default class BodyNode extends ShadedSphereNode {
       {
         bodyRadius: this.radius,
         fill: options.mainColor,
-        visibleProperty: CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.movedProperty )
+        visibleProperty: CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.userControlledProperty )
       } );
 
     this.addChild( cueingArrowsNode );

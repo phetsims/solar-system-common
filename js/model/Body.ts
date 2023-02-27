@@ -18,7 +18,6 @@ import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import Property from '../../../axon/js/Property.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { BodyInfo } from './CommonModel.js';
-import Multilink from '../../../axon/js/Multilink.js';
 
 
 class Body {
@@ -40,7 +39,6 @@ class Body {
   public readonly userControlledPositionProperty = new BooleanProperty( false );
   public readonly userControlledVelocityProperty = new BooleanProperty( false );
   public readonly userControlledMassProperty = new BooleanProperty( false );
-  public readonly movedProperty = new BooleanProperty( false );
 
   // Array of points for drawing the path
   public readonly pathPoints: ObservableArray<Vector2>;
@@ -49,7 +47,7 @@ class Body {
 
   private pathDistance = 0;
 
-  public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2, initialVelocity: Vector2, colorProperty: TReadOnlyProperty<Color> ) {
+  public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2, initialVelocity: Vector2, public userControlledProperty: Property<boolean>, colorProperty: TReadOnlyProperty<Color> ) {
     this.massProperty = new NumberProperty( initialMass );
     this.radiusProperty = new NumberProperty( 1 );
     this.positionProperty = new Vector2Property( initialPosition );
@@ -62,17 +60,6 @@ class Body {
 
     // Data for rendering the path as a WebGL object
     this.pathPoints = createObservableArray();
-
-    Multilink.multilink(
-      [
-        this.userControlledPositionProperty,
-        this.userControlledVelocityProperty,
-        this.userControlledMassProperty
-      ],
-      () => {
-        this.movedProperty.value = true;
-      }
-    );
   }
 
   public reset(): void {
@@ -81,7 +68,6 @@ class Body {
     this.velocityProperty.reset();
     this.accelerationProperty.reset();
     this.forceProperty.reset();
-    this.movedProperty.reset();
     this.clearPath();
   }
 
