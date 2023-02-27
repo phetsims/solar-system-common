@@ -167,14 +167,14 @@ export default class BodyNode extends ShadedSphereNode {
 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
-    const cueingArrowsNode = new CueingArrowsNode( {
-      fill: options.mainColor,
-      left: this.radius + 15,
-      visibleProperty: CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.movedProperty )
-    } );
+    const cueingArrowsNode = new CueingArrowsNode(
+      {
+        bodyRadius: this.radius,
+        fill: options.mainColor,
+        visibleProperty: CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.movedProperty )
+      } );
 
-    // Commented out while we take a design decision on whether to show the cueing arrows
-    // this.addChild( cueingArrowsNode );
+    this.addChild( cueingArrowsNode );
 
     this.disposeBodyNode = () => {
       positionMultilink.dispose();

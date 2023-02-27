@@ -18,6 +18,7 @@ import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import Property from '../../../axon/js/Property.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { BodyInfo } from './CommonModel.js';
+import Multilink from '../../../axon/js/Multilink.js';
 
 
 class Body {
@@ -62,9 +63,16 @@ class Body {
     // Data for rendering the path as a WebGL object
     this.pathPoints = createObservableArray();
 
-    this.positionProperty.lazyLink( () => {
-      this.movedProperty.value = true;
-    } );
+    Multilink.multilink(
+      [
+        this.userControlledPositionProperty,
+        this.userControlledVelocityProperty,
+        this.userControlledMassProperty
+      ],
+      () => {
+        this.movedProperty.value = true;
+      }
+    );
   }
 
   public reset(): void {
