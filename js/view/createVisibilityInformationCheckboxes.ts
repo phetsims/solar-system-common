@@ -14,7 +14,7 @@ import Property from '../../../axon/js/Property.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-import CommonModel from '../model/CommonModel.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import SolarSystemCommonCheckbox from './SolarSystemCommonCheckbox.js';
 import Tandem from '../../../tandem/js/Tandem.js';
@@ -26,7 +26,7 @@ const TEXT_OPTIONS = combineOptions<TextOptions>( {
   maxWidth: SolarSystemCommonConstants.MAX_WIDTH
 }, SolarSystemCommonConstants.TEXT_OPTIONS );
 
-const createVisibilityInformationCheckboxes = ( model: CommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
+const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
 
   const measuringTapeIcon = MeasuringTapeNode.createIcon( { scale: 0.3 } );
 

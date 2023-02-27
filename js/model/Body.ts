@@ -17,7 +17,7 @@ import { Color } from '../../../scenery/js/imports.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import Property from '../../../axon/js/Property.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import { BodyInfo } from './CommonModel.js';
+import { BodyInfo } from './SolarSystemCommonModel.js';
 
 
 class Body {

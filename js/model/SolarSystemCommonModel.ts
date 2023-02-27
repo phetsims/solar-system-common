@@ -53,7 +53,7 @@ export type BodyInfo = {
 
 export type CommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType>;
 
-abstract class CommonModel<EngineType extends Engine = Engine> {
+abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
 
   // Bodies will consist of all bodies from availableBodies that have isActiveProperty.value === true, and will be in
   // order.
@@ -310,5 +310,5 @@ abstract class CommonModel<EngineType extends Engine = Engine> {
   }
 }
 
-solarSystemCommon.register( 'CommonModel', CommonModel );
-export default CommonModel;
+solarSystemCommon.register( 'SolarSystemCommonModel', SolarSystemCommonModel );
+export default SolarSystemCommonModel;

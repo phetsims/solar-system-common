@@ -18,7 +18,7 @@ import GridNode from '../../../scenery-phet/js/GridNode.js';
 import SolarSystemCommonTimeControlNode from './SolarSystemCommonTimeControlNode.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import CommonModel from '../model/CommonModel.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import MySolarSystemStrings from '../../../my-solar-system/js/MySolarSystemStrings.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
@@ -45,7 +45,7 @@ type SelfOptions = {
 
 export type CommonScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-class CommonScreenView extends ScreenView {
+class SolarSystemCommonScreenView extends ScreenView {
   protected readonly bodiesLayer = new Node();
   protected readonly componentsLayer = new Node();
   protected readonly interfaceLayer = new Node();
@@ -67,7 +67,7 @@ class CommonScreenView extends ScreenView {
   // Tracks only the vertical bounds and constrains them to layoutBounds
   protected readonly availableBoundsProperty: TReadOnlyProperty<Bounds2>;
 
-  public constructor( public readonly model: CommonModel, providedOptions: CommonScreenViewOptions ) {
+  public constructor( public readonly model: SolarSystemCommonModel, providedOptions: CommonScreenViewOptions ) {
     super( providedOptions );
 
     this.availableBoundsProperty = new DerivedProperty(
@@ -217,5 +217,5 @@ class CommonScreenView extends ScreenView {
   }
 }
 
-solarSystemCommon.register( 'CommonScreenView', CommonScreenView );
-export default CommonScreenView;
+solarSystemCommon.register( 'SolarSystemCommonScreenView', SolarSystemCommonScreenView );
+export default SolarSystemCommonScreenView;

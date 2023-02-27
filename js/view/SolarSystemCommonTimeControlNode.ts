@@ -10,7 +10,7 @@ import TimeControlNode, { TimeControlNodeOptions } from '../../../scenery-phet/j
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
 import optionize from '../../../phet-core/js/optionize.js';
-import CommonModel from '../model/CommonModel.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import { HBox, Path, Rectangle } from '../../../scenery/js/imports.js';
 import { Shape } from '../../../kite/js/imports.js';
@@ -50,7 +50,7 @@ export type MySolarSystemTimeControlNodeOptions = SelfOptions & TimeControlNodeO
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
   public constructor(
-    model: CommonModel,
+    model: SolarSystemCommonModel,
     providedOptions: MySolarSystemTimeControlNodeOptions
   ) {
 

@@ -6,7 +6,7 @@
  * @author Agustín Vallejo
  */
 
-import CommonModel from '../model/CommonModel.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import soundConstants from '../../../tambo/js/soundConstants.js';
@@ -53,12 +53,12 @@ const METRONOME = [ 7, 0, 0, 0, 0, 0 ]; // METRONOME
 // const METRONOME = [ 0, 3, 5, 6, 7, 10 ]; // BLUES_SCALE
 
 export default class BodySoundManager {
-  private readonly model: CommonModel;
+  private readonly model: SolarSystemCommonModel;
   private readonly bodyNumberSoundClips: SoundClip[];
   private readonly collisionSoundClips: SoundClip[];
   private readonly metronomeSoundClips: SoundClip[];
 
-  public constructor( model: CommonModel ) {
+  public constructor( model: SolarSystemCommonModel ) {
     this.model = model;
 
     this.bodyNumberSoundClips = bodyNumberSounds.map( sound => new SoundClip( sound, {

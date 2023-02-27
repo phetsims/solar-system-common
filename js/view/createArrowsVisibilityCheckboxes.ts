@@ -15,7 +15,7 @@ import MySolarSystemStrings from '../../../my-solar-system/js/MySolarSystemStrin
 import { combineOptions } from '../../../phet-core/js/optionize.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonCheckbox from './SolarSystemCommonCheckbox.js';
-import CommonModel from '../model/CommonModel.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 
 // constants
@@ -27,7 +27,7 @@ const TEXT_OPTIONS = combineOptions<TextOptions>( {
 
 const SPACING = 10;
 
-const createArrowsVisibilityCheckboxes = ( model: CommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
+const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
   return [
     // gravity force checkbox
     new SolarSystemCommonCheckbox( model.gravityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
