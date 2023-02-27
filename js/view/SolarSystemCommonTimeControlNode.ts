@@ -17,6 +17,7 @@ import { Shape } from '../../../kite/js/imports.js';
 import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import MySolarSystemStrings from '../../../my-solar-system/js/MySolarSystemStrings.js';
 
 // constants
 const PLAY_PAUSE_BUTTON_RADIUS = 34;
@@ -92,10 +93,13 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       tandem: providedOptions.tandem.createTandem( 'restartButton' ),
       layoutOptions: {
         xMargin: SolarSystemCommonConstants.MARGIN / 2
-      }
+      },
+      innerContent: MySolarSystemStrings.a11y.restartStringProperty
     } );
 
     this.addChild( restartButton );
+    this.playPauseStepButtons.pdomOrder = [ restartButton, ...( this.playPauseStepButtons.pdomOrder ? this.playPauseStepButtons.pdomOrder : [] ) ];
+
 
     this.speedRadioButtonGroupParent!.center = this.getPlayPauseButtonCenter().plusXY(
       -0.9 * ( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS ),

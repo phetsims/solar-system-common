@@ -214,6 +214,9 @@ class SolarSystemCommonScreenView extends ScreenView {
     );
 
     this.interfaceLayer.addChild( resetAllButtonBox );
+
+    // ResetAllButton should be last in the PDOM order
+    this.interfaceLayer.pdomOrder = [ null, resetAllButtonBox ];
   }
 }
 
