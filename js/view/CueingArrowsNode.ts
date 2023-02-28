@@ -38,6 +38,7 @@ export default class CueingArrowsNode extends Path {
       // CueingArrowsNodeOptions
       bodyRadius: 10,
       length: 15,
+      rotation: Math.PI / 4,
 
       // PathOptions
       fill: 'rgb( 0, 200, 0 )',
@@ -48,6 +49,7 @@ export default class CueingArrowsNode extends Path {
     super( createArrowsShape( options.bodyRadius, options.length ), options );
 
     this.length = options.length;
+    this.rotation = options.rotation;
 
     const updateTouchArea = () => {
       this.touchArea = this.localBounds.dilated( 5 );

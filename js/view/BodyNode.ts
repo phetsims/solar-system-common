@@ -32,6 +32,7 @@ import Bodies_Strings_e3_v2_mp3 from '../../../my-solar-system/sounds/Bodies_Str
 import Bodies_Woodwinds_e3_mp3 from '../../../my-solar-system/sounds/Bodies_Woodwinds_e3_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
+import SolarSystemCommonQueryParameters from '../SolarSystemCommonQueryParameters.js';
 
 const bodySounds = [
   Bodies_Brass_C3_mp3,
@@ -174,7 +175,10 @@ export default class BodyNode extends ShadedSphereNode {
         visibleProperty: CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.userControlledProperty )
       } );
 
-    this.addChild( cueingArrowsNode );
+    if ( SolarSystemCommonQueryParameters.cueingArrows ) {
+      this.addChild( cueingArrowsNode );
+    }
+
 
     this.disposeBodyNode = () => {
       positionMultilink.dispose();
