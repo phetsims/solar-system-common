@@ -8,7 +8,42 @@ import getStringModule from '../../chipper/js/getStringModule.js';
 import LinkableProperty from '../../axon/js/LinkableProperty.js';
 import solarSystemCommon from './solarSystemCommon.js';
 
-type StringsType = {};
+type StringsType = {
+  'gravityForce': string;
+  'gravityForceStringProperty': LinkableProperty<string>;
+  'grid': string;
+  'gridStringProperty': LinkableProperty<string>;
+  'measuringTape': string;
+  'measuringTapeStringProperty': LinkableProperty<string>;
+  'velocity': string;
+  'velocityStringProperty': LinkableProperty<string>;
+  'V': string;
+  'VStringProperty': LinkableProperty<string>;
+  'clear': string;
+  'clearStringProperty': LinkableProperty<string>;
+  'speed': string;
+  'speedStringProperty': LinkableProperty<string>;
+  'units': {
+    'AU': string;
+    'AUStringProperty': LinkableProperty<string>;
+    'years': string;
+    'yearsStringProperty': LinkableProperty<string>;
+    'kms': string;
+    'kmsStringProperty': LinkableProperty<string>;
+  };
+  'pattern': {
+    'labelUnits': string;
+    'labelUnitsStringProperty': LinkableProperty<string>;
+    'velocityValueUnits': string;
+    'velocityValueUnitsStringProperty': LinkableProperty<string>;
+    'unitsPower': string;
+    'unitsPowerStringProperty': LinkableProperty<string>;
+  };
+  'a11y': {
+    'restart': string;
+    'restartStringProperty': LinkableProperty<string>;
+  }
+};
 
 const SolarSystemCommonStrings = getStringModule( 'SOLAR_SYSTEM_COMMON' ) as StringsType;
 

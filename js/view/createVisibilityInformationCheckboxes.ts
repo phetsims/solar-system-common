@@ -7,7 +7,7 @@
  */
 
 import { HBox, Text, TextOptions } from '../../../scenery/js/imports.js';
-import MySolarSystemStrings from '../../../my-solar-system/js/MySolarSystemStrings.js';
+import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import GridNode from '../../../scenery-phet/js/GridNode.js';
 import Property from '../../../axon/js/Property.js';
@@ -34,7 +34,7 @@ const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, t
     new SolarSystemCommonCheckbox( model.gridVisibleProperty, new HBox( {
       spacing: 10,
       children: [
-        new Text( MySolarSystemStrings.gridStringProperty, TEXT_OPTIONS ),
+        new Text( SolarSystemCommonStrings.gridStringProperty, TEXT_OPTIONS ),
         new GridNode( new Property( ModelViewTransform2.createIdentity() ), 10, Vector2.ZERO, 1, {
           stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
           lineWidth: 1.5
@@ -46,7 +46,7 @@ const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, t
     new SolarSystemCommonCheckbox( model.measuringTapeVisibleProperty, new HBox( {
       spacing: 10,
       children: [
-        new Text( MySolarSystemStrings.measuringTapeStringProperty, TEXT_OPTIONS ),
+        new Text( SolarSystemCommonStrings.measuringTapeStringProperty, TEXT_OPTIONS ),
         measuringTapeIcon
       ]
     } ), {

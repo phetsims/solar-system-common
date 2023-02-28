@@ -11,7 +11,7 @@ import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
 import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import { HBox, HBoxOptions, Text, TextOptions } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import MySolarSystemStrings from '../../../my-solar-system/js/MySolarSystemStrings.js';
+import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonCheckbox from './SolarSystemCommonCheckbox.js';
@@ -32,7 +32,7 @@ const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem
     // gravity force checkbox
     new SolarSystemCommonCheckbox( model.gravityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
       children: [
-        new Text( MySolarSystemStrings.gravityForceStringProperty, TEXT_OPTIONS ),
+        new Text( SolarSystemCommonStrings.gravityForceStringProperty, TEXT_OPTIONS ),
         new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: PhetColorScheme.GRAVITATIONAL_FORCE } )
       ]
     }, {
@@ -43,7 +43,7 @@ const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem
     // velocity checkbox
     new SolarSystemCommonCheckbox( model.velocityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
       children: [
-        new Text( MySolarSystemStrings.velocityStringProperty, TEXT_OPTIONS ),
+        new Text( SolarSystemCommonStrings.velocityStringProperty, TEXT_OPTIONS ),
         new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, { fill: PhetColorScheme.VELOCITY } )
       ]
     }, {
@@ -51,7 +51,7 @@ const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem
     } ) ), {
       tandem: tandem.createTandem( 'velocityCheckbox' )
     } ),
-    new SolarSystemCommonCheckbox( model.valuesVisibleProperty, new Text( MySolarSystemStrings.speedStringProperty, TEXT_OPTIONS ), {
+    new SolarSystemCommonCheckbox( model.valuesVisibleProperty, new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS ), {
       tandem: tandem.createTandem( 'valuesVisibleCheckbox' )
     } )
   ];

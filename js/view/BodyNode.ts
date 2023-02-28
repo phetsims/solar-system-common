@@ -14,7 +14,7 @@ import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2
 import optionize from '../../../phet-core/js/optionize.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import MySolarSystemStrings from '../../../my-solar-system/js/MySolarSystemStrings.js';
+import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import PatternStringProperty from '../../../axon/js/PatternStringProperty.js';
@@ -140,9 +140,9 @@ export default class BodyNode extends ShadedSphereNode {
         1
       )
     );
-    const readoutStringProperty = new PatternStringProperty( MySolarSystemStrings.pattern.velocityValueUnitsStringProperty, {
+    const readoutStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
       value: velocityValueProperty,
-      units: MySolarSystemStrings.units.kmsStringProperty
+      units: SolarSystemCommonStrings.units.kmsStringProperty
     } );
 
     const valueNode = new Text( readoutStringProperty, options.textOptions );

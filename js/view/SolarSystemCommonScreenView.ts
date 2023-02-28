@@ -20,7 +20,7 @@ import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import MySolarSystemStrings from '../../../my-solar-system/js/MySolarSystemStrings.js';
+import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
@@ -119,7 +119,7 @@ class SolarSystemCommonScreenView extends ScreenView {
         model.velocityVisibleProperty,
         body.velocityProperty,
         1,
-        MySolarSystemStrings.VStringProperty,
+        SolarSystemCommonStrings.VStringProperty,
         combineOptions<DraggableVectorNodeOptions>( { fill: PhetColorScheme.VELOCITY }, options )
       );
     };
@@ -145,15 +145,15 @@ class SolarSystemCommonScreenView extends ScreenView {
 
 
     const timeControlNode = new SolarSystemCommonTimeControlNode( model,
-    {
-      enabledProperty: providedOptions.playingAllowedProperty || null,
-      restartListener: () => model.restart(),
-      stepForwardListener: () => model.stepOnce( 1 / 4 ),
-      tandem: providedOptions.tandem.createTandem( 'timeControlNode' )
-    } );
+      {
+        enabledProperty: providedOptions.playingAllowedProperty || null,
+        restartListener: () => model.restart(),
+        stepForwardListener: () => model.stepOnce( 1 / 4 ),
+        tandem: providedOptions.tandem.createTandem( 'timeControlNode' )
+      } );
 
-    const timeStringPatternProperty = new PatternStringProperty( MySolarSystemStrings.pattern.labelUnitsStringProperty, {
-      units: MySolarSystemStrings.units.yearsStringProperty
+    const timeStringPatternProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.labelUnitsStringProperty, {
+      units: SolarSystemCommonStrings.units.yearsStringProperty
     } );
 
     const clockNode = new HBox( {
@@ -169,7 +169,7 @@ class SolarSystemCommonScreenView extends ScreenView {
           valuePattern: timeStringPatternProperty,
           decimalPlaces: 1
         } ),
-        new TextPushButton( MySolarSystemStrings.clearStringProperty, {
+        new TextPushButton( SolarSystemCommonStrings.clearStringProperty, {
           font: new PhetFont( 16 ),
           listener: () => { model.timeProperty.reset(); },
           maxTextWidth: 65,
@@ -198,12 +198,12 @@ class SolarSystemCommonScreenView extends ScreenView {
     } );
 
     const resetAllButtonBox = new AlignBox( resetAllButton,
-    {
-      alignBoundsProperty: this.availableBoundsProperty,
-      margin: SolarSystemCommonConstants.MARGIN,
-      xAlign: 'right',
-      yAlign: 'bottom'
-    } );
+      {
+        alignBoundsProperty: this.availableBoundsProperty,
+        margin: SolarSystemCommonConstants.MARGIN,
+        xAlign: 'right',
+        yAlign: 'bottom'
+      } );
 
     Multilink.multilink(
       [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
