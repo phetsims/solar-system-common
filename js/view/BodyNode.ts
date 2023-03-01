@@ -30,6 +30,8 @@ import Bodies_Brass_C3_mp3 from '../../sounds/Bodies_Brass_C3_mp3.js';
 import Bodies_Flute_g3_mp3 from '../../sounds/Bodies_Flute_g3_mp3.js';
 import Bodies_Strings_e3_v2_mp3 from '../../sounds/Bodies_Strings_e3_v2_mp3.js';
 import Bodies_Woodwinds_e3_mp3 from '../../sounds/Bodies_Woodwinds_e3_mp3.js';
+import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
+import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonQueryParameters from '../SolarSystemCommonQueryParameters.js';
@@ -58,6 +60,8 @@ export default class BodyNode extends ShadedSphereNode {
   private readonly disposeBodyNode: () => void;
 
   public readonly soundClip: SoundClip;
+  public readonly grabClip: SoundClip;
+  public readonly releaseClip: SoundClip;
 
   public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: BodyNodeOptions ) {
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
@@ -93,8 +97,21 @@ export default class BodyNode extends ShadedSphereNode {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL,
       loop: true
     } );
+
+    const dragClipOptions = {
+      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+    };
+    this.grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
+    this.releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
+
     if ( options.soundViewNode ) {
       soundManager.addSoundGenerator( this.soundClip, {
+        associatedViewNode: options.soundViewNode
+      } );
+      soundManager.addSoundGenerator( this.grabClip, {
+        associatedViewNode: options.soundViewNode
+      } );
+      soundManager.addSoundGenerator( this.releaseClip, {
         associatedViewNode: options.soundViewNode
       } );
     }
@@ -126,9 +143,11 @@ export default class BodyNode extends ShadedSphereNode {
         start: () => {
           body.clearPath();
           body.userControlledPositionProperty.value = true;
+          this.grabClip.play();
         },
         end: () => {
           body.userControlledPositionProperty.value = false;
+          this.releaseClip.play();
         }
       } ) );
     }
