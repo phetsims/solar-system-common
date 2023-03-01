@@ -3,7 +3,7 @@
 /**
  * SolarSystemCommonQueryParameters defines query parameters that are specific to this simulation.
  *
- * @author Agustin Vallejo
+ * @author Agustín Vallejo
  */
 
 import solarSystemCommon from './solarSystemCommon.js';

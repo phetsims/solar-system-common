@@ -39,6 +39,8 @@ type StringsType = {
     'unitsPower': string;
     'unitsPowerStringProperty': LinkableProperty<string>;
   };
+  'blarg': string;
+  'blargStringProperty': LinkableProperty<string>;
   'a11y': {
     'restart': string;
     'restartStringProperty': LinkableProperty<string>;

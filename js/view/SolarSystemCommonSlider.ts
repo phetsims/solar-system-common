@@ -11,7 +11,7 @@ import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js'
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Range from '../../../dot/js/Range.js';
 import Property from '../../../axon/js/Property.js';
-import Mass_Slider_Bass_Pluck_mp3 from '../../../my-solar-system/sounds/Mass_Slider_Bass_Pluck_mp3.js';
+import Mass_Slider_Bass_Pluck_mp3 from '../../sounds/Mass_Slider_Bass_Pluck_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
