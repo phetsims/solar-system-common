@@ -118,6 +118,10 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
       new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.fourthBodyColorProperty )
     ];
 
+    // Activate the first two bodies by default
+    this.availableBodies[ 0 ].isActiveProperty.value = true;
+    this.availableBodies[ 1 ].isActiveProperty.value = true;
+
     // Define the default mode the bodies will show up in
     this.defaultBodyState = this.availableBodies.map( body => body.info );
 
@@ -212,7 +216,6 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
         this.availableBodies[ i ].positionProperty.setInitialValue( bodyInfo.position );
         this.availableBodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity );
         this.availableBodies[ i ].reset();
-        this.availableBodies[ i ].preventCollision( this.bodies );
       }
       else {
         this.availableBodies[ i ].isActiveProperty.value = false;
@@ -259,6 +262,8 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     this.moreDataProperty.reset();
     this.realUnitsProperty.reset();
     this.userControlledProperty.reset();
+
+    this.startingBodyState = this.defaultBodyState;
 
     this.restart();
   }
