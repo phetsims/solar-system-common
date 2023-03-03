@@ -138,26 +138,26 @@ export default class BodyNode extends ShadedSphereNode {
       } );
 
     if ( options.draggable ) {
-      const startEnd = {
-        start: () => {
-          body.clearPath();
-          body.userControlledPositionProperty.value = true;
-          this.grabClip.play();
-        },
-        end: () => {
-          body.userControlledPositionProperty.value = false;
-          this.releaseClip.play();
-        }
+      const start = () => {
+        body.clearPath();
+        body.userControlledPositionProperty.value = true;
+        this.grabClip.play();
+      };
+      const end = () => {
+        body.userControlledPositionProperty.value = false;
+        this.releaseClip.play();
+      };
+      const map = ( point: Vector2 ) => {
+        return options.mapPosition( point, this.radius );
       };
 
       const bodyDragListener = new DragListener( {
         positionProperty: body.positionProperty,
         canStartPress: () => !body.userControlledPositionProperty.value,
-        mapPosition: point => {
-          return options.mapPosition( point, this.radius );
-        },
+        mapPosition: map,
         transform: modelViewTransformProperty,
-        ...startEnd
+        start: start,
+        end: end
       } );
       this.addInputListener( bodyDragListener );
       this.disposeEmitter.addListener( () => {
@@ -171,7 +171,8 @@ export default class BodyNode extends ShadedSphereNode {
           transform: modelViewTransformProperty.value,
           dragDelta: 8,
           shiftDragDelta: 2.5,
-          ...startEnd
+          start: start,
+          end: end
         } );
       modelViewTransformProperty.link( modelViewTransform => {
         keyboardDragListener.transform = modelViewTransform;
