@@ -172,7 +172,8 @@ export default class BodyNode extends ShadedSphereNode {
           dragDelta: 8,
           shiftDragDelta: 2.5,
           start: start,
-          end: end
+          end: end,
+          mapPosition: map
         } );
       modelViewTransformProperty.link( modelViewTransform => {
         keyboardDragListener.transform = modelViewTransform;
