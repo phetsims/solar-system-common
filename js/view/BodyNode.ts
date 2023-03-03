@@ -133,7 +133,7 @@ export default class BodyNode extends ShadedSphereNode {
       } );
 
     if ( options.draggable ) {
-      this.addInputListener( new DragListener( {
+      const bodyDragListener = new DragListener( {
         positionProperty: body.positionProperty,
         canStartPress: () => !body.userControlledPositionProperty.value,
         mapPosition: point => {
@@ -149,7 +149,11 @@ export default class BodyNode extends ShadedSphereNode {
           body.userControlledPositionProperty.value = false;
           this.releaseClip.play();
         }
-      } ) );
+      } );
+      this.addInputListener( bodyDragListener );
+      this.disposeEmitter.addListener( () => {
+        bodyDragListener.dispose();
+      } );
     }
 
     const velocityValueProperty = new DerivedProperty(
