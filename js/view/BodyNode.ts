@@ -88,7 +88,7 @@ export default class BodyNode extends ShadedSphereNode {
 
       tagName: 'div',
       focusable: true,
-      innerContent: 'Body',
+      innerContent: 'Body ' + ( body.index + 1 ),
       ariaRole: 'application'
     }, providedOptions );
 
