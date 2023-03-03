@@ -6,7 +6,7 @@
  * @author Agustín Vallejo
  */
 
-import { Color, DragListener, Node, Rectangle, RectangleOptions, Text, TextOptions } from '../../../scenery/js/imports.js';
+import { Color, DragListener, KeyboardDragListener, Node, Rectangle, RectangleOptions, Text, TextOptions } from '../../../scenery/js/imports.js';
 import Utils from '../../../dot/js/Utils.js';
 import Body from '../model/Body.js';
 import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../scenery-phet/js/ShadedSphereNode.js';
@@ -84,7 +84,12 @@ export default class BodyNode extends ShadedSphereNode {
         fill: 'white', // Not a colorProperty because it is not dynamic
         maxWidth: SolarSystemCommonConstants.MAX_WIDTH,
         font: new PhetFont( 16 )
-      }
+      },
+
+      tagName: 'div',
+      focusable: true,
+      innerContent: 'Body',
+      ariaRole: 'application'
     }, providedOptions );
 
     options.cursor = options.draggable ? 'pointer' : 'default';
@@ -133,13 +138,7 @@ export default class BodyNode extends ShadedSphereNode {
       } );
 
     if ( options.draggable ) {
-      const bodyDragListener = new DragListener( {
-        positionProperty: body.positionProperty,
-        canStartPress: () => !body.userControlledPositionProperty.value,
-        mapPosition: point => {
-          return options.mapPosition( point, this.radius );
-        },
-        transform: modelViewTransformProperty,
+      const startEnd = {
         start: () => {
           body.clearPath();
           body.userControlledPositionProperty.value = true;
@@ -149,11 +148,35 @@ export default class BodyNode extends ShadedSphereNode {
           body.userControlledPositionProperty.value = false;
           this.releaseClip.play();
         }
+      };
+
+      const bodyDragListener = new DragListener( {
+        positionProperty: body.positionProperty,
+        canStartPress: () => !body.userControlledPositionProperty.value,
+        mapPosition: point => {
+          return options.mapPosition( point, this.radius );
+        },
+        transform: modelViewTransformProperty,
+        ...startEnd
       } );
       this.addInputListener( bodyDragListener );
       this.disposeEmitter.addListener( () => {
         bodyDragListener.dispose();
       } );
+
+      const keyboardDragListener = new KeyboardDragListener(
+        {
+          positionProperty: body.positionProperty,
+          // dragBoundsProperty: dragBoundsProperty,
+          transform: modelViewTransformProperty.value,
+          dragDelta: 8,
+          shiftDragDelta: 2.5,
+          ...startEnd
+        } );
+      modelViewTransformProperty.link( modelViewTransform => {
+        keyboardDragListener.transform = modelViewTransform;
+      } );
+      this.addInputListener( keyboardDragListener );
     }
 
     const velocityValueProperty = new DerivedProperty(
