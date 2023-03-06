@@ -41,6 +41,7 @@ const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, t
         } )
       ]
     } ), {
+      accessibleName: SolarSystemCommonStrings.gridStringProperty,
       tandem: tandem.createTandem( 'gridVisibleCheckbox' )
     } ),
     new SolarSystemCommonCheckbox( model.measuringTapeVisibleProperty, new HBox( {
@@ -50,6 +51,7 @@ const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, t
         measuringTapeIcon
       ]
     } ), {
+      accessibleName: SolarSystemCommonStrings.measuringTapeStringProperty,
       tandem: tandem.createTandem( 'measuringTapeVisibleCheckbox' )
     } )
   ];

@@ -38,6 +38,7 @@ const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem
     }, {
       spacing: SPACING
     } ) ), {
+      accessibleName: SolarSystemCommonStrings.gravityForceStringProperty,
       tandem: tandem.createTandem( 'gravityForceCheckbox' )
     } ),
     // velocity checkbox
@@ -49,9 +50,11 @@ const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem
     }, {
       spacing: SPACING
     } ) ), {
+      accessibleName: SolarSystemCommonStrings.velocityStringProperty,
       tandem: tandem.createTandem( 'velocityCheckbox' )
     } ),
     new SolarSystemCommonCheckbox( model.valuesVisibleProperty, new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS ), {
+      accessibleName: SolarSystemCommonStrings.speedStringProperty,
       tandem: tandem.createTandem( 'valuesVisibleCheckbox' )
     } )
   ];
