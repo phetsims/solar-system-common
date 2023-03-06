@@ -11,7 +11,7 @@ import Multilink from '../../../axon/js/Multilink.js';
 import ScreenView, { ScreenViewOptions } from '../../../joist/js/ScreenView.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { AlignBox, HBox, Node, TextOptions, VBox } from '../../../scenery/js/imports.js';
+import { HBox, Node, TextOptions, VBox } from '../../../scenery/js/imports.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import GridNode from '../../../scenery-phet/js/GridNode.js';
@@ -66,6 +66,8 @@ class SolarSystemCommonScreenView extends ScreenView {
   // Derived from visibleBoundsProperty to keep the UI elements centered on narrow screens
   // Tracks only the vertical bounds and constrains them to layoutBounds
   protected readonly availableBoundsProperty: TReadOnlyProperty<Bounds2>;
+
+  protected readonly resetAllButton: ResetAllButton;
 
   public constructor( public readonly model: SolarSystemCommonModel, providedOptions: CommonScreenViewOptions ) {
     super( providedOptions );
@@ -184,11 +186,11 @@ class SolarSystemCommonScreenView extends ScreenView {
     } );
 
     this.timeBox = new Panel( new VBox( {
-      children: [ clockNode, timeControlNode ],
+      children: [ timeControlNode, clockNode ],
       spacing: 10
     } ), SolarSystemCommonConstants.CONTROL_PANEL_OPTIONS );
 
-    const resetAllButton = new ResetAllButton( {
+    this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
@@ -199,13 +201,9 @@ class SolarSystemCommonScreenView extends ScreenView {
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );
 
-    const resetAllButtonBox = new AlignBox( resetAllButton,
-      {
-        alignBoundsProperty: this.availableBoundsProperty,
-        margin: SolarSystemCommonConstants.MARGIN,
-        xAlign: 'right',
-        yAlign: 'bottom'
-      } );
+    this.modelViewTransformProperty.lazyLink( () => {
+      this.model.userControlledProperty.value = true;
+    } );
 
     Multilink.multilink(
       [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
@@ -214,11 +212,6 @@ class SolarSystemCommonScreenView extends ScreenView {
         measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
       }
     );
-
-    this.interfaceLayer.addChild( resetAllButtonBox );
-
-    // ResetAllButton should be last in the PDOM order
-    this.interfaceLayer.pdomOrder = [ null, resetAllButtonBox ];
   }
 }
 
