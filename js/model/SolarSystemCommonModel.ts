@@ -174,7 +174,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     } );
 
     // Visibility properties for checkboxes
-    this.pathVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
+    this.pathVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
     this.gravityVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gravityVisibleProperty' ) } );
     this.velocityVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'velocityVisibleProperty' ) } );
     this.gridVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gridVisibleProperty' ) } );
@@ -183,13 +183,13 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     this.moreDataProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'moreDataProperty' ) } );
     this.realUnitsProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'realUnitsProperty' ) } );
 
-    this.zoomLevelProperty = new NumberProperty( 2, {
-      range: new Range( 0, 4 ),
+    this.zoomLevelProperty = new NumberProperty( 4, {
+      range: new Range( 1, 6 ),
       tandem: tandem.createTandem( 'zoomLevelProperty' ),
       numberType: 'Integer'
     } );
     this.zoomProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
-      return Utils.linear( 0, 4, 0.5, 1.25, zoomLevel );
+      return Utils.linear( 1, 6, 0.25, 1.25, zoomLevel );
     } );
 
     this.pathVisibleProperty.link( visible => {

@@ -38,12 +38,12 @@
   "pattern.unitsPower": {
     "value": "{{units}}<sup>{{power}}</sup>"
   },
-  "blarg": {
-    "value": "happy"
-  },
   "a11y": {
     "restart": {
       "value": "Restart"
+    },
+    "massSlider": {
+      "value": "Mass Slider"
     }
   }
 }

@@ -16,6 +16,7 @@ import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -34,6 +35,7 @@ export default class SolarSystemCommonSlider extends HSlider {
       thumbCenterLineStroke: 'black',
       trackFillEnabled: SolarSystemCommonColors.foregroundProperty,
       trackStroke: SolarSystemCommonColors.foregroundProperty,
+      accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty,
       valueChangeSoundGeneratorOptions: {
         middleMovingUpSoundPlayer: massSliderSoundClip,
         middleMovingDownSoundPlayer: massSliderSoundClip,

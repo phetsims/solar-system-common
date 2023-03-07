@@ -88,7 +88,7 @@ class SolarSystemCommonScreenView extends ScreenView {
     this.bodySoundManager = new BodySoundManager( model );
     model.availableBodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
-        this.bodySoundManager.playBodyRemovedSound( 2 );
+        this.bodySoundManager.playBodyRemovedSound( 3 ); // Plays the collision sound instead of body index
       } );
     } );
 

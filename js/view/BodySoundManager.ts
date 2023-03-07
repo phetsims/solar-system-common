@@ -14,6 +14,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Bodies_Collide_Absorb_2_to_1_mp3 from '../../sounds/Bodies_Collide_Absorb_2_to_1_mp3.js';
 import Bodies_Collide_Absorb_3_to_2_mp3 from '../../sounds/Bodies_Collide_Absorb_3_to_2_mp3.js';
 import Bodies_Collide_Absorb_4_to_3_mp3 from '../../sounds/Bodies_Collide_Absorb_4_to_3_mp3.js';
+import Collision_Sound_mp3 from '../../sounds/Collision_Sound_mp3.js';
 import Mass_Selection_1_mp3 from '../../sounds/Mass_Selection_1_mp3.js';
 import Mass_Selection_2_mp3 from '../../sounds/Mass_Selection_2_mp3.js';
 import Mass_Selection_3_mp3 from '../../sounds/Mass_Selection_3_mp3.js';
@@ -32,10 +33,12 @@ const bodyNumberSounds = [
   Mass_Selection_4_mp3
 ];
 
-const collisionSounds = [
+// Sounds for when the bodies are reduced from the number control or collision
+const removalSounds = [
   Bodies_Collide_Absorb_2_to_1_mp3,
   Bodies_Collide_Absorb_3_to_2_mp3,
-  Bodies_Collide_Absorb_4_to_3_mp3
+  Bodies_Collide_Absorb_4_to_3_mp3,
+  Collision_Sound_mp3
 ];
 
 const metronomeSounds = [
@@ -55,7 +58,7 @@ const METRONOME = [ 7, 0, 0, 0, 0, 0 ]; // METRONOME
 export default class BodySoundManager {
   private readonly model: SolarSystemCommonModel;
   private readonly bodyNumberSoundClips: SoundClip[];
-  private readonly collisionSoundClips: SoundClip[];
+  private readonly removalSoundClips: SoundClip[];
   private readonly metronomeSoundClips: SoundClip[];
 
   public constructor( model: SolarSystemCommonModel ) {
@@ -65,8 +68,8 @@ export default class BodySoundManager {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
-    this.collisionSoundClips = collisionSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+    this.removalSoundClips = removalSounds.map( sound => new SoundClip( sound, {
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 3
     } ) );
 
     this.metronomeSoundClips = metronomeSounds.map( sound => new SoundClip( sound, {
@@ -74,7 +77,7 @@ export default class BodySoundManager {
     } ) );
 
     this.bodyNumberSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
-    this.collisionSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
+    this.removalSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
     this.metronomeSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
   }
 
@@ -83,7 +86,7 @@ export default class BodySoundManager {
   }
 
   public playBodyRemovedSound( bodyNumber: number ): void {
-    this.collisionSoundClips[ bodyNumber ].play();
+    this.removalSoundClips[ bodyNumber ].play();
   }
 
   /**
