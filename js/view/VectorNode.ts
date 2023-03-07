@@ -7,6 +7,7 @@
  */
 
 import Body from '../model/Body.js';
+import Bounds2 from '../../../dot/js/Bounds2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import ArrowNode, { ArrowNodeOptions } from '../../../scenery-phet/js/ArrowNode.js';
@@ -54,6 +55,7 @@ export default class VectorNode extends ArrowNode {
 
     Multilink.multilink( [ this.tailProperty, this.tipProperty ], ( tail, tip ) => {
       this.setTailAndTip( tail.x, tail.y, tip.x, tip.y );
+      this.localBounds = Bounds2.point( tail ).addPoint( tip ).dilated( 10 ); // must set because boundsMethod: 'none'.
     } );
   }
 
