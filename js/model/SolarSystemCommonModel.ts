@@ -176,7 +176,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     // Visibility properties for checkboxes
     this.pathVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
     this.gravityVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gravityVisibleProperty' ) } );
-    this.velocityVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'velocityVisibleProperty' ) } );
+    this.velocityVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'velocityVisibleProperty' ) } );
     this.gridVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gridVisibleProperty' ) } );
     this.measuringTapeVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'measuringTapeVisibleProperty' ) } );
     this.valuesVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'valuesVisibleProperty' ) } );
