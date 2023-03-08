@@ -252,6 +252,8 @@ export default class BodyNode extends ShadedSphereNode {
         soundManager.removeSoundGenerator( this.releaseClip );
       }
       this.soundClip.dispose();
+      this.grabClip.dispose();
+      this.releaseClip.dispose();
     };
   }
 
