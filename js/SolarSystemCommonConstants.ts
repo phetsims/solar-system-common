@@ -55,6 +55,7 @@ const SolarSystemCommonConstants = {
   },
 
   NUM_BODIES: 4,
+  BODIES_ESCAPE_DISTANCE: 500,
 
   CHECKBOX_SPACING: 7,
 

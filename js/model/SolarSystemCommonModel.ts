@@ -90,6 +90,9 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
+  // Emitted when bodies get really far from the play area
+  public readonly bodiesEscapedProperty: BooleanProperty;
+
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
     { mass: 200, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -5 ), active: true },
@@ -141,6 +144,8 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
       }
     } );
 
+    this.bodiesEscapedProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'bodiesEscapedProperty' ) } );
+
     this.availableBodies.forEach( body => {
       Multilink.lazyMultilink(
         [ body.userControlledPositionProperty, body.userControlledVelocityProperty, body.userControlledMassProperty ],
@@ -153,6 +158,11 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
           this.userControlledProperty.value = true;
         }
       );
+      body.escapedProperty.lazyLink( escaped => {
+        if ( escaped ) {
+          this.bodiesEscapedProperty.value = true;
+        }
+      } );
     } );
 
     this.loadBodyStates( this.startingBodyState );
@@ -204,7 +214,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
   /**
    * Sets the available bodies initial states according to bodiesInfo
    */
-  public loadBodyStates( bodiesInfo: BodyInfo[] ): void {
+  public loadBodyStates( bodiesInfo: BodyInfo[], preventCollision = false ): void {
     for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
       const bodyInfo = bodiesInfo[ i ];
 
@@ -216,6 +226,9 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
         this.availableBodies[ i ].positionProperty.setInitialValue( bodyInfo.position );
         this.availableBodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity );
         this.availableBodies[ i ].reset();
+        if ( preventCollision ) {
+          this.availableBodies[ i ].preventCollision( this.bodies );
+        }
       }
       else {
         this.availableBodies[ i ].isActiveProperty.value = false;
@@ -249,6 +262,25 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     this.bodyRemovedEmitter.emit();
   }
 
+  public returnEscapedBodies(): void {
+    // Create a sim state where escaped bodies go back to default state
+    // Non-escaped bodies stay the same
+    const newBodyState = this.bodies.map( body => {
+      if ( body.escapedProperty.value ) {
+        // body.escapedProperty.value = false;
+        const bodyState = this.defaultBodyState[ body.index ];
+        bodyState.active = true;
+        return bodyState;
+      }
+      else {
+        return body.info;
+      }
+    } );
+
+    this.loadBodyStates( newBodyState, true );
+    this.bodiesEscapedProperty.value = false;
+  }
+
   public reset(): void {
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeSpeedProperty.reset();
@@ -271,6 +303,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
   // Restart is for when the time controls are brought back to 0
   // Bodies move to their last modified position
   public restart(): void {
+    this.bodiesEscapedProperty.reset();
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
     this.loadBodyStates( this.startingBodyState ); // Reset the bodies

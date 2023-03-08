@@ -135,6 +135,7 @@ export default class BodyNode extends ShadedSphereNode {
       [ body.positionProperty, modelViewTransformProperty ],
       ( position, modelViewTransform ) => {
         this.translation = modelViewTransform.modelToViewPosition( position );
+        this.body.escapeDistance = SolarSystemCommonConstants.BODIES_ESCAPE_DISTANCE / modelViewTransform.modelToViewDeltaX( 1 );
       } );
 
     if ( options.draggable ) {
