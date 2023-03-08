@@ -94,9 +94,9 @@ export default class SolarSystemCommonSlider extends HBox {
       () => {
         const numberValue = valueProperty.value;
         valueProperty.value =
-          numberValue > divisionsRange.min ?
+          numberValue > divisionsRange.min + 1 ?
           numberValue - 1 :
-          numberValue;
+          range.min;
       },
       combineOptions<ArrowButtonOptions>( {
         accessibleName: SolarSystemCommonStrings.a11y.decreaseStringProperty,
