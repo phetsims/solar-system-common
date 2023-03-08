@@ -85,6 +85,17 @@ class SolarSystemCommonScreenView extends ScreenView {
     this.addChild( this.interfaceLayer );
     this.addChild( this.topLayer );
 
+    this.pdomPlayAreaNode.pdomOrder = [
+      this.bodiesLayer,
+      this.componentsLayer,
+      this.topLayer
+    ];
+
+    this.pdomControlAreaNode.pdomOrder = [
+      this.bottomLayer,
+      this.interfaceLayer
+    ];
+
     this.bodySoundManager = new BodySoundManager( model );
     model.availableBodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
