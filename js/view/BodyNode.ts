@@ -129,6 +129,7 @@ export default class BodyNode extends ShadedSphereNode {
         const area = Shape.circle( 0, 0, this.radius + 10 );
         this.mouseArea = area;
         this.touchArea = area;
+        this.focusHighlight = area;
       } );
 
     const positionMultilink = Multilink.multilink(
