@@ -138,6 +138,8 @@ export default class BodyNode extends ShadedSphereNode {
         this.body.escapeDistance = SolarSystemCommonConstants.BODIES_ESCAPE_DISTANCE / modelViewTransform.modelToViewDeltaX( 1 );
       } );
 
+    let keyboardDragListener: KeyboardDragListener;
+
     if ( options.draggable ) {
       const start = () => {
         body.clearPath();
@@ -165,7 +167,7 @@ export default class BodyNode extends ShadedSphereNode {
         bodyDragListener.dispose();
       } );
 
-      const keyboardDragListener = new KeyboardDragListener(
+      keyboardDragListener = new KeyboardDragListener(
         {
           positionProperty: body.positionProperty,
           // dragBoundsProperty: dragBoundsProperty,
@@ -230,6 +232,7 @@ export default class BodyNode extends ShadedSphereNode {
 
 
     this.disposeBodyNode = () => {
+      keyboardDragListener && keyboardDragListener.dispose();
       positionMultilink.dispose();
       radiusMultilink.dispose();
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
