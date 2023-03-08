@@ -59,7 +59,11 @@ export default class DraggableVectorNode extends VectorNode {
     const grabArea = new Path( circle, {
       lineWidth: 3,
       stroke: Color.lightGray,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      tagName: 'div',
+      focusable: true,
+      innerContent: 'Velocity Body ' + ( body.index + 1 ),
+      ariaRole: 'application'
     } );
 
     const text = new Text( labelText, {
