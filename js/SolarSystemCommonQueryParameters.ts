@@ -13,7 +13,7 @@ const SolarSystemCommonQueryParameters = QueryStringMachine.getAll( {
   // Boolean that controls if the cueing arrow node is visible or not
   cueingArrows: {
     type: 'boolean',
-    defaultValue: true
+    defaultValue: false
   }
 } );
 

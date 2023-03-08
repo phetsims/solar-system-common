@@ -18,7 +18,6 @@ import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import Property from '../../../axon/js/Property.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { BodyInfo } from './SolarSystemCommonModel.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 
 class Body {
@@ -38,7 +37,6 @@ class Body {
 
   // Emits when the body goes off-screen
   public readonly escapedProperty = new BooleanProperty( false );
-  public escapeDistance = SolarSystemCommonConstants.BODIES_ESCAPE_DISTANCE;
 
   // User modified properties
   public readonly userControlledPositionProperty = new BooleanProperty( false );

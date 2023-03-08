@@ -145,6 +145,10 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     } );
 
     this.bodiesEscapedProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'bodiesEscapedProperty' ) } );
+    Multilink.multilinkAny( this.availableBodies.map( body => body.escapedProperty ), () => {
+      const escapedBodies = this.bodies.filter( body => body.escapedProperty.value );
+      this.bodiesEscapedProperty.value = escapedBodies.length > 0;
+    } );
 
     this.availableBodies.forEach( body => {
       Multilink.lazyMultilink(
@@ -158,11 +162,6 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
           this.userControlledProperty.value = true;
         }
       );
-      body.escapedProperty.lazyLink( escaped => {
-        if ( escaped ) {
-          this.bodiesEscapedProperty.value = true;
-        }
-      } );
     } );
 
     this.loadBodyStates( this.startingBodyState );
@@ -267,9 +266,10 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     // Non-escaped bodies stay the same
     const newBodyState = this.bodies.map( body => {
       if ( body.escapedProperty.value ) {
-        // body.escapedProperty.value = false;
+        body.escapedProperty.value = false;
         const bodyState = this.defaultBodyState[ body.index ];
         bodyState.active = true;
+        bodyState.mass = body.massProperty.value;
         return bodyState;
       }
       else {
@@ -277,6 +277,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
       }
     } );
 
+    this.isPlayingProperty.value = false; // Pause the sim
     this.loadBodyStates( newBodyState, true );
     this.bodiesEscapedProperty.value = false;
   }
