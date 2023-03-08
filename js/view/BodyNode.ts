@@ -140,6 +140,9 @@ export default class BodyNode extends ShadedSphereNode {
         this.body.escapedProperty.value = body.positionProperty.value.magnitude > options.mapPosition( body.positionProperty.value, this.radius ).magnitude;
       } );
 
+    let keyboardDragListener: KeyboardDragListener;
+    let dragMVTListener: ( mvt: ModelViewTransform2 ) => void;
+
     if ( options.draggable ) {
       const start = () => {
         body.clearPath();
@@ -167,10 +170,10 @@ export default class BodyNode extends ShadedSphereNode {
         bodyDragListener.dispose();
       } );
 
-      const keyboardDragListener = new KeyboardDragListener(
+      keyboardDragListener = new KeyboardDragListener(
         {
           positionProperty: body.positionProperty,
-          // dragBoundsProperty: dragBoundsProperty,
+          // dragBoundsProperty: dragBoundsProperty, //REVIEW: Why commented out?
           transform: modelViewTransformProperty.value,
           dragDelta: 8,
           shiftDragDelta: 2.5,
@@ -178,9 +181,10 @@ export default class BodyNode extends ShadedSphereNode {
           end: end,
           mapPosition: map
         } );
-      modelViewTransformProperty.link( modelViewTransform => {
+      dragMVTListener = modelViewTransform => {
         keyboardDragListener.transform = modelViewTransform;
-      } );
+      };
+      modelViewTransformProperty.link( dragMVTListener );
       this.addInputListener( keyboardDragListener );
     }
 
@@ -232,6 +236,8 @@ export default class BodyNode extends ShadedSphereNode {
 
 
     this.disposeBodyNode = () => {
+      keyboardDragListener && keyboardDragListener.dispose();
+      dragMVTListener && modelViewTransformProperty.unlink( dragMVTListener );
       positionMultilink.dispose();
       radiusMultilink.dispose();
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
