@@ -44,6 +44,12 @@
     },
     "massSlider": {
       "value": "Mass Slider"
+    },
+    "increase": {
+      "value": "Increase"
+    },
+    "decrease": {
+      "value": "Decrease"
     }
   }
 }

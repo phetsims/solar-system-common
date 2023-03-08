@@ -44,6 +44,10 @@ type StringsType = {
     'restartStringProperty': LinkableProperty<string>;
     'massSlider': string;
     'massSliderStringProperty': LinkableProperty<string>;
+    'increase': string;
+    'increaseStringProperty': LinkableProperty<string>;
+    'decrease': string;
+    'decreaseStringProperty': LinkableProperty<string>;
   }
 };
 
