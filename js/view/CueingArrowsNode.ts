@@ -50,6 +50,9 @@ export default class CueingArrowsNode extends Path {
     super( createArrowsShape( options.bodyRadius, options.length ), options );
 
     this.length = options.length;
+
+    //REVIEW: Why is this being set? Shouldn't the rotation option (that is currently passed to the super) be sufficient?
+    //REVIEW: I believe this can be removed
     this.rotation = options.rotation;
 
     const updateTouchArea = () => {
@@ -57,6 +60,7 @@ export default class CueingArrowsNode extends Path {
       this.mouseArea = this.localBounds.dilated( 3 );
     };
     //REVIEW: This depends on the localBounds, so it should link to the localBoundsProperty instead
+    //REVIEW: THEN, in the link, you can use localBounds as a parameter instead of having to grab `this.localBounds`
     this.boundsProperty.link( updateTouchArea );
 
     //REVIEW: Don't need/want a disposal of the updateTouchArea, since they have the same lifetime
