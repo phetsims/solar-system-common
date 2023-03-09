@@ -135,6 +135,8 @@ export default class DraggableVectorNode extends VectorNode {
     this.inputEnabledProperty.link( onInputEnabled );
 
     this.disposeDraggableVectorNode = () => {
+      text.dispose();
+
       this.inputEnabledProperty.unlink( onInputEnabled );
       dragListener.dispose();
     };
