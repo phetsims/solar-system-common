@@ -91,6 +91,8 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
   // Emitted when bodies get really far from the play area
+  //REVIEW: Terminology for "emitted" is for emitters. Should we have an emitter here? Or is a Property needed and we
+  //REVIEW: could reword things?
   public readonly bodiesEscapedProperty: BooleanProperty;
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.

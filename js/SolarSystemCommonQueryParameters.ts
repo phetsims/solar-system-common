@@ -14,6 +14,7 @@ const SolarSystemCommonQueryParameters = QueryStringMachine.getAll( {
   cueingArrows: {
     type: 'boolean',
     defaultValue: false
+    //REVIEW: Is this public or not? It should be noted as such in the schema (see QueryStringMachine docs)
   }
 } );
 
