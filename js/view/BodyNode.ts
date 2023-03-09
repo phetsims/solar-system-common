@@ -225,11 +225,12 @@ export default class BodyNode extends ShadedSphereNode {
 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
+    const cueingVisibleProperty = CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.userControlledProperty );
     const cueingArrowsNode = new CueingArrowsNode(
       {
         bodyRadius: this.radius,
         fill: options.mainColor,
-        visibleProperty: CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.userControlledProperty )
+        visibleProperty: cueingVisibleProperty
       } );
 
     if ( SolarSystemCommonQueryParameters.cueingArrows ) {
@@ -239,6 +240,7 @@ export default class BodyNode extends ShadedSphereNode {
 
     this.disposeBodyNode = () => {
       valueContainer.dispose(); // Because we provide the visibleProperty
+      cueingVisibleProperty.dispose();
       keyboardDragListener && keyboardDragListener.dispose();
       dragMVTListener && modelViewTransformProperty.unlink( dragMVTListener );
       positionMultilink.dispose();
