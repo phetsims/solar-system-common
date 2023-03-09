@@ -211,11 +211,12 @@ export default class BodyNode extends ShadedSphereNode {
     } );
 
     // Value Container
-    this.addChild( new Node( {
+    const valueContainer = new Node( {
       children: [ valueBackgroundNode, valueNode ],
       visibleProperty: options.valuesVisibleProperty,
       center: new Vector2( 0, 30 )
-    } ) );
+    } );
+    this.addChild( valueContainer );
 
     const bodyCollisionListener = () => {
       this.interruptSubtreeInput();
@@ -237,6 +238,7 @@ export default class BodyNode extends ShadedSphereNode {
 
 
     this.disposeBodyNode = () => {
+      valueContainer.dispose(); // Because we provide the visibleProperty
       keyboardDragListener && keyboardDragListener.dispose();
       dragMVTListener && modelViewTransformProperty.unlink( dragMVTListener );
       positionMultilink.dispose();
