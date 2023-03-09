@@ -64,7 +64,8 @@ export default class SolarSystemCommonSlider extends HBox {
       baseColor: 'white',
       stroke: 'black',
       lineWidth: 1,
-      scale: 0.8
+      scale: 0.8,
+      touchAreaYDilation: 2.5
     };
 
     // increment button

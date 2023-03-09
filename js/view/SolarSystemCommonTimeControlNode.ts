@@ -66,7 +66,8 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         },
         stepForwardButtonOptions: {
           radius: STEP_BUTTON_RADIUS,
-          listener: providedOptions.stepForwardListener
+          listener: providedOptions.stepForwardListener,
+          touchAreaDilation: 2
         }
       },
       buttonGroupXSpacing: 20,
@@ -86,6 +87,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         time => time !== 0
       ),
       radius: STEP_BUTTON_RADIUS,
+      touchAreaDilation: 2,
       xMargin: 9.5,
       yMargin: 9.5,
       listener: () => model.restart(),
