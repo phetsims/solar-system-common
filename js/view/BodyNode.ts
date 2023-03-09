@@ -142,6 +142,8 @@ export default class BodyNode extends ShadedSphereNode {
       } );
 
     let keyboardDragListener: KeyboardDragListener;
+
+    //REVIEW: Consider a rename for this. I made this name hastily
     let dragMVTListener: ( mvt: ModelViewTransform2 ) => void;
 
     if ( options.draggable ) {
