@@ -15,6 +15,8 @@ const SolarSystemCommonConstants = {
   MARGIN: 15,
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
+
+  //REVIEW: maximum width for.... what? Should be documented, and possibly renamed to something more informative
   MAX_WIDTH: 200,
 
   CONTROL_PANEL_OPTIONS: {
@@ -50,6 +52,8 @@ const SolarSystemCommonConstants = {
     font: new PhetFont( { size: 18, weight: 'bold' } ),
     fill: SolarSystemCommonColors.foregroundProperty
   },
+
+  //REVIEW: Why not GRID_SPACING? I don't see any point of nesting here
   GRID: {
     spacing: 100
   },

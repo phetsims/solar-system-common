@@ -27,6 +27,7 @@ type CueingArrowsNodeOptions = SelfOptions &
 export default class CueingArrowsNode extends Path {
 
   // length of the arrows, from tip to tip
+  //REVIEW: We don't use this field anywhere but the constructor. Get rid of this field (won't even need a local variable)
   private readonly length: number;
 
   private readonly disposeCueingArrowsNode: () => void;
@@ -55,8 +56,11 @@ export default class CueingArrowsNode extends Path {
       this.touchArea = this.localBounds.dilated( 5 );
       this.mouseArea = this.localBounds.dilated( 3 );
     };
+    //REVIEW: This depends on the localBounds, so it should link to the localBoundsProperty instead
     this.boundsProperty.link( updateTouchArea );
 
+    //REVIEW: Don't need/want a disposal of the updateTouchArea, since they have the same lifetime
+    //REVIEW: I'd just inline the updateTouchArea function into the link
     this.disposeCueingArrowsNode = () => {
       this.boundsProperty.unlink( updateTouchArea );
     };
@@ -67,6 +71,8 @@ export default class CueingArrowsNode extends Path {
     this.disposeCueingArrowsNode();
   }
 
+  //REVIEW: Only one usage. See notes at the usage for inlining and simplifying.
+  //REVIEW: I don't see a point of having this function here, and it's a ton of TypeScript verbiage.
   public static createVisibleProperty( inputEnabledProperty: TReadOnlyProperty<boolean>,
                                        wasDraggedProperty: TReadOnlyProperty<boolean> ): TReadOnlyProperty<boolean> {
     return new DerivedProperty(
@@ -76,6 +82,8 @@ export default class CueingArrowsNode extends Path {
   }
 }
 
+//REVIEW: This looks somewhat copied from CueingArrowsNode in geometric-optics. Can we factor out cue arrow shape
+//REVIEW: creation to somewhere in common code, instead of copying?
 const ARROW_SHAPE_OPTIONS = {
   doubleHead: false,
   headWidth: 12,

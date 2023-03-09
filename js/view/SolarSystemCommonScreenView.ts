@@ -59,6 +59,7 @@ class SolarSystemCommonScreenView extends ScreenView {
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
 
   // View position of where the geometrical center of the orbit is located
+  //REVIEW: Somewhat surprised this isn't in the model, but I'm ok with it here. Were both locations considered?
   protected readonly orbitalCenterProperty: Property<Vector2>;
 
   protected readonly modelViewTransformProperty: ReadOnlyProperty<ModelViewTransform2>;
@@ -186,7 +187,7 @@ class SolarSystemCommonScreenView extends ScreenView {
         } ),
         new TextPushButton( SolarSystemCommonStrings.clearStringProperty, {
           font: new PhetFont( 16 ),
-          listener: () => { model.timeProperty.reset(); },
+          listener: () => { model.timeProperty.reset(); }, //REVIEW: don't need the braces around this
           maxTextWidth: 65,
           tandem: providedOptions.tandem.createTandem( 'clearButton' ),
           touchAreaXDilation: 10,
