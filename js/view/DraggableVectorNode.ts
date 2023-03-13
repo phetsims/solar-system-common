@@ -51,19 +51,21 @@ export default class DraggableVectorNode extends VectorNode {
       vectorProperty,
       scale,
       options
-      );
+    );
+
+    const circleRadius = 18;
 
     // a circle with text (a character) in the center, to help indicate what it represents
     // ("v" for velocity in this sim)
-    const circle = Shape.circle( 0, 0, 18 );
-    const grabArea = new Path( circle, {
+    const grabArea = new Path( Shape.circle( 0, 0, circleRadius ), {
       lineWidth: 3,
       stroke: Color.lightGray,
       cursor: 'pointer',
       tagName: 'div',
       focusable: true,
       innerContent: 'Velocity Body ' + ( body.index + 1 ),
-      ariaRole: 'application'
+      ariaRole: 'application',
+      focusHighlight: Shape.circle( 0, 0, circleRadius * 1.2 ) // 20% dilation
     } );
 
     const text = new Text( labelText, {
