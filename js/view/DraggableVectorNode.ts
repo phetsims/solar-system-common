@@ -10,7 +10,7 @@
 
 import { Shape } from '../../../kite/js/imports.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Color, DragListener, Path, PressListenerEvent, Text } from '../../../scenery/js/imports.js';
+import { Color, DragListener, Path, Text } from '../../../scenery/js/imports.js';
 import VectorNode, { VectorNodeOptions } from './VectorNode.js';
 import Body from '../model/Body.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -18,9 +18,12 @@ import Vector2 from '../../../dot/js/Vector2.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import Vector2Property from '../../../dot/js/Vector2Property.js';
+import TProperty from '../../../axon/js/TProperty.js';
 
 type SelfOptions = {
-  zeroAllowed?: boolean;
+  snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
+  minimumMagnitude?: number; // The minimum magnitude of the vector
   maxMagnitudeProperty?: TReadOnlyProperty<number> | null;
 };
 
@@ -34,13 +37,14 @@ export default class DraggableVectorNode extends VectorNode {
     body: Body,
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     visibleProperty: TReadOnlyProperty<boolean>,
-    vectorProperty: TReadOnlyProperty<Vector2>,
+    vectorProperty: TProperty<Vector2>,
     scale: number,
     labelText: TReadOnlyProperty<string>,
     providedOptions?: DraggableVectorNodeOptions ) {
 
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
-      zeroAllowed: true,
+      snapToZero: true,
+      minimumMagnitude: 10,
       maxMagnitudeProperty: null
     }, providedOptions );
 
@@ -81,43 +85,33 @@ export default class DraggableVectorNode extends VectorNode {
     this.addChild( grabArea );
     this.addChild( text );
 
-    // The velocity vector is rooted on the object, so we manage all of its drags by deltas.
-    let previousPoint: Vector2 | null = null;
-    let previousValue: Vector2 | null = null;
+    // This represents the model coordinates of where the 'V' circle appears
+    const vectorPositionProperty = new Vector2Property( vectorProperty.value );
+    vectorPositionProperty.link( vectorPosition => {
+      const newVelocity = vectorPosition.subtract( body.positionProperty.value );
+      if ( newVelocity.magnitude < options.minimumMagnitude ) {
+        if ( options.snapToZero ) {
+          vectorProperty.value = new Vector2( 0, 0 );
+        }
+        else {
+          vectorProperty.value = newVelocity.withMagnitude( options.minimumMagnitude );
+        }
+      }
+      else if ( options.maxMagnitudeProperty && newVelocity.magnitude > options.maxMagnitudeProperty.value ) {
+        vectorProperty.value = newVelocity.withMagnitude( options.maxMagnitudeProperty.value );
+      }
+      else {
+        vectorProperty.value = newVelocity;
+      }
+    } );
 
     // Add the drag handler
     const dragListener = new DragListener( {
-      //REVIEW: See if dragListener can be improved (with positionProperty)
-      //REVIEW: NOTE that the transform for the DragListener needs to include the scale
+      transform: transformProperty,
+      positionProperty: vectorPositionProperty,
       canStartPress: () => !body.userControlledVelocityProperty.value,
-      start: ( event: PressListenerEvent ) => {
-        previousPoint = transformProperty.value.viewToModelPosition( this.globalToParentPoint( event.pointer.point ) ).timesScalar( 1 / scale );
-        previousValue = body.velocityProperty.get();
+      start: () => {
         body.userControlledVelocityProperty.value = true;
-      },
-      drag: ( event: PressListenerEvent ) => {
-
-        const currentPoint = transformProperty.value.viewToModelPosition( this.globalToParentPoint( event.pointer.point ) ).timesScalar( 1 / scale );
-        if ( previousPoint ) {
-          const delta = currentPoint.minus( previousPoint );
-
-          const proposedVelocity = previousValue!.plus( delta );
-          const viewVector = transformProperty.value.modelToViewDelta( proposedVelocity.times( scale ) );
-          if ( viewVector.magnitude < 10 ) {
-            if ( options.zeroAllowed ) {
-              proposedVelocity.setXY( 0, 0 );
-              body.velocityProperty.value = proposedVelocity;
-            }
-          }
-          else if ( options.maxMagnitudeProperty && proposedVelocity.magnitude > options.maxMagnitudeProperty.value ) {
-            const maxMagnitude = options.maxMagnitudeProperty.value;
-            const unit = proposedVelocity.normalized();
-            body.velocityProperty.value = unit.times( maxMagnitude );
-          }
-          else {
-            body.velocityProperty.value = proposedVelocity;
-          }
-        }
       },
       end: () => {
         body.userControlledVelocityProperty.value = false;
@@ -141,6 +135,7 @@ export default class DraggableVectorNode extends VectorNode {
 
       this.inputEnabledProperty.unlink( onInputEnabled );
       dragListener.dispose();
+      vectorPositionProperty.dispose();
     };
   }
 
