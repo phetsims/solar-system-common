@@ -21,6 +21,8 @@ type StringsType = {
   'VStringProperty': LinkableProperty<string>;
   'clear': string;
   'clearStringProperty': LinkableProperty<string>;
+  'path': string;
+  'pathStringProperty': LinkableProperty<string>;
   'speed': string;
   'speedStringProperty': LinkableProperty<string>;
   'units': {

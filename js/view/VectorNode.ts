@@ -99,7 +99,6 @@ export default class VectorNode extends ArrowNode {
         //     vector = vector.times( 0.05 );
         //   }
         // }
-        vector = vector.times( 0.05 );
         const finalPosition = transform.modelToViewDelta( vector.times( scale ) ).plus( tail );
         oversizeText.center = finalPosition;
         return finalPosition;
