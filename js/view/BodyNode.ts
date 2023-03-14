@@ -177,17 +177,13 @@ export default class BodyNode extends ShadedSphereNode {
         {
           positionProperty: body.positionProperty,
           // dragBoundsProperty: dragBoundsProperty, //REVIEW: Why commented out?
-          transform: modelViewTransformProperty.value,
+          transform: modelViewTransformProperty,
           dragDelta: 8,
           shiftDragDelta: 2.5,
           start: start,
           end: end,
           mapPosition: map
         } );
-      dragMVTListener = modelViewTransform => {
-        keyboardDragListener.transform = modelViewTransform;
-      };
-      modelViewTransformProperty.link( dragMVTListener );
       this.addInputListener( keyboardDragListener );
     }
 
@@ -247,7 +243,6 @@ export default class BodyNode extends ShadedSphereNode {
       valueContainer.dispose(); // Because we provide the visibleProperty
       cueingVisibleProperty.dispose();
       keyboardDragListener && keyboardDragListener.dispose();
-      dragMVTListener && modelViewTransformProperty.unlink( dragMVTListener );
       positionMultilink.dispose();
       radiusMultilink.dispose();
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
