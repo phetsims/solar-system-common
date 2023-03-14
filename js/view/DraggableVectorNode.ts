@@ -135,10 +135,9 @@ export default class DraggableVectorNode extends VectorNode {
         start: start,
         end: end
       } );
-    const dragMVTListener = modelViewTransform => {
+    transformProperty.link( modelViewTransform => {
       keyboardDragListener.transform = modelViewTransform;
-    };
-    transformProperty.link( dragMVTListener );
+    } );
     this.addInputListener( keyboardDragListener );
 
     this.disposeEmitter.addListener( () => {
