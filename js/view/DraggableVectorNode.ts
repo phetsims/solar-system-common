@@ -138,6 +138,7 @@ export default class DraggableVectorNode extends VectorNode {
 
     this.disposeEmitter.addListener( () => {
       dragListener.dispose();
+      keyboardDragListener.dispose();
       vectorPositionProperty.dispose();
     } );
 

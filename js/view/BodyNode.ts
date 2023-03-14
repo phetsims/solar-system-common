@@ -166,9 +166,6 @@ export default class BodyNode extends ShadedSphereNode {
         end: end
       } );
       this.addInputListener( bodyDragListener );
-      this.disposeEmitter.addListener( () => {
-        bodyDragListener.dispose();
-      } );
 
       keyboardDragListener = new KeyboardDragListener(
         {
@@ -182,6 +179,10 @@ export default class BodyNode extends ShadedSphereNode {
           mapPosition: map
         } );
       this.addInputListener( keyboardDragListener );
+      this.disposeEmitter.addListener( () => {
+        bodyDragListener.dispose();
+        keyboardDragListener.dispose();
+      } );
     }
 
     const velocityValueProperty = new DerivedProperty(
@@ -239,7 +240,6 @@ export default class BodyNode extends ShadedSphereNode {
     this.disposeBodyNode = () => {
       valueContainer.dispose(); // Because we provide the visibleProperty
       cueingVisibleProperty.dispose();
-      keyboardDragListener && keyboardDragListener.dispose();
       positionMultilink.dispose();
       radiusMultilink.dispose();
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
