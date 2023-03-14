@@ -10,7 +10,7 @@
 
 import { Shape } from '../../../kite/js/imports.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Color, DragListener, Path, Text } from '../../../scenery/js/imports.js';
+import { Color, DragListener, KeyboardDragListener, Path, Text } from '../../../scenery/js/imports.js';
 import VectorNode, { VectorNodeOptions } from './VectorNode.js';
 import Body from '../model/Body.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -38,6 +38,7 @@ export default class DraggableVectorNode extends VectorNode {
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     visibleProperty: TReadOnlyProperty<boolean>,
     vectorProperty: TProperty<Vector2>,
+    basePositionProperty: TReadOnlyProperty<Vector2>,
     scale: number,
     labelText: TReadOnlyProperty<string>,
     providedOptions?: DraggableVectorNodeOptions ) {
@@ -86,9 +87,9 @@ export default class DraggableVectorNode extends VectorNode {
     this.addChild( text );
 
     // This represents the model coordinates of where the 'V' circle appears
-    const vectorPositionProperty = new Vector2Property( vectorProperty.value );
+    const vectorPositionProperty = new Vector2Property( vectorProperty.value.plus( basePositionProperty.value ) );
     vectorPositionProperty.link( vectorPosition => {
-      const newVelocity = vectorPosition.subtract( body.positionProperty.value );
+      const newVelocity = vectorPosition.subtract( basePositionProperty.value );
       if ( newVelocity.magnitude < options.minimumMagnitude ) {
         if ( options.snapToZero ) {
           vectorProperty.value = new Vector2( 0, 0 );
@@ -106,22 +107,45 @@ export default class DraggableVectorNode extends VectorNode {
     } );
 
     // Add the drag handler
+    const start = () => {
+      body.userControlledVelocityProperty.value = true;
+    };
+    const end = () => {
+      body.userControlledVelocityProperty.value = false;
+    };
+
     const dragListener = new DragListener( {
       transform: transformProperty,
       positionProperty: vectorPositionProperty,
       canStartPress: () => !body.userControlledVelocityProperty.value,
-      start: () => {
-        body.userControlledVelocityProperty.value = true;
-      },
-      end: () => {
-        body.userControlledVelocityProperty.value = false;
-      }
+      start: start,
+      end: end
     } );
     grabArea.addInputListener( dragListener );
-
     // move behind the geometry created by the superclass
     grabArea.moveToBack();
     text.moveToBack();
+
+    const keyboardDragListener = new KeyboardDragListener(
+      {
+        positionProperty: vectorProperty,
+        transform: transformProperty.value,
+        dragDelta: 8,
+        shiftDragDelta: 2.5,
+        start: start,
+        end: end
+      } );
+    const dragMVTListener = modelViewTransform => {
+      keyboardDragListener.transform = modelViewTransform;
+    };
+    transformProperty.link( dragMVTListener );
+    this.addInputListener( keyboardDragListener );
+
+    this.disposeEmitter.addListener( () => {
+      dragListener.dispose();
+      vectorPositionProperty.dispose();
+    } );
+
 
     // For PhET-iO, when the node does not support input, don't show the drag circle
     const onInputEnabled = ( inputEnabled: boolean ) => {
@@ -134,8 +158,6 @@ export default class DraggableVectorNode extends VectorNode {
       text.dispose();
 
       this.inputEnabledProperty.unlink( onInputEnabled );
-      dragListener.dispose();
-      vectorPositionProperty.dispose();
     };
   }
 

@@ -134,6 +134,7 @@ class SolarSystemCommonScreenView extends ScreenView {
         this.modelViewTransformProperty,
         model.velocityVisibleProperty,
         body.velocityProperty,
+        body.positionProperty,
         1,
         SolarSystemCommonStrings.VStringProperty,
         combineOptions<DraggableVectorNodeOptions>( { fill: PhetColorScheme.VELOCITY }, options )
