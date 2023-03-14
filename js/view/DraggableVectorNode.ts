@@ -126,15 +126,14 @@ export default class DraggableVectorNode extends VectorNode {
     grabArea.moveToBack();
     text.moveToBack();
 
-    const keyboardDragListener = new KeyboardDragListener(
-      {
-        positionProperty: vectorProperty,
-        transform: transformProperty.value,
-        dragDelta: 8,
-        shiftDragDelta: 2.5,
-        start: start,
-        end: end
-      } );
+    const keyboardDragListener = new KeyboardDragListener( {
+      positionProperty: vectorProperty,
+      transform: transformProperty.value,
+      dragDelta: 8,
+      shiftDragDelta: 2.5,
+      start: start,
+      end: end
+    } );
     transformProperty.link( modelViewTransform => {
       keyboardDragListener.transform = modelViewTransform;
     } );
