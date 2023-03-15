@@ -170,7 +170,6 @@ export default class BodyNode extends ShadedSphereNode {
       keyboardDragListener = new KeyboardDragListener(
         {
           positionProperty: body.positionProperty,
-          // dragBoundsProperty: dragBoundsProperty, //REVIEW: Why commented out?
           transform: modelViewTransformProperty,
           dragVelocity: 450,
           shiftDragVelocity: 200,
