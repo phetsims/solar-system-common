@@ -90,10 +90,8 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
-  // Emitted when bodies get really far from the play area
-  //REVIEW: Terminology for "emitted" is for emitters. Should we have an emitter here? Or is a Property needed and we
-  //REVIEW: could reword things?
-  public readonly bodiesEscapedProperty: BooleanProperty;
+  // Indicates if any body is far from the play area
+  public readonly isAnyBodyEscapedProperty: ReadOnlyProperty<boolean>;
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
@@ -146,11 +144,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
       }
     } );
 
-    this.bodiesEscapedProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'bodiesEscapedProperty' ) } );
-    Multilink.multilinkAny( this.availableBodies.map( body => body.escapedProperty ), () => {
-      const escapedBodies = this.bodies.filter( body => body.escapedProperty.value );
-      this.bodiesEscapedProperty.value = escapedBodies.length > 0;
-    } );
+    this.isAnyBodyEscapedProperty = DerivedProperty.or( this.bodies.map( body => body.escapedProperty ) );
 
     this.availableBodies.forEach( body => {
       Multilink.lazyMultilink(
@@ -281,7 +275,6 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
 
     this.isPlayingProperty.value = false; // Pause the sim
     this.loadBodyStates( newBodyState, true );
-    this.bodiesEscapedProperty.value = false;
   }
 
   public reset(): void {
@@ -306,7 +299,6 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
   // Restart is for when the time controls are brought back to 0
   // Bodies move to their last modified position
   public restart(): void {
-    this.bodiesEscapedProperty.reset();
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
     this.loadBodyStates( this.startingBodyState ); // Reset the bodies
