@@ -88,7 +88,7 @@ export default class DraggableVectorNode extends VectorNode {
 
     // This represents the model coordinates of where the 'V' circle appears
     const vectorPositionProperty = new Vector2Property( vectorProperty.value.plus( basePositionProperty.value ) );
-    vectorPositionProperty.link( vectorPosition => {
+    vectorPositionProperty.lazyLink( vectorPosition => {
       const newVelocity = vectorPosition.subtract( basePositionProperty.value );
       if ( newVelocity.magnitude < options.minimumMagnitude ) {
         if ( options.snapToZero ) {
