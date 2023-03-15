@@ -53,10 +53,7 @@ const SolarSystemCommonConstants = {
     fill: SolarSystemCommonColors.foregroundProperty
   },
 
-  //REVIEW: Why not GRID_SPACING? I don't see any point of nesting here
-  GRID: {
-    spacing: 100
-  },
+  GRID_SPACING: 100,
 
   NUM_BODIES: 4,
 

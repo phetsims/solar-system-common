@@ -59,7 +59,7 @@ class SolarSystemCommonScreenView extends ScreenView {
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
 
   // View position of where the geometrical center of the orbit is located
-  //REVIEW: Somewhat surprised this isn't in the model, but I'm ok with it here. Were both locations considered?
+  // Used only on Keplers Laws but is defined here because of the Model View Transform
   protected readonly orbitalCenterProperty: Property<Vector2>;
 
   protected readonly modelViewTransformProperty: ReadOnlyProperty<ModelViewTransform2>;
@@ -112,15 +112,15 @@ class SolarSystemCommonScreenView extends ScreenView {
         return ModelViewTransform2.createSinglePointScaleInvertedYMapping(
           Vector2.ZERO,
           new Vector2(
-            orbitalCenter.x - SolarSystemCommonConstants.GRID.spacing,
-            orbitalCenter.y - SolarSystemCommonConstants.GRID.spacing ),
+            orbitalCenter.x - SolarSystemCommonConstants.GRID_SPACING,
+            orbitalCenter.y - SolarSystemCommonConstants.GRID_SPACING ),
           zoom );
       } );
 
     // Add the node for the overlay grid, setting its visibility based on the model.showGridProperty
     this.interfaceLayer.addChild( new GridNode(
       this.modelViewTransformProperty,
-      SolarSystemCommonConstants.GRID.spacing,
+      SolarSystemCommonConstants.GRID_SPACING,
       Vector2.ZERO,
       28,
       {
@@ -188,7 +188,7 @@ class SolarSystemCommonScreenView extends ScreenView {
         } ),
         new TextPushButton( SolarSystemCommonStrings.clearStringProperty, {
           font: new PhetFont( 16 ),
-          listener: () => { model.timeProperty.reset(); }, //REVIEW: don't need the braces around this
+          listener: () => model.timeProperty.reset(),
           maxTextWidth: 65,
           tandem: providedOptions.tandem.createTandem( 'clearButton' ),
           touchAreaXDilation: 10,
