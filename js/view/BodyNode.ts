@@ -221,21 +221,16 @@ export default class BodyNode extends ShadedSphereNode {
 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
-    //REVIEW: This createVisibleProperty is only used here, AND we are creating a useless BooleanProperty for it.
-    //REVIEW: please inline and simplify as a DerivedProperty here, as we only need to base it off of the
-    //REVIEW: userControlledProperty!
-    const cueingVisibleProperty = CueingArrowsNode.createVisibleProperty( new BooleanProperty( options.draggable ), this.body.userControlledProperty );
-    const cueingArrowsNode = new CueingArrowsNode(
-      {
-        bodyRadius: this.radius,
-        fill: options.mainColor,
-        visibleProperty: cueingVisibleProperty
-      } );
+    const cueingVisibleProperty = new DerivedProperty( [ this.body.userControlledProperty ], wasDragged => ( options.draggable && !wasDragged ) );
+    const cueingArrowsNode = new CueingArrowsNode( {
+      bodyRadius: this.radius,
+      fill: options.mainColor,
+      visibleProperty: cueingVisibleProperty
+    } );
 
     if ( SolarSystemCommonQueryParameters.cueingArrows ) {
       this.addChild( cueingArrowsNode );
     }
-
 
     this.disposeBodyNode = () => {
       valueContainer.dispose(); // Because we provide the visibleProperty

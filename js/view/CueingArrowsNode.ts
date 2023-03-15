@@ -12,8 +12,6 @@ import { Shape } from '../../../kite/js/imports.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import PickOptional from '../../../phet-core/js/types/PickOptional.js';
 import solarSystemCommon from '../solarSystemCommon.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   length?: number;
@@ -25,12 +23,6 @@ type CueingArrowsNodeOptions = SelfOptions &
   NodeTranslationOptions;
 
 export default class CueingArrowsNode extends Path {
-
-  // length of the arrows, from tip to tip
-  //REVIEW: We don't use this field anywhere but the constructor. Get rid of this field (won't even need a local variable)
-  private readonly length: number;
-
-  private readonly disposeCueingArrowsNode: () => void;
 
   public constructor( providedOptions?: CueingArrowsNodeOptions ) {
 
@@ -49,40 +41,10 @@ export default class CueingArrowsNode extends Path {
 
     super( createArrowsShape( options.bodyRadius, options.length ), options );
 
-    this.length = options.length;
-
-    //REVIEW: Why is this being set? Shouldn't the rotation option (that is currently passed to the super) be sufficient?
-    //REVIEW: I believe this can be removed
-    this.rotation = options.rotation;
-
-    const updateTouchArea = () => {
-      this.touchArea = this.localBounds.dilated( 5 );
-      this.mouseArea = this.localBounds.dilated( 3 );
-    };
-    //REVIEW: This depends on the localBounds, so it should link to the localBoundsProperty instead
-    //REVIEW: THEN, in the link, you can use localBounds as a parameter instead of having to grab `this.localBounds`
-    this.boundsProperty.link( updateTouchArea );
-
-    //REVIEW: Don't need/want a disposal of the updateTouchArea, since they have the same lifetime
-    //REVIEW: I'd just inline the updateTouchArea function into the link
-    this.disposeCueingArrowsNode = () => {
-      this.boundsProperty.unlink( updateTouchArea );
-    };
-  }
-
-  public override dispose(): void {
-    super.dispose();
-    this.disposeCueingArrowsNode();
-  }
-
-  //REVIEW: Only one usage. See notes at the usage for inlining and simplifying.
-  //REVIEW: I don't see a point of having this function here, and it's a ton of TypeScript verbiage.
-  public static createVisibleProperty( inputEnabledProperty: TReadOnlyProperty<boolean>,
-                                       wasDraggedProperty: TReadOnlyProperty<boolean> ): TReadOnlyProperty<boolean> {
-    return new DerivedProperty(
-      [ inputEnabledProperty, wasDraggedProperty ],
-      ( inputEnabled, wasDragged ) =>
-        ( inputEnabled && !wasDragged ) );
+    this.localBoundsProperty.link( localBounds => {
+      this.touchArea = localBounds.dilated( 5 );
+      this.mouseArea = localBounds.dilated( 3 );
+    } );
   }
 }
 
