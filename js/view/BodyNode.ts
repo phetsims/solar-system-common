@@ -64,6 +64,8 @@ export default class BodyNode extends ShadedSphereNode {
   public readonly releaseClip: SoundClip;
 
   public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: BodyNodeOptions ) {
+    const accessibleName = 'Body ' + ( body.index + 1 );
+
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
       draggable: true,
 
@@ -86,9 +88,11 @@ export default class BodyNode extends ShadedSphereNode {
         font: new PhetFont( 16 )
       },
 
+      // pdom
       tagName: 'div',
       focusable: true,
-      innerContent: 'Body ' + ( body.index + 1 ),
+      ariaLabel: accessibleName, // the screen reader Accessible Name
+      innerContent: accessibleName, // needed to make it focusable in the PDOM
       ariaRole: 'application'
     }, providedOptions );
 
