@@ -135,7 +135,10 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
       const idealBodies = this.availableBodies.filter( body => body.isActiveProperty.value );
 
       // Remove all inactive bodies
-      this.bodies.filter( body => !body.isActiveProperty.value ).forEach( body => this.bodies.remove( body ) );
+      this.bodies.filter( body => !body.isActiveProperty.value ).forEach( body => {
+        this.bodies.remove( body );
+        body.reset();
+      } );
 
       // Add in active bodies (in order)
       for ( let i = 0; i < idealBodies.length; i++ ) {
@@ -145,7 +148,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
       }
     } );
 
-    this.isAnyBodyEscapedProperty = DerivedProperty.or( this.bodies.map( body => body.escapedProperty ) );
+    this.isAnyBodyEscapedProperty = DerivedProperty.or( this.availableBodies.map( body => body.escapedProperty ) );
 
     this.availableBodies.forEach( body => {
       Multilink.lazyMultilink(
