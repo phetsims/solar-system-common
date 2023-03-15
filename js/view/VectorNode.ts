@@ -46,7 +46,7 @@ export default class VectorNode extends ArrowNode {
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     visibleProperty: TReadOnlyProperty<boolean>,
     vectorProperty: TReadOnlyProperty<Vector2>,
-    scale: number,
+    forceScaleProperty: TReadOnlyProperty<number>,
     providedOptions?: VectorNodeOptions
   ) {
 
@@ -74,32 +74,9 @@ export default class VectorNode extends ArrowNode {
     const oversizeText = new RichText( '', SolarSystemCommonConstants.TEXT_OPTIONS );
     this.addChild( oversizeText );
 
-    this.tipProperty = new DerivedProperty( [ this.tailProperty, vectorProperty, transformProperty ],
-      ( tail, vector, transform ) => {
-        // COMMENTED OUT CODE AWAITING DESIGN DECISIONS
-        // if ( vector.magnitude && options.constrainSize ) {
-        //   const maxLogValue = 1;
-        //   const minLogValue = -1;
-        //   const magnitude = vector.magnitude;
-        //   const logMagnitude = Math.log10( magnitude / 500 );
-        //
-        //   const minValue = 30;
-        //   const maxValue = 100;
-        //
-        //   // if ( logMagnitude < minLogValue || logMagnitude > maxLogValue ) {
-        //   if ( logMagnitude < minLogValue ) {
-        //     // oversizeText.setString( 'x10<sup>' + Utils.toFixed( logMagnitude, 0 ) + '</sup>' );
-        //     oversizeText.setString( 'F<sub>g</sub> ~ 10<sup>' + Utils.toFixed( logMagnitude + 26, 0 ) + '</sup>N' );
-        //     // oversizeText.setString( 'x' + Utils.toFixed( magnitude / 500, 2 ) );
-        //     vector = vector.normalized().times(
-        //       Utils.clamp( Utils.linear( minLogValue, maxLogValue, minValue, maxValue, logMagnitude ), minValue, maxValue ) );
-        //   }
-        //   else {
-        //     oversizeText.setString( '' );
-        //     vector = vector.times( 0.05 );
-        //   }
-        // }
-        const finalPosition = transform.modelToViewDelta( vector.times( scale ) ).plus( tail );
+    this.tipProperty = new DerivedProperty( [ this.tailProperty, vectorProperty, transformProperty, forceScaleProperty ],
+      ( tail, vector, transform, forceScale ) => {
+        const finalPosition = transform.modelToViewDelta( vector.times( 0.05 * Math.pow( 10, forceScale ) ) ).plus( tail );
         oversizeText.center = finalPosition;
         return finalPosition;
       } );

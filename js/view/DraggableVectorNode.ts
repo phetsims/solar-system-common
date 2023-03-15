@@ -20,6 +20,7 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
 import TProperty from '../../../axon/js/TProperty.js';
+import NumberProperty from '../../../axon/js/NumberProperty.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -54,7 +55,7 @@ export default class DraggableVectorNode extends VectorNode {
       transformProperty,
       visibleProperty,
       vectorProperty,
-      scale,
+      new NumberProperty( 1.3 ),
       options
     );
 

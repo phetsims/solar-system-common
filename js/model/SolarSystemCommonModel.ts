@@ -299,6 +299,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     this.moreDataProperty.reset();
     this.realUnitsProperty.reset();
     this.userControlledProperty.reset();
+    this.forceScaleProperty.reset();
 
     this.startingBodyState = this.defaultBodyState;
 
