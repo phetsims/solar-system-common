@@ -172,8 +172,8 @@ export default class BodyNode extends ShadedSphereNode {
           positionProperty: body.positionProperty,
           // dragBoundsProperty: dragBoundsProperty, //REVIEW: Why commented out?
           transform: modelViewTransformProperty,
-          dragVelocity: 150,
-          shiftDragVelocity: 30,
+          dragVelocity: 450,
+          shiftDragVelocity: 200,
           start: start,
           end: end,
           mapPosition: map

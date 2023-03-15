@@ -129,8 +129,8 @@ export default class DraggableVectorNode extends VectorNode {
     const keyboardDragListener = new KeyboardDragListener( {
       positionProperty: vectorProperty,
       transform: transformProperty,
-      dragVelocity: 150,
-      shiftDragVelocity: 30,
+      dragVelocity: 450,
+      shiftDragVelocity: 200,
       start: start,
       end: end
     } );
