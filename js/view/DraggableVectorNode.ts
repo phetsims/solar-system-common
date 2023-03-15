@@ -60,15 +60,20 @@ export default class DraggableVectorNode extends VectorNode {
 
     const circleRadius = 18;
 
+    const accessibleName = 'Velocity Body ' + ( body.index + 1 );
+
     // a circle with text (a character) in the center, to help indicate what it represents
     // ("v" for velocity in this sim)
     const grabArea = new Path( Shape.circle( 0, 0, circleRadius ), {
       lineWidth: 3,
       stroke: Color.lightGray,
       cursor: 'pointer',
+
+      // pdom
       tagName: 'div',
       focusable: true,
-      innerContent: 'Velocity Body ' + ( body.index + 1 ),
+      ariaLabel: accessibleName, // the screen reader Accessible Name
+      innerContent: accessibleName, // needed to make it focusable in the PDOM
       ariaRole: 'application',
       focusHighlight: Shape.circle( 0, 0, circleRadius * 1.2 ) // 20% dilation
     } );
