@@ -25,7 +25,7 @@ import pathIconProjector_png from '../../images/pathIconProjector_png.js';
 
 // constants
 const TEXT_OPTIONS = combineOptions<TextOptions>( {
-  maxWidth: SolarSystemCommonConstants.MAX_WIDTH
+  maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH
 }, SolarSystemCommonConstants.TEXT_OPTIONS );
 
 const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {

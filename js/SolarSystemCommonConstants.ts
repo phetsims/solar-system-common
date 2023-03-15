@@ -16,8 +16,8 @@ const SolarSystemCommonConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
 
-  //REVIEW: maximum width for.... what? Should be documented, and possibly renamed to something more informative
-  MAX_WIDTH: 200,
+  // Max width for many of the text labels
+  TEXT_MAX_WIDTH: 200,
 
   CONTROL_PANEL_OPTIONS: {
     stroke: null,

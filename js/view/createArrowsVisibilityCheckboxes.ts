@@ -22,7 +22,7 @@ import solarSystemCommon from '../solarSystemCommon.js';
 const ARROW_Y_COORDINATE = -10;
 
 const TEXT_OPTIONS = combineOptions<TextOptions>( {
-  maxWidth: SolarSystemCommonConstants.MAX_WIDTH
+  maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH
 }, SolarSystemCommonConstants.TEXT_OPTIONS );
 
 const SPACING = 10;

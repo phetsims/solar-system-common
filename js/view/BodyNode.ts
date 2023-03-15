@@ -82,7 +82,7 @@ export default class BodyNode extends ShadedSphereNode {
 
       textOptions: {
         fill: 'white', // Not a colorProperty because it is not dynamic
-        maxWidth: SolarSystemCommonConstants.MAX_WIDTH,
+        maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH,
         font: new PhetFont( 16 )
       },
 
