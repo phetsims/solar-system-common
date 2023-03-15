@@ -82,6 +82,7 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
   public readonly moreDataProperty: BooleanProperty;
   public readonly realUnitsProperty: BooleanProperty;
 
+  public readonly forceScaleProperty: NumberProperty; // Power of 10 to which the force is scaled
   public readonly zoomLevelProperty: NumberProperty;
   public readonly zoomProperty: ReadOnlyProperty<number>;
   public readonly isLab: boolean;
@@ -188,6 +189,11 @@ abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
     this.moreDataProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'moreDataProperty' ) } );
     this.realUnitsProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'realUnitsProperty' ) } );
 
+
+    this.forceScaleProperty = new NumberProperty( 0, {
+      range: new Range( -2, 8 ),
+      numberType: 'Integer'
+    } );
     this.zoomLevelProperty = new NumberProperty( 4, {
       range: new Range( 1, 6 ),
       tandem: tandem.createTandem( 'zoomLevelProperty' ),

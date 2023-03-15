@@ -29,17 +29,10 @@ const SPACING = 10;
 
 const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
   return [
-    // gravity force checkbox
-    new SolarSystemCommonCheckbox( model.gravityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
-      children: [
-        new Text( SolarSystemCommonStrings.gravityForceStringProperty, TEXT_OPTIONS ),
-        new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: PhetColorScheme.GRAVITATIONAL_FORCE } )
-      ]
-    }, {
-      spacing: SPACING
-    } ) ), {
-      accessibleName: SolarSystemCommonStrings.gravityForceStringProperty,
-      tandem: tandem.createTandem( 'gravityForceCheckbox' )
+    // speed checkbox
+    new SolarSystemCommonCheckbox( model.valuesVisibleProperty, new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS ), {
+      accessibleName: SolarSystemCommonStrings.speedStringProperty,
+      tandem: tandem.createTandem( 'valuesVisibleCheckbox' )
     } ),
     // velocity checkbox
     new SolarSystemCommonCheckbox( model.velocityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
@@ -53,9 +46,17 @@ const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem
       accessibleName: SolarSystemCommonStrings.velocityStringProperty,
       tandem: tandem.createTandem( 'velocityCheckbox' )
     } ),
-    new SolarSystemCommonCheckbox( model.valuesVisibleProperty, new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS ), {
-      accessibleName: SolarSystemCommonStrings.speedStringProperty,
-      tandem: tandem.createTandem( 'valuesVisibleCheckbox' )
+    // gravity force checkbox
+    new SolarSystemCommonCheckbox( model.gravityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
+      children: [
+        new Text( SolarSystemCommonStrings.gravityForceStringProperty, TEXT_OPTIONS ),
+        new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: PhetColorScheme.GRAVITATIONAL_FORCE } )
+      ]
+    }, {
+      spacing: SPACING
+    } ) ), {
+      accessibleName: SolarSystemCommonStrings.gravityForceStringProperty,
+      tandem: tandem.createTandem( 'gravityForceCheckbox' )
     } )
   ];
 };
