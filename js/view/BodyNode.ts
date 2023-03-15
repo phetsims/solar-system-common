@@ -24,7 +24,6 @@ import { Shape } from '../../../kite/js/imports.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
-import CueingArrowsNode from './CueingArrowsNode.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import Bodies_Brass_C3_mp3 from '../../sounds/Bodies_Brass_C3_mp3.js';
 import Bodies_Flute_g3_mp3 from '../../sounds/Bodies_Flute_g3_mp3.js';
@@ -34,7 +33,6 @@ import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
-import SolarSystemCommonQueryParameters from '../SolarSystemCommonQueryParameters.js';
 
 const bodySounds = [
   Bodies_Brass_C3_mp3,
@@ -220,27 +218,14 @@ export default class BodyNode extends ShadedSphereNode {
 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
-    const cueingVisibleProperty = new DerivedProperty( [ this.body.userControlledProperty ], wasDragged => ( options.draggable && !wasDragged ) );
-    const cueingArrowsNode = new CueingArrowsNode( {
-      bodyRadius: this.radius,
-      fill: options.mainColor,
-      visibleProperty: cueingVisibleProperty
-    } );
-
-    if ( SolarSystemCommonQueryParameters.cueingArrows ) {
-      this.addChild( cueingArrowsNode );
-    }
-
     this.disposeBodyNode = () => {
       valueContainer.dispose(); // Because we provide the visibleProperty
-      cueingVisibleProperty.dispose();
       positionMultilink.dispose();
       radiusMultilink.dispose();
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
       readoutStringProperty.dispose();
       velocityValueProperty.dispose();
       valueNode.dispose();
-      cueingArrowsNode.dispose();
       this.stopSound();
       if ( options.soundViewNode ) {
         soundManager.removeSoundGenerator( this.soundClip );
