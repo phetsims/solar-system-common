@@ -19,8 +19,7 @@ import Property from '../../../axon/js/Property.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { BodyInfo } from './SolarSystemCommonModel.js';
 
-
-class Body {
+export default class Body {
   // Unitless body quantities (physical properties)
   public readonly massProperty: Property<number>;
   public readonly radiusProperty: TReadOnlyProperty<number>;
@@ -139,4 +138,3 @@ class Body {
 }
 
 solarSystemCommon.register( 'Body', Body );
-export default Body;

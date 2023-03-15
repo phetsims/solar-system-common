@@ -45,7 +45,7 @@ type SelfOptions = {
 
 export type CommonScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-class SolarSystemCommonScreenView extends ScreenView {
+export default class SolarSystemCommonScreenView extends ScreenView {
   protected readonly bodiesLayer = new Node();
   protected readonly componentsLayer = new Node();
   protected readonly interfaceLayer = new Node();
@@ -229,4 +229,3 @@ class SolarSystemCommonScreenView extends ScreenView {
 }
 
 solarSystemCommon.register( 'SolarSystemCommonScreenView', SolarSystemCommonScreenView );
-export default SolarSystemCommonScreenView;
