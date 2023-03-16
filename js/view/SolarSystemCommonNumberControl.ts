@@ -26,11 +26,24 @@ export type SolarSystemCommonNumberControlOptions = SelfOptions & NumberControlO
 
 const massSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3 );
 
+
 soundManager.addSoundGenerator( massSliderSoundClip );
 
 export default class SolarSystemCommonNumberControl extends NumberControl {
 
   public constructor( valueProperty: Property<number>, range: Range, providedOptions?: SolarSystemCommonNumberControlOptions ) {
+
+    // This mapping function the same as in Greenhouse
+    const playbackRateMapper = ( value: number ) => 0.5 + ( range.max - value ) / range.getLength();
+    const maxMassSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3, {
+      initialPlaybackRate: playbackRateMapper( range.max )
+    } );
+    const minMassSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3, {
+      initialPlaybackRate: playbackRateMapper( range.min )
+    } );
+    soundManager.addSoundGenerator( maxMassSliderSoundClip );
+    soundManager.addSoundGenerator( minMassSliderSoundClip );
+
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
       sliderOptions: {
 
@@ -43,12 +56,11 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         valueChangeSoundGeneratorOptions: {
           middleMovingUpSoundPlayer: massSliderSoundClip,
           middleMovingDownSoundPlayer: massSliderSoundClip,
-          minSoundPlayer: massSliderSoundClip,
-          maxSoundPlayer: massSliderSoundClip,
+          minSoundPlayer: minMassSliderSoundClip,
+          maxSoundPlayer: maxMassSliderSoundClip,
           numberOfMiddleThresholds: 10,
           interThresholdDelta: null,
-          // This mapping function the same as in Greenhouse
-          middleMovingUpPlaybackRateMapper: ( value: number ) => 0.5 + ( range.max - value ) / range.getLength()
+          middleMovingUpPlaybackRateMapper: playbackRateMapper
         },
 
         //a11y
@@ -77,7 +89,6 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     }, providedOptions );
 
     // TODO: double check on constrainValue as it pertains to the arrow buttons. https://github.com/phetsims/my-solar-system/issues/105
-    // TODO: last two sounds are the same deepness. https://github.com/phetsims/my-solar-system/issues/105
     // TODO: keyboard interaction (slider step + arrow buttons) https://github.com/phetsims/my-solar-system/issues/105
     // TODO: slider step https://github.com/phetsims/my-solar-system/issues/105
     // TODO: arrow buttons have default sounds. https://github.com/phetsims/my-solar-system/issues/105
