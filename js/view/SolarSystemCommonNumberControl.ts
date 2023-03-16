@@ -22,16 +22,16 @@ import Tandem from '../../../tandem/js/Tandem.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type SolarSystemCommonSliderOptions = SelfOptions & NumberControlOptions;
+export type SolarSystemCommonNumberControlOptions = SelfOptions & NumberControlOptions;
 
 const massSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3 );
 
 soundManager.addSoundGenerator( massSliderSoundClip );
 
-export default class SolarSystemCommonSlider extends NumberControl {
+export default class SolarSystemCommonNumberControl extends NumberControl {
 
-  public constructor( valueProperty: Property<number>, range: Range, providedOptions?: SolarSystemCommonSliderOptions ) {
-    const options = optionize<SolarSystemCommonSliderOptions, SelfOptions, NumberControlOptions>()( {
+  public constructor( valueProperty: Property<number>, range: Range, providedOptions?: SolarSystemCommonNumberControlOptions ) {
+    const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
       sliderOptions: {
 
         trackSize: new Dimension2( 226, 2 ),
@@ -82,10 +82,9 @@ export default class SolarSystemCommonSlider extends NumberControl {
     // TODO: keyboard interaction (slider step + arrow buttons) https://github.com/phetsims/my-solar-system/issues/105
     // TODO: slider step https://github.com/phetsims/my-solar-system/issues/105
     // TODO: arrow buttons have default sounds. https://github.com/phetsims/my-solar-system/issues/105
-    // TODO: Rename from "Slider" type, https://github.com/phetsims/my-solar-system/issues/105
 
     super( '', valueProperty, range, options );
   }
 }
 
-solarSystemCommon.register( 'SolarSystemCommonSlider', SolarSystemCommonSlider );
+solarSystemCommon.register( 'SolarSystemCommonNumberControl', SolarSystemCommonNumberControl );
