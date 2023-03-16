@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Visual representation of space object's property checkbox.
+ * Creates checkboxes that change the visibility of the different model attributes.
  *
  * @author Agustín Vallejo
  */
