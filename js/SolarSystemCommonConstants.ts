@@ -10,6 +10,17 @@ import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 import solarSystemCommon from './solarSystemCommon.js';
 
+const METERS_IN_AU = 149597870700;
+const SECONDS_IN_A_YEAR = 31557600;
+const G = 10000;
+const G_ACTUAL = 6.6743e-11;
+const POSITION_MULTIPLIER = 0.01;
+const MASS_MULTIPLIER = 1e28;
+const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_IN_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_IN_A_YEAR );
+const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_IN_AU / SECONDS_IN_A_YEAR / 1000;
+
+console.log( VELOCITY_MULTIPLIER );
+
 const SolarSystemCommonConstants = {
 
   MARGIN: 15,
@@ -63,8 +74,8 @@ const SolarSystemCommonConstants = {
 
   // Multipliers that modify the numeric value shown in Number Displays
   POSITION_MULTIPLIER: 0.01, // Transforms from model units to AU
-  VELOCITY_MULTIPLIER: 0.21061355341275995, // Transforms from model units to AU/yr then to km/s
-  TIME_MULTIPLIER: 0.22507907903927651, // Transforms from model units to years
+  VELOCITY_MULTIPLIER: VELOCITY_MULTIPLIER, // Transforms from model units to AU/yr then to km/s
+  TIME_MULTIPLIER: TIME_MULTIPLIER, // Transforms from model units to years
 
   MAX_ORBITAL_DIVISIONS: 6,
   MIN_ORBITAL_DIVISIONS: 2
