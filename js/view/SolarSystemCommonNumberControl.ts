@@ -95,6 +95,11 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     // we have to pass a title string, even though it will not be displayed due to our custom layout.
     super( '', valueProperty, range, options );
   }
+
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
 }
 
 solarSystemCommon.register( 'SolarSystemCommonNumberControl', SolarSystemCommonNumberControl );
