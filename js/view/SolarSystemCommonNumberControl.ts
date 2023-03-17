@@ -24,11 +24,6 @@ type SelfOptions = EmptySelfOptions;
 
 export type SolarSystemCommonNumberControlOptions = SelfOptions & NumberControlOptions;
 
-const massSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3 );
-
-
-soundManager.addSoundGenerator( massSliderSoundClip );
-
 export default class SolarSystemCommonNumberControl extends NumberControl {
 
   public constructor( valueProperty: Property<number>, range: Range, providedOptions?: SolarSystemCommonNumberControlOptions ) {
@@ -44,9 +39,11 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     soundManager.addSoundGenerator( maxMassSliderSoundClip );
     soundManager.addSoundGenerator( minMassSliderSoundClip );
 
+    const massSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3 );
+    soundManager.addSoundGenerator( massSliderSoundClip );
+
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
       sliderOptions: {
-
         trackSize: new Dimension2( 226, 2 ),
         thumbSize: new Dimension2( 15, 25 ),
         thumbTouchAreaYDilation: 2,
@@ -56,6 +53,9 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         valueChangeSoundGeneratorOptions: {
           middleMovingUpSoundPlayer: massSliderSoundClip,
           middleMovingDownSoundPlayer: massSliderSoundClip,
+
+          // TODO: what should the min max sounds be? https://github.com/phetsims/my-solar-system/issues/105
+          // TODO: If we want them to also be the default mapping, how do we change ValueChangeSoundGenerator to make this happen? https://github.com/phetsims/my-solar-system/issues/105
           minSoundPlayer: minMassSliderSoundClip,
           maxSoundPlayer: maxMassSliderSoundClip,
           middleMovingUpPlaybackRateMapper: playbackRateMapper
