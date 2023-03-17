@@ -62,9 +62,9 @@ const SolarSystemCommonConstants = {
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.1,
 
   // Multipliers that modify the numeric value shown in Number Displays
-  POSITION_MULTIPLIER: 0.01,
-  VELOCITY_MULTIPLIER: 0.2109,
-  TIME_MULTIPLIER: 0.218,
+  POSITION_MULTIPLIER: 0.01, // Transforms from model units to AU
+  VELOCITY_MULTIPLIER: 0.21061355341275995, // Transforms from model units to AU/yr then to km/s
+  TIME_MULTIPLIER: 0.22507907903927651, // Transforms from model units to years
 
   MAX_ORBITAL_DIVISIONS: 6,
   MIN_ORBITAL_DIVISIONS: 2
