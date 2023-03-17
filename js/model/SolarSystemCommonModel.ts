@@ -194,8 +194,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
 
     this.forceScaleProperty = new NumberProperty( 0, {
-      range: new Range( -2, 8 ),
-      numberType: 'Integer'
+      range: new Range( -2, 8 )
     } );
     this.zoomLevelProperty = new NumberProperty( 4, {
       range: new Range( 1, 6 ),
