@@ -165,7 +165,7 @@ export default class DraggableVectorNode extends VectorNode {
       positionProperty: vectorProperty,
       transform: transformProperty,
       dragVelocity: 450,
-      shiftDragVelocity: 200,
+      shiftDragVelocity: 100,
       start: start,
       end: end
     } );
