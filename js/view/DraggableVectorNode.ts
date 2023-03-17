@@ -189,6 +189,13 @@ export default class DraggableVectorNode extends VectorNode {
       text.dispose();
 
       this.inputEnabledProperty.unlink( onInputEnabled );
+
+      if ( options.soundViewNode ) {
+        soundManager.removeSoundGenerator( this.grabClip );
+        soundManager.removeSoundGenerator( this.releaseClip );
+      }
+      this.grabClip.dispose();
+      this.releaseClip.dispose();
     };
   }
 
