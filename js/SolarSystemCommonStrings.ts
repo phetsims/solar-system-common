@@ -23,6 +23,8 @@ type StringsType = {
   'clearStringProperty': LinkableProperty<string>;
   'path': string;
   'pathStringProperty': LinkableProperty<string>;
+  'offscaleMessage': string;
+  'offscaleMessageStringProperty': LinkableProperty<string>;
   'speed': string;
   'speedStringProperty': LinkableProperty<string>;
   'units': {

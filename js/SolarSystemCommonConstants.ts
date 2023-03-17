@@ -19,8 +19,6 @@ const MASS_MULTIPLIER = 1e28;
 const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_IN_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_IN_A_YEAR );
 const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_IN_AU / SECONDS_IN_A_YEAR / 1000;
 
-console.log( VELOCITY_MULTIPLIER );
-
 const SolarSystemCommonConstants = {
 
   MARGIN: 15,
