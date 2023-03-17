@@ -58,8 +58,6 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
           middleMovingDownSoundPlayer: massSliderSoundClip,
           minSoundPlayer: minMassSliderSoundClip,
           maxSoundPlayer: maxMassSliderSoundClip,
-          numberOfMiddleThresholds: 10,
-          interThresholdDelta: null,
           middleMovingUpPlaybackRateMapper: playbackRateMapper
         },
 
