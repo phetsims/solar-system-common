@@ -86,9 +86,6 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
       }
     }, providedOptions );
 
-    // TODO: double check on constrainValue as it pertains to the arrow buttons. https://github.com/phetsims/my-solar-system/issues/105
-    // TODO: keyboard interaction (slider step + arrow buttons) https://github.com/phetsims/my-solar-system/issues/105
-    // TODO: slider step https://github.com/phetsims/my-solar-system/issues/105
     // TODO: arrow buttons have default sounds. https://github.com/phetsims/my-solar-system/issues/105
 
     // Unfortunately, NumberControl is hard-coded to require a title, and always creates a titleNode. Therefore
