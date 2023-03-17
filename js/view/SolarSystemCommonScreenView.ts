@@ -137,7 +137,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         body.positionProperty,
         1,
         SolarSystemCommonStrings.VStringProperty,
-        combineOptions<DraggableVectorNodeOptions>( { fill: PhetColorScheme.VELOCITY }, options )
+        combineOptions<DraggableVectorNodeOptions>( { fill: PhetColorScheme.VELOCITY, soundViewNode: this }, options )
       );
     };
 

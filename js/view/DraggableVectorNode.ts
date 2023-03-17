@@ -10,7 +10,7 @@
 
 import { Shape } from '../../../kite/js/imports.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Color, DragListener, KeyboardDragListener, Path, Text } from '../../../scenery/js/imports.js';
+import { Color, DragListener, KeyboardDragListener, Node, Path, Text } from '../../../scenery/js/imports.js';
 import VectorNode, { VectorNodeOptions } from './VectorNode.js';
 import Body from '../model/Body.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -21,11 +21,19 @@ import solarSystemCommon from '../solarSystemCommon.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
 import TProperty from '../../../axon/js/TProperty.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
+import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
+import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
+import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import soundManager from '../../../tambo/js/soundManager.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
   minimumMagnitude?: number; // The minimum magnitude of the vector
   maxMagnitudeProperty?: TReadOnlyProperty<number> | null;
+
+  // If a soundViewNode is provided, we'll hook up a soundClip to it and play sounds when it is visible
+  soundViewNode?: Node | null;
 };
 
 export type DraggableVectorNodeOptions = SelfOptions & VectorNodeOptions;
@@ -33,6 +41,8 @@ export type DraggableVectorNodeOptions = SelfOptions & VectorNodeOptions;
 export default class DraggableVectorNode extends VectorNode {
 
   private readonly disposeDraggableVectorNode: () => void;
+  public readonly grabClip: SoundClip;
+  public readonly releaseClip: SoundClip;
 
   public constructor(
     body: Body,
@@ -47,7 +57,9 @@ export default class DraggableVectorNode extends VectorNode {
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
       snapToZero: true,
       minimumMagnitude: 10,
-      maxMagnitudeProperty: null
+      maxMagnitudeProperty: null,
+
+      soundViewNode: null
     }, providedOptions );
 
     super(
@@ -58,6 +70,21 @@ export default class DraggableVectorNode extends VectorNode {
       new NumberProperty( 1.3 ),
       options
     );
+
+    const dragClipOptions = {
+      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+    };
+    this.grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
+    this.releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
+
+    if ( options.soundViewNode ) {
+      soundManager.addSoundGenerator( this.grabClip, {
+        associatedViewNode: options.soundViewNode
+      } );
+      soundManager.addSoundGenerator( this.releaseClip, {
+        associatedViewNode: options.soundViewNode
+      } );
+    }
 
     const circleRadius = 18;
 
@@ -115,9 +142,11 @@ export default class DraggableVectorNode extends VectorNode {
     // Add the drag handler
     const start = () => {
       body.userControlledVelocityProperty.value = true;
+      this.grabClip.play();
     };
     const end = () => {
       body.userControlledVelocityProperty.value = false;
+      this.releaseClip.play();
     };
 
     const dragListener = new DragListener( {
