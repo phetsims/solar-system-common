@@ -265,13 +265,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.bodyRemovedEmitter.emit();
   }
 
-  public returnEscapedBodies(): void {
+  public returnEscapedBodies( stateToReturn?: BodyInfo[] ): void {
     // Create a sim state where escaped bodies go back to default state
     // Non-escaped bodies stay the same
     const newBodyState = this.bodies.map( body => {
       if ( body.escapedProperty.value ) {
         body.escapedProperty.value = false;
-        const bodyState = this.defaultBodyState[ body.index ];
+        const bodyState = stateToReturn && stateToReturn[ body.index ] ? stateToReturn[ body.index ] : this.defaultBodyState[ body.index ];
         bodyState.active = true;
         bodyState.mass = body.massProperty.value;
         return bodyState;
