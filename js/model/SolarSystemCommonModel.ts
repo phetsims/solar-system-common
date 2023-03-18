@@ -82,7 +82,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly moreDataProperty: BooleanProperty;
   public readonly realUnitsProperty: BooleanProperty;
 
-  public readonly forceScaleProperty: NumberProperty; // Power of 10 to which the force is scaled
   public readonly zoomLevelProperty: NumberProperty;
   public readonly zoomProperty: ReadOnlyProperty<number>;
   public readonly isLab: boolean;
@@ -93,6 +92,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   // Indicates if any body is far from the play area
   public readonly isAnyBodyEscapedProperty: ReadOnlyProperty<boolean>;
+
+  // Indicates if any force arrow is currently off scale
+  public readonly forceScaleProperty: NumberProperty; // Power of 10 to which the force is scaled
+  public readonly isAnyForceOffscaleProperty: ReadOnlyProperty<boolean>;
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
@@ -149,6 +152,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
 
     this.isAnyBodyEscapedProperty = DerivedProperty.or( this.availableBodies.map( body => body.escapedProperty ) );
+
+    this.isAnyForceOffscaleProperty = DerivedProperty.or( this.availableBodies.map( body => body.forceOffscaleProperty ) );
 
     this.availableBodies.forEach( body => {
       Multilink.lazyMultilink(

@@ -18,8 +18,6 @@ import Multilink from '../../../axon/js/Multilink.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import EnumerationValue from '../../../phet-core/js/EnumerationValue.js';
 import Enumeration from '../../../phet-core/js/Enumeration.js';
-import { RichText } from '../../../scenery/js/imports.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 type SelfOptions = {
   constrainSize?: boolean;
@@ -71,13 +69,24 @@ export default class VectorNode extends ArrowNode {
         return transform.modelToViewPosition( bodyPosition );
       } );
 
-    const oversizeText = new RichText( '', SolarSystemCommonConstants.TEXT_OPTIONS );
-    this.addChild( oversizeText );
-
     this.tipProperty = new DerivedProperty( [ this.tailProperty, vectorProperty, transformProperty, forceScaleProperty ],
       ( tail, vector, transform, forceScale ) => {
+      // forceScale currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
+      // and 8 is scaling up for small vectors ~1/100000000 units of force
+      const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / 500 ) : -forceScale;
+      if ( magnitudeLog > -forceScale + 1 ) {
+        this.oversizeType = OversizeType.BIGGER;
+        body.forceOffscaleProperty.value = true;
+      }
+      else if ( magnitudeLog < -forceScale - 1 ) {
+        this.oversizeType = OversizeType.SMALLER;
+        body.forceOffscaleProperty.value = true;
+      }
+      else {
+        this.oversizeType = OversizeType.NONE;
+        body.forceOffscaleProperty.value = false;
+      }
         const finalPosition = transform.modelToViewDelta( vector.times( 0.05 * Math.pow( 10, forceScale ) ) ).plus( tail );
-        oversizeText.center = finalPosition;
         return finalPosition;
       } );
 

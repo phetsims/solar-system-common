@@ -34,8 +34,11 @@ export default class Body {
   // Not resettable, common model will handle. Determines if the body is currently on-screen
   public readonly isActiveProperty = new BooleanProperty( false );
 
-  // Emits when the body goes off-screen
+  // True when the body goes off-screen
   public readonly escapedProperty = new BooleanProperty( false );
+
+  // True when the body force is off-scale
+  public readonly forceOffscaleProperty = new BooleanProperty( false );
 
   // User modified properties
   public readonly userControlledPositionProperty = new BooleanProperty( false );
@@ -71,6 +74,7 @@ export default class Body {
     this.accelerationProperty.reset();
     this.forceProperty.reset();
     this.escapedProperty.reset();
+    this.forceOffscaleProperty.reset();
     this.clearPath();
   }
 
