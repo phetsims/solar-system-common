@@ -65,11 +65,11 @@ export default class BodySoundManager {
     this.model = model;
 
     this.bodyNumberSoundClips = bodyNumberSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 2
     } ) );
 
     this.removalSoundClips = removalSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 3
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 2
     } ) );
 
     this.metronomeSoundClips = metronomeSounds.map( sound => new SoundClip( sound, {
