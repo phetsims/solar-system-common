@@ -15,7 +15,6 @@ import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import { HBox, Path, Rectangle } from '../../../scenery/js/imports.js';
 import { Shape } from '../../../kite/js/imports.js';
 import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
-import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 
@@ -82,10 +81,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
 
     const restartButton = new RoundPushButton( {
       content: restartIcon,
-      enabledProperty: new DerivedProperty(
-        [ model.timeProperty ],
-        time => time !== 0
-      ),
+      enabledProperty: model.hasPlayedProperty,
       radius: STEP_BUTTON_RADIUS,
       touchAreaDilation: 2,
       xMargin: 9.5,

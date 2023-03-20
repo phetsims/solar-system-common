@@ -72,6 +72,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly timeProperty: NumberProperty;
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
+  public readonly hasPlayedProperty = new BooleanProperty( false );
 
   public readonly pathVisibleProperty: BooleanProperty;
   public readonly gravityVisibleProperty: BooleanProperty;
@@ -313,6 +314,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Restart is for when the time controls are brought back to 0
   // Bodies move to their last modified position
   public restart(): void {
+    this.hasPlayedProperty.value = false;
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
     this.loadBodyStates( this.startingBodyState ); // Reset the bodies
@@ -328,6 +330,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public stepOnce( dt: number ): void {
+    this.hasPlayedProperty.value = true;
     let adjustedDT = dt * timeFormatter.get( this.timeSpeedProperty.value )! * this.timeScale;
     const count = Math.ceil( adjustedDT / 0.02 );
     adjustedDT /= count;
