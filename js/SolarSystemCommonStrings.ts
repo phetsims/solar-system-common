@@ -23,6 +23,8 @@ type StringsType = {
   'clearStringProperty': LinkableProperty<string>;
   'path': string;
   'pathStringProperty': LinkableProperty<string>;
+  'scale': string;
+  'scaleStringProperty': LinkableProperty<string>;
   'offscaleMessage': string;
   'offscaleMessageStringProperty': LinkableProperty<string>;
   'speed': string;
@@ -48,6 +50,8 @@ type StringsType = {
     'restartStringProperty': LinkableProperty<string>;
     'massSlider': string;
     'massSliderStringProperty': LinkableProperty<string>;
+    'scaleSlider': string;
+    'scaleSliderStringProperty': LinkableProperty<string>;
     'increase': string;
     'increaseStringProperty': LinkableProperty<string>;
     'decrease': string;

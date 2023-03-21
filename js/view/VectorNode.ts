@@ -71,21 +71,21 @@ export default class VectorNode extends ArrowNode {
 
     this.tipProperty = new DerivedProperty( [ this.tailProperty, vectorProperty, transformProperty, forceScaleProperty ],
       ( tail, vector, transform, forceScale ) => {
-      // forceScale currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
-      // and 8 is scaling up for small vectors ~1/100000000 units of force
-      const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / 500 ) : -forceScale;
-      if ( magnitudeLog > -forceScale + 1 ) {
-        this.oversizeType = OversizeType.BIGGER;
-        body.forceOffscaleProperty.value = true;
-      }
-      else if ( magnitudeLog < -forceScale - 1 ) {
-        this.oversizeType = OversizeType.SMALLER;
-        body.forceOffscaleProperty.value = true;
-      }
-      else {
-        this.oversizeType = OversizeType.NONE;
-        body.forceOffscaleProperty.value = false;
-      }
+        // forceScale currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
+        // and 8 is scaling up for small vectors ~1/100000000 units of force
+        const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / 500 ) : -forceScale;
+        if ( magnitudeLog > -forceScale + 1 ) {
+          this.oversizeType = OversizeType.BIGGER;
+          body.forceOffscaleProperty.value = true;
+        }
+        else if ( magnitudeLog < -forceScale - 1 ) {
+          this.oversizeType = OversizeType.SMALLER;
+          body.forceOffscaleProperty.value = true;
+        }
+        else {
+          this.oversizeType = OversizeType.NONE;
+          body.forceOffscaleProperty.value = false;
+        }
         const finalPosition = transform.modelToViewDelta( vector.times( 0.05 * Math.pow( 10, forceScale ) ) ).plus( tail );
         return finalPosition;
       } );
