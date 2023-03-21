@@ -75,7 +75,8 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         stroke: 'black',
         lineWidth: 1,
         scale: 0.8,
-        touchAreaYDilation: 2.5
+        touchAreaYDilation: 2.5,
+        soundPlayer: massSliderSoundClip
       },
       layoutFunction: ( titleNode, numberDisplay, slider, decrementButton, incrementButton ) => {
         assert && assert( decrementButton && incrementButton );
