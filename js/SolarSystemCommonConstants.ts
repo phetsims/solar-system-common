@@ -9,6 +9,7 @@
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 import solarSystemCommon from './solarSystemCommon.js';
+import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS } from '../../scenery/js/imports.js';
 
 export const METERS_IN_AU = 149597870700;
 export const SECONDS_IN_A_YEAR = 31557600;
@@ -47,9 +48,8 @@ const SolarSystemCommonConstants = {
     lineWidth: 2,
     stroke: '#8E9097',
     layoutOptions: {
-      yMargin: 5,
-      stretch: true,
-      isSeparator: true
+      yMargin: 2,
+      ...DEFAULT_SEPARATOR_LAYOUT_OPTIONS
     }
   },
   PANEL_FONT: new PhetFont( 16 ),
