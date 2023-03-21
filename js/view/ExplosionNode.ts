@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 /**
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import { Path, PathOptions } from '../../../scenery/js/imports.js';

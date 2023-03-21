@@ -3,7 +3,7 @@
 /**
  * Draws a vector for a Body, such as a force vector or velocity vector.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import Body from '../model/Body.js';

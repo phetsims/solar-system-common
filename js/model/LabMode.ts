@@ -3,7 +3,7 @@
 /**
  * Enumerates the presets and custom settings for the bodies in the Lab Screen.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import Enumeration from '../../../phet-core/js/Enumeration.js';

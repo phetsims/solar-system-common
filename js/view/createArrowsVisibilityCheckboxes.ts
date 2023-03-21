@@ -4,7 +4,7 @@
 /**
  * Visual representation of velocity and gravity arrows checkbox.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';

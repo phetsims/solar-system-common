@@ -3,7 +3,7 @@
 /**
  * Checkbox with common options for the my-solar-system and keplers-laws sims
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import Checkbox, { CheckboxOptions } from '../../../sun/js/Checkbox.js';

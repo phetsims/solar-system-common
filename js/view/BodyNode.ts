@@ -3,7 +3,7 @@
 /**
  * Visible Body Node that draws a sphere with size dependent on the Body's mass.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import { Color, DragListener, KeyboardDragListener, Node, Rectangle, RectangleOptions, Text, TextOptions } from '../../../scenery/js/imports.js';

@@ -3,7 +3,7 @@
 /**
  * Module in charge of controlling the sounds of the bodies in the simulation.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';

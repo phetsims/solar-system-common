@@ -3,7 +3,7 @@
 /**
  * Model for a gravitational interacting Body
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import createObservableArray, { ObservableArray } from '../../../axon/js/createObservableArray.js';

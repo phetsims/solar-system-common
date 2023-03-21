@@ -3,7 +3,7 @@
 /**
  * Everything that controls the gravitational interactions between bodies.
  * 
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import { ObservableArray } from '../../../axon/js/createObservableArray.js';

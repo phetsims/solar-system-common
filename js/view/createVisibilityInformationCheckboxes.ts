@@ -3,7 +3,7 @@
 /**
  * Creates checkboxes that change the visibility of the different model attributes.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import { colorProfileProperty, HBox, Image, SceneryConstants, Text, TextOptions } from '../../../scenery/js/imports.js';

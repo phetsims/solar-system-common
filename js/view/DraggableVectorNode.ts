@@ -7,7 +7,6 @@
  * @author Aaron Davis (PhET Interactive Simulations)
  */
 
-
 import { Shape } from '../../../kite/js/imports.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { Color, DragListener, KeyboardDragListener, Node, Path, Text } from '../../../scenery/js/imports.js';
