@@ -47,7 +47,9 @@ const SolarSystemCommonConstants = {
     lineWidth: 2,
     stroke: '#8E9097',
     layoutOptions: {
-      yMargin: 5
+      yMargin: 5,
+      stretch: true,
+      isSeparator: true
     }
   },
   PANEL_FONT: new PhetFont( 16 ),
