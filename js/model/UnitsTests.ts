@@ -3,7 +3,7 @@
 /**
  * QUnit tests for Units
  *
- * @author Agustin Vallejo (PhET Interactive Simulations)
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
