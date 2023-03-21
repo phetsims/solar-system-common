@@ -19,6 +19,7 @@ import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import NumberControl, { NumberControlOptions } from '../../../scenery-phet/js/NumberControl.js';
 import { HBox } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -42,6 +43,17 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     const massSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3 );
     soundManager.addSoundGenerator( massSliderSoundClip );
 
+    const valueChangeSoundGeneratorOptions = {
+      middleMovingUpSoundPlayer: massSliderSoundClip,
+      middleMovingDownSoundPlayer: massSliderSoundClip,
+
+      // TODO: what should the min max sounds be? https://github.com/phetsims/my-solar-system/issues/105
+      // TODO: If we want them to also be the default mapping, how do we change ValueChangeSoundGenerator to make this happen? https://github.com/phetsims/my-solar-system/issues/105
+      minSoundPlayer: minMassSliderSoundClip,
+      maxSoundPlayer: maxMassSliderSoundClip,
+      middleMovingUpPlaybackRateMapper: playbackRateMapper
+    };
+
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
       sliderOptions: {
         trackSize: new Dimension2( 226, 2 ),
@@ -50,16 +62,7 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         thumbCenterLineStroke: 'black',
         trackFillEnabled: SolarSystemCommonColors.foregroundProperty,
         trackStroke: SolarSystemCommonColors.foregroundProperty,
-        valueChangeSoundGeneratorOptions: {
-          middleMovingUpSoundPlayer: massSliderSoundClip,
-          middleMovingDownSoundPlayer: massSliderSoundClip,
-
-          // TODO: what should the min max sounds be? https://github.com/phetsims/my-solar-system/issues/105
-          // TODO: If we want them to also be the default mapping, how do we change ValueChangeSoundGenerator to make this happen? https://github.com/phetsims/my-solar-system/issues/105
-          minSoundPlayer: minMassSliderSoundClip,
-          maxSoundPlayer: maxMassSliderSoundClip,
-          middleMovingUpPlaybackRateMapper: playbackRateMapper
-        },
+        soundGenerator: new ValueChangeSoundPlayer( range, valueChangeSoundGeneratorOptions ),
 
         //a11y
         accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty
