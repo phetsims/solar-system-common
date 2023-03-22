@@ -152,7 +152,10 @@ export default class DraggableVectorNode extends VectorNode {
       transform: transformProperty,
       positionProperty: vectorPositionProperty,
       canStartPress: () => !body.userControlledVelocityProperty.value,
-      start: start,
+      start: () => {
+        keyboardDragListener.interrupt();
+        start();
+      },
       end: end
     } );
     grabArea.addInputListener( dragListener );
@@ -165,7 +168,10 @@ export default class DraggableVectorNode extends VectorNode {
       transform: transformProperty,
       dragVelocity: 450,
       shiftDragVelocity: 100,
-      start: start,
+      start: () => {
+        dragListener.interrupt();
+        start();
+      },
       end: end
     } );
     this.addInputListener( keyboardDragListener );
