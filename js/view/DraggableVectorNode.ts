@@ -102,7 +102,7 @@ export default class DraggableVectorNode extends VectorNode {
       ariaLabel: accessibleName, // the screen reader Accessible Name
       innerContent: accessibleName, // needed to make it focusable in the PDOM
       ariaRole: 'application',
-      focusHighlight: Shape.circle( 0, 0, circleRadius * 1.2 ) // 20% dilation
+      focusHighlight: Shape.circle( 0, 0, circleRadius * 1.3 )
     } );
 
     const text = new Text( labelText, {
