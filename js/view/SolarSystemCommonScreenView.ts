@@ -122,7 +122,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       this.modelViewTransformProperty,
       SolarSystemCommonConstants.GRID_SPACING,
       Vector2.ZERO,
-      28,
+      100,
       {
         stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
         visibleProperty: model.gridVisibleProperty

@@ -76,9 +76,9 @@ export default class VectorNode extends ArrowNode {
         const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / 500 ) : -forceScale;
         if ( magnitudeLog > -forceScale + 1.5 ) {
           this.oversizeType = OversizeType.BIGGER;
-          body.forceOffscaleProperty.value = true;
+          // body.forceOffscaleProperty.value = true;
         }
-        else if ( magnitudeLog < -forceScale - 0.5 ) {
+        else if ( magnitudeLog < -forceScale - 0.4 ) {
           this.oversizeType = OversizeType.SMALLER;
           body.forceOffscaleProperty.value = true;
         }
