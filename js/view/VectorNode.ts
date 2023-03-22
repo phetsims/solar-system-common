@@ -86,7 +86,11 @@ export default class VectorNode extends ArrowNode {
           this.oversizeType = OversizeType.NONE;
           body.forceOffscaleProperty.value = false;
         }
-        const finalPosition = transform.modelToViewDelta( vector.times( 0.05 * Math.pow( 10, forceScale ) ) ).plus( tail );
+        const finalTip = vector.times( 0.05 * Math.pow( 10, forceScale ) );
+        if ( finalTip.magnitude > 1e4 ) {
+          finalTip.setMagnitude( 1e4 );
+        }
+        const finalPosition = transform.modelToViewDelta( finalTip ).plus( tail );
         return finalPosition;
       } );
 
