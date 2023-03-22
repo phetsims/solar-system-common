@@ -74,11 +74,11 @@ export default class VectorNode extends ArrowNode {
         // forceScale currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
         // and 8 is scaling up for small vectors ~1/100000000 units of force
         const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / 500 ) : -forceScale;
-        if ( magnitudeLog > -forceScale + 1 ) {
+        if ( magnitudeLog > -forceScale + 1.5 ) {
           this.oversizeType = OversizeType.BIGGER;
           body.forceOffscaleProperty.value = true;
         }
-        else if ( magnitudeLog < -forceScale - 1 ) {
+        else if ( magnitudeLog < -forceScale - 0.5 ) {
           this.oversizeType = OversizeType.SMALLER;
           body.forceOffscaleProperty.value = true;
         }
