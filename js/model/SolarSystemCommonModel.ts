@@ -184,10 +184,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
 
-    this.isPlayingProperty.lazyLink( () => {
-      this.userControlledProperty.value = true;
-    } );
-
     // Visibility properties for checkboxes
     this.pathVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
     this.gravityVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gravityVisibleProperty' ) } );
