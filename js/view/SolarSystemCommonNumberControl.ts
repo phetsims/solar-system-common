@@ -54,6 +54,8 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
       middleMovingUpPlaybackRateMapper: playbackRateMapper
     };
 
+    const valueChangeSoundGenerator = new ValueChangeSoundPlayer( range, valueChangeSoundGeneratorOptions );
+
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
       sliderOptions: {
         trackSize: new Dimension2( 226, 2 ),
@@ -62,7 +64,7 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         thumbCenterLineStroke: 'black',
         trackFillEnabled: SolarSystemCommonColors.foregroundProperty,
         trackStroke: SolarSystemCommonColors.foregroundProperty,
-        soundGenerator: new ValueChangeSoundPlayer( range, valueChangeSoundGeneratorOptions ),
+        soundGenerator: valueChangeSoundGenerator,
 
         //a11y
         accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty
