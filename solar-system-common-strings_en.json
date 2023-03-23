@@ -42,7 +42,7 @@
     "value": "{{value}} {{units}}"
   },
   "pattern.velocityValueUnits": {
-    "value": "|v| = {{value}} {{units}}"
+    "value": "|v<sub>{{index}}</sub>| = {{value}} {{units}}"
   },
   "pattern.unitsPower": {
     "value": "{{units}}<sup>{{power}}</sup>"

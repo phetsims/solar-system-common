@@ -6,7 +6,7 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { Color, DragListener, KeyboardDragListener, Node, Rectangle, RectangleOptions, Text, TextOptions } from '../../../scenery/js/imports.js';
+import { Color, DragListener, KeyboardDragListener, Node, Rectangle, RectangleOptions, RichText, TextOptions } from '../../../scenery/js/imports.js';
 import Utils from '../../../dot/js/Utils.js';
 import Body from '../model/Body.js';
 import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../scenery-phet/js/ShadedSphereNode.js';
@@ -194,11 +194,12 @@ export default class BodyNode extends ShadedSphereNode {
       )
     );
     const readoutStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
+      index: body.index + 1,
       value: velocityValueProperty,
       units: SolarSystemCommonStrings.units.kmsStringProperty
     } );
 
-    const valueNode = new Text( readoutStringProperty, options.textOptions );
+    const valueNode = new RichText( readoutStringProperty, options.textOptions );
 
     const valueBackgroundNode = new Rectangle( options.rectangleOptions );
 
