@@ -23,8 +23,8 @@ type StringsType = {
   'clearStringProperty': LinkableProperty<string>;
   'path': string;
   'pathStringProperty': LinkableProperty<string>;
-  'scale': string;
-  'scaleStringProperty': LinkableProperty<string>;
+  'zoom': string;
+  'zoomStringProperty': LinkableProperty<string>;
   'offscaleMessage': string;
   'offscaleMessageStringProperty': LinkableProperty<string>;
   'speed': string;
