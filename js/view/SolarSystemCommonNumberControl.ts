@@ -20,6 +20,7 @@ import NumberControl, { NumberControlOptions } from '../../../scenery-phet/js/Nu
 import { HBox } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -47,11 +48,11 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
       middleMovingUpSoundPlayer: massSliderSoundClip,
       middleMovingDownSoundPlayer: massSliderSoundClip,
 
-      // TODO: what should the min max sounds be? https://github.com/phetsims/my-solar-system/issues/105
-      // TODO: If we want them to also be the default mapping, how do we change ValueChangeSoundGenerator to make this happen? https://github.com/phetsims/my-solar-system/issues/105
       minSoundPlayer: minMassSliderSoundClip,
       maxSoundPlayer: maxMassSliderSoundClip,
-      middleMovingUpPlaybackRateMapper: playbackRateMapper
+      middleMovingUpPlaybackRateMapper: playbackRateMapper,
+
+      interThresholdDelta: SolarSystemCommonConstants.SLIDER_STEP - 0.1
     };
 
     const valueChangeSoundGenerator = new ValueChangeSoundPlayer( range, valueChangeSoundGeneratorOptions );
@@ -91,8 +92,6 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         } );
       }
     }, providedOptions );
-
-    // TODO: arrow buttons have default sounds. https://github.com/phetsims/my-solar-system/issues/105
 
     // Unfortunately, NumberControl is hard-coded to require a title, and always creates a titleNode. Therefore
     // we have to pass a title string, even though it will not be displayed due to our custom layout.

@@ -29,6 +29,8 @@ const SolarSystemCommonConstants = {
   // Max width for many of the text labels
   TEXT_MAX_WIDTH: 200,
 
+  SLIDER_STEP: 25,
+
   CONTROL_PANEL_OPTIONS: {
     stroke: null,
     fill: SolarSystemCommonColors.controlPanelFillProperty,
