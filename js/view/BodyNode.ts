@@ -33,6 +33,8 @@ import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
+import CueingArrowsNode from './CueingArrowsNode.js';
+
 
 const bodySounds = [
   Bodies_Brass_C3_mp3,
@@ -47,6 +49,7 @@ type SelfOptions = {
   valuesVisibleProperty?: TReadOnlyProperty<boolean>;
   rectangleOptions?: RectangleOptions;
   textOptions?: TextOptions;
+  useCueingArrows?: boolean;
 
   // If a soundViewNode is provided, we'll hook up a soundClip to it and play sounds when it is visible
   soundViewNode?: Node | null;
@@ -85,6 +88,8 @@ export default class BodyNode extends ShadedSphereNode {
         maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH,
         font: new PhetFont( 16 )
       },
+
+      useCueingArrows: false,
 
       // pdom
       tagName: 'div',
@@ -223,10 +228,24 @@ export default class BodyNode extends ShadedSphereNode {
 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
+    const cueingVisibleProperty = new DerivedProperty( [ this.body.userControlledProperty ], wasDragged => ( options.draggable && !wasDragged ) );
+    const cueingArrowsNode = new CueingArrowsNode( {
+      bodyRadius: this.radius,
+      fill: options.mainColor,
+      visibleProperty: cueingVisibleProperty
+    } );
+
+    if ( options.useCueingArrows ) {
+      this.addChild( cueingArrowsNode );
+    }
+
     this.disposeBodyNode = () => {
       valueContainer.dispose(); // Because we provide the visibleProperty
       positionMultilink.dispose();
       radiusMultilink.dispose();
+      cueingVisibleProperty.dispose();
+      cueingArrowsNode.dispose();
+
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
       readoutStringProperty.dispose();
       velocityValueProperty.dispose();
