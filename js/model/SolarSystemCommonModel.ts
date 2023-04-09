@@ -45,6 +45,7 @@ type SelfOptions<EngineType extends Engine> = {
 };
 
 export type BodyInfo = {
+  index: number;
   mass: number;
   position: Vector2;
   velocity: Vector2;
@@ -100,8 +101,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
-    { mass: 200, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -5 ), active: true },
-    { mass: 10, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 100 ), active: true }
+    { index: 0, mass: 200, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -5 ), active: true },
+    { index: 1, mass: 10, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 100 ), active: true }
   ];
   protected defaultBodyState: BodyInfo[];
 
@@ -225,9 +226,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
    * Sets the available bodies initial states according to bodiesInfo
    */
   public loadBodyStates( bodiesInfo: BodyInfo[], preventCollision = false ): void {
-    for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
-      const bodyInfo = bodiesInfo[ i ];
+    const activeIndeces = bodiesInfo.map( bodyInfo => bodyInfo.index );
 
+    bodiesInfo.forEach( bodyInfo => {
+      const i = bodyInfo.index;
       if ( bodyInfo ) {
         this.availableBodies[ i ].isActiveProperty.value = bodyInfo.active;
 
@@ -240,7 +242,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           this.availableBodies[ i ].preventCollision( this.bodies );
         }
       }
-      else {
+    } );
+
+    for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
+      if ( !activeIndeces.includes( i ) ) {
         this.availableBodies[ i ].isActiveProperty.value = false;
       }
     }
@@ -275,6 +280,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public returnEscapedBodies( stateToReturn?: BodyInfo[] ): void {
     // Create a sim state where escaped bodies go back to default state
     // Non-escaped bodies stay the same
+    // stateToReturn arg is used for LabScreen, where the preset states are passed as an input
     const newBodyState = this.bodies.map( body => {
       if ( body.escapedProperty.value ) {
         body.escapedProperty.value = false;
