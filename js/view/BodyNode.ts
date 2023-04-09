@@ -6,7 +6,7 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { Color, DragListener, KeyboardDragListener, Node, Rectangle, RectangleOptions, RichText, TextOptions } from '../../../scenery/js/imports.js';
+import { Color, DragListener, InteractiveHighlighting, KeyboardDragListener, Node, Rectangle, RectangleOptions, RichText, TextOptions } from '../../../scenery/js/imports.js';
 import Utils from '../../../dot/js/Utils.js';
 import Body from '../model/Body.js';
 import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../scenery-phet/js/ShadedSphereNode.js';
@@ -57,7 +57,7 @@ type SelfOptions = {
 
 export type BodyNodeOptions = SelfOptions & StrictOmit<ShadedSphereNodeOptions, 'cursor'>;
 
-export default class BodyNode extends ShadedSphereNode {
+export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode ) {
   private readonly disposeBodyNode: () => void;
 
   public readonly soundClip: SoundClip;

@@ -9,7 +9,7 @@
 
 import { Shape } from '../../../kite/js/imports.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Color, DragListener, KeyboardDragListener, Node, Path, Text } from '../../../scenery/js/imports.js';
+import { Color, DragListener, InteractiveHighlighting, KeyboardDragListener, Node, Path, PathOptions, Text } from '../../../scenery/js/imports.js';
 import VectorNode, { VectorNodeOptions } from './VectorNode.js';
 import Body from '../model/Body.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -91,7 +91,7 @@ export default class DraggableVectorNode extends VectorNode {
 
     // a circle with text (a character) in the center, to help indicate what it represents
     // ("v" for velocity in this sim)
-    const grabArea = new Path( Shape.circle( 0, 0, circleRadius ), {
+    const grabArea = new InteractivePath( Shape.circle( 0, 0, circleRadius ), {
       lineWidth: 3,
       stroke: Color.lightGray,
       cursor: 'pointer',
@@ -209,6 +209,12 @@ export default class DraggableVectorNode extends VectorNode {
 
     super.dispose();
   }
+}
+
+class InteractivePath extends InteractiveHighlighting( Path ) {
+    public constructor( shape: Shape, options?: PathOptions ) {
+      super( shape, options );
+    }
 }
 
 solarSystemCommon.register( 'DraggableVectorNode', DraggableVectorNode );
