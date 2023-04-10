@@ -226,7 +226,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
    * Sets the available bodies initial states according to bodiesInfo
    */
   public loadBodyStates( bodiesInfo: BodyInfo[], preventCollision = false ): void {
-    const activeIndeces = bodiesInfo.map( bodyInfo => bodyInfo.index );
+    const activeIndices = bodiesInfo.map( bodyInfo => bodyInfo.index );
 
     bodiesInfo.forEach( bodyInfo => {
       const i = bodyInfo.index;
@@ -245,7 +245,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
 
     for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
-      if ( !activeIndeces.includes( i ) ) {
+      if ( !activeIndices.includes( i ) ) {
         this.availableBodies[ i ].isActiveProperty.value = false;
       }
     }
