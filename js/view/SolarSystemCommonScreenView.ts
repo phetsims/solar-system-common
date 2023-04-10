@@ -137,7 +137,11 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         body.positionProperty,
         1,
         SolarSystemCommonStrings.VStringProperty,
-        combineOptions<DraggableVectorNodeOptions>( { fill: PhetColorScheme.VELOCITY, soundViewNode: this }, options )
+        combineOptions<DraggableVectorNodeOptions>( {
+          fill: PhetColorScheme.VELOCITY,
+          soundViewNode: this,
+          mapPosition: this.constrainBoundaryViewPoint.bind( this )
+        }, options )
       );
     };
 
@@ -225,6 +229,10 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
       }
     );
+  }
+
+  public constrainBoundaryViewPoint( point: Vector2, radius: number ): Vector2 {
+    return point;
   }
 }
 

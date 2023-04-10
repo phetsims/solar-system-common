@@ -33,6 +33,9 @@ type SelfOptions = {
 
   // If a soundViewNode is provided, we'll hook up a soundClip to it and play sounds when it is visible
   soundViewNode?: Node | null;
+
+  // For drag "bounds"-like handling
+  mapPosition?: ( position: Vector2, radius: number ) => Vector2;
 };
 
 export type DraggableVectorNodeOptions = SelfOptions & VectorNodeOptions;
@@ -58,7 +61,8 @@ export default class DraggableVectorNode extends VectorNode {
       minimumMagnitude: 10,
       maxMagnitudeProperty: null,
 
-      soundViewNode: null
+      soundViewNode: null,
+      mapPosition: _.identity
     }, providedOptions );
 
     super(
@@ -86,13 +90,15 @@ export default class DraggableVectorNode extends VectorNode {
     }
 
     const circleRadius = 18;
+    const circleLineWidth = 3;
+    const circleOuterRadius = circleRadius + circleLineWidth / 2;
 
     const accessibleName = 'Velocity Body ' + ( body.index + 1 );
 
     // a circle with text (a character) in the center, to help indicate what it represents
     // ("v" for velocity in this sim)
     const grabArea = new InteractivePath( Shape.circle( 0, 0, circleRadius ), {
-      lineWidth: 3,
+      lineWidth: circleLineWidth,
       stroke: Color.lightGray,
       cursor: 'pointer',
 
@@ -150,6 +156,9 @@ export default class DraggableVectorNode extends VectorNode {
 
     const dragListener = new DragListener( {
       transform: transformProperty,
+      mapPosition: point => {
+        return options.mapPosition( point, circleOuterRadius );
+      },
       positionProperty: vectorPositionProperty,
       canStartPress: () => !body.userControlledVelocityProperty.value,
       start: () => {
