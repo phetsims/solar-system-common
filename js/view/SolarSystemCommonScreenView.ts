@@ -218,10 +218,6 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );
 
-    this.modelViewTransformProperty.lazyLink( () => {
-      this.model.userControlledProperty.value = true;
-    } );
-
     Multilink.multilink(
       [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
       ( visibleBounds, modelViewTransform ) => {
