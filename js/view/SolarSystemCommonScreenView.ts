@@ -196,7 +196,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
           maxTextWidth: 65,
           tandem: providedOptions.tandem.createTandem( 'clearButton' ),
           touchAreaXDilation: 10,
-          touchAreaYDilation: 10
+          touchAreaYDilation: 5
         } )
       ],
       spacing: 8
