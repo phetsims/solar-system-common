@@ -10,7 +10,7 @@ import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js'
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Range from '../../../dot/js/Range.js';
 import Property from '../../../axon/js/Property.js';
-import Mass_Slider_Bass_Pluck_mp3 from '../../sounds/Mass_Slider_Bass_Pluck_mp3.js';
+import brightMarimba_mp3 from '../../sounds/brightMarimba_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
@@ -30,18 +30,22 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
 
   public constructor( valueProperty: Property<number>, range: Range, providedOptions?: SolarSystemCommonNumberControlOptions ) {
 
+    const SLIDER_INITIAL_OUTPUT_LEVEL = 0.1;
+
     // This mapping function the same as in Greenhouse
     const playbackRateMapper = ( value: number ) => 0.5 + ( range.max - value ) / range.getLength();
-    const maxMassSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3, {
-      initialPlaybackRate: playbackRateMapper( range.max )
+    const maxMassSliderSoundClip = new SoundClip( brightMarimba_mp3, {
+      initialPlaybackRate: playbackRateMapper( range.max ),
+      initialOutputLevel: SLIDER_INITIAL_OUTPUT_LEVEL
     } );
-    const minMassSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3, {
-      initialPlaybackRate: playbackRateMapper( range.min )
+    const minMassSliderSoundClip = new SoundClip( brightMarimba_mp3, {
+      initialPlaybackRate: playbackRateMapper( range.min ),
+      initialOutputLevel: SLIDER_INITIAL_OUTPUT_LEVEL
     } );
     soundManager.addSoundGenerator( maxMassSliderSoundClip );
     soundManager.addSoundGenerator( minMassSliderSoundClip );
 
-    const massSliderSoundClip = new SoundClip( Mass_Slider_Bass_Pluck_mp3 );
+    const massSliderSoundClip = new SoundClip( brightMarimba_mp3, { initialOutputLevel: SLIDER_INITIAL_OUTPUT_LEVEL } );
     soundManager.addSoundGenerator( massSliderSoundClip );
 
     const valueChangeSoundGeneratorOptions = {
