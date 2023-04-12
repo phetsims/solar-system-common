@@ -189,6 +189,7 @@ export default class DraggableVectorNode extends VectorNode {
       dragListener.dispose();
       keyboardDragListener.dispose();
       vectorPositionProperty.dispose();
+      grabArea.dispose();
     } );
 
 
