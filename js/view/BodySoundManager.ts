@@ -69,7 +69,7 @@ export default class BodySoundManager {
     } ) );
 
     this.removalSoundClips = removalSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 2
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 2.3
     } ) );
 
     this.metronomeSoundClips = metronomeSounds.map( sound => new SoundClip( sound, {
