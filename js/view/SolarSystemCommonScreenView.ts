@@ -12,16 +12,14 @@ import ScreenView, { ScreenViewOptions } from '../../../joist/js/ScreenView.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { HBox, Node, TextOptions, VBox } from '../../../scenery/js/imports.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-import GridNode from '../../../scenery-phet/js/GridNode.js';
 import SolarSystemCommonTimeControlNode from './SolarSystemCommonTimeControlNode.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
-import { combineOptions } from '../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
@@ -37,13 +35,16 @@ import Range from '../../../dot/js/Range.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import BodySoundManager from './BodySoundManager.js';
+import GridNode from '../../../scenery-phet/js/GridNode.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 
 type SelfOptions = {
   playingAllowedProperty?: TReadOnlyProperty<boolean>;
+  centerOrbitOffset?: Vector2;
 };
 
-export type CommonScreenViewOptions = SelfOptions & ScreenViewOptions;
+export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class SolarSystemCommonScreenView extends ScreenView {
   protected readonly bodiesLayer = new Node();
@@ -58,10 +59,6 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
 
-  // View position of where the geometrical center of the orbit is located
-  // Used only on Keplers Laws but is defined here because of the Model View Transform
-  protected readonly orbitalCenterProperty: Property<Vector2>;
-
   protected readonly modelViewTransformProperty: ReadOnlyProperty<ModelViewTransform2>;
 
   // Derived from visibleBoundsProperty to keep the UI elements centered on narrow screens
@@ -70,8 +67,15 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   protected readonly resetAllButton: ResetAllButton;
 
-  public constructor( public readonly model: SolarSystemCommonModel, providedOptions: CommonScreenViewOptions ) {
-    super( providedOptions );
+  public constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
+
+    const options = optionize<SolarSystemCommonScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+      playingAllowedProperty: new Property( true ),
+
+      centerOrbitOffset: Vector2.ZERO
+    }, providedOptions );
+
+    super( options );
 
     this.availableBoundsProperty = new DerivedProperty(
       [ this.visibleBoundsProperty ],
@@ -104,16 +108,14 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       } );
     } );
 
-    this.orbitalCenterProperty = new Vector2Property( this.layoutBounds.center );
-
     this.modelViewTransformProperty = new DerivedProperty(
-      [ model.zoomProperty, this.orbitalCenterProperty ],
-      ( zoom, orbitalCenter ) => {
+      [ model.zoomProperty ],
+      zoom => {
         return ModelViewTransform2.createSinglePointScaleInvertedYMapping(
           Vector2.ZERO,
           new Vector2(
-            orbitalCenter.x - SolarSystemCommonConstants.GRID_SPACING,
-            orbitalCenter.y - SolarSystemCommonConstants.GRID_SPACING ),
+            this.layoutBounds.center.x - options.centerOrbitOffset.x,
+            this.layoutBounds.center.y - options.centerOrbitOffset.y ),
           zoom );
       } );
 
@@ -167,10 +169,10 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
     const timeControlNode = new SolarSystemCommonTimeControlNode( model,
       {
-        enabledProperty: providedOptions.playingAllowedProperty || null,
+        enabledProperty: options.playingAllowedProperty || null,
         restartListener: () => model.restart(),
         stepForwardListener: () => model.stepOnce( 1 / 4 ),
-        tandem: providedOptions.tandem.createTandem( 'timeControlNode' )
+        tandem: options.tandem.createTandem( 'timeControlNode' )
       } );
 
     const timeStringPatternProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.labelUnitsStringProperty, {
@@ -212,7 +214,6 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
         measuringTapeNode.reset();
-        this.orbitalCenterProperty.reset();
       },
       touchAreaDilation: 10,
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
