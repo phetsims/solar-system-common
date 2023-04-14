@@ -51,6 +51,8 @@ type SelfOptions = {
   textOptions?: TextOptions;
   useCueingArrows?: boolean;
 
+  showVelocityIndex?: boolean;
+
   // If a soundViewNode is provided, we'll hook up a soundClip to it and play sounds when it is visible
   soundViewNode?: Node | null;
 };
@@ -90,6 +92,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       },
 
       useCueingArrows: false,
+      showVelocityIndex: true,
 
       // pdom
       tagName: 'div',
@@ -199,7 +202,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       )
     );
     const readoutStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
-      index: body.index + 1,
+      index: options.showVelocityIndex ? body.index + 1 : '',
       value: velocityValueProperty,
       units: SolarSystemCommonStrings.units.kmsStringProperty
     } );
