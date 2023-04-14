@@ -22,9 +22,9 @@ export const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METER
 
 const SolarSystemCommonConstants = {
 
-  MARGIN: 15,
-  SCREEN_VIEW_X_MARGIN: 15,
-  SCREEN_VIEW_Y_MARGIN: 15,
+  MARGIN: 10,
+  SCREEN_VIEW_X_MARGIN: 10,
+  SCREEN_VIEW_Y_MARGIN: 10,
 
   // Max width for many of the text labels
   TEXT_MAX_WIDTH: 200,
