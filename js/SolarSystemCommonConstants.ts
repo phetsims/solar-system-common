@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Constants used throughout this simulation.
+ * Constants used throughout the My Solar System and Kepler's Laws Simulations.
  *
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
