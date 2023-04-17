@@ -19,8 +19,8 @@ import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import NumberControl, { NumberControlOptions } from '../../../scenery-phet/js/NumberControl.js';
 import { HBox } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -32,36 +32,24 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
 
     const SLIDER_INITIAL_OUTPUT_LEVEL = 0.1;
 
-    // This mapping function the same as in Greenhouse
+    // Create a function to map the mass value to the playback rate of the associated sound.
     const playbackRateMapper = ( value: number ) => 0.5 + ( range.max - value ) / range.getLength();
-    const maxMassSliderSoundClip = new SoundClip( brightMarimba_mp3, {
-      initialPlaybackRate: playbackRateMapper( range.max ),
-      initialOutputLevel: SLIDER_INITIAL_OUTPUT_LEVEL
-    } );
-    const minMassSliderSoundClip = new SoundClip( brightMarimba_mp3, {
-      initialPlaybackRate: playbackRateMapper( range.min ),
-      initialOutputLevel: SLIDER_INITIAL_OUTPUT_LEVEL
-    } );
-    soundManager.addSoundGenerator( maxMassSliderSoundClip );
-    soundManager.addSoundGenerator( minMassSliderSoundClip );
 
+    // sound clip for mass changes
     const massSliderSoundClip = new SoundClip( brightMarimba_mp3, { initialOutputLevel: SLIDER_INITIAL_OUTPUT_LEVEL } );
     soundManager.addSoundGenerator( massSliderSoundClip );
 
     const valueChangeSoundGeneratorOptions = {
       middleMovingUpSoundPlayer: massSliderSoundClip,
       middleMovingDownSoundPlayer: massSliderSoundClip,
-
-      minSoundPlayer: minMassSliderSoundClip,
-      maxSoundPlayer: maxMassSliderSoundClip,
+      minSoundPlayer: ValueChangeSoundPlayer.USE_MIDDLE_SOUND,
+      maxSoundPlayer: ValueChangeSoundPlayer.USE_MIDDLE_SOUND,
       middleMovingUpPlaybackRateMapper: playbackRateMapper,
-
       interThresholdDelta: SolarSystemCommonConstants.SLIDER_STEP - 0.1
     };
 
-    const valueChangeSoundGenerator = new ValueChangeSoundPlayer( range, valueChangeSoundGeneratorOptions );
-
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
+      valueChangeSoundGeneratorOptions: valueChangeSoundGeneratorOptions,
       sliderOptions: {
         trackSize: new Dimension2( 226, 2 ),
         thumbSize: new Dimension2( 15, 25 ),
@@ -69,7 +57,6 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         thumbCenterLineStroke: 'black',
         trackFillEnabled: SolarSystemCommonColors.foregroundProperty,
         trackStroke: SolarSystemCommonColors.foregroundProperty,
-        soundGenerator: valueChangeSoundGenerator,
 
         //a11y
         accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty
@@ -85,8 +72,7 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         stroke: 'black',
         lineWidth: 1,
         scale: 0.8,
-        touchAreaYDilation: 2.5,
-        soundPlayer: massSliderSoundClip
+        touchAreaYDilation: 2.5
       },
       layoutFunction: ( titleNode, numberDisplay, slider, decrementButton, incrementButton ) => {
         assert && assert( decrementButton && incrementButton );
