@@ -63,7 +63,7 @@ export default class Body {
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
-    // Data for rendering the path as a WebGL object
+    // Data for rendering the path
     this.pathPoints = createObservableArray();
   }
 
