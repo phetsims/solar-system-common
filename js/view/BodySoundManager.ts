@@ -69,7 +69,7 @@ export default class BodySoundManager {
     } ) );
 
     this.removalSoundClips = removalSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 2.3
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL * 2
     } ) );
 
     this.metronomeSoundClips = metronomeSounds.map( sound => new SoundClip( sound, {
@@ -79,6 +79,9 @@ export default class BodySoundManager {
     this.bodyNumberSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
     this.removalSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
     this.metronomeSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
+
+    // Increasing the level of the collision sound
+    this.removalSoundClips[ this.removalSoundClips.length - 1 ].setOutputLevel( 10 );
   }
 
   public playBodyAddedSound( bodyNumber: number ): void {
