@@ -93,6 +93,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   // Indicates if any body is far from the play area
   public readonly isAnyBodyEscapedProperty: ReadOnlyProperty<boolean>;
+  public readonly isAnyBodyCollidedProperty = new BooleanProperty( false );
 
   // Indicates if any force arrow is currently off scale
   public readonly forceScaleProperty: NumberProperty; // Power of 10 to which the force is scaled
@@ -152,18 +153,24 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       }
     } );
 
-    this.isAnyBodyEscapedProperty = DerivedProperty.or( this.availableBodies.map( body => body.escapedProperty ) );
+    this.isAnyBodyEscapedProperty = DerivedProperty.or( [ ...this.availableBodies.map( body => body.escapedProperty ), this.isAnyBodyCollidedProperty ] );
 
     this.isAnyForceOffscaleProperty = DerivedProperty.or( this.availableBodies.map( body => body.forceOffscaleProperty ) );
 
     this.availableBodies.forEach( body => {
+      body.collidedEmitter.addListener( () => {
+        this.isAnyBodyCollidedProperty.value = true;
+      } );
+
       Multilink.lazyMultilink(
         [ body.userControlledPositionProperty, body.userControlledVelocityProperty, body.userControlledMassProperty ],
         ( userControlledPosition: boolean, userControlledVelocity: boolean, userControlledMass: boolean ) => {
           if ( userControlledPosition || userControlledVelocity ) {
             this.isPlayingProperty.value = false;
           }
-          this.saveStartingBodyState();
+          if ( !this.isAnyBodyCollidedProperty.value ) {
+            this.saveStartingBodyState();
+          }
           this.userInteractingEmitter.emit();
           this.userControlledProperty.value = true;
         }
@@ -315,6 +322,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Restart is for when the time controls are brought back to 0
   // Bodies move to their last modified position
   public restart(): void {
+    this.isAnyBodyCollidedProperty.reset();
     this.hasPlayedProperty.value = false;
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
