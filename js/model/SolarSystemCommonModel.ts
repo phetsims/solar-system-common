@@ -190,11 +190,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.timeProperty = new NumberProperty( 0 );
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
-    this.isPlayingProperty.link( isPlaying => {
-      if ( isPlaying ) {
-        this.userControlledProperty.value = true;
-      }
-    } );
 
     // Visibility properties for checkboxes
     this.pathVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
