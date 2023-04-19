@@ -168,7 +168,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           if ( userControlledPosition || userControlledVelocity ) {
             this.isPlayingProperty.value = false;
           }
-          if ( !this.isAnyBodyCollidedProperty.value ) {
+          if ( !this.isAnyBodyEscapedProperty.value ) {
             this.saveStartingBodyState();
           }
           this.userInteractingEmitter.emit();
