@@ -77,10 +77,7 @@ const SolarSystemCommonConstants = {
   // Multipliers that modify the numeric value shown in Number Displays
   POSITION_MULTIPLIER: 0.01, // Transforms from model units to AU
   VELOCITY_MULTIPLIER: VELOCITY_MULTIPLIER, // Transforms from model units to AU/yr then to km/s
-  TIME_MULTIPLIER: TIME_MULTIPLIER, // Transforms from model units to years
-
-  MAX_ORBITAL_DIVISIONS: 6,
-  MIN_ORBITAL_DIVISIONS: 2
+  TIME_MULTIPLIER: TIME_MULTIPLIER // Transforms from model units to years
 };
 
 solarSystemCommon.register( 'SolarSystemCommonConstants', SolarSystemCommonConstants );
