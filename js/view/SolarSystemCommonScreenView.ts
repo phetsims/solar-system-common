@@ -37,6 +37,10 @@ import solarSystemCommon from '../solarSystemCommon.js';
 import BodySoundManager from './BodySoundManager.js';
 import GridNode from '../../../scenery-phet/js/GridNode.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
+import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../tambo/js/soundManager.js';
+import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
+import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 
 
 type SelfOptions = {
@@ -151,6 +155,14 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
     const measuringTapeUnitsProperty = new Property( { name: 'AU', multiplier: 0.01 } );
 
+    const dragClipOptions = {
+      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+    };
+    const grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
+    const releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
+    soundManager.addSoundGenerator( grabClip );
+    soundManager.addSoundGenerator( releaseClip );
+
     // Add the MeasuringTapeNode
     const measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
       visibleProperty: model.measuringTapeVisibleProperty,
@@ -162,7 +174,9 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       basePositionProperty: new Vector2Property( new Vector2( 0, 100 ) ),
       tipPositionProperty: new Vector2Property( new Vector2( 100, 100 ) ),
       tandem: providedOptions.tandem.createTandem( 'measuringTapeNode' ),
-      significantFigures: 2
+      significantFigures: 2,
+      baseDragStarted: () => grabClip.play(),
+      baseDragEnded: () => releaseClip.play()
     } );
     this.topLayer.addChild( measuringTapeNode );
 
