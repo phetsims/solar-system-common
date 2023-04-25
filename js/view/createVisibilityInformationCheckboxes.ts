@@ -6,7 +6,7 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { colorProfileProperty, HBox, Image, SceneryConstants, Text, TextOptions } from '../../../scenery/js/imports.js';
+import { HBox, Text, TextOptions } from '../../../scenery/js/imports.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import GridNode from '../../../scenery-phet/js/GridNode.js';
@@ -20,8 +20,6 @@ import SolarSystemCommonCheckbox from './SolarSystemCommonCheckbox.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
 import solarSystemCommon from '../solarSystemCommon.js';
-import pathIcon_png from '../../images/pathIcon_png.js';
-import pathIconProjector_png from '../../images/pathIconProjector_png.js';
 
 // constants
 const TEXT_OPTIONS = combineOptions<TextOptions>( {
@@ -32,23 +30,7 @@ const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, t
 
   const measuringTapeIcon = MeasuringTapeNode.createIcon( { scale: 0.3 } );
 
-  const pathIconImageNode = new Image( pathIcon_png, { scale: 0.25 } );
-  colorProfileProperty.lazyLink( ( profileName: string ) => {
-    assert && assert( profileName === SceneryConstants.DEFAULT_COLOR_PROFILE || profileName === SceneryConstants.PROJECTOR_COLOR_PROFILE );
-    pathIconImageNode.setImage( profileName === SceneryConstants.PROJECTOR_COLOR_PROFILE ? pathIconProjector_png : pathIcon_png );
-  } );
-
   return [
-    new SolarSystemCommonCheckbox( model.pathVisibleProperty, new HBox( {
-      spacing: 10,
-      children: [
-        new Text( SolarSystemCommonStrings.pathStringProperty, TEXT_OPTIONS ),
-        pathIconImageNode
-      ]
-    } ), {
-      tandem: tandem.createTandem( 'pathVisibleCheckbox' ),
-      accessibleName: SolarSystemCommonStrings.pathStringProperty
-    } ),
     new SolarSystemCommonCheckbox( model.gridVisibleProperty, new HBox( {
       spacing: 10,
       children: [
