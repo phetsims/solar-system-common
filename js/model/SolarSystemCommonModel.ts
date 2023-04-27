@@ -101,8 +101,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
-    { mass: 200, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -5 ), active: true },
-    { mass: 10, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 100 ), active: true }
+    { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -5.45 ) },
+    { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111.8 ) }
   ];
   protected defaultBodyState: BodyInfo[];
 
