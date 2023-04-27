@@ -121,8 +121,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
 
     this.availableBodies = [
-      new Body( 0, 200, new Vector2( 0, 0 ), new Vector2( 0, -5 ), this.userControlledProperty, SolarSystemCommonColors.firstBodyColorProperty ),
-      new Body( 1, 10, new Vector2( 200, 0 ), new Vector2( 0, 100 ), this.userControlledProperty, SolarSystemCommonColors.secondBodyColorProperty ),
+      new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -5.45 ), this.userControlledProperty, SolarSystemCommonColors.firstBodyColorProperty ),
+      new Body( 1, 25, new Vector2( 200, 0 ), new Vector2( 0, 111.8 ), this.userControlledProperty, SolarSystemCommonColors.secondBodyColorProperty ),
       new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.thirdBodyColorProperty ),
       new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.fourthBodyColorProperty )
     ];
