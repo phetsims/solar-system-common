@@ -198,7 +198,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       [ this.body.velocityProperty ],
       ( velocity: Vector2 ) => Utils.toFixed(
         velocity.magnitude * SolarSystemCommonConstants.VELOCITY_MULTIPLIER,
-        1
+        2
       )
     );
     const readoutStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
