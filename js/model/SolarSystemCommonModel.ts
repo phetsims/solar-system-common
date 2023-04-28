@@ -101,8 +101,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
-    { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -5.45 ) },
-    { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111.8 ) }
+    { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -11.1 ) },
+    { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111 ) }
   ];
   protected defaultBodyState: BodyInfo[];
 
@@ -121,8 +121,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
 
     this.availableBodies = [
-      new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -5.45 ), this.userControlledProperty, SolarSystemCommonColors.firstBodyColorProperty ),
-      new Body( 1, 25, new Vector2( 200, 0 ), new Vector2( 0, 111.8 ), this.userControlledProperty, SolarSystemCommonColors.secondBodyColorProperty ),
+      new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.firstBodyColorProperty ),
+      new Body( 1, 25, new Vector2( 200, 0 ), new Vector2( 0, 111 ), this.userControlledProperty, SolarSystemCommonColors.secondBodyColorProperty ),
       new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.thirdBodyColorProperty ),
       new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.fourthBodyColorProperty )
     ];
