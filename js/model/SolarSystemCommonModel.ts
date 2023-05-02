@@ -340,7 +340,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     adjustedDT /= count;
 
     for ( let i = 0; i < count; i++ ) {
-      this.engine.run( adjustedDT );
+      // Only modify the properties on the last step
+      const updateProperties = i === count - 1;
+      this.engine.run( adjustedDT, updateProperties );
       this.engine.checkCollisions();
       this.timeProperty.value += adjustedDT * this.timeMultiplier;
       if ( this.pathVisibleProperty ) {

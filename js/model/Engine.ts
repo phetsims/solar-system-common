@@ -20,7 +20,7 @@ export default abstract class Engine {
   public checkCollisions(): void {
     // no-op
   }
-  public abstract run( dt: number ): void;
+  public abstract run( dt: number, updateProperties: boolean ): void;
   public abstract update( bodies: ObservableArray<Body> ): void;
   public abstract reset(): void;
 }
