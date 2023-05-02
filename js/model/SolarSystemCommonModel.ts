@@ -163,8 +163,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       } );
 
       Multilink.lazyMultilink(
-        [ body.userControlledPositionProperty, body.userControlledVelocityProperty, body.userControlledMassProperty ],
-        ( userControlledPosition: boolean, userControlledVelocity: boolean, userControlledMass: boolean ) => {
+        [ body.userControlledPositionProperty, body.userControlledVelocityProperty, body.massProperty ],
+        ( userControlledPosition: boolean, userControlledVelocity: boolean, mass: number ) => {
           if ( userControlledPosition || userControlledVelocity ) {
             this.isPlayingProperty.value = false;
           }
