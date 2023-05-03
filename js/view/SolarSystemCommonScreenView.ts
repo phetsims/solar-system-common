@@ -208,6 +208,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         } ),
         new TextPushButton( SolarSystemCommonStrings.clearStringProperty, {
           font: new PhetFont( 16 ),
+          enabledProperty: new DerivedProperty( [ model.timeProperty ], time => time > 0 ),
           listener: () => model.timeProperty.reset(),
           maxTextWidth: 65,
           tandem: providedOptions.tandem.createTandem( 'clearButton' ),
