@@ -106,8 +106,8 @@ export default class Body {
   public get info(): BodyInfo {
     return {
       mass: this.massProperty.value,
-      position: this.positionProperty.value,
-      velocity: this.velocityProperty.value,
+      position: this.positionProperty.value.copy(),
+      velocity: this.velocityProperty.value.copy(),
       active: this.isActiveProperty.value
     };
   }
