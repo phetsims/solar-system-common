@@ -83,7 +83,7 @@ export default class Body {
    * This also removes points when the path gets too long.
    */
   public addPathPoint(): void {
-    const pathPoint = this.positionProperty.value;
+    const pathPoint = this.positionProperty.value.copy();
 
     // Only add or remove points if the body is effectively moving
     if ( this.pathPoints.length === 0 || !pathPoint.equals( this.pathPoints[ this.pathPoints.length - 1 ] ) ) {
