@@ -263,6 +263,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.saveStartingBodyState();
 
     this.bodyAddedEmitter.emit();
+    this.isAnyBodyCollidedProperty.reset();
   }
 
   public removeLastBody(): void {
@@ -272,26 +273,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.saveStartingBodyState();
 
     this.bodyRemovedEmitter.emit();
-  }
-
-  public returnEscapedBodies( stateToReturn?: BodyInfo[] ): void {
-    // Create a sim state where escaped bodies go back to default state
-    // Non-escaped bodies stay the same
-    const newBodyState = this.bodies.map( body => {
-      if ( body.escapedProperty.value ) {
-        body.escapedProperty.value = false;
-        const bodyState = stateToReturn && stateToReturn[ body.index ] ? stateToReturn[ body.index ] : this.defaultBodyState[ body.index ];
-        bodyState.active = true;
-        bodyState.mass = body.massProperty.value;
-        return bodyState;
-      }
-      else {
-        return body.info;
-      }
-    } );
-
-    this.isPlayingProperty.value = false; // Pause the sim
-    this.loadBodyStates( newBodyState, true );
+    this.isAnyBodyCollidedProperty.reset();
   }
 
   public reset(): void {
