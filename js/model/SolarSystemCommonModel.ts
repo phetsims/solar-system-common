@@ -41,7 +41,7 @@ type SelfOptions<EngineType extends Engine> = {
   isLab: boolean;
   tandem: Tandem;
   timeScale?: number;
-  timeMultiplier?: number;
+  modelToViewTime?: number;
 };
 
 export type BodyInfo = {
@@ -68,7 +68,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   // Time control parameters
   public timeScale: number; // Scale of the model's dt
-  public timeMultiplier: number; // Transform between model's and view's times
+  public modelToViewTime: number; // Transform between model's and view's times
   public readonly timeProperty: NumberProperty;
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
@@ -110,7 +110,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     const options = optionize<CommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
-      timeMultiplier: SolarSystemCommonConstants.TIME_MULTIPLIER
+      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
     const tandem = options.tandem;
@@ -186,7 +186,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     // Time settings
     // timeScale controls the velocity of time
     this.timeScale = options.timeScale;
-    this.timeMultiplier = options.timeMultiplier;
+    this.modelToViewTime = options.modelToViewTime;
     this.timeProperty = new NumberProperty( 0 );
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
@@ -326,7 +326,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       const updateProperties = i === count - 1;
       this.engine.run( adjustedDT, updateProperties );
       this.engine.checkCollisions();
-      this.timeProperty.value += adjustedDT * this.timeMultiplier;
+      this.timeProperty.value += adjustedDT * this.modelToViewTime;
       if ( this.pathVisibleProperty ) {
         this.bodies.forEach( body => body.addPathPoint() );
       }
