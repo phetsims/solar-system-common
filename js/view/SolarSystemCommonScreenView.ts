@@ -204,7 +204,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
           xMargin: 0,
           yMargin: 0,
           valuePattern: timeStringPatternProperty,
-          decimalPlaces: 1
+          decimalPlaces: 2
         } ),
         new TextPushButton( SolarSystemCommonStrings.clearStringProperty, {
           font: new PhetFont( 16 ),

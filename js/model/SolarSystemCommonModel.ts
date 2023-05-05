@@ -318,6 +318,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public stepOnce( dt: number ): void {
     this.hasPlayedProperty.value = true;
     let adjustedDT = dt * timeFormatter.get( this.timeSpeedProperty.value )! * this.timeScale;
+
+    // Limit the number of steps to 50 per frame
     const count = Math.ceil( adjustedDT / 0.02 );
     adjustedDT /= count;
 
