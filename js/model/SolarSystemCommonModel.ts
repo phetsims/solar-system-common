@@ -329,7 +329,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       this.engine.run( adjustedDT, updateProperties );
       this.engine.checkCollisions();
       this.timeProperty.value += adjustedDT * this.modelToViewTime;
-      if ( this.pathVisibleProperty ) {
+      if ( this.pathVisibleProperty.value ) {
         this.bodies.forEach( body => body.addPathPoint() );
       }
     }
