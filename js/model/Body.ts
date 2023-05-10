@@ -57,8 +57,8 @@ export default class Body {
     this.radiusProperty = new NumberProperty( 1 );
     this.positionProperty = new Vector2Property( initialPosition );
     this.velocityProperty = new Vector2Property( initialVelocity );
-    this.accelerationProperty = new Vector2Property( Vector2.ZERO );
-    this.forceProperty = new Vector2Property( Vector2.ZERO );
+    this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    this.forceProperty = new Vector2Property( new Vector2( 0, 0 ) );
     this.colorProperty = colorProperty;
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
