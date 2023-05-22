@@ -223,6 +223,9 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       center: new Vector2( 0, 30 )
     } );
     this.addChild( valueContainer );
+    this.body.velocityProperty.link( velocity => {
+      valueContainer.center = new Vector2( 0, velocity.y > 0 ? 30 : -30 );
+    } );
 
     const bodyCollisionListener = () => {
       this.interruptSubtreeInput();
