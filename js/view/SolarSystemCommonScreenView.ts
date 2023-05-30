@@ -254,7 +254,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     Multilink.multilink(
       [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
       ( visibleBounds, modelViewTransform ) => {
-        measuringTapeNode.setDragBounds( modelViewTransform.viewToModelBounds( visibleBounds.eroded( 50 ) ) );
+        measuringTapeNode.setDragBounds( modelViewTransform.viewToModelBounds( visibleBounds.eroded( 10 ) ) );
         measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
       }
     );
