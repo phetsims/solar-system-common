@@ -11,7 +11,7 @@ import Multilink from '../../../axon/js/Multilink.js';
 import ScreenView, { ScreenViewOptions } from '../../../joist/js/ScreenView.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { HBox, Node, TextOptions, VBox } from '../../../scenery/js/imports.js';
+import { HBox, Node, Path, TextOptions, VBox } from '../../../scenery/js/imports.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonTimeControlNode from './SolarSystemCommonTimeControlNode.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
@@ -41,11 +41,18 @@ import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
+import { Shape } from '../../../kite/js/imports.js';
 
 
 type SelfOptions = {
   playingAllowedProperty?: TReadOnlyProperty<boolean>;
   centerOrbitOffset?: Vector2;
+};
+
+export type BodyBoundsItem = {
+  node: Node;
+  expandX: 'left' | 'right';
+  expandY: 'top' | 'bottom';
 };
 
 export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -71,6 +78,8 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   protected readonly resetAllButton: ResetAllButton;
 
+  private readonly dragDebugPath: Path;
+
   public constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
 
     const options = optionize<SolarSystemCommonScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
@@ -80,6 +89,14 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     }, providedOptions );
 
     super( options );
+
+    this.dragDebugPath = new Path( null, {
+      stroke: 'red',
+      fill: 'rgba(255,0,0,0.2)'
+    } );
+    if ( phet.chipper.queryParameters.dev ) {
+      this.addChild( this.dragDebugPath );
+    }
 
     this.availableBoundsProperty = new DerivedProperty(
       [ this.visibleBoundsProperty ],
@@ -243,8 +260,74 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     );
   }
 
+  /**
+   * Return the bounds items that should be used to constrain the areas for body dragging.
+   */
+  public getBodyBoundsItems(): BodyBoundsItem[] {
+    return [
+      {
+        node: this.resetAllButton,
+        expandX: 'right',
+        expandY: 'bottom'
+      }
+    ];
+  }
+
   public constrainBoundaryViewPoint( point: Vector2, radius: number ): Vector2 {
-    return point;
+
+    const bodyBoundsItems = this.getBodyBoundsItems();
+
+    if ( !_.every( [ this.dragDebugPath, ...bodyBoundsItems.map( item => item.node ) ] ) ) {
+      return point;
+    }
+
+
+    const mvt = this.modelViewTransformProperty.value;
+
+    const expandToTop = ( bounds: Bounds2 ) => bounds.withMinY( this.layoutBounds.minY );
+    const expandToBottom = ( bounds: Bounds2 ) => bounds.withMaxY( this.layoutBounds.maxY );
+    const expandToLeft = ( bounds: Bounds2 ) => bounds.withMinX( this.visibleBoundsProperty.value.minX );
+    const expandToRight = ( bounds: Bounds2 ) => bounds.withMaxX( this.visibleBoundsProperty.value.maxX );
+
+    // Use visible bounds (horizontally) and layout bounds (vertically) to create the main shape
+    let shape = Shape.bounds( mvt.viewToModelBounds( expandToLeft( expandToRight( this.layoutBounds ) ).eroded( radius ) ) );
+
+    bodyBoundsItems.forEach( item => {
+      if ( item.node.visible ) {
+        let viewBounds = this.boundsOf( item.node );
+        if ( viewBounds.isValid() ) {
+          if ( item.expandX === 'left' ) {
+            viewBounds = expandToLeft( viewBounds );
+          }
+          else if ( item.expandX === 'right' ) {
+            viewBounds = expandToRight( viewBounds );
+          }
+
+          if ( item.expandY === 'top' ) {
+            viewBounds = expandToTop( viewBounds );
+          }
+          else if ( item.expandY === 'bottom' ) {
+            viewBounds = expandToBottom( viewBounds );
+          }
+
+          const modelBounds = mvt.viewToModelBounds( viewBounds.dilated( radius ) );
+
+          shape = shape.shapeDifference( Shape.bounds( modelBounds ) );
+        }
+      }
+    } );
+
+    // Only show drag debug path if ?dev is specified, temporarily for https://github.com/phetsims/my-solar-system/issues/129
+    if ( phet.chipper.queryParameters.dev ) {
+      this.dragDebugPath.shape = mvt.modelToViewShape( shape );
+    }
+
+    if ( shape.containsPoint( point ) || shape.getArea() === 0 ) {
+      return point;
+    }
+    else {
+      return shape.getClosestPoint( point );
+    }
   }
 }
 
