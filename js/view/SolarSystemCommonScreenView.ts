@@ -42,6 +42,7 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import { Shape } from '../../../kite/js/imports.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 
 type SelfOptions = {
@@ -208,7 +209,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
     const timeStringPatternProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.labelUnitsStringProperty, {
       units: SolarSystemCommonStrings.units.yearsStringProperty
-    } );
+    }, { tandem: Tandem.OPT_OUT } );
 
     const clockNode = new HBox( {
       children: [
