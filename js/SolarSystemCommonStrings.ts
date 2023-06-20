@@ -5,57 +5,57 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import LinkableProperty from '../../axon/js/LinkableProperty.js';
+import type LocalizedStringProperty from '../../chipper/js/LocalizedStringProperty.js';
 import solarSystemCommon from './solarSystemCommon.js';
 
 type StringsType = {
   'gravityForce': string;
-  'gravityForceStringProperty': LinkableProperty<string>;
+  'gravityForceStringProperty': LocalizedStringProperty;
   'grid': string;
-  'gridStringProperty': LinkableProperty<string>;
+  'gridStringProperty': LocalizedStringProperty;
   'measuringTape': string;
-  'measuringTapeStringProperty': LinkableProperty<string>;
+  'measuringTapeStringProperty': LocalizedStringProperty;
   'velocity': string;
-  'velocityStringProperty': LinkableProperty<string>;
+  'velocityStringProperty': LocalizedStringProperty;
   'V': string;
-  'VStringProperty': LinkableProperty<string>;
+  'VStringProperty': LocalizedStringProperty;
   'clear': string;
-  'clearStringProperty': LinkableProperty<string>;
+  'clearStringProperty': LocalizedStringProperty;
   'path': string;
-  'pathStringProperty': LinkableProperty<string>;
+  'pathStringProperty': LocalizedStringProperty;
   'zoom': string;
-  'zoomStringProperty': LinkableProperty<string>;
+  'zoomStringProperty': LocalizedStringProperty;
   'offscaleMessage': string;
-  'offscaleMessageStringProperty': LinkableProperty<string>;
+  'offscaleMessageStringProperty': LocalizedStringProperty;
   'speed': string;
-  'speedStringProperty': LinkableProperty<string>;
+  'speedStringProperty': LocalizedStringProperty;
   'units': {
     'AU': string;
-    'AUStringProperty': LinkableProperty<string>;
+    'AUStringProperty': LocalizedStringProperty;
     'years': string;
-    'yearsStringProperty': LinkableProperty<string>;
+    'yearsStringProperty': LocalizedStringProperty;
     'kms': string;
-    'kmsStringProperty': LinkableProperty<string>;
+    'kmsStringProperty': LocalizedStringProperty;
   };
   'pattern': {
     'labelUnits': string;
-    'labelUnitsStringProperty': LinkableProperty<string>;
+    'labelUnitsStringProperty': LocalizedStringProperty;
     'velocityValueUnits': string;
-    'velocityValueUnitsStringProperty': LinkableProperty<string>;
+    'velocityValueUnitsStringProperty': LocalizedStringProperty;
     'unitsPower': string;
-    'unitsPowerStringProperty': LinkableProperty<string>;
+    'unitsPowerStringProperty': LocalizedStringProperty;
   };
   'a11y': {
     'restart': string;
-    'restartStringProperty': LinkableProperty<string>;
+    'restartStringProperty': LocalizedStringProperty;
     'massSlider': string;
-    'massSliderStringProperty': LinkableProperty<string>;
+    'massSliderStringProperty': LocalizedStringProperty;
     'scaleSlider': string;
-    'scaleSliderStringProperty': LinkableProperty<string>;
+    'scaleSliderStringProperty': LocalizedStringProperty;
     'increase': string;
-    'increaseStringProperty': LinkableProperty<string>;
+    'increaseStringProperty': LocalizedStringProperty;
     'decrease': string;
-    'decreaseStringProperty': LinkableProperty<string>;
+    'decreaseStringProperty': LocalizedStringProperty;
   }
 };
 
