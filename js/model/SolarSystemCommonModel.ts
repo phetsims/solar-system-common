@@ -8,7 +8,6 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import Tandem from '../../../tandem/js/Tandem.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import Body from './Body.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
@@ -29,6 +28,8 @@ import Emitter from '../../../axon/js/Emitter.js';
 import LabMode from './LabMode.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
+import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 
 const timeFormatter = new Map<TimeSpeed, number>( [
   [ TimeSpeed.FAST, 7 / 4 ],
@@ -39,10 +40,9 @@ const timeFormatter = new Map<TimeSpeed, number>( [
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
   isLab: boolean;
-  tandem: Tandem;
   timeScale?: number;
   modelToViewTime?: number;
-};
+} & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export type BodyInfo = {
   mass: number;
