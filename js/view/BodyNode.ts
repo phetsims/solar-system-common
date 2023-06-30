@@ -46,6 +46,9 @@ const bodySounds = [
 
 type SelfOptions = {
   draggable?: boolean;
+  dragVelocity?: number;
+  shiftDragVelocity?: number;
+
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
   valuesVisibleProperty?: TReadOnlyProperty<boolean>;
   rectangleOptions?: RectangleOptions;
@@ -72,6 +75,10 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
       draggable: true,
+
+      // Velocities for keyboard drag controls
+      dragVelocity: 450,
+      shiftDragVelocity: 100,
 
       mainColor: body.colorProperty,
 
@@ -182,8 +189,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         {
           positionProperty: body.positionProperty,
           transform: modelViewTransformProperty,
-          dragVelocity: 450,
-          shiftDragVelocity: 100,
+          dragVelocity: options.dragVelocity,
+          shiftDragVelocity: options.shiftDragVelocity,
           start: start,
           end: end,
           mapPosition: map

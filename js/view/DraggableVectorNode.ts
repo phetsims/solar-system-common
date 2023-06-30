@@ -36,6 +36,10 @@ type SelfOptions = {
 
   // For drag "bounds"-like handling
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
+
+  // Velocities for keyboard drag controls
+  dragVelocity?: number;
+  shiftDragVelocity?: number;
 };
 
 export type DraggableVectorNodeOptions = SelfOptions & VectorNodeOptions;
@@ -62,7 +66,10 @@ export default class DraggableVectorNode extends VectorNode {
       maxMagnitudeProperty: null,
 
       soundViewNode: null,
-      mapPosition: _.identity
+      mapPosition: _.identity,
+
+      dragVelocity: 450,
+      shiftDragVelocity: 100
     }, providedOptions );
 
     super(
@@ -175,8 +182,8 @@ export default class DraggableVectorNode extends VectorNode {
     const keyboardDragListener = new KeyboardDragListener( {
       positionProperty: vectorProperty,
       transform: transformProperty,
-      dragVelocity: 450,
-      shiftDragVelocity: 100,
+      dragVelocity: options.dragVelocity,
+      shiftDragVelocity: options.shiftDragVelocity,
       start: () => {
         dragListener.interrupt();
         start();
