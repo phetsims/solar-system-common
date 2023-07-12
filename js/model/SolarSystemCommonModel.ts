@@ -83,8 +83,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly moreDataProperty: BooleanProperty;
   public readonly realUnitsProperty: BooleanProperty;
 
-  public readonly zoomLevelProperty: NumberProperty;
-  public readonly zoomProperty: ReadOnlyProperty<number>;
+  public zoomLevelProperty: NumberProperty;
+  public zoomProperty: ReadOnlyProperty<number>;
   public readonly isLab: boolean;
   public readonly labModeProperty: EnumerationProperty<LabMode>;
 
