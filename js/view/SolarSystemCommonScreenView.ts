@@ -194,7 +194,11 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       tandem: providedOptions.tandem.createTandem( 'measuringTapeNode' ),
       significantFigures: 2,
       baseDragStarted: () => grabClip.play(),
-      baseDragEnded: () => releaseClip.play()
+      baseDragEnded: () => releaseClip.play(),
+      keyboardDragListenerOptions: {
+        baseShiftDragVelocity: 100,
+        tipShiftDragVelocity: 100
+      }
     } );
     this.topLayer.addChild( measuringTapeNode );
 
