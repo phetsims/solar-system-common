@@ -28,7 +28,7 @@ const TEXT_OPTIONS = combineOptions<TextOptions>( {
   maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH
 }, SolarSystemCommonConstants.TEXT_OPTIONS );
 
-const createVisibilityInformationCheckboxes = ( model: SolarSystemCommonModel, tandem: Tandem, usePath = true ): SolarSystemCommonCheckbox[] => {
+const createVisibilityInformationCheckboxes = ( model: Pick<SolarSystemCommonModel, 'pathVisibleProperty' | 'gridVisibleProperty' | 'measuringTapeVisibleProperty'>, tandem: Tandem, usePath = true ): SolarSystemCommonCheckbox[] => {
 
   const measuringTapeIcon = MeasuringTapeNode.createIcon( { scale: 0.3 } );
 

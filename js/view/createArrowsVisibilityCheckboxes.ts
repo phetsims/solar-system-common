@@ -27,7 +27,7 @@ const TEXT_OPTIONS = combineOptions<TextOptions>( {
 
 const SPACING = 10;
 
-const createArrowsVisibilityCheckboxes = ( model: SolarSystemCommonModel, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
+const createArrowsVisibilityCheckboxes = ( model: Pick<SolarSystemCommonModel, 'valuesVisibleProperty' | 'velocityVisibleProperty' | 'gravityVisibleProperty'>, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
   return [
     // speed checkbox
     new SolarSystemCommonCheckbox( model.valuesVisibleProperty, new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS ), {
