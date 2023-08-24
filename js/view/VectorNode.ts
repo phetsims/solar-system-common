@@ -21,6 +21,7 @@ import Enumeration from '../../../phet-core/js/Enumeration.js';
 
 type SelfOptions = {
   constrainSize?: boolean;
+  baseMagnitude?: number;
 };
 
 // Determines if the vector exceeds the min or max values, used only if constrainSize is true
@@ -51,6 +52,7 @@ export default class VectorNode extends ArrowNode {
     const options = optionize<VectorNodeOptions, SelfOptions, ArrowNodeOptions>()( {
       // Self options
       constrainSize: false,
+      baseMagnitude: 500,
 
       headHeight: 15,
       headWidth: 15,
@@ -73,7 +75,7 @@ export default class VectorNode extends ArrowNode {
       ( tail, vector, transform, forceScale ) => {
         // forceScale currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
         // and 8 is scaling up for small vectors ~1/100000000 units of force
-        const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / 500 ) : -forceScale;
+        const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScale;
         if ( magnitudeLog > -forceScale + 1.5 ) {
           this.oversizeType = OversizeType.BIGGER;
           // body.forceOffscaleProperty.value = true;
