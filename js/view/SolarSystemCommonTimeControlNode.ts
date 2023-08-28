@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Controls time in MySolarSystem
+` * Controls time in MySolarSystem
  *
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
@@ -46,15 +46,15 @@ type SelfOptions = {
   stepForwardListener: () => void;
 };
 
-export type MySolarSystemTimeControlNodeOptions = SelfOptions & TimeControlNodeOptions & PickRequired<TimeControlNodeOptions, 'tandem'>;
+type SolarSystemTimeControlNodeOptions = SelfOptions & TimeControlNodeOptions & PickRequired<TimeControlNodeOptions, 'tandem'>;
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
   public constructor(
     model: SolarSystemCommonModel,
-    providedOptions: MySolarSystemTimeControlNodeOptions
+    providedOptions: SolarSystemTimeControlNodeOptions
   ) {
 
-    const options = optionize<MySolarSystemTimeControlNodeOptions, SelfOptions, TimeControlNodeOptions>()( {
+    const options = optionize<SolarSystemTimeControlNodeOptions, SelfOptions, TimeControlNodeOptions>()( {
       timeSpeedProperty: model.timeSpeedProperty,
       timeSpeeds: [ TimeSpeed.FAST, TimeSpeed.NORMAL, TimeSpeed.SLOW ],
       scale: 0.9,
