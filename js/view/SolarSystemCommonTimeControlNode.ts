@@ -44,6 +44,8 @@ const restartIcon = new HBox( { children: [ barPath, trianglePath, trianglePath2
 type SelfOptions = {
   restartListener: () => void;
   stepForwardListener: () => void;
+
+  speedRadioButtonGroupOnRight?: boolean;
 };
 
 type SolarSystemTimeControlNodeOptions = SelfOptions & TimeControlNodeOptions & PickRequired<TimeControlNodeOptions, 'tandem'>;
@@ -74,7 +76,9 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       speedRadioButtonGroupOptions: {
         labelOptions: SolarSystemCommonConstants.TEXT_OPTIONS,
         touchAreaXDilation: 10
-      }
+      },
+
+      speedRadioButtonGroupOnRight: true
     }, providedOptions );
 
     super( model.isPlayingProperty, options );
@@ -98,11 +102,12 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
     this.addChild( restartButton );
     this.playPauseStepButtons.pdomOrder = [ restartButton, ...( this.playPauseStepButtons.pdomOrder ? this.playPauseStepButtons.pdomOrder : [] ) ];
 
-
-    this.speedRadioButtonGroupParent!.center = this.getPlayPauseButtonCenter().plusXY(
-      -0.9 * ( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS ),
-      PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS + 3 * PUSH_BUTTON_SPACING
-    );
+    if ( !options.speedRadioButtonGroupOnRight ) {
+      this.speedRadioButtonGroupParent!.center = this.getPlayPauseButtonCenter().plusXY(
+        -0.9 * ( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS ),
+        PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS + 3 * PUSH_BUTTON_SPACING
+      );
+    }
   }
 }
 

@@ -208,7 +208,8 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         enabledProperty: options.playingAllowedProperty || null,
         restartListener: () => model.restart(),
         stepForwardListener: () => model.stepOnce( 1 / 8 ),
-        tandem: options.tandem.createTandem( 'timeControlNode' )
+        tandem: options.tandem.createTandem( 'timeControlNode' ),
+        speedRadioButtonGroupOnRight: false
       } );
 
     const timeStringPatternProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.labelUnitsStringProperty, {
