@@ -94,7 +94,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       center: this.getPlayPauseButtonCenter().minusXY( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS + PUSH_BUTTON_SPACING, 0 ),
       tandem: providedOptions.tandem.createTandem( 'restartButton' ),
       layoutOptions: {
-        xMargin: SolarSystemCommonConstants.MARGIN / 2
+        xMargin: 5
       },
       innerContent: SolarSystemCommonStrings.a11y.restartStringProperty
     } );
