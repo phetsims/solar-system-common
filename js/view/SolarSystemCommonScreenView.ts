@@ -255,6 +255,10 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       touchAreaDilation: 10,
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );
+    this.visibleBoundsProperty.link( visibleBounds => {
+      this.resetAllButton.right = visibleBounds.right - 10;
+      this.resetAllButton.bottom = visibleBounds.bottom - 10;
+    } );
 
     Multilink.multilink(
       [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
