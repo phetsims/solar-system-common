@@ -29,7 +29,7 @@ const SolarSystemCommonConstants = {
   // Max width for many of the text labels
   TEXT_MAX_WIDTH: 200,
 
-  CHECKBOX_TEXT_MAX_WIDTH: 100,
+  CHECKBOX_TEXT_MAX_WIDTH: 125,
 
   SLIDER_STEP: 25,
 
