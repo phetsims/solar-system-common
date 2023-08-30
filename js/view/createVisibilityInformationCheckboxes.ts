@@ -24,9 +24,9 @@ import pathIcon_png from '../../images/pathIcon_png.js';
 import pathIconProjector_png from '../../images/pathIconProjector_png.js';
 
 // constants
-const TEXT_OPTIONS = combineOptions<TextOptions>( {
-  maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH
-}, SolarSystemCommonConstants.TEXT_OPTIONS );
+const TEXT_OPTIONS = combineOptions<TextOptions>( {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
+  maxWidth: SolarSystemCommonConstants.CHECKBOX_TEXT_MAX_WIDTH
+} );
 
 const createVisibilityInformationCheckboxes = ( model: Pick<SolarSystemCommonModel, 'pathVisibleProperty' | 'gridVisibleProperty' | 'measuringTapeVisibleProperty'>, tandem: Tandem, usePath = true ): SolarSystemCommonCheckbox[] => {
 

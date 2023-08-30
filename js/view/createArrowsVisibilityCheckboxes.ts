@@ -21,9 +21,9 @@ import solarSystemCommon from '../solarSystemCommon.js';
 // constants
 const ARROW_Y_COORDINATE = -10;
 
-const TEXT_OPTIONS = combineOptions<TextOptions>( {
-  maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH
-}, SolarSystemCommonConstants.TEXT_OPTIONS );
+const TEXT_OPTIONS = combineOptions<TextOptions>( {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
+  maxWidth: SolarSystemCommonConstants.CHECKBOX_TEXT_MAX_WIDTH
+} );
 
 const SPACING = 10;
 
