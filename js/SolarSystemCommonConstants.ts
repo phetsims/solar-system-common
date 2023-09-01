@@ -43,21 +43,6 @@ const SolarSystemCommonConstants = {
       stretch: true
     }
   },
-  ACCORDION_BOX_OPTIONS: {
-    stroke: null,
-    fill: SolarSystemCommonColors.controlPanelFillProperty,
-    cornerRadius: 5,
-    margin: 5,
-    padding: 5,
-    titleYMargin: 10,
-    buttonXMargin: 10,
-    expandCollapseButtonOptions: {
-      scale: 1.5
-    },
-    layoutOptions: {
-      stretch: true
-    }
-  },
   CHECKBOX_OPTIONS: {
     boxWidth: 14,
     checkboxColor: SolarSystemCommonColors.foregroundProperty,
