@@ -81,7 +81,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   private readonly dragDebugPath: Path;
 
-  public constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
+  protected constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
 
     const options = optionize<SolarSystemCommonScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       playingAllowedProperty: new Property( true ),
@@ -273,7 +273,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
   /**
    * Return the bounds items that should be used to constrain the areas for body dragging.
    */
-  public getBodyBoundsItems(): BodyBoundsItem[] {
+  protected getBodyBoundsItems(): BodyBoundsItem[] {
     return [
       {
         node: this.resetAllButton,
@@ -283,7 +283,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     ];
   }
 
-  public constrainBoundaryViewPoint( point: Vector2, radius: number ): Vector2 {
+  protected constrainBoundaryViewPoint( point: Vector2, radius: number ): Vector2 {
 
     const bodyBoundsItems = this.getBodyBoundsItems();
 
