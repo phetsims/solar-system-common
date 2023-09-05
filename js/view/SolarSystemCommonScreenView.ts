@@ -192,6 +192,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     } );
     this.topLayer.addChild( measuringTapeNode );
 
+    // NOTE: It is the responsibility of the subclass to add resetAllButton to the scene graph.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
@@ -202,8 +203,8 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );
     this.visibleBoundsProperty.link( visibleBounds => {
-      this.resetAllButton.right = visibleBounds.right - 10;
-      this.resetAllButton.bottom = visibleBounds.bottom - 10;
+      this.resetAllButton.right = visibleBounds.right - SolarSystemCommonConstants.SCREEN_VIEW_X_MARGIN;
+      this.resetAllButton.bottom = visibleBounds.bottom - SolarSystemCommonConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
     Multilink.multilink(
