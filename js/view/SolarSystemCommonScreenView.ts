@@ -69,6 +69,8 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   protected readonly resetAllButton: ResetAllButton;
 
+  protected readonly measuringTapeNode: MeasuringTapeNode;
+
   private readonly dragDebugPath: Path;
 
   protected constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
@@ -172,7 +174,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     soundManager.addSoundGenerator( releaseClip );
 
     // Add the MeasuringTapeNode
-    const measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
+    this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
       visibleProperty: model.measuringTapeVisibleProperty,
       textColor: 'black',
       textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent red
@@ -190,14 +192,14 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         tipShiftDragVelocity: 100
       }
     } );
-    this.topLayer.addChild( measuringTapeNode );
+    this.topLayer.addChild( this.measuringTapeNode );
 
     // NOTE: It is the responsibility of the subclass to add resetAllButton to the scene graph.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
-        measuringTapeNode.reset();
+        this.measuringTapeNode.reset();
       },
       touchAreaDilation: 10,
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
@@ -210,8 +212,8 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     Multilink.multilink(
       [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
       ( visibleBounds, modelViewTransform ) => {
-        measuringTapeNode.setDragBounds( modelViewTransform.viewToModelBounds( visibleBounds.eroded( 10 ) ) );
-        measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
+        this.measuringTapeNode.setDragBounds( modelViewTransform.viewToModelBounds( visibleBounds.eroded( 10 ) ) );
+        this.measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
       }
     );
   }
