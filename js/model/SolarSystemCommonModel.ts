@@ -31,12 +31,6 @@ import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 
-const timeFormatter = new Map<TimeSpeed, number>( [
-  [ TimeSpeed.FAST, 7 / 4 ],
-  [ TimeSpeed.NORMAL, 1 ],
-  [ TimeSpeed.SLOW, 1 / 4 ]
-] );
-
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
   isLab: boolean;
@@ -69,6 +63,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Time control parameters
   public timeScale: number; // Scale of the model's dt
   public modelToViewTime: number; // Transform between model's and view's times
+  public readonly timeFormatter = new Map<TimeSpeed, number>( [
+    [ TimeSpeed.FAST, 7 / 4 ],
+    [ TimeSpeed.NORMAL, 1 ],
+    [ TimeSpeed.SLOW, 1 / 4 ]
+  ] );
   public readonly timeProperty: NumberProperty;
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
@@ -317,7 +316,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   public stepOnce( dt: number ): void {
     this.hasPlayedProperty.value = true;
-    let adjustedDT = dt * timeFormatter.get( this.timeSpeedProperty.value )! * this.timeScale;
+    let adjustedDT = dt * this.timeFormatter.get( this.timeSpeedProperty.value )! * this.timeScale;
 
     // Limit the number of steps to 50 per frame
     const count = Math.ceil( adjustedDT / 0.02 );
