@@ -53,7 +53,10 @@ export default class Body {
   private pathDistance = 0;
 
   public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2, initialVelocity: Vector2, public userControlledProperty: Property<boolean>, colorProperty: TReadOnlyProperty<Color> ) {
-    this.massProperty = new NumberProperty( initialMass, { isValidValue: v => v > 0 } );
+    this.massProperty = new NumberProperty( initialMass, {
+      isValidValue: v => v > 0,
+      hasListenerOrderDependencies: true // during reset listener order is key for calculating correct values.
+    } );
     this.radiusProperty = new NumberProperty( 1 );
     this.positionProperty = new Vector2Property( initialPosition );
     this.velocityProperty = new Vector2Property( initialVelocity );
