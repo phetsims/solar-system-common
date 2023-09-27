@@ -33,7 +33,7 @@ import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
-  isLab: boolean;
+  isLab?: boolean;
   timeScale?: number;
   modelToViewTime?: number;
 } & PickRequired<PhetioObjectOptions, 'tandem'>;
@@ -109,7 +109,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     const options = optionize<CommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
-      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
+      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
+      isLab: false
     }, providedOptions );
 
     const tandem = options.tandem;
