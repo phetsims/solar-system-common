@@ -8,7 +8,6 @@
  */
 
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
-import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import { HBox, HBoxOptions, Text, TextOptions } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
@@ -17,6 +16,7 @@ import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonCheckbox from './SolarSystemCommonCheckbox.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 // constants
 const ARROW_Y_COORDINATE = -10;
@@ -38,7 +38,7 @@ const createArrowsVisibilityCheckboxes = ( model: Pick<SolarSystemCommonModel, '
     new SolarSystemCommonCheckbox( model.velocityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
       children: [
         new Text( SolarSystemCommonStrings.velocityStringProperty, TEXT_OPTIONS ),
-        new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, { fill: PhetColorScheme.VELOCITY } )
+        new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, { fill: SolarSystemCommonColors.velocityColorProperty } )
       ]
     }, {
       spacing: SPACING
@@ -50,7 +50,7 @@ const createArrowsVisibilityCheckboxes = ( model: Pick<SolarSystemCommonModel, '
     new SolarSystemCommonCheckbox( model.gravityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
       children: [
         new Text( SolarSystemCommonStrings.gravityForceStringProperty, TEXT_OPTIONS ),
-        new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: PhetColorScheme.GRAVITATIONAL_FORCE } )
+        new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: SolarSystemCommonColors.gravityColorProperty } )
       ]
     }, {
       spacing: SPACING
