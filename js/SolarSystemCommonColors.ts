@@ -43,6 +43,14 @@ const SolarSystemCommonColors = {
     tandem: Tandem.COLORS.createTandem( 'userControlledBackgroundColorProperty' )
   } ),
 
+  velocityColorProperty: new ProfileColorProperty( solarSystemCommon, 'velocity', {
+    default: PhetColorScheme.VELOCITY,
+    projector: '#44b052'
+  } ),
+  gravityColorProperty: new ProfileColorProperty( solarSystemCommon, 'gravity', {
+    default: PhetColorScheme.GRAVITATIONAL_FORCE
+  } ),
+
   firstBodyColorProperty: new ProfileColorProperty( solarSystemCommon, 'first body color', {
     default: 'yellow',
     projector: '#FFAE00'

@@ -23,7 +23,6 @@ import Vector2Property from '../../../dot/js/Vector2Property.js';
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import Body from '../model/Body.js';
 import DraggableVectorNode, { DraggableVectorNodeOptions } from './DraggableVectorNode.js';
-import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
@@ -154,7 +153,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
         1,
         SolarSystemCommonStrings.VStringProperty,
         combineOptions<DraggableVectorNodeOptions>( {
-          fill: PhetColorScheme.VELOCITY,
+          fill: SolarSystemCommonColors.velocityColorProperty,
           soundViewNode: this,
           mapPosition: this.constrainBoundaryViewPoint.bind( this )
         }, options )
