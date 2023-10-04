@@ -47,30 +47,30 @@ const SolarSystemCommonColors = {
     default: PhetColorScheme.GRAVITATIONAL_FORCE
   } ),
 
-  firstBodyColorProperty: new ProfileColorProperty( solarSystemCommon, 'first body color', {
+  body1ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body1Color', {
     default: 'yellow',
     projector: '#FFAE00'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'firstBodyColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body1ColorProperty' )
   } ),
 
-  secondBodyColorProperty: new ProfileColorProperty( solarSystemCommon, 'second body color', {
+  body2ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body2Color', {
     default: 'magenta'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'secondBodyColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body2ColorProperty' )
   } ),
 
-  thirdBodyColorProperty: new ProfileColorProperty( solarSystemCommon, 'third body color', {
+  body3ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body3Color', {
     default: 'cyan',
     projector: '#0055FF'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'thirdBodyColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body3ColorProperty' )
   } ),
 
-  fourthBodyColorProperty: new ProfileColorProperty( solarSystemCommon, 'fourth body color', {
+  body4ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body4Color', {
     default: 'green'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'fourthBodyColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body4ColorProperty' )
   } ),
 
   explosionColorProperty: new ProfileColorProperty( solarSystemCommon, 'explosionColor', {
