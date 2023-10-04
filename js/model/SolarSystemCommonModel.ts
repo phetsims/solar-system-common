@@ -202,7 +202,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.moreDataProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'moreDataProperty' ) } );
     this.realUnitsProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'realUnitsProperty' ) } );
 
-
     this.forceScaleProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
     } );

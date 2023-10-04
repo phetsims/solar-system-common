@@ -36,7 +36,6 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 
-
 const bodySounds = [
   Bodies_Brass_C3_mp3,
   Bodies_Woodwinds_e3_mp3,

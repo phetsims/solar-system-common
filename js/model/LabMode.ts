@@ -11,6 +11,7 @@ import EnumerationValue from '../../../phet-core/js/EnumerationValue.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 
 export default class LabMode extends EnumerationValue {
+
   public static readonly SUN_PLANET = new LabMode();
   public static readonly SUN_PLANET_MOON = new LabMode();
   public static readonly SUN_PLANET_COMET = new LabMode();

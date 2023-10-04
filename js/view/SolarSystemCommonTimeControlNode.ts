@@ -50,6 +50,7 @@ type SelfOptions = {
 type SolarSystemTimeControlNodeOptions = SelfOptions & TimeControlNodeOptions & PickRequired<TimeControlNodeOptions, 'tandem'>;
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
+
   public constructor( model: SolarSystemCommonModel, providedOptions: SolarSystemTimeControlNodeOptions ) {
 
     const options = optionize<SolarSystemTimeControlNodeOptions, SelfOptions, TimeControlNodeOptions>()( {

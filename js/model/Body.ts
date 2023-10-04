@@ -20,6 +20,7 @@ import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { BodyInfo } from './SolarSystemCommonModel.js';
 
 export default class Body {
+
   // Unitless body quantities (physical properties)
   public readonly massProperty: Property<number>;
   public readonly radiusProperty: TReadOnlyProperty<number>;
@@ -55,15 +56,22 @@ export default class Body {
   public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2,
                       initialVelocity: Vector2, public userControlledProperty: Property<boolean>,
                       colorProperty: TReadOnlyProperty<Color> ) {
+
     this.massProperty = new NumberProperty( initialMass, {
       isValidValue: v => v > 0,
       hasListenerOrderDependencies: true // during reset listener order is key for calculating correct values.
     } );
+
     this.radiusProperty = new NumberProperty( 1 );
+
     this.positionProperty = new Vector2Property( initialPosition );
+
     this.velocityProperty = new Vector2Property( initialVelocity );
+
     this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ) );
+
     this.forceProperty = new Vector2Property( new Vector2( 0, 0 ) );
+
     this.colorProperty = colorProperty;
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );

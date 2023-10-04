@@ -18,8 +18,8 @@ import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 
 export default class GravityScaleSlider extends HBox {
-  public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean> ) {
 
+  public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean> ) {
 
     const rangeMin = forceScaleProperty.range.min;
     const rangeMax = forceScaleProperty.range.max;

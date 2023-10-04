@@ -199,7 +199,6 @@ export default class DraggableVectorNode extends VectorNode {
       grabArea.dispose();
     } );
 
-
     // For PhET-iO, when the node does not support input, don't show the drag circle
     const onInputEnabled = ( inputEnabled: boolean ) => {
       grabArea.visible = inputEnabled;

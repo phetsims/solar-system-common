@@ -49,6 +49,7 @@ type SelfOptions = {
 export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class SolarSystemCommonScreenView extends ScreenView {
+
   protected readonly bodiesLayer = new Node();
   protected readonly componentsLayer = new Node();
   protected readonly interfaceLayer = new Node();
@@ -237,7 +238,6 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     if ( !_.every( [ this.dragDebugPath, ...bodyBoundsItems.map( item => item.node ) ] ) ) {
       return point;
     }
-
 
     const mvt = this.modelViewTransformProperty.value;
 

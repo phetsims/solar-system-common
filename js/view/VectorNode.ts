@@ -36,6 +36,7 @@ type SelfOptions = {
 export type VectorNodeOptions = SelfOptions & ArrowNodeOptions;
 
 export default class VectorNode extends ArrowNode {
+
   protected readonly tipProperty: TReadOnlyProperty<Vector2>;
   protected readonly tailProperty: TReadOnlyProperty<Vector2>;
   private oversizeType: OversizeType = OversizeType.NONE;
