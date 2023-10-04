@@ -183,7 +183,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.engine = options.engineFactory( this.bodies );
     this.engine.reset();
 
-
     // Time settings
     // timeScale controls the velocity of time
     this.timeScale = options.timeScale;
@@ -192,17 +191,33 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
 
-    // Visibility Properties for checkboxes, grouped under a parent tandem
+    // Properties that control visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
     const visiblePropertiesTandem = options.tandem.createTandem( 'visibleProperties' );
-    this.pathVisibleProperty = new BooleanProperty( true, { tandem: visiblePropertiesTandem.createTandem( 'pathVisibleProperty' ) } );
-    this.gravityVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'gravityVisibleProperty' ) } );
-    this.velocityVisibleProperty = new BooleanProperty( true, { tandem: visiblePropertiesTandem.createTandem( 'velocityVisibleProperty' ) } );
-    this.gridVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'gridVisibleProperty' ) } );
-    this.measuringTapeVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'measuringTapeVisibleProperty' ) } );
-    this.valuesVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'valuesVisibleProperty' ) } );
+    this.pathVisibleProperty = new BooleanProperty( true, {
+      tandem: visiblePropertiesTandem.createTandem( 'pathVisibleProperty' )
+    } );
+    this.gravityVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'gravityVisibleProperty' )
+    } );
+    this.velocityVisibleProperty = new BooleanProperty( true, {
+      tandem: visiblePropertiesTandem.createTandem( 'velocityVisibleProperty' )
+    } );
+    this.gridVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'gridVisibleProperty' )
+    } );
+    this.measuringTapeVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'measuringTapeVisibleProperty' )
+    } );
+    this.valuesVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'valuesVisibleProperty' )
+    } );
 
-    this.moreDataProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'moreDataProperty' ) } );
-    this.realUnitsProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'realUnitsProperty' ) } );
+    this.moreDataProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'moreDataProperty' )
+    } );
+    this.realUnitsProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'realUnitsProperty' )
+    } );
 
     this.forceScaleProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
