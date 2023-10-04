@@ -50,8 +50,11 @@ type SelfOptions = {
   dragVelocity?: number;
   shiftDragVelocity?: number;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
   valuesVisibleProperty?: TReadOnlyProperty<boolean>;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   rectangleOptions?: RectangleOptions;
   textOptions?: TextOptions;
   useCueingArrows?: boolean;

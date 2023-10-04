@@ -25,7 +25,6 @@ import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
-import LabMode from './LabMode.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
@@ -40,7 +39,6 @@ export type BodyInfo = {
 
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
-  isLab?: boolean;
   timeScale?: number;
   modelToViewTime?: number;
   defaultBodyState?: BodyInfo[] | null;
@@ -55,16 +53,19 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // order.
   public readonly bodies: ObservableArray<Body> = createObservableArray();
   public readonly availableBodies: Body[];
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userControlledProperty = new BooleanProperty( false );
 
-  public numberOfActiveBodiesProperty: NumberProperty;
-  public engine: EngineType;
+  public readonly numberOfActiveBodiesProperty: NumberProperty;
+  public readonly engine: EngineType;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userInteractingEmitter = new Emitter();
 
   // Time control parameters
-  public timeScale: number; // Scale of the model's dt
-  public modelToViewTime: number; // Transform between model's and view's times
+  public readonly timeScale: number; // Scale of the model's dt
+  public readonly modelToViewTime: number; // Transform between model's and view's times
   public readonly timeFormatter = new Map<TimeSpeed, number>( [
     [ TimeSpeed.FAST, 7 / 4 ],
     [ TimeSpeed.NORMAL, 1 ],
@@ -75,29 +76,37 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly hasPlayedProperty = new BooleanProperty( false );
 
+  // Properties that control the visibility of various things in the UI. These live in the model for convenience.
   public readonly pathVisibleProperty: BooleanProperty;
   public readonly gravityVisibleProperty: BooleanProperty;
   public readonly velocityVisibleProperty: BooleanProperty;
   public readonly gridVisibleProperty: BooleanProperty;
   public readonly measuringTapeVisibleProperty: BooleanProperty;
   public readonly valuesVisibleProperty: BooleanProperty;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly moreDataProperty: BooleanProperty;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly realUnitsProperty: BooleanProperty;
 
+  //TODO https://github.com/phetsims/keplers-laws/issues/191 zoomLevelProperty and zoomProperty should be readonly
   public zoomLevelProperty: NumberProperty;
-  public zoomProperty: ReadOnlyProperty<number>;
-  public readonly isLab: boolean;
-  public readonly labModeProperty: EnumerationProperty<LabMode>;
+  public zoomProperty: ReadOnlyProperty<number>; //TODO https://github.com/phetsims/my-solar-system/issues/213 document, is this a scale?
 
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
   // Indicates if any body is far from the play area
   public readonly isAnyBodyEscapedProperty: ReadOnlyProperty<boolean>;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly isAnyBodyCollidedProperty = new BooleanProperty( false );
 
+  // Power of 10 to which the force is scaled
+  public readonly forceScaleProperty: NumberProperty;
+
   // Indicates if any force arrow is currently off scale
-  public readonly forceScaleProperty: NumberProperty; // Power of 10 to which the force is scaled
   public readonly isAnyForceOffscaleProperty: ReadOnlyProperty<boolean>;
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
@@ -112,16 +121,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
       modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
-      isLab: false,
       defaultBodyState: null
     }, providedOptions );
-
-    const tandem = options.tandem;
-
-    this.isLab = options.isLab;
-    this.labModeProperty = new EnumerationProperty( LabMode.SUN_PLANET, {
-      tandem: tandem.createTandem( 'labModeProperty' )
-    } );
 
     this.availableBodies = [
       new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty ),
@@ -185,7 +186,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.engine = options.engineFactory( this.bodies );
     this.engine.reset();
 
-
     // Time settings
     // timeScale controls the velocity of time
     this.timeScale = options.timeScale;
@@ -194,22 +194,40 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
 
-    // Visibility properties for checkboxes
-    this.pathVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
-    this.gravityVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gravityVisibleProperty' ) } );
-    this.velocityVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'velocityVisibleProperty' ) } );
-    this.gridVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gridVisibleProperty' ) } );
-    this.measuringTapeVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'measuringTapeVisibleProperty' ) } );
-    this.valuesVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'valuesVisibleProperty' ) } );
-    this.moreDataProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'moreDataProperty' ) } );
-    this.realUnitsProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'realUnitsProperty' ) } );
+    // Properties that control visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
+    const visiblePropertiesTandem = options.tandem.createTandem( 'visibleProperties' );
+    this.pathVisibleProperty = new BooleanProperty( true, {
+      tandem: visiblePropertiesTandem.createTandem( 'pathVisibleProperty' )
+    } );
+    this.gravityVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'gravityVisibleProperty' )
+    } );
+    this.velocityVisibleProperty = new BooleanProperty( true, {
+      tandem: visiblePropertiesTandem.createTandem( 'velocityVisibleProperty' )
+    } );
+    this.gridVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'gridVisibleProperty' )
+    } );
+    this.measuringTapeVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'measuringTapeVisibleProperty' )
+    } );
+    this.valuesVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'valuesVisibleProperty' )
+    } );
+
+    this.moreDataProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'moreDataProperty' )
+    } );
+    this.realUnitsProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'realUnitsProperty' )
+    } );
 
     this.forceScaleProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
     } );
     this.zoomLevelProperty = new NumberProperty( 4, {
       range: new Range( 1, 6 ),
-      tandem: tandem.createTandem( 'zoomLevelProperty' ),
+      tandem: options.tandem.createTandem( 'zoomLevelProperty' ),
       numberType: 'Integer'
     } );
     this.zoomProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {

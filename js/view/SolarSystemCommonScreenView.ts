@@ -50,16 +50,20 @@ export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions
 
 export default class SolarSystemCommonScreenView extends ScreenView {
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document - I'm having to guess at what these layers are for.
   protected readonly bodiesLayer = new Node();
   protected readonly componentsLayer = new Node();
   protected readonly interfaceLayer = new Node();
   protected readonly topLayer = new Node();
   protected readonly bottomLayer = new Node();
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   protected readonly bodySoundManager: BodySoundManager;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
   protected readonly modelViewTransformProperty: ReadOnlyProperty<ModelViewTransform2>;
 
   // Derived from visibleBoundsProperty to keep the UI elements centered on narrow screens
@@ -70,6 +74,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   protected readonly measuringTapeNode: MeasuringTapeNode;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   private readonly dragDebugPath: Path;
 
   protected constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {

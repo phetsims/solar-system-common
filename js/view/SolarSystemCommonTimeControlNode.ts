@@ -102,6 +102,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
     this.addChild( restartButton );
     this.playPauseStepButtons.pdomOrder = [ restartButton, ...( this.playPauseStepButtons.pdomOrder ? this.playPauseStepButtons.pdomOrder : [] ) ];
 
+    //TODO https://github.com/phetsims/my-solar-system/issues/213 this complicated computation deserves a comment
     if ( !options.speedRadioButtonGroupOnRight ) {
       this.speedRadioButtonGroupParent!.center = this.getPlayPauseButtonCenter().plusXY(
         -0.9 * ( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS ),

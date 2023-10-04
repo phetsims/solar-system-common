@@ -41,7 +41,7 @@ export default class Body {
   // True when the body force is off-scale
   public readonly forceOffscaleProperty = new BooleanProperty( false );
 
-  // User modified properties
+  // User modified Properties
   public readonly userControlledPositionProperty = new BooleanProperty( false );
   public readonly userControlledVelocityProperty = new BooleanProperty( false );
   public readonly userControlledMassProperty = new BooleanProperty( false );
@@ -51,6 +51,7 @@ export default class Body {
 
   public readonly colorProperty: TReadOnlyProperty<Color>;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   private pathDistance = 0;
 
   public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2,

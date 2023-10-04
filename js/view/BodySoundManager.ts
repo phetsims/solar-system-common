@@ -56,7 +56,10 @@ const METRONOME = [ 7, 0, 0, 0, 0, 0 ]; // METRONOME
 // const METRONOME = [ 0, 3, 5, 6, 7, 10 ]; // BLUES_SCALE
 
 export default class BodySoundManager {
+
   private readonly model: SolarSystemCommonModel;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document these 3 fields
   private readonly bodyNumberSoundClips: SoundClip[];
   private readonly removalSoundClips: SoundClip[];
   private readonly metronomeSoundClips: SoundClip[];
