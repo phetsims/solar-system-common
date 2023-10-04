@@ -43,6 +43,7 @@ type SelfOptions<EngineType extends Engine> = {
   isLab?: boolean;
   timeScale?: number;
   modelToViewTime?: number;
+  defaultBodyState?: BodyInfo[] | null;
 };
 
 export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
@@ -104,14 +105,15 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -11.1 ) },
     { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111 ) }
   ];
-  protected defaultBodyState: BodyInfo[];
+  protected readonly defaultBodyState: BodyInfo[];
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
       modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
-      isLab: false
+      isLab: false,
+      defaultBodyState: null
     }, providedOptions );
 
     const tandem = options.tandem;
@@ -133,7 +135,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.availableBodies[ 1 ].isActiveProperty.value = true;
 
     // Define the default mode the bodies will show up in
-    this.defaultBodyState = this.availableBodies.map( body => body.info );
+    this.defaultBodyState = options.defaultBodyState ? options.defaultBodyState : this.availableBodies.map( body => body.info );
 
     // We want to synchronize availableBodies and bodies, so that bodies is effectively availableBodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
