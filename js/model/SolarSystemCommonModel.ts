@@ -75,12 +75,14 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly hasPlayedProperty = new BooleanProperty( false );
 
+  // Properties that control the visibility of various things in the UI. These live in the model for convenience.
   public readonly pathVisibleProperty: BooleanProperty;
   public readonly gravityVisibleProperty: BooleanProperty;
   public readonly velocityVisibleProperty: BooleanProperty;
   public readonly gridVisibleProperty: BooleanProperty;
   public readonly measuringTapeVisibleProperty: BooleanProperty;
   public readonly valuesVisibleProperty: BooleanProperty;
+
   public readonly moreDataProperty: BooleanProperty;
   public readonly realUnitsProperty: BooleanProperty;
 
@@ -118,8 +120,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       timeScale: 1,
       modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
-
-    const tandem = options.tandem;
 
     this.availableBodies = [
       new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty ),
@@ -192,22 +192,24 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
 
-    // Visibility properties for checkboxes
-    this.pathVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'pathVisibleProperty' ) } );
-    this.gravityVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gravityVisibleProperty' ) } );
-    this.velocityVisibleProperty = new BooleanProperty( true, { tandem: tandem.createTandem( 'velocityVisibleProperty' ) } );
-    this.gridVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'gridVisibleProperty' ) } );
-    this.measuringTapeVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'measuringTapeVisibleProperty' ) } );
-    this.valuesVisibleProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'valuesVisibleProperty' ) } );
-    this.moreDataProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'moreDataProperty' ) } );
-    this.realUnitsProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'realUnitsProperty' ) } );
+    // Visibility Properties for checkboxes, grouped under a parent tandem
+    const visiblePropertiesTandem = options.tandem.createTandem( 'visibleProperties' );
+    this.pathVisibleProperty = new BooleanProperty( true, { tandem: visiblePropertiesTandem.createTandem( 'pathVisibleProperty' ) } );
+    this.gravityVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'gravityVisibleProperty' ) } );
+    this.velocityVisibleProperty = new BooleanProperty( true, { tandem: visiblePropertiesTandem.createTandem( 'velocityVisibleProperty' ) } );
+    this.gridVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'gridVisibleProperty' ) } );
+    this.measuringTapeVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'measuringTapeVisibleProperty' ) } );
+    this.valuesVisibleProperty = new BooleanProperty( false, { tandem: visiblePropertiesTandem.createTandem( 'valuesVisibleProperty' ) } );
+
+    this.moreDataProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'moreDataProperty' ) } );
+    this.realUnitsProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'realUnitsProperty' ) } );
 
     this.forceScaleProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
     } );
     this.zoomLevelProperty = new NumberProperty( 4, {
       range: new Range( 1, 6 ),
-      tandem: tandem.createTandem( 'zoomLevelProperty' ),
+      tandem: options.tandem.createTandem( 'zoomLevelProperty' ),
       numberType: 'Integer'
     } );
     this.zoomProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
