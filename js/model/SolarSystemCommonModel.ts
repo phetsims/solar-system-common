@@ -83,7 +83,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly measuringTapeVisibleProperty: BooleanProperty;
   public readonly valuesVisibleProperty: BooleanProperty;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly moreDataProperty: BooleanProperty;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly realUnitsProperty: BooleanProperty;
 
   //TODO https://github.com/phetsims/keplers-laws/issues/191 zoomLevelProperty and zoomProperty should be readonly
