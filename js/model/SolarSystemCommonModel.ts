@@ -25,7 +25,6 @@ import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
-import LabMode from './LabMode.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
@@ -87,7 +86,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public zoomLevelProperty: NumberProperty;
   public zoomProperty: ReadOnlyProperty<number>;
   public readonly isLab: boolean;
-  public readonly labModeProperty: EnumerationProperty<LabMode>;
 
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
@@ -119,9 +117,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const tandem = options.tandem;
 
     this.isLab = options.isLab;
-    this.labModeProperty = new EnumerationProperty( LabMode.SUN_PLANET, {
-      tandem: tandem.createTandem( 'labModeProperty' )
-    } );
 
     this.availableBodies = [
       new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty ),

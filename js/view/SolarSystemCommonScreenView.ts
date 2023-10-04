@@ -50,6 +50,7 @@ export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions
 
 export default class SolarSystemCommonScreenView extends ScreenView {
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document - I'm having to guess at what these layers are for.
   protected readonly bodiesLayer = new Node();
   protected readonly componentsLayer = new Node();
   protected readonly interfaceLayer = new Node();
