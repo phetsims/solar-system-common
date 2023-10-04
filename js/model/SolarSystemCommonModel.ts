@@ -39,7 +39,6 @@ export type BodyInfo = {
 
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
-  isLab?: boolean;
   timeScale?: number;
   modelToViewTime?: number;
 };
@@ -85,7 +84,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   //TODO https://github.com/phetsims/keplers-laws/issues/191 zoomLevelProperty and zoomProperty should be readonly
   public zoomLevelProperty: NumberProperty;
   public zoomProperty: ReadOnlyProperty<number>;
-  public readonly isLab: boolean;
 
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
@@ -110,13 +108,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
-      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
-      isLab: false
+      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
     const tandem = options.tandem;
-
-    this.isLab = options.isLab;
 
     this.availableBodies = [
       new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty ),
