@@ -45,7 +45,7 @@ export type BodyInfo = {
   active: boolean;
 };
 
-export type CommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType>;
+export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType>;
 
 export default abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
 
@@ -105,9 +105,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   ];
   protected defaultBodyState: BodyInfo[];
 
-  protected constructor( providedOptions: CommonModelOptions<EngineType> ) {
+  protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
-    const options = optionize<CommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
+    const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
       modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
       isLab: false
