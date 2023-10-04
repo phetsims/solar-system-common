@@ -52,7 +52,9 @@ export default class Body {
 
   private pathDistance = 0;
 
-  public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2, initialVelocity: Vector2, public userControlledProperty: Property<boolean>, colorProperty: TReadOnlyProperty<Color> ) {
+  public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2,
+                      initialVelocity: Vector2, public userControlledProperty: Property<boolean>,
+                      colorProperty: TReadOnlyProperty<Color> ) {
     this.massProperty = new NumberProperty( initialMass, {
       isValidValue: v => v > 0,
       hasListenerOrderDependencies: true // during reset listener order is key for calculating correct values.
