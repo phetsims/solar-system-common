@@ -29,8 +29,8 @@ class OversizeType extends EnumerationValue {
 }
 
 type SelfOptions = {
-  constrainSize?: boolean;
-  baseMagnitude?: number;
+  constrainSize?: boolean; //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  baseMagnitude?: number; //TODO https://github.com/phetsims/my-solar-system/issues/213 document
 };
 
 export type VectorNodeOptions = SelfOptions & ArrowNodeOptions;
@@ -39,6 +39,8 @@ export default class VectorNode extends ArrowNode {
 
   protected readonly tipProperty: TReadOnlyProperty<Vector2>;
   protected readonly tailProperty: TReadOnlyProperty<Vector2>;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   private oversizeType: OversizeType = OversizeType.NONE;
 
   public constructor(

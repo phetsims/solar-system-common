@@ -52,11 +52,14 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // order.
   public readonly bodies: ObservableArray<Body> = createObservableArray();
   public readonly availableBodies: Body[];
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userControlledProperty = new BooleanProperty( false );
 
   public readonly numberOfActiveBodiesProperty: NumberProperty;
   public readonly engine: EngineType;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userInteractingEmitter = new Emitter();
 
   // Time control parameters
@@ -83,17 +86,21 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   //TODO https://github.com/phetsims/keplers-laws/issues/191 zoomLevelProperty and zoomProperty should be readonly
   public zoomLevelProperty: NumberProperty;
-  public zoomProperty: ReadOnlyProperty<number>;
+  public zoomProperty: ReadOnlyProperty<number>; //TODO https://github.com/phetsims/my-solar-system/issues/213 document, is this a scale?
 
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
   // Indicates if any body is far from the play area
   public readonly isAnyBodyEscapedProperty: ReadOnlyProperty<boolean>;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly isAnyBodyCollidedProperty = new BooleanProperty( false );
 
+  // Power of 10 to which the force is scaled
+  public readonly forceScaleProperty: NumberProperty;
+
   // Indicates if any force arrow is currently off scale
-  public readonly forceScaleProperty: NumberProperty; // Power of 10 to which the force is scaled
   public readonly isAnyForceOffscaleProperty: ReadOnlyProperty<boolean>;
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
@@ -101,6 +108,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -11.1 ) },
     { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111 ) }
   ];
+
   //TODO https://github.com/phetsims/keplers-laws/issues/192 defaultBodyState should be readonly
   protected defaultBodyState: BodyInfo[];
 
