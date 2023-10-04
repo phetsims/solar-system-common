@@ -6,7 +6,6 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import Disposable from '../../../axon/js/Disposable.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Range from '../../../dot/js/Range.js';
@@ -22,10 +21,11 @@ import { HBox } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type SolarSystemCommonNumberControlOptions = SelfOptions & NumberControlOptions;
+export type SolarSystemCommonNumberControlOptions = SelfOptions & StrictOmit<NumberControlOptions, 'isDisposable'>;
 
 export default class SolarSystemCommonNumberControl extends NumberControl {
 
@@ -52,6 +52,7 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
 
       // NumberControlOptions
+      isDisposable: false,
       valueChangeSoundGeneratorOptions: valueChangeSoundGeneratorOptions,
       sliderOptions: {
         trackSize: new Dimension2( 226, 2 ),
@@ -89,11 +90,6 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     // Unfortunately, NumberControl is hard-coded to require a title, and always creates a titleNode. Therefore
     // we have to pass a title string, even though it will not be displayed due to our custom layout.
     super( '', valueProperty, range, options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 
