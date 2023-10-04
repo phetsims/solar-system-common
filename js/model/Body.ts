@@ -18,8 +18,11 @@ import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import Property from '../../../axon/js/Property.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { BodyInfo } from './SolarSystemCommonModel.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import PhetioObject from '../../../tandem/js/PhetioObject.js';
+import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 
-export default class Body {
+export default class Body extends PhetioObject {
 
   // Unitless body quantities (physical properties)
   public readonly massProperty: Property<number>;
@@ -56,22 +59,42 @@ export default class Body {
 
   public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2,
                       initialVelocity: Vector2, public userControlledProperty: Property<boolean>,
-                      colorProperty: TReadOnlyProperty<Color> ) {
+                      colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
+
+    super( {
+      tandem: tandem,
+      phetioState: false
+    } );
 
     this.massProperty = new NumberProperty( initialMass, {
       isValidValue: v => v > 0,
-      hasListenerOrderDependencies: true // during reset listener order is key for calculating correct values.
+      hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
+      tandem: tandem.createTandem( 'massProperty' ),
+      phetioReadOnly: true
     } );
 
-    this.positionProperty = new Vector2Property( initialPosition );
+    this.positionProperty = new Vector2Property( initialPosition, {
+      tandem: tandem.createTandem( 'positionProperty' ),
+      phetioReadOnly: true
+    } );
 
-    this.velocityProperty = new Vector2Property( initialVelocity );
+    this.velocityProperty = new Vector2Property( initialVelocity, {
+      tandem: tandem.createTandem( 'velocityProperty' ),
+      phetioReadOnly: true
+    } );
 
-    this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ), {
+      tandem: tandem.createTandem( 'accelerationProperty' ),
+      phetioReadOnly: true
+    } );
 
-    this.forceProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    this.forceProperty = new Vector2Property( new Vector2( 0, 0 ), {
+      tandem: tandem.createTandem( 'forceProperty' ),
+      phetioReadOnly: true
+    } );
 
     this.colorProperty = colorProperty;
+    this.addLinkedElement( colorProperty );
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 

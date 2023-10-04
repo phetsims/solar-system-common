@@ -41,7 +41,6 @@ type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
   timeScale?: number;
   modelToViewTime?: number;
-  defaultBodyState?: BodyInfo[] | null;
 };
 
 export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
@@ -114,21 +113,29 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -11.1 ) },
     { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111 ) }
   ];
-  protected readonly defaultBodyState: BodyInfo[];
+
+  //TODO https://github.com/phetsims/keplers-laws/issues/192 defaultBodyState should be readonly
+  protected defaultBodyState: BodyInfo[];
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
-      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
-      defaultBodyState: null
+      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
+    // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
+    const bodiesTandem = options.tandem.createTandem( 'bodies' );
+    let bodyIndex = 1;
     this.availableBodies = [
-      new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty ),
-      new Body( 1, 25, new Vector2( 200, 0 ), new Vector2( 0, 111 ), this.userControlledProperty, SolarSystemCommonColors.body2ColorProperty ),
-      new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.body3ColorProperty ),
-      new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.body4ColorProperty )
+      new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty,
+        bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
+      new Body( 1, 25, new Vector2( 200, 0 ), new Vector2( 0, 111 ), this.userControlledProperty, SolarSystemCommonColors.body2ColorProperty,
+        bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
+      new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.body3ColorProperty,
+        bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
+      new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.body4ColorProperty,
+        bodiesTandem.createTandem( `body${bodyIndex++}` ) )
     ];
 
     // Activate the first two bodies by default
@@ -136,7 +143,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.availableBodies[ 1 ].isActiveProperty.value = true;
 
     // Define the default mode the bodies will show up in
-    this.defaultBodyState = options.defaultBodyState ? options.defaultBodyState : this.availableBodies.map( body => body.info );
+    this.defaultBodyState = this.availableBodies.map( body => body.info );
 
     // We want to synchronize availableBodies and bodies, so that bodies is effectively availableBodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
