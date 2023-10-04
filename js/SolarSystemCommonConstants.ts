@@ -51,7 +51,7 @@ const SolarSystemCommonConstants = {
   HSEPARATOR_OPTIONS: {
     lineWidth: 2,
     stroke: '#8E9097',
-    layoutOptions: combineOptions<TLayoutOptions>( { yMargin: 2 }, DEFAULT_SEPARATOR_LAYOUT_OPTIONS )
+    layoutOptions: combineOptions<TLayoutOptions>( {}, DEFAULT_SEPARATOR_LAYOUT_OPTIONS, { yMargin: 2 } )
   },
   PANEL_FONT: new PhetFont( 16 ),
   TITLE_FONT: new PhetFont( { size: 16, weight: 'bold' } ),

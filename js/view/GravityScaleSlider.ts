@@ -21,6 +21,12 @@ export default class GravityScaleSlider extends HBox {
 
   public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean> ) {
 
+    const zoomText = new Text( SolarSystemCommonStrings.zoomStringProperty, combineOptions<TextOptions>(
+      {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
+        maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH / 2,
+        layoutOptions: { leftMargin: 20 }
+      } ) );
+
     const rangeMin = forceScaleProperty.range.min;
     const rangeMax = forceScaleProperty.range.max;
     const rangeStep = 2;
@@ -39,9 +45,7 @@ export default class GravityScaleSlider extends HBox {
       majorTickLength: 8,
       minorTickLength: 8,
       minorTickStroke: SolarSystemCommonColors.foregroundProperty,
-
       accessibleName: SolarSystemCommonStrings.a11y.scaleSliderStringProperty,
-
       valueChangeSoundGeneratorOptions: {
         numberOfMiddleThresholds: ( rangeMax - rangeMin ) / rangeStep - 1
       }
@@ -57,13 +61,7 @@ export default class GravityScaleSlider extends HBox {
     super( {
       spacing: 0,
       enabledProperty: gravityVisibleProperty,
-      children: [
-        new Text( SolarSystemCommonStrings.zoomStringProperty, combineOptions<TextOptions>( {
-          maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH / 2,
-          layoutOptions: { leftMargin: 20 }
-        }, SolarSystemCommonConstants.TEXT_OPTIONS ) ),
-        slider
-      ]
+      children: [ zoomText, slider ]
     } );
   }
 }

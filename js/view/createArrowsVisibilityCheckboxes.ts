@@ -8,7 +8,7 @@
  */
 
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
-import { HBox, HBoxOptions, Text, TextOptions } from '../../../scenery/js/imports.js';
+import { HBox, Text, TextOptions } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
@@ -35,26 +35,24 @@ const createArrowsVisibilityCheckboxes = ( model: Pick<SolarSystemCommonModel, '
       tandem: tandem.createTandem( 'valuesVisibleCheckbox' )
     } ),
     // velocity checkbox
-    new SolarSystemCommonCheckbox( model.velocityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
+    new SolarSystemCommonCheckbox( model.velocityVisibleProperty, new HBox( {
+      spacing: SPACING,
       children: [
         new Text( SolarSystemCommonStrings.velocityStringProperty, TEXT_OPTIONS ),
         new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, { fill: SolarSystemCommonColors.velocityColorProperty } )
       ]
-    }, {
-      spacing: SPACING
-    } ) ), {
+    } ), {
       accessibleName: SolarSystemCommonStrings.velocityStringProperty,
       tandem: tandem.createTandem( 'velocityCheckbox' )
     } ),
     // gravity force checkbox
-    new SolarSystemCommonCheckbox( model.gravityVisibleProperty, new HBox( combineOptions<HBoxOptions>( {
+    new SolarSystemCommonCheckbox( model.gravityVisibleProperty, new HBox( {
+      spacing: SPACING,
       children: [
         new Text( SolarSystemCommonStrings.gravityForceStringProperty, TEXT_OPTIONS ),
         new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: SolarSystemCommonColors.gravityColorProperty } )
       ]
-    }, {
-      spacing: SPACING
-    } ) ), {
+    } ), {
       accessibleName: SolarSystemCommonStrings.gravityForceStringProperty,
       tandem: tandem.createTandem( 'gravityForceCheckbox' )
     } )
