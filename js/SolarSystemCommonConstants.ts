@@ -12,14 +12,14 @@ import solarSystemCommon from './solarSystemCommon.js';
 import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, TLayoutOptions } from '../../scenery/js/imports.js';
 import { combineOptions } from '../../phet-core/js/optionize.js';
 
-export const METERS_IN_AU = 149597870700;
-export const SECONDS_IN_A_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
+export const METERS_PER_AU = 149597870700;
+export const SECONDS_PER_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
 export const G = 10000;
 export const G_ACTUAL = 6.6743e-11;
 export const POSITION_MULTIPLIER = 0.01;
 export const MASS_MULTIPLIER = 1e28;
-export const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_IN_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_IN_A_YEAR );
-export const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_IN_AU / SECONDS_IN_A_YEAR / 1000;
+export const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_PER_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_PER_YEAR );
+export const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_PER_AU / SECONDS_PER_YEAR / 1000;
 
 const SolarSystemCommonConstants = {
 
