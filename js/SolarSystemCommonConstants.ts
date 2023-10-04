@@ -13,7 +13,7 @@ import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, TLayoutOptions } from '../../scenery/
 import { combineOptions } from '../../phet-core/js/optionize.js';
 
 export const METERS_IN_AU = 149597870700;
-export const SECONDS_IN_A_YEAR = 31557600;
+export const SECONDS_IN_A_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
 export const G = 10000;
 export const G_ACTUAL = 6.6743e-11;
 export const POSITION_MULTIPLIER = 0.01;
