@@ -44,19 +44,20 @@ const restartIcon = new HBox( { children: [ barPath, trianglePath, trianglePath2
 type SelfOptions = {
   restartListener: () => void;
   stepForwardListener: () => void;
-
   speedRadioButtonGroupOnRight?: boolean;
 };
 
 type SolarSystemTimeControlNodeOptions = SelfOptions & TimeControlNodeOptions & PickRequired<TimeControlNodeOptions, 'tandem'>;
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
-  public constructor(
-    model: SolarSystemCommonModel,
-    providedOptions: SolarSystemTimeControlNodeOptions
-  ) {
+  public constructor( model: SolarSystemCommonModel, providedOptions: SolarSystemTimeControlNodeOptions ) {
 
     const options = optionize<SolarSystemTimeControlNodeOptions, SelfOptions, TimeControlNodeOptions>()( {
+
+      // SelfOptions
+      speedRadioButtonGroupOnRight: true,
+
+      // TimeControlNodeOptions
       timeSpeedProperty: model.timeSpeedProperty,
       timeSpeeds: [ TimeSpeed.FAST, TimeSpeed.NORMAL, TimeSpeed.SLOW ],
       scale: 0.9,
@@ -76,9 +77,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       speedRadioButtonGroupOptions: {
         labelOptions: SolarSystemCommonConstants.TEXT_OPTIONS,
         touchAreaXDilation: 10
-      },
-
-      speedRadioButtonGroupOnRight: true
+      }
     }, providedOptions );
 
     super( model.isPlayingProperty, options );

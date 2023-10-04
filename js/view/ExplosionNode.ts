@@ -4,22 +4,27 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { Path, PathOptions } from '../../../scenery/js/imports.js';
+import { NodeTranslationOptions, Path, PathOptions } from '../../../scenery/js/imports.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import { Shape } from '../../../kite/js/imports.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
-import { combineOptions } from '../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Animation from '../../../twixt/js/Animation.js';
 import Easing from '../../../twixt/js/Easing.js';
 import BodyNode from './BodyNode.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 
+type SelfOptions = EmptySelfOptions;
+type ExplosionNodeOptions = SelfOptions & NodeTranslationOptions;
+
 export default class ExplosionNode extends Path {
 
-  public constructor( providedOptions?: PathOptions ) {
+  public constructor( providedOptions?: ExplosionNodeOptions ) {
 
-    const options = combineOptions<PathOptions>( {
+    const options = optionize<ExplosionNodeOptions, SelfOptions, PathOptions>()( {
+
+      // PathOptions
       fill: SolarSystemCommonColors.explosionColorProperty
     }, providedOptions );
 

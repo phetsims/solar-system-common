@@ -19,11 +19,6 @@ import solarSystemCommon from '../solarSystemCommon.js';
 import EnumerationValue from '../../../phet-core/js/EnumerationValue.js';
 import Enumeration from '../../../phet-core/js/Enumeration.js';
 
-type SelfOptions = {
-  constrainSize?: boolean;
-  baseMagnitude?: number;
-};
-
 // Determines if the vector exceeds the min or max values, used only if constrainSize is true
 class OversizeType extends EnumerationValue {
   public static readonly NONE = new OversizeType();
@@ -33,7 +28,12 @@ class OversizeType extends EnumerationValue {
   public static readonly enumeration = new Enumeration( OversizeType );
 }
 
-export type VectorNodeOptions = ArrowNodeOptions & SelfOptions;
+type SelfOptions = {
+  constrainSize?: boolean;
+  baseMagnitude?: number;
+};
+
+export type VectorNodeOptions = SelfOptions & ArrowNodeOptions;
 
 export default class VectorNode extends ArrowNode {
   protected readonly tipProperty: TReadOnlyProperty<Vector2>;
@@ -50,10 +50,12 @@ export default class VectorNode extends ArrowNode {
   ) {
 
     const options = optionize<VectorNodeOptions, SelfOptions, ArrowNodeOptions>()( {
-      // Self options
+
+      // SelfOptions
       constrainSize: false,
       baseMagnitude: 500,
 
+      // ArrowNodeOptions
       headHeight: 15,
       headWidth: 15,
       tailWidth: 5,

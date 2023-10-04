@@ -46,6 +46,8 @@ const bodySounds = [
 
 type SelfOptions = {
   draggable?: boolean;
+
+  // Velocities for keyboard drag controls
   dragVelocity?: number;
   shiftDragVelocity?: number;
 
@@ -64,43 +66,39 @@ type SelfOptions = {
 export type BodyNodeOptions = SelfOptions & StrictOmit<ShadedSphereNodeOptions, 'cursor'>;
 
 export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode ) {
-  private readonly disposeBodyNode: () => void;
 
   public readonly soundClip: SoundClip;
   public readonly grabClip: SoundClip;
   public readonly releaseClip: SoundClip;
 
+  private readonly disposeBodyNode: () => void;
+
   public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: BodyNodeOptions ) {
     const accessibleName = 'Body ' + ( body.index + 1 );
 
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
-      draggable: true,
 
-      // Velocities for keyboard drag controls
+      // SelfOptions
+      draggable: true,
       dragVelocity: 450,
       shiftDragVelocity: 100,
-
-      mainColor: body.colorProperty,
-
       mapPosition: _.identity,
-
       valuesVisibleProperty: new BooleanProperty( false ),
-
       rectangleOptions: {
         cornerRadius: 2,
         fill: new Color( 0, 0, 0, 0.5 )
       },
-
-      soundViewNode: null,
-
       textOptions: {
         fill: 'white', // Not a colorProperty because it is not dynamic
         maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH,
         font: new PhetFont( 16 )
       },
-
       useCueingArrows: false,
       showVelocityIndex: true,
+      soundViewNode: null,
+
+      // ShadedSphereNodeOptions
+      mainColor: body.colorProperty,
 
       // pdom
       tagName: 'div',

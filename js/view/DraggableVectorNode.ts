@@ -61,13 +61,13 @@ export default class DraggableVectorNode extends VectorNode {
     providedOptions?: DraggableVectorNodeOptions ) {
 
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
+
+      // SelfOptions
       snapToZero: true,
       minimumMagnitude: 10,
       maxMagnitudeProperty: null,
-
       soundViewNode: null,
       mapPosition: _.identity,
-
       dragVelocity: 450,
       shiftDragVelocity: 100
     }, providedOptions );

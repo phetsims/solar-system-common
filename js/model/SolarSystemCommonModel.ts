@@ -31,13 +31,6 @@ import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 
-type SelfOptions<EngineType extends Engine> = {
-  engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
-  isLab?: boolean;
-  timeScale?: number;
-  modelToViewTime?: number;
-} & PickRequired<PhetioObjectOptions, 'tandem'>;
-
 export type BodyInfo = {
   mass: number;
   position: Vector2;
@@ -45,7 +38,15 @@ export type BodyInfo = {
   active: boolean;
 };
 
-export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType>;
+type SelfOptions<EngineType extends Engine> = {
+  engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
+  isLab?: boolean;
+  timeScale?: number;
+  modelToViewTime?: number;
+};
+
+export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
+  PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export default abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
 

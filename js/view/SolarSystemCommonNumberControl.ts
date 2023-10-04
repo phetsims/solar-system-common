@@ -50,6 +50,8 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     };
 
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {
+
+      // NumberControlOptions
       valueChangeSoundGeneratorOptions: valueChangeSoundGeneratorOptions,
       sliderOptions: {
         trackSize: new Dimension2( 226, 2 ),

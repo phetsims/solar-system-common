@@ -35,16 +35,15 @@ import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import { Shape } from '../../../kite/js/imports.js';
 
-
-type SelfOptions = {
-  playingAllowedProperty?: TReadOnlyProperty<boolean>;
-  centerOrbitOffset?: Vector2;
-};
-
 export type BodyBoundsItem = {
   node: Node;
   expandX: 'left' | 'right';
   expandY: 'top' | 'bottom';
+};
+
+type SelfOptions = {
+  playingAllowedProperty?: TReadOnlyProperty<boolean>;
+  centerOrbitOffset?: Vector2;
 };
 
 export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -75,8 +74,9 @@ export default class SolarSystemCommonScreenView extends ScreenView {
   protected constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
 
     const options = optionize<SolarSystemCommonScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-      playingAllowedProperty: new Property( true ),
 
+      // SelfOptions
+      playingAllowedProperty: new Property( true ),
       centerOrbitOffset: Vector2.ZERO
     }, providedOptions );
 
