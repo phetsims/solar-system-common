@@ -63,8 +63,6 @@ export default class Body {
       hasListenerOrderDependencies: true // during reset listener order is key for calculating correct values.
     } );
 
-    this.radiusProperty = new NumberProperty( 1 );
-
     this.positionProperty = new Vector2Property( initialPosition );
 
     this.velocityProperty = new Vector2Property( initialVelocity );
