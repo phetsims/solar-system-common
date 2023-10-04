@@ -56,14 +56,14 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly availableBodies: Body[];
   public readonly userControlledProperty = new BooleanProperty( false );
 
-  public numberOfActiveBodiesProperty: NumberProperty;
-  public engine: EngineType;
+  public readonly numberOfActiveBodiesProperty: NumberProperty;
+  public readonly engine: EngineType;
 
   public readonly userInteractingEmitter = new Emitter();
 
   // Time control parameters
-  public timeScale: number; // Scale of the model's dt
-  public modelToViewTime: number; // Transform between model's and view's times
+  public readonly timeScale: number; // Scale of the model's dt
+  public readonly modelToViewTime: number; // Transform between model's and view's times
   public readonly timeFormatter = new Map<TimeSpeed, number>( [
     [ TimeSpeed.FAST, 7 / 4 ],
     [ TimeSpeed.NORMAL, 1 ],
@@ -83,6 +83,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly moreDataProperty: BooleanProperty;
   public readonly realUnitsProperty: BooleanProperty;
 
+  //TODO https://github.com/phetsims/keplers-laws/issues/191 zoomLevelProperty and zoomProperty should be readonly
   public zoomLevelProperty: NumberProperty;
   public zoomProperty: ReadOnlyProperty<number>;
   public readonly isLab: boolean;
@@ -104,6 +105,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -11.1 ) },
     { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111 ) }
   ];
+  //TODO https://github.com/phetsims/keplers-laws/issues/192 defaultBodyState should be readonly
   protected defaultBodyState: BodyInfo[];
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
