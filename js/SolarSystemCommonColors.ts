@@ -17,37 +17,33 @@ const SolarSystemCommonColors = {
   foregroundProperty: new ProfileColorProperty( solarSystemCommon, 'foreground', {
     default: 'white',
     projector: 'black'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'foregroundColorProperty' )
   } ),
+
   backgroundProperty: new ProfileColorProperty( solarSystemCommon, 'background', {
     default: 'black',
     projector: 'white'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'backgroundColorProperty' )
   } ),
-  controlPanelFillProperty: new ProfileColorProperty( solarSystemCommon, 'control panel fill', {
+
+  controlPanelFillProperty: new ProfileColorProperty( solarSystemCommon, 'controlPanelFill', {
     default: 'rgb( 40, 40, 40 )',
     projector: new Color( 222, 234, 255 )
   } ),
-  gridIconStrokeColorProperty: new ProfileColorProperty( solarSystemCommon, 'grid icon stroke', {
+
+  gridIconStrokeColorProperty: new ProfileColorProperty( solarSystemCommon, 'gridIconStroke', {
     default: 'gray',
     projector: 'black'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'gridIconStrokeColorProperty' )
   } ),
 
-  userControlledBackgroundColorProperty: new ProfileColorProperty( solarSystemCommon, 'user controlled background', {
+  userControlledBackgroundColorProperty: new ProfileColorProperty( solarSystemCommon, 'userControlledBackgroundColor', {
     default: PhetColorScheme.BUTTON_YELLOW
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'userControlledBackgroundColorProperty' )
   } ),
 
-  velocityColorProperty: new ProfileColorProperty( solarSystemCommon, 'velocity', {
+  velocityColorProperty: new ProfileColorProperty( solarSystemCommon, 'velocityColor', {
     default: PhetColorScheme.VELOCITY,
     projector: '#44b052'
   } ),
-  gravityColorProperty: new ProfileColorProperty( solarSystemCommon, 'gravity', {
+
+  gravityColorProperty: new ProfileColorProperty( solarSystemCommon, 'gravityColor', {
     default: PhetColorScheme.GRAVITATIONAL_FORCE
   } ),
 
@@ -77,16 +73,12 @@ const SolarSystemCommonColors = {
     tandem: Tandem.COLORS.createTandem( 'fourthBodyColorProperty' )
   } ),
 
-  explosionColorProperty: new ProfileColorProperty( solarSystemCommon, 'explosion color', {
+  explosionColorProperty: new ProfileColorProperty( solarSystemCommon, 'explosionColor', {
     default: 'yellow'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'explosionColorProperty' )
   } ),
 
-  orbitColorProperty: new ProfileColorProperty( solarSystemCommon, 'orbit color', {
+  orbitColorProperty: new ProfileColorProperty( solarSystemCommon, 'orbitColor', {
     default: 'fuchsia'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'orbitColorProperty' )
   } )
 };
 
