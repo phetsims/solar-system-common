@@ -14,7 +14,6 @@ import Property from '../../../axon/js/Property.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import SolarSystemCommonCheckbox from './SolarSystemCommonCheckbox.js';
 import Tandem from '../../../tandem/js/Tandem.js';
@@ -22,13 +21,22 @@ import { combineOptions } from '../../../phet-core/js/optionize.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import pathIcon_png from '../../images/pathIcon_png.js';
 import pathIconProjector_png from '../../images/pathIconProjector_png.js';
+import VisibleProperties from './VisibleProperties.js';
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 
 // constants
 const TEXT_OPTIONS = combineOptions<TextOptions>( {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
   maxWidth: SolarSystemCommonConstants.CHECKBOX_TEXT_MAX_WIDTH
 } );
 
-const createVisibilityInformationCheckboxes = ( model: Pick<SolarSystemCommonModel, 'pathVisibleProperty' | 'gridVisibleProperty' | 'measuringTapeVisibleProperty'>, tandem: Tandem, usePath = true ): SolarSystemCommonCheckbox[] => {
+/**
+ * Creates checkboxes that change the visibility of the different model attributes like the grid, measuring tape, etc.
+ * @param visibleProperties
+ * @param pathVisibleProperty - this property lives in the model, it's separate to visibleProperties
+ * @param tandem
+ * @param usePath
+ */
+const createVisibilityInformationCheckboxes = ( visibleProperties: VisibleProperties, pathVisibleProperty: BooleanProperty, tandem: Tandem, usePath = true ): SolarSystemCommonCheckbox[] => {
 
   const measuringTapeIcon = MeasuringTapeNode.createIcon( { scale: 0.3 } );
 
@@ -39,7 +47,7 @@ const createVisibilityInformationCheckboxes = ( model: Pick<SolarSystemCommonMod
   } );
 
   return [
-    new SolarSystemCommonCheckbox( model.pathVisibleProperty, new HBox( {
+    new SolarSystemCommonCheckbox( pathVisibleProperty, new HBox( {
       spacing: 10,
       children: [
         new Text( SolarSystemCommonStrings.pathStringProperty, TEXT_OPTIONS ),
@@ -50,7 +58,7 @@ const createVisibilityInformationCheckboxes = ( model: Pick<SolarSystemCommonMod
       tandem: tandem.createTandem( 'pathVisibleCheckbox' ),
       accessibleName: SolarSystemCommonStrings.pathStringProperty
     } ),
-    new SolarSystemCommonCheckbox( model.gridVisibleProperty, new HBox( {
+    new SolarSystemCommonCheckbox( visibleProperties.gridVisibleProperty, new HBox( {
       spacing: 10,
       children: [
         new Text( SolarSystemCommonStrings.gridStringProperty, TEXT_OPTIONS ),
@@ -63,7 +71,7 @@ const createVisibilityInformationCheckboxes = ( model: Pick<SolarSystemCommonMod
       accessibleName: SolarSystemCommonStrings.gridStringProperty,
       tandem: tandem.createTandem( 'gridVisibleCheckbox' )
     } ),
-    new SolarSystemCommonCheckbox( model.measuringTapeVisibleProperty, new HBox( {
+    new SolarSystemCommonCheckbox( visibleProperties.measuringTapeVisibleProperty, new HBox( {
       spacing: 10,
       children: [
         new Text( SolarSystemCommonStrings.measuringTapeStringProperty, TEXT_OPTIONS ),

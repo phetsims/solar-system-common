@@ -34,6 +34,7 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import { Shape } from '../../../kite/js/imports.js';
+import VisibleProperties from './VisibleProperties.js';
 
 export type BodyBoundsItem = {
   node: Node;
@@ -62,6 +63,9 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
+
+  // Element that handles the visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
+  protected readonly visibleProperties: VisibleProperties;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
   protected readonly modelViewTransformProperty: ReadOnlyProperty<ModelViewTransform2>;
@@ -127,6 +131,11 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       } );
     } );
 
+    // Create visibleProperty instances for Nodes in the view.
+    this.visibleProperties = new VisibleProperties( {
+      tandem: options.tandem.createTandem( 'visibleProperties' )
+    } );
+
     this.modelViewTransformProperty = new DerivedProperty(
       [ model.zoomProperty ],
       zoom => {
@@ -146,14 +155,14 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       100,
       {
         stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
-        visibleProperty: model.gridVisibleProperty
+        visibleProperty: this.visibleProperties.gridVisibleProperty
       } ) );
 
     this.createDraggableVectorNode = ( body: Body, options?: DraggableVectorNodeOptions ) => {
       return new DraggableVectorNode(
         body,
         this.modelViewTransformProperty,
-        model.velocityVisibleProperty,
+        this.visibleProperties.velocityVisibleProperty,
         body.velocityProperty,
         body.positionProperty,
         1,
@@ -180,7 +189,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
     // Add the MeasuringTapeNode
     this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
-      visibleProperty: model.measuringTapeVisibleProperty,
+      visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,
       textColor: 'black',
       textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent red
       textBackgroundXMargin: 10,
@@ -199,13 +208,16 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     } );
     this.topLayer.addChild( this.measuringTapeNode );
 
+    const resetScreenView = () => {
+      this.interruptSubtreeInput(); // cancel interactions that may be in progress
+      model.reset();
+      this.measuringTapeNode.reset();
+      this.visibleProperties.reset();
+    };
+
     // NOTE: It is the responsibility of the subclass to add resetAllButton to the scene graph.
     this.resetAllButton = new ResetAllButton( {
-      listener: () => {
-        this.interruptSubtreeInput(); // cancel interactions that may be in progress
-        model.reset();
-        this.measuringTapeNode.reset();
-      },
+      listener: resetScreenView,
       touchAreaDilation: 10,
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );

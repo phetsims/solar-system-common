@@ -76,13 +76,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
   public readonly hasPlayedProperty = new BooleanProperty( false );
 
-  // Properties that control the visibility of various things in the UI. These live in the model for convenience.
+  // Indicates if the path is visible. Lives in the model because it's also linked to model properties.
   public readonly pathVisibleProperty: BooleanProperty;
-  public readonly gravityVisibleProperty: BooleanProperty;
-  public readonly velocityVisibleProperty: BooleanProperty;
-  public readonly gridVisibleProperty: BooleanProperty;
-  public readonly measuringTapeVisibleProperty: BooleanProperty;
-  public readonly valuesVisibleProperty: BooleanProperty;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly moreDataProperty: BooleanProperty;
@@ -202,27 +197,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty = new BooleanProperty( false );
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
 
-    // Properties that control visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
-    const visiblePropertiesTandem = options.tandem.createTandem( 'visibleProperties' );
-    this.pathVisibleProperty = new BooleanProperty( true, {
-      tandem: visiblePropertiesTandem.createTandem( 'pathVisibleProperty' )
-    } );
-    this.gravityVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'gravityVisibleProperty' )
-    } );
-    this.velocityVisibleProperty = new BooleanProperty( true, {
-      tandem: visiblePropertiesTandem.createTandem( 'velocityVisibleProperty' )
-    } );
-    this.gridVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'gridVisibleProperty' )
-    } );
-    this.measuringTapeVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'measuringTapeVisibleProperty' )
-    } );
-    this.valuesVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'valuesVisibleProperty' )
-    } );
-
     this.moreDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'moreDataProperty' )
     } );
@@ -240,6 +214,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
     this.zoomProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
       return Utils.linear( 1, 6, 0.25, 1.25, zoomLevel );
+    } );
+
+    this.pathVisibleProperty = new BooleanProperty( true, {
+      tandem: providedOptions.tandem.createTandem( 'pathVisibleProperty' )
     } );
 
     this.pathVisibleProperty.link( visible => {
@@ -308,13 +286,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
-    this.pathVisibleProperty.reset();
-    this.gravityVisibleProperty.reset();
-    this.velocityVisibleProperty.reset();
-    this.gridVisibleProperty.reset();
-    this.measuringTapeVisibleProperty.reset();
-    this.valuesVisibleProperty.reset();
     this.moreDataProperty.reset();
+    this.pathVisibleProperty.reset();
     this.realUnitsProperty.reset();
     this.userControlledProperty.reset();
     this.forceScaleProperty.reset();
