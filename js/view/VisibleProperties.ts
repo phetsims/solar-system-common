@@ -26,7 +26,7 @@ export default class VisibleProperties {
   // Indicates if the measuring tape is visible.
   public readonly measuringTapeVisibleProperty: BooleanProperty;
 
-  // Indicates if the speed values are visible. TODO: refactor to speedVisibleProperty https://github.com/phetsims/solar-system-common/issues/1
+  // Indicates if the speed values are visible. TODO: refactor to speedVisibleProperty https://github.com/phetsims/my-solar-system/issues/219
   public readonly valuesVisibleProperty: BooleanProperty;
 
   public constructor( providedOptions: VisiblePropertiesOptions ) {
