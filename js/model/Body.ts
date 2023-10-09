@@ -39,18 +39,18 @@ export default class Body extends PhetioObject {
   public readonly collidedEmitter = new TinyEmitter();
 
   // Not resettable, common model will handle. Determines if the body is currently on-screen
-  public readonly isActiveProperty = new BooleanProperty( false );
+  public readonly isActiveProperty: Property<boolean>;
 
   // True when the body goes off-screen
-  public readonly escapedProperty = new BooleanProperty( false );
+  public readonly escapedProperty: Property<boolean>;
 
   // True when the body force is off-scale
-  public readonly forceOffscaleProperty = new BooleanProperty( false );
+  public readonly forceOffscaleProperty: Property<boolean>;
 
   // User modified Properties
-  public readonly userControlledPositionProperty = new BooleanProperty( false );
-  public readonly userControlledVelocityProperty = new BooleanProperty( false );
-  public readonly userControlledMassProperty = new BooleanProperty( false );
+  public readonly userControlledPositionProperty: Property<boolean>;
+  public readonly userControlledVelocityProperty: Property<boolean>;
+  public readonly userControlledMassProperty: Property<boolean>;
 
   // Array of points for drawing the path
   public readonly pathPoints: ObservableArray<Vector2>;
@@ -79,6 +79,8 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
+    this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
+
     this.positionProperty = new Vector2Property( initialPosition, {
       tandem: tandem.createTandem( 'positionProperty' ),
       phetioReadOnly: true
@@ -99,10 +101,38 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
+    this.isActiveProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'isActiveProperty' ),
+      phetioReadOnly: true
+    } );
+
+    this.escapedProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'escapedProperty' ),
+      phetioReadOnly: true
+    } );
+
+    this.forceOffscaleProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'forceOffscaleProperty' ),
+      phetioReadOnly: true
+    } );
+
+    this.userControlledPositionProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'userControlledPositionProperty' ),
+      phetioReadOnly: true
+    } );
+
+    this.userControlledVelocityProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'userControlledVelocityProperty' ),
+      phetioReadOnly: true
+    } );
+
+    this.userControlledMassProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'userControlledMassProperty' ),
+      phetioReadOnly: true
+    } );
+
     this.colorProperty = colorProperty;
     this.addLinkedElement( colorProperty );
-
-    this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
     // Data for rendering the path
     this.pathPoints = createObservableArray();
