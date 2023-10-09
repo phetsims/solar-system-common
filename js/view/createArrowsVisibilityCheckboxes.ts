@@ -33,7 +33,7 @@ const SPACING = 10;
 const createArrowsVisibilityCheckboxes = ( visibleProperties: VisibleProperties, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
   return [
     // speed checkbox
-    new SolarSystemCommonCheckbox( visibleProperties.valuesVisibleProperty, new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS ), {
+    new SolarSystemCommonCheckbox( visibleProperties.speedVisibleProperty, new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS ), {
       accessibleName: SolarSystemCommonStrings.speedStringProperty,
       tandem: tandem.createTandem( 'valuesVisibleCheckbox' )
     } ),

@@ -1,4 +1,5 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
  * VisibleProperties contains visibleProperty instances for things in the view. These Properties are controlled
  * by checkboxes and toggle buttons.
@@ -24,8 +25,8 @@ export default class VisibleProperties {
   // Indicates if the measuring tape is visible.
   public readonly measuringTapeVisibleProperty: BooleanProperty;
 
-  // Indicates if the speed values are visible. TODO: refactor to speedVisibleProperty https://github.com/phetsims/my-solar-system/issues/219
-  public readonly valuesVisibleProperty: BooleanProperty;
+  // Indicates if the speed values are visible.
+  public readonly speedVisibleProperty: BooleanProperty;
 
   public constructor( tandem: Tandem ) {
 
@@ -42,8 +43,8 @@ export default class VisibleProperties {
     this.measuringTapeVisibleProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'measuringTapeVisibleProperty' )
     } );
-    this.valuesVisibleProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'valuesVisibleProperty' )
+    this.speedVisibleProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'speedVisibleProperty' )
     } );
   }
 
@@ -52,7 +53,7 @@ export default class VisibleProperties {
     this.velocityVisibleProperty.reset();
     this.gridVisibleProperty.reset();
     this.measuringTapeVisibleProperty.reset();
-    this.valuesVisibleProperty.reset();
+    this.speedVisibleProperty.reset();
   }
 }
 

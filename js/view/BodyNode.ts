@@ -52,7 +52,7 @@ type SelfOptions = {
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
-  valuesVisibleProperty?: TReadOnlyProperty<boolean>;
+  speedVisibleProperty?: TReadOnlyProperty<boolean>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   rectangleOptions?: RectangleOptions;
@@ -85,7 +85,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       dragVelocity: 450,
       shiftDragVelocity: 100,
       mapPosition: _.identity,
-      valuesVisibleProperty: new BooleanProperty( false ),
+      speedVisibleProperty: new BooleanProperty( false ),
       rectangleOptions: {
         cornerRadius: 2,
         fill: new Color( 0, 0, 0, 0.5 )
@@ -202,37 +202,40 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       } );
     }
 
-    const velocityValueProperty = new DerivedProperty(
+    // Speed is the magnitude of velocity.
+    const speedProperty = new DerivedProperty(
       [ this.body.velocityProperty ],
       ( velocity: Vector2 ) => Utils.toFixed(
         velocity.magnitude * SolarSystemCommonConstants.VELOCITY_MULTIPLIER,
         2
       )
     );
-    const readoutStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
+
+    // Format the speed with units.
+    const speedStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
       index: options.showVelocityIndex ? body.index : '',
-      value: velocityValueProperty,
+      value: speedProperty,
       units: SolarSystemCommonStrings.units.kmsStringProperty
     }, { tandem: Tandem.OPT_OUT } );
 
-    const valueNode = new RichText( readoutStringProperty, options.textOptions );
+    const speedText = new RichText( speedStringProperty, options.textOptions );
 
-    const valueBackgroundNode = new Rectangle( options.rectangleOptions );
-
-    // Resizes the value background and centers it on the value
-    valueNode.boundsProperty.link( bounds => {
-      valueBackgroundNode.rectBounds = bounds.dilated( 4 );
+    // Dynamically size the background to fit the text.
+    const speedBackgroundNode = new Rectangle( options.rectangleOptions );
+    speedText.boundsProperty.link( bounds => {
+      speedBackgroundNode.rectBounds = bounds.dilated( 4 );
     } );
 
-    // Value Container
-    const valueContainer = new Node( {
-      children: [ valueBackgroundNode, valueNode ],
-      visibleProperty: options.valuesVisibleProperty,
+    // Put the parts of the speed display together
+    const speedDisplay = new Node( {
+      children: [ speedBackgroundNode, speedText ],
+      visibleProperty: options.speedVisibleProperty,
       center: new Vector2( 0, 30 )
     } );
-    this.addChild( valueContainer );
+    this.addChild( speedDisplay );
+
     this.body.velocityProperty.link( velocity => {
-      valueContainer.center = new Vector2( 0, velocity.y > 0 ? 30 : -30 );
+      speedDisplay.center = new Vector2( 0, velocity.y > 0 ? 30 : -30 );
     } );
 
     const bodyCollisionListener = () => {
@@ -254,16 +257,16 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     }
 
     this.disposeBodyNode = () => {
-      valueContainer.dispose(); // Because we provide the visibleProperty
+      speedDisplay.dispose(); // Because we provide the visibleProperty
       positionMultilink.dispose();
       radiusMultilink.dispose();
       cueingVisibleProperty.dispose();
       cueingArrowsNode.dispose();
 
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
-      readoutStringProperty.dispose();
-      velocityValueProperty.dispose();
-      valueNode.dispose();
+      speedProperty.dispose();
+      speedStringProperty.dispose();
+      speedText.dispose();
       this.stopSound();
       if ( options.soundViewNode ) {
         soundManager.removeSoundGenerator( this.soundClip );
