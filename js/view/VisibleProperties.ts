@@ -8,12 +8,10 @@
 
 import solarSystemCommon from '../solarSystemCommon.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
-
-type VisiblePropertiesOptions = PickRequired<PhetioObjectOptions, 'tandem'>;
+import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class VisibleProperties {
+
   // Indicates if the gravity arrows are visible.
   public readonly gravityVisibleProperty: BooleanProperty;
 
@@ -29,22 +27,23 @@ export default class VisibleProperties {
   // Indicates if the speed values are visible. TODO: refactor to speedVisibleProperty https://github.com/phetsims/my-solar-system/issues/219
   public readonly valuesVisibleProperty: BooleanProperty;
 
-  public constructor( providedOptions: VisiblePropertiesOptions ) {
+  public constructor( tandem: Tandem ) {
+
     // Properties that control visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
     this.gravityVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'gravityVisibleProperty' )
+      tandem: tandem.createTandem( 'gravityVisibleProperty' )
     } );
     this.velocityVisibleProperty = new BooleanProperty( true, {
-      tandem: providedOptions.tandem.createTandem( 'velocityVisibleProperty' )
+      tandem: tandem.createTandem( 'velocityVisibleProperty' )
     } );
     this.gridVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'gridVisibleProperty' )
+      tandem: tandem.createTandem( 'gridVisibleProperty' )
     } );
     this.measuringTapeVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'measuringTapeVisibleProperty' )
+      tandem: tandem.createTandem( 'measuringTapeVisibleProperty' )
     } );
     this.valuesVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'valuesVisibleProperty' )
+      tandem: tandem.createTandem( 'valuesVisibleProperty' )
     } );
   }
 
