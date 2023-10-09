@@ -124,13 +124,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const bodiesTandem = options.tandem.createTandem( 'bodies' );
     let bodyIndex = 1;
     this.availableBodies = [
-      new Body( 0, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty,
+      new Body( bodyIndex, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty,
         bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
-      new Body( 1, 25, new Vector2( 200, 0 ), new Vector2( 0, 111 ), this.userControlledProperty, SolarSystemCommonColors.body2ColorProperty,
+      new Body( bodyIndex, 25, new Vector2( 200, 0 ), new Vector2( 0, 111 ), this.userControlledProperty, SolarSystemCommonColors.body2ColorProperty,
         bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
-      new Body( 2, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.body3ColorProperty,
+      new Body( bodyIndex, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.body3ColorProperty,
         bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
-      new Body( 3, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.body4ColorProperty,
+      new Body( bodyIndex, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.body4ColorProperty,
         bodiesTandem.createTandem( `body${bodyIndex++}` ) )
     ];
 

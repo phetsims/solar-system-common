@@ -24,6 +24,9 @@ import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 
 export default class Body extends PhetioObject {
 
+  // Index of the body, 1-based to correspond to the UI and PhET-iO.
+  public readonly index: number;
+
   // Unitless body quantities (physical properties)
   public readonly massProperty: Property<number>;
   public readonly radiusProperty: TReadOnlyProperty<number>;
@@ -57,14 +60,17 @@ export default class Body extends PhetioObject {
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   private pathDistance = 0;
 
-  public constructor( public readonly index: number, initialMass: number, initialPosition: Vector2,
+  public constructor( index: number, initialMass: number, initialPosition: Vector2,
                       initialVelocity: Vector2, public userControlledProperty: Property<boolean>,
                       colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
+    assert && assert( Number.isInteger( index ) && index >= 1, `invalid index: ${index}` );
 
     super( {
       tandem: tandem,
       phetioState: false
     } );
+
+    this.index = index;
 
     this.massProperty = new NumberProperty( initialMass, {
       isValidValue: v => v > 0,

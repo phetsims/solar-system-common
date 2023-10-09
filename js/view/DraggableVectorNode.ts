@@ -100,7 +100,7 @@ export default class DraggableVectorNode extends VectorNode {
     const circleLineWidth = 3;
     const circleOuterRadius = circleRadius + circleLineWidth / 2;
 
-    const accessibleName = 'Velocity Body ' + ( body.index + 1 );
+    const accessibleName = `Velocity Body ${body.index}`;
 
     // a circle with text (a character) in the center, to help indicate what it represents
     // ("v" for velocity in this sim)

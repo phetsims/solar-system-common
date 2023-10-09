@@ -76,7 +76,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
   private readonly disposeBodyNode: () => void;
 
   public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: BodyNodeOptions ) {
-    const accessibleName = 'Body ' + ( body.index + 1 );
+    const accessibleName = `Body ${body.index}`;
 
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
 
@@ -116,7 +116,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     this.body = body;
 
-    this.soundClip = new SoundClip( bodySounds[ body.index ], {
+    this.soundClip = new SoundClip( bodySounds[ body.index - 1 ], {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL,
       loop: true
     } );
@@ -210,7 +210,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       )
     );
     const readoutStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
-      index: options.showVelocityIndex ? body.index + 1 : '',
+      index: options.showVelocityIndex ? body.index : '',
       value: velocityValueProperty,
       units: SolarSystemCommonStrings.units.kmsStringProperty
     }, { tandem: Tandem.OPT_OUT } );
