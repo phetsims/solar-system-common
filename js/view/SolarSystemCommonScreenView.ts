@@ -20,7 +20,6 @@ import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
-import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import Body from '../model/Body.js';
 import DraggableVectorNode, { DraggableVectorNodeOptions } from './DraggableVectorNode.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
@@ -68,7 +67,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
   protected readonly visibleProperties: VisibleProperties;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
-  protected readonly modelViewTransformProperty: ReadOnlyProperty<ModelViewTransform2>;
+  protected readonly modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>;
 
   // Derived from visibleBoundsProperty to keep the UI elements centered on narrow screens
   // Tracks only the vertical bounds and constrains them to layoutBounds
