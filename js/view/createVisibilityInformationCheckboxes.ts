@@ -55,7 +55,7 @@ const createVisibilityInformationCheckboxes = ( visibleProperties: VisibleProper
       ]
     } ), {
       visible: usePath,
-      tandem: tandem.createTandem( 'pathVisibleCheckbox' ),
+      tandem: usePath ? tandem.createTandem( 'pathCheckbox' ) : Tandem.OPT_OUT,
       accessibleName: SolarSystemCommonStrings.pathStringProperty
     } ),
     new SolarSystemCommonCheckbox( visibleProperties.gridVisibleProperty, new HBox( {
@@ -69,7 +69,7 @@ const createVisibilityInformationCheckboxes = ( visibleProperties: VisibleProper
       ]
     } ), {
       accessibleName: SolarSystemCommonStrings.gridStringProperty,
-      tandem: tandem.createTandem( 'gridVisibleCheckbox' )
+      tandem: tandem.createTandem( 'gridCheckbox' )
     } ),
     new SolarSystemCommonCheckbox( visibleProperties.measuringTapeVisibleProperty, new HBox( {
       spacing: 10,
@@ -79,7 +79,7 @@ const createVisibilityInformationCheckboxes = ( visibleProperties: VisibleProper
       ]
     } ), {
       accessibleName: SolarSystemCommonStrings.measuringTapeStringProperty,
-      tandem: tandem.createTandem( 'measuringTapeVisibleCheckbox' )
+      tandem: tandem.createTandem( 'measuringTapeCheckbox' )
     } )
   ];
 };
