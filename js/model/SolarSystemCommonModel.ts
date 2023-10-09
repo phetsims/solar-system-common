@@ -220,7 +220,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
 
     this.zoomScaleProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
-      return Utils.linear( 1, 6, 0.25, 1.25, zoomLevel );
+      return Utils.linear( options.zoomLevelRange.min, options.zoomLevelRange.max, 0.25, 1.25, zoomLevel );
     } );
 
     this.pathVisibleProperty = new BooleanProperty( true, {
