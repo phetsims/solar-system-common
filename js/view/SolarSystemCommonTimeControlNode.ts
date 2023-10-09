@@ -47,13 +47,13 @@ type SelfOptions = {
   speedRadioButtonGroupOnRight?: boolean;
 };
 
-type SolarSystemTimeControlNodeOptions = SelfOptions & TimeControlNodeOptions & PickRequired<TimeControlNodeOptions, 'tandem'>;
+type SolarSystemCommonTimeControlNodeOptions = SelfOptions & PickRequired<TimeControlNodeOptions, 'tandem' | 'enabledProperty'>;
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
 
-  public constructor( model: SolarSystemCommonModel, providedOptions: SolarSystemTimeControlNodeOptions ) {
+  public constructor( model: SolarSystemCommonModel, providedOptions: SolarSystemCommonTimeControlNodeOptions ) {
 
-    const options = optionize<SolarSystemTimeControlNodeOptions, SelfOptions, TimeControlNodeOptions>()( {
+    const options = optionize<SolarSystemCommonTimeControlNodeOptions, SelfOptions, TimeControlNodeOptions>()( {
 
       // SelfOptions
       speedRadioButtonGroupOnRight: true,
