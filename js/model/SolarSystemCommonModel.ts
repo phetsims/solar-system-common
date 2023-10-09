@@ -29,6 +29,7 @@ import optionize from '../../../phet-core/js/optionize.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import RangeWithValue from '../../../dot/js/RangeWithValue.js';
 
 export type BodyInfo = {
   mass: number;
@@ -39,6 +40,7 @@ export type BodyInfo = {
 
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
+  zoomLevelRange: RangeWithValue;
   timeScale?: number;
   modelToViewTime?: number;
   defaultBodyState?: BodyInfo[] | null;
@@ -85,9 +87,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly realUnitsProperty: BooleanProperty;
 
-  //TODO https://github.com/phetsims/keplers-laws/issues/191 zoomLevelProperty and zoomProperty should be readonly
-  public zoomLevelProperty: NumberProperty;
-  public zoomProperty: ReadOnlyProperty<number>; //TODO https://github.com/phetsims/my-solar-system/issues/213 document, is this a scale?
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  public readonly zoomLevelProperty: NumberProperty;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document, is this a scale?
+  //TODO https://github.com/phetsims/keplers-laws/issues/191  zoomProperty should be readonly
+  public zoomProperty: ReadOnlyProperty<number>;
 
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
@@ -207,11 +212,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.forceScaleProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
     } );
-    this.zoomLevelProperty = new NumberProperty( 4, {
-      range: new Range( 1, 6 ),
-      tandem: options.tandem.createTandem( 'zoomLevelProperty' ),
-      numberType: 'Integer'
+
+    this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
+      range: options.zoomLevelRange,
+      numberType: 'Integer',
+      tandem: options.tandem.createTandem( 'zoomLevelProperty' )
     } );
+
     this.zoomProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
       return Utils.linear( 1, 6, 0.25, 1.25, zoomLevel );
     } );
