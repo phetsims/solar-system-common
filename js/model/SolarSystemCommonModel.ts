@@ -17,9 +17,7 @@ import createObservableArray, { ObservableArray } from '../../../axon/js/createO
 import Engine from './Engine.js';
 import Range from '../../../dot/js/Range.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
-import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import Multilink from '../../../axon/js/Multilink.js';
@@ -30,6 +28,7 @@ import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import RangeWithValue from '../../../dot/js/RangeWithValue.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 
 export type BodyInfo = {
   mass: number;
@@ -90,15 +89,14 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly zoomLevelProperty: NumberProperty;
 
-  //TODO https://github.com/phetsims/keplers-laws/issues/191  zoomScaleProperty should be readonly
   // How much to scale the model-view transform when zooming in and out
-  public zoomScaleProperty: ReadOnlyProperty<number>;
+  public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
   // Indicates if any body is far from the play area
-  public readonly isAnyBodyEscapedProperty: ReadOnlyProperty<boolean>;
+  public readonly isAnyBodyEscapedProperty: TReadOnlyProperty<boolean>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly isAnyBodyCollidedProperty = new BooleanProperty( false );
@@ -107,7 +105,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly forceScaleProperty: NumberProperty;
 
   // Indicates if any force arrow is currently off scale
-  public readonly isAnyForceOffscaleProperty: ReadOnlyProperty<boolean>;
+  public readonly isAnyForceOffscaleProperty: TReadOnlyProperty<boolean>;
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
   private startingBodyState: BodyInfo[] = [
@@ -217,10 +215,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       range: options.zoomLevelRange,
       numberType: 'Integer',
       tandem: options.tandem.createTandem( 'zoomLevelProperty' )
-    } );
-
-    this.zoomScaleProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
-      return Utils.linear( options.zoomLevelRange.min, options.zoomLevelRange.max, 0.25, 1.25, zoomLevel );
     } );
 
     this.pathVisibleProperty = new BooleanProperty( true, {
