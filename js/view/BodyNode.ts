@@ -245,14 +245,16 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
-    const cueingVisibleProperty = new DerivedProperty( [ this.body.userControlledProperty ], wasDragged => ( options.draggable && !wasDragged ) );
-    const cueingArrowsNode = new CueingArrowsNode( {
-      bodyRadius: this.radius,
-      fill: options.mainColor,
-      visibleProperty: cueingVisibleProperty
-    } );
-
+    // Optional cueing arrows
+    let cueingVisibleProperty: TReadOnlyProperty<boolean>;
+    let cueingArrowsNode: Node;
     if ( options.useCueingArrows ) {
+      const cueingVisibleProperty = new DerivedProperty( [ this.body.userControlledProperty ], wasDragged => ( options.draggable && !wasDragged ) );
+      const cueingArrowsNode = new CueingArrowsNode( {
+        bodyRadius: this.radius,
+        fill: options.mainColor,
+        visibleProperty: cueingVisibleProperty
+      } );
       this.addChild( cueingArrowsNode );
     }
 
@@ -260,8 +262,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       speedDisplay.dispose(); // Because we provide the visibleProperty
       positionMultilink.dispose();
       radiusMultilink.dispose();
-      cueingVisibleProperty.dispose();
-      cueingArrowsNode.dispose();
+      cueingVisibleProperty && cueingVisibleProperty.dispose();
+      cueingArrowsNode && cueingArrowsNode.dispose();
 
       this.body.collidedEmitter.removeListener( bodyCollisionListener );
       speedProperty.dispose();
