@@ -90,9 +90,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly zoomLevelProperty: NumberProperty;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document, is this a scale?
-  //TODO https://github.com/phetsims/keplers-laws/issues/191  zoomProperty should be readonly
-  public zoomProperty: ReadOnlyProperty<number>;
+  //TODO https://github.com/phetsims/keplers-laws/issues/191  zoomScaleProperty should be readonly
+  // How much to scale the model-view transform when zooming in and out
+  public zoomScaleProperty: ReadOnlyProperty<number>;
 
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
@@ -219,7 +219,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       tandem: options.tandem.createTandem( 'zoomLevelProperty' )
     } );
 
-    this.zoomProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
+    this.zoomScaleProperty = new DerivedProperty( [ this.zoomLevelProperty ], zoomLevel => {
       return Utils.linear( 1, 6, 0.25, 1.25, zoomLevel );
     } );
 

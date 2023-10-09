@@ -135,14 +135,14 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     this.visibleProperties = new VisibleProperties( options.tandem.createTandem( 'visibleProperties' ) );
 
     this.modelViewTransformProperty = new DerivedProperty(
-      [ model.zoomProperty ],
-      zoom => {
+      [ model.zoomScaleProperty ],
+      zoomScale => {
         return ModelViewTransform2.createSinglePointScaleInvertedYMapping(
           Vector2.ZERO,
           new Vector2(
             this.layoutBounds.center.x - options.centerOrbitOffset.x,
             this.layoutBounds.center.y - options.centerOrbitOffset.y ),
-          zoom );
+          zoomScale );
       } );
 
     // Add the node for the overlay grid, setting its visibility based on the model.showGridProperty
