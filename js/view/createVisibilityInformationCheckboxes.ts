@@ -34,9 +34,8 @@ const TEXT_OPTIONS = combineOptions<TextOptions>( {}, SolarSystemCommonConstants
  * @param visibleProperties
  * @param pathVisibleProperty - this property lives in the model, it's separate to visibleProperties
  * @param tandem
- * @param usePath
  */
-const createVisibilityInformationCheckboxes = ( visibleProperties: VisibleProperties, pathVisibleProperty: BooleanProperty, tandem: Tandem, usePath = true ): SolarSystemCommonCheckbox[] => {
+const createVisibilityInformationCheckboxes = ( visibleProperties: VisibleProperties, pathVisibleProperty: BooleanProperty, tandem: Tandem ): SolarSystemCommonCheckbox[] => {
 
   const measuringTapeIcon = MeasuringTapeNode.createIcon( { scale: 0.3 } );
 
@@ -47,17 +46,6 @@ const createVisibilityInformationCheckboxes = ( visibleProperties: VisibleProper
   } );
 
   return [
-    new SolarSystemCommonCheckbox( pathVisibleProperty, new HBox( {
-      spacing: 10,
-      children: [
-        new Text( SolarSystemCommonStrings.pathStringProperty, TEXT_OPTIONS ),
-        pathIconImageNode
-      ]
-    } ), {
-      visible: usePath,
-      tandem: usePath ? tandem.createTandem( 'pathCheckbox' ) : Tandem.OPT_OUT,
-      accessibleName: SolarSystemCommonStrings.pathStringProperty
-    } ),
     new SolarSystemCommonCheckbox( visibleProperties.gridVisibleProperty, new HBox( {
       spacing: 10,
       children: [
