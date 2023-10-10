@@ -113,6 +113,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111 ) }
   ];
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   protected readonly defaultBodyState: BodyInfo[];
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
