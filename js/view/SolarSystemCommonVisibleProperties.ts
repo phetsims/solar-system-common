@@ -1,8 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * VisibleProperties contains visibleProperty instances for things in the view. These Properties are controlled
- * by checkboxes and toggle buttons.
+ * SolarSystemCommonVisibleProperties is the parent abstract class that has common visible properties,
+ * and is extended by MySolarSystemVisibleProperties and KeplersLawsVisibleProperties.
  *
  * @author Agustín Vallejo
  */
@@ -11,7 +11,7 @@ import solarSystemCommon from '../solarSystemCommon.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 
-export default class VisibleProperties {
+export default class SolarSystemCommonVisibleProperties {
 
   // Indicates if the speed values are visible.
   public readonly speedVisibleProperty: BooleanProperty;
@@ -67,4 +67,4 @@ export default class VisibleProperties {
   }
 }
 
-solarSystemCommon.register( 'VisibleProperties', VisibleProperties );
+solarSystemCommon.register( 'SolarSystemCommonVisibleProperties', SolarSystemCommonVisibleProperties );

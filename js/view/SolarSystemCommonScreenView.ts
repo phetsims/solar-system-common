@@ -33,7 +33,7 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import { Shape } from '../../../kite/js/imports.js';
-import VisibleProperties from './VisibleProperties.js';
+import SolarSystemCommonVisibleProperties from './SolarSystemCommonVisibleProperties.js';
 
 export type BodyBoundsItem = {
   node: Node;
@@ -42,6 +42,7 @@ export type BodyBoundsItem = {
 };
 
 type SelfOptions = {
+  visibleProperties?: SolarSystemCommonVisibleProperties | null;
   playingAllowedProperty?: TReadOnlyProperty<boolean>;
   centerOrbitOffset?: Vector2;
 };
@@ -64,7 +65,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
 
   // Element that handles the visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
-  protected readonly visibleProperties: VisibleProperties;
+  protected readonly visibleProperties: SolarSystemCommonVisibleProperties;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
   protected readonly modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>;
@@ -83,8 +84,8 @@ export default class SolarSystemCommonScreenView extends ScreenView {
   protected constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
 
     const options = optionize<SolarSystemCommonScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-
       // SelfOptions
+      visibleProperties: null,
       playingAllowedProperty: new Property( true ),
       centerOrbitOffset: Vector2.ZERO
     }, providedOptions );
@@ -131,7 +132,7 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     } );
 
     // Create visibleProperty instances for Nodes in the view.
-    this.visibleProperties = new VisibleProperties( options.tandem.createTandem( 'visibleProperties' ) );
+    this.visibleProperties = options.visibleProperties ? options.visibleProperties : new SolarSystemCommonVisibleProperties( options.tandem.createTandem( 'visibleProperties' ) );
     this.visibleProperties.pathVisibleProperty.link( visible => {
       this.model.clearPaths();
       this.model.addingPathPoints = visible;
