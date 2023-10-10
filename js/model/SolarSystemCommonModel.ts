@@ -30,19 +30,28 @@ import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import RangeWithValue from '../../../dot/js/RangeWithValue.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 
+// Constants
+const BODY_COLORS = [
+  SolarSystemCommonColors.body1ColorProperty,
+  SolarSystemCommonColors.body2ColorProperty,
+  SolarSystemCommonColors.body3ColorProperty,
+  SolarSystemCommonColors.body4ColorProperty
+];
+
+// Type definitions
 export type BodyInfo = {
   mass: number;
   position: Vector2;
   velocity: Vector2;
-  active: boolean;
+  isActive: boolean;
 };
 
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
   zoomLevelRange: RangeWithValue;
+  defaultBodyState: BodyInfo[];
   timeScale?: number;
   modelToViewTime?: number;
-  defaultBodyState?: BodyInfo[] | null;
 };
 
 export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
@@ -118,30 +127,17 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
-      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
-      defaultBodyState: null
+      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
     const bodiesTandem = options.tandem.createTandem( 'bodies' );
-    let bodyIndex = 1;
-    this.availableBodies = [
-      new Body( bodyIndex, 250, new Vector2( 0, 0 ), new Vector2( 0, -11.1 ), this.userControlledProperty, SolarSystemCommonColors.body1ColorProperty,
-        bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
-      new Body( bodyIndex, 25, new Vector2( 200, 0 ), new Vector2( 0, 111 ), this.userControlledProperty, SolarSystemCommonColors.body2ColorProperty,
-        bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
-      new Body( bodyIndex, 0.1, new Vector2( 100, 0 ), new Vector2( 0, 150 ), this.userControlledProperty, SolarSystemCommonColors.body3ColorProperty,
-        bodiesTandem.createTandem( `body${bodyIndex++}` ) ),
-      new Body( bodyIndex, 0.1, new Vector2( -100, -100 ), new Vector2( 120, 0 ), this.userControlledProperty, SolarSystemCommonColors.body4ColorProperty,
-        bodiesTandem.createTandem( `body${bodyIndex++}` ) )
-    ];
 
-    // Activate the first two bodies by default
-    this.availableBodies[ 0 ].isActiveProperty.value = true;
-    this.availableBodies[ 1 ].isActiveProperty.value = true;
-
-    // Define the default mode the bodies will show up in
-    this.defaultBodyState = options.defaultBodyState ? options.defaultBodyState : this.availableBodies.map( body => body.info );
+    this.defaultBodyState = options.defaultBodyState;
+    this.availableBodies = this.defaultBodyState.map( ( bodyInfo, index ) => {
+      return new Body( index + 1, bodyInfo.isActive, bodyInfo.mass, bodyInfo.position, bodyInfo.velocity, this.userControlledProperty,
+        BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) );
+    } );
 
     // We want to synchronize availableBodies and bodies, so that bodies is effectively availableBodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
@@ -225,11 +221,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
    * Sets the available bodies initial states according to bodiesInfo
    */
   public loadBodyStates( bodiesInfo: BodyInfo[], preventCollision = false ): void {
-    for ( let i = 0; i < SolarSystemCommonConstants.NUM_BODIES; i++ ) {
+    for ( let i = 0; i < this.availableBodies.length; i++ ) {
       const bodyInfo = bodiesInfo[ i ];
 
       if ( bodyInfo ) {
-        this.availableBodies[ i ].isActiveProperty.value = bodyInfo.active;
+        this.availableBodies[ i ].isActiveProperty.value = bodyInfo.isActive;
 
         // Setting initial values and then resetting the body to make sure the body is in the correct state
         this.availableBodies[ i ].massProperty.setInitialValue( bodyInfo.mass );

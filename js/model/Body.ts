@@ -60,7 +60,7 @@ export default class Body extends PhetioObject {
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   private pathDistance = 0;
 
-  public constructor( index: number, initialMass: number, initialPosition: Vector2,
+  public constructor( index: number, isActive: boolean, initialMass: number, initialPosition: Vector2,
                       initialVelocity: Vector2, public userControlledProperty: Property<boolean>,
                       colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
     assert && assert( Number.isInteger( index ) && index >= 1, `invalid index: ${index}` );
@@ -101,7 +101,7 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
-    this.isActiveProperty = new BooleanProperty( false, {
+    this.isActiveProperty = new BooleanProperty( isActive, {
       tandem: tandem.createTandem( 'isActiveProperty' ),
       phetioReadOnly: true
     } );
@@ -179,7 +179,7 @@ export default class Body extends PhetioObject {
       mass: this.massProperty.value,
       position: this.positionProperty.value.copy(),
       velocity: this.velocityProperty.value.copy(),
-      active: this.isActiveProperty.value
+      isActive: this.isActiveProperty.value
     };
   }
 

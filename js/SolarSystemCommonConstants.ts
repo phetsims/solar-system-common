@@ -62,8 +62,6 @@ const SolarSystemCommonConstants = {
 
   GRID_SPACING: 100,
 
-  NUM_BODIES: 4,
-
   CHECKBOX_SPACING: 7,
 
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.1,
