@@ -1,13 +1,15 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Checkbox with common options for the my-solar-system and keplers-laws sims
+ * SolarSystemCommonCheckbox creates checkboxes with common options for the my-solar-system and keplers-laws sims.
+ * A set of static methods are provided for creating the checkboxes that are common to both sims.
  *
  * @author Agustín Vallejo (PhET Interactive Simulations)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import Checkbox, { CheckboxOptions } from '../../../sun/js/Checkbox.js';
-import { combineOptions, EmptySelfOptions, optionize4 } from '../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
 import { HBox, Node, Text, TextOptions } from '../../../scenery/js/imports.js';
 import Property from '../../../axon/js/Property.js';
 import solarSystemCommon from '../solarSystemCommon.js';
@@ -20,46 +22,64 @@ import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 
-const TEXT_OPTIONS = combineOptions<TextOptions>( {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
-  maxWidth: SolarSystemCommonConstants.CHECKBOX_TEXT_MAX_WIDTH
-} );
-const TEXT_ICON_SPACING = 10;
 const ARROW_Y_COORDINATE = -10;
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  textOptions?: TextOptions;
+  icon?: Node; // optional icon, to the right of Text
+};
 
 export type SolarSystemCommonCheckboxOptions = SelfOptions & CheckboxOptions;
 
 export default class SolarSystemCommonCheckbox extends Checkbox {
 
-  public constructor( property: Property<boolean>, content: Node, providedOptions?: SolarSystemCommonCheckboxOptions ) {
+  public static readonly TEXT_OPTIONS = {
+    font: new PhetFont( 16 ),
+    fill: SolarSystemCommonColors.foregroundProperty,
+    maxWidth: 125
+  };
 
-    const options = optionize4<SolarSystemCommonCheckboxOptions, SelfOptions, CheckboxOptions>()(
-      {}, SolarSystemCommonConstants.CHECKBOX_OPTIONS, {
+  protected constructor( property: Property<boolean>, stringProperty: TReadOnlyProperty<string>, providedOptions?: SolarSystemCommonCheckboxOptions ) {
+
+    const options = optionize<SolarSystemCommonCheckboxOptions, StrictOmit<SelfOptions, 'textOptions' | 'icon'>, CheckboxOptions>()( {
 
         // CheckboxOptions
+        boxWidth: 14,
+        checkboxColor: SolarSystemCommonColors.foregroundProperty,
+        checkboxColorBackground: SolarSystemCommonColors.backgroundProperty,
         touchAreaXDilation: 5,
         touchAreaYDilation: SolarSystemCommonConstants.CHECKBOX_SPACING / 2,
-        containerTagName: 'div' // Just for easier visualization in a11y view
+        containerTagName: 'div', // Just for easier visualization in a11y view
+        accessibleName: stringProperty
       }, providedOptions );
+
+    const text = new Text( stringProperty, combineOptions<TextOptions>( {}, SolarSystemCommonCheckbox.TEXT_OPTIONS, {
+      maxWidth: 125
+    }, options.textOptions ) );
+
+    let content: Node;
+    if ( options.icon ) {
+      content = new HBox( {
+        children: [ text, options.icon ],
+        spacing: 10
+      } );
+    }
+    else {
+      content = text;
+    }
 
     super( property, content, options );
   }
-
-  public static readonly TEXT_OPTIONS = TEXT_OPTIONS;
-
-  public static readonly TEXT_ICON_SPACING = TEXT_ICON_SPACING;
 
   /**
    * Creates the 'Speed' checkbox
    */
   public static createSpeedCheckbox( speedVisibleProperty: Property<boolean>, tandem: Tandem ): SolarSystemCommonCheckbox {
-
-    const text = new Text( SolarSystemCommonStrings.speedStringProperty, TEXT_OPTIONS );
-
-    return new SolarSystemCommonCheckbox( speedVisibleProperty, text, {
-      accessibleName: SolarSystemCommonStrings.speedStringProperty,
+    return new SolarSystemCommonCheckbox( speedVisibleProperty, SolarSystemCommonStrings.speedStringProperty, {
       tandem: tandem.createTandem( 'speedCheckbox' )
     } );
   }
@@ -68,19 +88,10 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
    * Creates the 'Velocity' checkbox
    */
   public static createVelocityCheckbox( velocityVisibleProperty: Property<boolean>, tandem: Tandem ): SolarSystemCommonCheckbox {
-
-    const text = new Text( SolarSystemCommonStrings.velocityStringProperty, TEXT_OPTIONS );
-    const icon = new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, {
-      fill: SolarSystemCommonColors.velocityColorProperty
-    } );
-
-    const content = new HBox( {
-      children: [ text, icon ],
-      spacing: TEXT_ICON_SPACING
-    } );
-
-    return new SolarSystemCommonCheckbox( velocityVisibleProperty, content, {
-      accessibleName: SolarSystemCommonStrings.velocityStringProperty,
+    return new SolarSystemCommonCheckbox( velocityVisibleProperty, SolarSystemCommonStrings.velocityStringProperty, {
+      icon: new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, {
+        fill: SolarSystemCommonColors.velocityColorProperty
+      } ),
       tandem: tandem.createTandem( 'velocityCheckbox' )
     } );
   }
@@ -89,19 +100,10 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
    * Creates the 'Gravity Force' checkbox
    */
   public static createGravityForceCheckbox( gravityForceVisibleProperty: Property<boolean>, tandem: Tandem ): SolarSystemCommonCheckbox {
-
-    const text = new Text( SolarSystemCommonStrings.gravityForceStringProperty, TEXT_OPTIONS );
-    const icon = new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, {
-      fill: SolarSystemCommonColors.gravityColorProperty
-    } );
-
-    const content = new HBox( {
-      children: [ text, icon ],
-      spacing: TEXT_ICON_SPACING
-    } );
-
-    return new SolarSystemCommonCheckbox( gravityForceVisibleProperty, content, {
-      accessibleName: SolarSystemCommonStrings.gravityForceStringProperty,
+    return new SolarSystemCommonCheckbox( gravityForceVisibleProperty, SolarSystemCommonStrings.gravityForceStringProperty, {
+      icon: new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, {
+        fill: SolarSystemCommonColors.gravityColorProperty
+      } ),
       tandem: tandem.createTandem( 'gravityForceCheckbox' )
     } );
   }
@@ -110,20 +112,11 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
    * Creates the 'Grid' checkbox
    */
   public static createGridCheckbox( gridVisibleProperty: Property<boolean>, tandem: Tandem ): SolarSystemCommonCheckbox {
-
-    const text = new Text( SolarSystemCommonStrings.gridStringProperty, TEXT_OPTIONS );
-    const icon = new GridNode( new Property( ModelViewTransform2.createIdentity() ), 10, Vector2.ZERO, 1, {
-      stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
-      lineWidth: 1.5
-    } );
-
-    const content = new HBox( {
-      children: [ text, icon ],
-      spacing: TEXT_ICON_SPACING
-    } );
-
-    return new SolarSystemCommonCheckbox( gridVisibleProperty, content, {
-      accessibleName: SolarSystemCommonStrings.gridStringProperty,
+    return new SolarSystemCommonCheckbox( gridVisibleProperty, SolarSystemCommonStrings.gridStringProperty, {
+      icon: new GridNode( new Property( ModelViewTransform2.createIdentity() ), 10, Vector2.ZERO, 1, {
+        stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
+        lineWidth: 1.5
+      } ),
       tandem: tandem
     } );
   }
@@ -132,17 +125,8 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
    * Creates the 'Measuring Tape' checkbox
    */
   public static createMeasuringTapeCheckbox( measuringTapeVisibleProperty: Property<boolean>, tandem: Tandem ): SolarSystemCommonCheckbox {
-
-    const text = new Text( SolarSystemCommonStrings.measuringTapeStringProperty, TEXT_OPTIONS );
-    const icon = MeasuringTapeNode.createIcon( { scale: 0.3 } );
-
-    const content = new HBox( {
-      children: [ text, icon ],
-      spacing: TEXT_ICON_SPACING
-    } );
-
-    return new SolarSystemCommonCheckbox( measuringTapeVisibleProperty, content, {
-      accessibleName: SolarSystemCommonStrings.measuringTapeStringProperty,
+    return new SolarSystemCommonCheckbox( measuringTapeVisibleProperty, SolarSystemCommonStrings.measuringTapeStringProperty, {
+      icon: MeasuringTapeNode.createIcon( { scale: 0.3 } ),
       tandem: tandem.createTandem( 'measuringTapeCheckbox' )
     } );
   }

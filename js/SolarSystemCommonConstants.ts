@@ -43,11 +43,6 @@ const SolarSystemCommonConstants = {
       stretch: true
     }
   },
-  CHECKBOX_OPTIONS: {
-    boxWidth: 14,
-    checkboxColor: SolarSystemCommonColors.foregroundProperty,
-    checkboxColorBackground: SolarSystemCommonColors.backgroundProperty
-  },
   HSEPARATOR_OPTIONS: {
     lineWidth: 2,
     stroke: '#8E9097',
