@@ -109,10 +109,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly isAnyForceOffscaleProperty: TReadOnlyProperty<boolean>;
 
   // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
-  private startingBodyState: BodyInfo[] = [
-    { active: true, mass: 250, position: new Vector2( 0, 0 ), velocity: new Vector2( 0, -11.1 ) },
-    { active: true, mass: 25, position: new Vector2( 200, 0 ), velocity: new Vector2( 0, 111 ) }
-  ];
+  private startingBodyState: BodyInfo[] = [];
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   protected readonly defaultBodyState: BodyInfo[];
@@ -189,7 +186,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       );
     } );
 
-    this.loadBodyStates( this.startingBodyState );
+    this.saveStartingBodyState();
     this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length );
     this.engine = options.engineFactory( this.bodies );
     this.engine.reset();
