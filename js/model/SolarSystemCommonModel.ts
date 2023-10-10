@@ -75,6 +75,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly timeProperty: NumberProperty;
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly hasPlayedProperty = new BooleanProperty( false );
 
   // Indicates if the path is visible. Lives in the model because it's also linked to model properties.
