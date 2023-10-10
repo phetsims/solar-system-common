@@ -132,6 +132,10 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
     // Create visibleProperty instances for Nodes in the view.
     this.visibleProperties = new VisibleProperties( options.tandem.createTandem( 'visibleProperties' ) );
+    this.visibleProperties.pathVisibleProperty.link( visible => {
+      this.model.clearPaths();
+      this.model.addingPathPoints = visible;
+    } );
 
     this.modelViewTransformProperty = new DerivedProperty(
       [ model.zoomScaleProperty ],

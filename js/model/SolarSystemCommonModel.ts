@@ -79,8 +79,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly hasPlayedProperty = new BooleanProperty( false );
 
-  // Indicates if the path is visible. Lives in the model because it's also linked to model properties.
-  public readonly pathVisibleProperty: BooleanProperty;
+  public addingPathPoints = false;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly moreDataProperty: BooleanProperty;
@@ -219,14 +218,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       numberType: 'Integer',
       tandem: options.tandem.createTandem( 'zoomLevelProperty' )
     } );
-
-    this.pathVisibleProperty = new BooleanProperty( true, {
-      tandem: providedOptions.tandem.createTandem( 'pathVisibleProperty' )
-    } );
-
-    this.pathVisibleProperty.link( visible => {
-      this.clearPaths();
-    } );
   }
 
   public saveStartingBodyState(): void {
@@ -291,7 +282,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
     this.moreDataProperty.reset();
-    this.pathVisibleProperty.reset();
     this.realUnitsProperty.reset();
     this.userControlledProperty.reset();
     this.forceScaleProperty.reset();
@@ -334,7 +324,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       this.engine.run( adjustedDT, updateProperties );
       this.engine.checkCollisions();
       this.timeProperty.value += adjustedDT * this.modelToViewTime;
-      if ( this.pathVisibleProperty.value ) {
+      if ( this.addingPathPoints ) {
         this.bodies.forEach( body => body.addPathPoint() );
       }
     }
