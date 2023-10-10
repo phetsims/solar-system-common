@@ -34,7 +34,6 @@ import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 const bodySounds = [
   Bodies_Brass_C3_mp3,
@@ -216,7 +215,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       index: options.showVelocityIndex ? body.index : '',
       value: speedProperty,
       units: SolarSystemCommonStrings.units.kmsStringProperty
-    }, { tandem: Tandem.OPT_OUT } );
+    } );
 
     const speedText = new RichText( speedStringProperty, options.textOptions );
 
