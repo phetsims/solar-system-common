@@ -122,10 +122,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
+    this.defaultBodyInfo = options.defaultBodyInfo;
+
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
     const bodiesTandem = options.tandem.createTandem( 'bodies' );
-
-    this.defaultBodyInfo = options.defaultBodyInfo;
     this.availableBodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
       new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) )
     );
