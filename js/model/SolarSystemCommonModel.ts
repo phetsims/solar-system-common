@@ -258,8 +258,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public removeLastBody(): void {
-    const numberOfActiveBodies = this.bodies.length - 1;
-    const lastBody = this.bodies[ numberOfActiveBodies ];
+    const lastBody = this.bodies[ this.bodies.length - 1 ];
     lastBody.isActiveProperty.value = false;
     this.saveStartingBodyInfo();
 
