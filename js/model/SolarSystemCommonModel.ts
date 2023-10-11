@@ -9,7 +9,7 @@
  */
 
 import solarSystemCommon from '../solarSystemCommon.js';
-import Body from './Body.js';
+import Body, { BodyInfo } from './Body.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
@@ -18,7 +18,6 @@ import Engine from './Engine.js';
 import Range from '../../../dot/js/Range.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import Vector2 from '../../../dot/js/Vector2.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
@@ -39,13 +38,6 @@ const BODY_COLORS = [
 ];
 
 // Type definitions
-export type BodyInfo = {
-  mass: number;
-  position: Vector2;
-  velocity: Vector2;
-  isActive: boolean;
-};
-
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
   zoomLevelRange: RangeWithValue;

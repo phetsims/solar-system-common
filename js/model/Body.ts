@@ -17,10 +17,16 @@ import { Color } from '../../../scenery/js/imports.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import Property from '../../../axon/js/Property.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import { BodyInfo } from './SolarSystemCommonModel.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import PhetioObject from '../../../tandem/js/PhetioObject.js';
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
+
+export type BodyInfo = {
+  isActive: boolean;
+  mass: number;
+  position: Vector2;
+  velocity: Vector2;
+};
 
 export default class Body extends PhetioObject {
 
