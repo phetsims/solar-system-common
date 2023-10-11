@@ -42,14 +42,13 @@ export type BodyBoundsItem = {
 };
 
 type SelfOptions = {
-  visibleProperties?: SolarSystemCommonVisibleProperties | null;
   playingAllowedProperty?: TReadOnlyProperty<boolean>;
   centerOrbitOffset?: Vector2;
 };
 
 export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class SolarSystemCommonScreenView extends ScreenView {
+export default class SolarSystemCommonScreenView<GenericVisibleProperties extends SolarSystemCommonVisibleProperties> extends ScreenView {
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document - I'm having to guess at what these layers are for.
   protected readonly bodiesLayer = new Node();
@@ -63,9 +62,6 @@ export default class SolarSystemCommonScreenView extends ScreenView {
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
-
-  // Element that handles the visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
-  protected readonly visibleProperties: SolarSystemCommonVisibleProperties;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
   protected readonly modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>;
@@ -81,11 +77,13 @@ export default class SolarSystemCommonScreenView extends ScreenView {
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   private readonly dragDebugPath: Path;
 
-  protected constructor( public readonly model: SolarSystemCommonModel, providedOptions: SolarSystemCommonScreenViewOptions ) {
+  protected constructor(
+    public readonly model: SolarSystemCommonModel,
+    public readonly visibleProperties: GenericVisibleProperties,
+    providedOptions: SolarSystemCommonScreenViewOptions ) {
 
     const options = optionize<SolarSystemCommonScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       // SelfOptions
-      visibleProperties: null,
       playingAllowedProperty: new Property( true ),
       centerOrbitOffset: Vector2.ZERO
     }, providedOptions );
@@ -129,13 +127,6 @@ export default class SolarSystemCommonScreenView extends ScreenView {
       body.collidedEmitter.addListener( () => {
         this.bodySoundManager.playBodyRemovedSound( 3 ); // Plays the collision sound instead of body index
       } );
-    } );
-
-    // Create visibleProperty instances for Nodes in the view.
-    this.visibleProperties = options.visibleProperties ? options.visibleProperties : new SolarSystemCommonVisibleProperties( options.tandem.createTandem( 'visibleProperties' ) );
-    this.visibleProperties.pathVisibleProperty.link( visible => {
-      this.model.clearPaths();
-      this.model.addingPathPoints = visible;
     } );
 
     this.modelViewTransformProperty = new DerivedProperty(
@@ -210,16 +201,12 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     } );
     this.topLayer.addChild( this.measuringTapeNode );
 
-    const resetScreenView = () => {
-      this.interruptSubtreeInput(); // cancel interactions that may be in progress
-      model.reset();
-      this.measuringTapeNode.reset();
-      this.visibleProperties.reset();
-    };
-
     // NOTE: It is the responsibility of the subclass to add resetAllButton to the scene graph.
     this.resetAllButton = new ResetAllButton( {
-      listener: resetScreenView,
+      listener: () => {
+        model.reset();
+        this.reset();
+      },
       touchAreaDilation: 10,
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );
@@ -304,6 +291,12 @@ export default class SolarSystemCommonScreenView extends ScreenView {
     else {
       return shape.getClosestPoint( point );
     }
+  }
+
+  public reset(): void {
+    this.interruptSubtreeInput(); // cancel interactions that may be in progress
+    this.measuringTapeNode.reset();
+    this.visibleProperties.reset();
   }
 }
 
