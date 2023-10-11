@@ -126,10 +126,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const bodiesTandem = options.tandem.createTandem( 'bodies' );
 
     this.defaultBodyState = options.defaultBodyState;
-    this.availableBodies = this.defaultBodyState.map( ( bodyInfo, index ) => {
-      return new Body( index + 1, bodyInfo.isActive, bodyInfo.mass, bodyInfo.position, bodyInfo.velocity, this.userControlledProperty,
-        BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) );
-    } );
+    this.availableBodies = this.defaultBodyState.map( ( bodyInfo, index ) =>
+      new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) )
+    );
 
     // We want to synchronize availableBodies and bodies, so that bodies is effectively availableBodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.

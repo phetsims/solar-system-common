@@ -66,8 +66,7 @@ export default class Body extends PhetioObject {
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   private pathDistance = 0;
 
-  public constructor( index: number, isActive: boolean, initialMass: number, initialPosition: Vector2,
-                      initialVelocity: Vector2, public userControlledProperty: Property<boolean>,
+  public constructor( index: number, bodyInfo: BodyInfo, public userControlledProperty: Property<boolean>,
                       colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
     assert && assert( Number.isInteger( index ) && index >= 1, `invalid index: ${index}` );
 
@@ -78,7 +77,7 @@ export default class Body extends PhetioObject {
 
     this.index = index;
 
-    this.massProperty = new NumberProperty( initialMass, {
+    this.massProperty = new NumberProperty( bodyInfo.mass, {
       isValidValue: v => v > 0,
       hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
       tandem: tandem.createTandem( 'massProperty' ),
@@ -87,12 +86,12 @@ export default class Body extends PhetioObject {
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
-    this.positionProperty = new Vector2Property( initialPosition, {
+    this.positionProperty = new Vector2Property( bodyInfo.position, {
       tandem: tandem.createTandem( 'positionProperty' ),
       phetioReadOnly: true
     } );
 
-    this.velocityProperty = new Vector2Property( initialVelocity, {
+    this.velocityProperty = new Vector2Property( bodyInfo.velocity, {
       tandem: tandem.createTandem( 'velocityProperty' ),
       phetioReadOnly: true
     } );
@@ -107,7 +106,7 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
-    this.isActiveProperty = new BooleanProperty( isActive, {
+    this.isActiveProperty = new BooleanProperty( bodyInfo.isActive, {
       tandem: tandem.createTandem( 'isActiveProperty' ),
       phetioReadOnly: true
     } );
