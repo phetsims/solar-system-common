@@ -174,7 +174,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
 
     this.saveStartingBodyInfo();
-    this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length );
+
+    this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length, {
+      numberType: 'Integer',
+      range: new Range( 1, this.availableBodies.length ),
+      tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
+    } );
+
     this.engine = options.engineFactory( this.bodies );
     this.engine.reset();
 
