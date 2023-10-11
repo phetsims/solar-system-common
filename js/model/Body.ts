@@ -20,6 +20,8 @@ import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import PhetioObject from '../../../tandem/js/PhetioObject.js';
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
+import IOType from '../../../tandem/js/types/IOType.js';
+import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
 
 export type BodyInfo = {
   isActive: boolean;
@@ -27,6 +29,8 @@ export type BodyInfo = {
   position: Vector2;
   velocity: Vector2;
 };
+
+export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 
 export default class Body extends PhetioObject {
 
@@ -75,6 +79,7 @@ export default class Body extends PhetioObject {
 
     super( {
       tandem: tandem,
+      phetioType: Body.BodyIO,
       phetioState: false
     } );
 
@@ -221,6 +226,17 @@ export default class Body extends PhetioObject {
     const minRadius = 3;
     return Math.max( minRadius, 2.3 * Math.pow( mass, 1 / 3 ) );
   }
+
+  /**
+   * BodyIO implements 'Reference type serialization', as described in the Serialization section of
+   * https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
+   * Reference type serialization is appropriate because all Body instances are created at startup, and exist
+   * for the lifetime of the simulation.
+   */
+  public static readonly BodyIO = new IOType<Body, BodyStateObject>( 'BodyIO', {
+    valueType: Body,
+    supertype: ReferenceIO( IOType.ObjectIO )
+  } );
 }
 
 solarSystemCommon.register( 'Body', Body );

@@ -51,10 +51,11 @@ export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptio
 
 export default abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
 
-  // Bodies will consist of all bodies from availableBodies that have isActiveProperty.value === true, and will be in
-  // order.
-  public readonly bodies: ObservableArray<Body> = createObservableArray();
+  // The complete set of Body instances, active and inactive
   public readonly availableBodies: Body[];
+
+  // The set of Body instances in availableBodies that are active (body.isActive === true)
+  public readonly bodies: ObservableArray<Body>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userControlledProperty = new BooleanProperty( false );
@@ -125,11 +126,17 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.defaultBodyInfo = options.defaultBodyInfo;
 
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
-    const bodiesTandem = options.tandem.createTandem( 'bodies' );
+    const bodiesTandem = options.tandem.createTandem( 'availableBodies' );
     this.availableBodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
       new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) )
     );
     this.saveStartingBodyInfo();
+
+    this.bodies = createObservableArray( {
+      tandem: options.tandem.createTandem( 'bodies' ),
+      phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
+      phetioDocumentation: 'The set of Body elements that are currently active, and thus visible on the screen'
+    } );
 
     // We want to synchronize availableBodies and bodies, so that bodies is effectively availableBodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
