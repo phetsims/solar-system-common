@@ -1,9 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Main model for My Solar System.
- * In charge of keeping track of the position and states of the bodies,
- * their center of mass, and the time.
+ * SolarSystemCommonModel is the base class for the top-level model, used by all screens in my-solar-system and
+ * keplers-laws.
  *
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
