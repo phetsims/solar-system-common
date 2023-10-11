@@ -41,7 +41,7 @@ const BODY_COLORS = [
 type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
   zoomLevelRange: RangeWithValue;
-  defaultBodyState: BodyInfo[];
+  defaultBodyInfo: BodyInfo[];
   timeScale?: number;
   modelToViewTime?: number;
 };
@@ -109,11 +109,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Indicates if any force arrow is currently off scale
   public readonly isAnyForceOffscaleProperty: TReadOnlyProperty<boolean>;
 
-  // Define the mode bodies will go to when restarted. Is updated when the user changes a body.
-  private startingBodyState: BodyInfo[] = [];
+  // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
+  private startingBodyInfo: BodyInfo[] = [];
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  protected readonly defaultBodyState: BodyInfo[];
+  protected readonly defaultBodyInfo: BodyInfo[];
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
@@ -125,8 +125,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
     const bodiesTandem = options.tandem.createTandem( 'bodies' );
 
-    this.defaultBodyState = options.defaultBodyState;
-    this.availableBodies = this.defaultBodyState.map( ( bodyInfo, index ) =>
+    this.defaultBodyInfo = options.defaultBodyInfo;
+    this.availableBodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
       new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) )
     );
 
@@ -165,7 +165,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
             this.isPlayingProperty.value = false;
           }
           if ( !this.isAnyBodyEscapedProperty.value ) {
-            this.saveStartingBodyState();
+            this.saveStartingBodyInfo();
           }
           this.userInteractingEmitter.emit();
           this.userControlledProperty.value = true;
@@ -173,7 +173,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       );
     } );
 
-    this.saveStartingBodyState();
+    this.saveStartingBodyInfo();
     this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length );
     this.engine = options.engineFactory( this.bodies );
     this.engine.reset();
@@ -204,14 +204,14 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
   }
 
-  public saveStartingBodyState(): void {
-    this.startingBodyState = this.availableBodies.map( body => body.info );
+  public saveStartingBodyInfo(): void {
+    this.startingBodyInfo = this.availableBodies.map( body => body.info );
   }
 
   /**
-   * Sets the available bodies initial states according to bodiesInfo
+   * Sets availableBodies to have the specified values.
    */
-  public loadBodyStates( bodiesInfo: BodyInfo[], preventCollision = false ): void {
+  public loadBodyInfo( bodiesInfo: BodyInfo[], preventCollision = false ): void {
     for ( let i = 0; i < this.availableBodies.length; i++ ) {
       const bodyInfo = bodiesInfo[ i ];
 
@@ -232,7 +232,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       }
     }
 
-    this.saveStartingBodyState();
+    this.saveStartingBodyInfo();
   }
 
   /**
@@ -245,7 +245,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       newBody.preventCollision( this.bodies );
       newBody.isActiveProperty.value = true;
     }
-    this.saveStartingBodyState();
+    this.saveStartingBodyInfo();
 
     this.bodyAddedEmitter.emit();
     this.isAnyBodyCollidedProperty.reset();
@@ -255,7 +255,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const numberOfActiveBodies = this.bodies.length - 1;
     const lastBody = this.bodies[ numberOfActiveBodies ];
     lastBody.isActiveProperty.value = false;
-    this.saveStartingBodyState();
+    this.saveStartingBodyInfo();
 
     this.bodyRemovedEmitter.emit();
     this.isAnyBodyCollidedProperty.reset();
@@ -270,7 +270,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.userControlledProperty.reset();
     this.forceScaleProperty.reset();
 
-    this.startingBodyState = this.defaultBodyState;
+    this.startingBodyInfo = this.defaultBodyInfo;
 
     this.restart();
   }
@@ -282,7 +282,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.hasPlayedProperty.value = false;
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
-    this.loadBodyStates( this.startingBodyState ); // Reset the bodies
+    this.loadBodyInfo( this.startingBodyInfo ); // Reset the bodies
     this.update();
   }
 
