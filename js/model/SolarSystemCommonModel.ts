@@ -28,6 +28,7 @@ import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import RangeWithValue from '../../../dot/js/RangeWithValue.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Property from '../../../axon/js/Property.js';
 
 // Constants
 const BODY_COLORS = [
@@ -58,7 +59,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly bodies: ObservableArray<Body>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  public readonly userControlledProperty = new BooleanProperty( false );
+  public readonly userControlledProperty: Property<boolean>;
 
   public readonly numberOfActiveBodiesProperty: NumberProperty;
   public readonly engine: EngineType;
@@ -66,20 +67,25 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userInteractingEmitter = new Emitter();
 
-  // Time control parameters
-  public readonly timeScale: number; // Scale of the model's dt
-  public readonly modelToViewTime: number; // Transform between model's and view's times
+  // Controls the velocity of time by scaling dt
+  public readonly timeScale: number;
+
+  // Transform between model's and view's times
+  public readonly modelToViewTime: number;
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly timeFormatter = new Map<TimeSpeed, number>( [
     [ TimeSpeed.FAST, 7 / 4 ],
     [ TimeSpeed.NORMAL, 1 ],
     [ TimeSpeed.SLOW, 1 / 4 ]
   ] );
+
   public readonly timeProperty: NumberProperty;
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  public readonly hasPlayedProperty = new BooleanProperty( false );
+  public readonly hasPlayedProperty: Property<boolean>;
 
   public addingPathPoints = false;
 
@@ -102,7 +108,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly isAnyBodyEscapedProperty: TReadOnlyProperty<boolean>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  public readonly isAnyBodyCollidedProperty = new BooleanProperty( false );
+  public readonly isAnyBodyCollidedProperty: Property<boolean>;
 
   // Power of 10 to which the force is scaled
   public readonly forceScaleProperty: NumberProperty;
@@ -157,6 +163,16 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       }
     } );
 
+    this.userControlledProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'userControlledProperty' ),
+      phetioReadOnly: true
+    } );
+
+    this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
+      phetioReadOnly: true
+    } );
+
     this.isAnyBodyEscapedProperty = DerivedProperty.or( [ ...this.availableBodies.map( body => body.escapedProperty ), this.isAnyBodyCollidedProperty ] );
 
     this.isAnyForceOffscaleProperty = DerivedProperty.or( this.availableBodies.map( body => body.forceOffscaleProperty ) );
@@ -191,12 +207,25 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.engine.reset();
 
     // Time settings
-    // timeScale controls the velocity of time
     this.timeScale = options.timeScale;
     this.modelToViewTime = options.modelToViewTime;
-    this.timeProperty = new NumberProperty( 0 );
-    this.isPlayingProperty = new BooleanProperty( false );
-    this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL );
+
+    // Time Properties, grouped under a parent tandem
+    const timeTandem = options.tandem.createTandem( 'time' );
+    this.timeProperty = new NumberProperty( 0, {
+      tandem: timeTandem.createTandem( 'timeProperty' ),
+      phetioReadOnly: true
+    } );
+    this.isPlayingProperty = new BooleanProperty( false, {
+      tandem: timeTandem.createTandem( 'isPlayingProperty' )
+    } );
+    this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
+      tandem: timeTandem.createTandem( 'timeSpeedProperty' )
+    } );
+    this.hasPlayedProperty = new BooleanProperty( false, {
+      tandem: timeTandem.createTandem( 'hasPlayedProperty' ),
+      phetioReadOnly: true
+    } );
 
     this.moreDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'moreDataProperty' )
