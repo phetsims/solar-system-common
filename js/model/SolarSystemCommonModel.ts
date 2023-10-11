@@ -173,6 +173,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       }
     } );
 
+    this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length, {
+      numberType: 'Integer',
+      range: new Range( 1, this.availableBodies.length ),
+      tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
+    } );
+
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
       phetioReadOnly: true
@@ -200,12 +206,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           this.userControlledProperty.value = true;
         }
       );
-    } );
-
-    this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length, {
-      numberType: 'Integer',
-      range: new Range( 1, this.availableBodies.length ),
-      tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
     } );
 
     this.engine = options.engineFactory( this.bodies );
