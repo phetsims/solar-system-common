@@ -52,17 +52,27 @@ export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptio
 
 export default abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
 
+  // Initial values that were used to instantiate Body instances
+  protected readonly defaultBodyInfo: BodyInfo[];
+
   // The complete set of Body instances, active and inactive
   public readonly availableBodies: Body[];
 
   // The set of Body instances in availableBodies that are active (body.isActive === true)
   public readonly bodies: ObservableArray<Body>;
 
+  // The number of Bodies that are 'active', and thus visible on the screen. This is controlled by a NumberSpinner,
+  // so may briefly have a value that is different from bodies.lengthProperty.
+  public readonly numberOfActiveBodiesProperty: NumberProperty;
+
+  // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
+  private startingBodyInfo: BodyInfo[] = [];
+
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  public readonly engine: EngineType;
+
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userControlledProperty: Property<boolean>;
-
-  public readonly numberOfActiveBodiesProperty: NumberProperty;
-  public readonly engine: EngineType;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly userInteractingEmitter = new Emitter();
@@ -87,6 +97,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly hasPlayedProperty: Property<boolean>;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/226 Does this field need to be stateful?
   public addingPathPoints = false;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
@@ -101,10 +112,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // How much to scale the model-view transform when zooming in and out
   public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
-  // Indicates if any body is far from the play area
+  // Indicates whether any Body is far from the play area
   public readonly isAnyBodyEscapedProperty: TReadOnlyProperty<boolean>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
@@ -113,14 +125,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Power of 10 to which the force is scaled
   public readonly forceScaleProperty: NumberProperty;
 
-  // Indicates if any force arrow is currently off scale
+  // Indicates whether any force arrow is currently off scale
   public readonly isAnyForceOffscaleProperty: TReadOnlyProperty<boolean>;
-
-  // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
-  private startingBodyInfo: BodyInfo[] = [];
-
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  protected readonly defaultBodyInfo: BodyInfo[];
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
