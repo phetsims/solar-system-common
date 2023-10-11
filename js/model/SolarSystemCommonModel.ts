@@ -129,6 +129,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.availableBodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
       new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) )
     );
+    this.saveStartingBodyInfo();
 
     // We want to synchronize availableBodies and bodies, so that bodies is effectively availableBodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
@@ -172,8 +173,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
         }
       );
     } );
-
-    this.saveStartingBodyInfo();
 
     this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length, {
       numberType: 'Integer',
