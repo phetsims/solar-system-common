@@ -129,6 +129,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
+    this.userControlledProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'userControlledProperty' ),
+      phetioReadOnly: true
+    } );
+
     this.defaultBodyInfo = options.defaultBodyInfo;
 
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
@@ -161,11 +166,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           this.bodies.splice( i, 0, idealBodies[ i ] );
         }
       }
-    } );
-
-    this.userControlledProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'userControlledProperty' ),
-      phetioReadOnly: true
     } );
 
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
