@@ -54,6 +54,8 @@ export default class Body extends PhetioObject {
   public readonly forceOffscaleProperty: Property<boolean>;
 
   // User modified Properties
+  //TODO https://github.com/phetsims/my-solar-system/issues/213 document these
+  public readonly userControlledProperty: Property<boolean>;
   public readonly userControlledPositionProperty: Property<boolean>;
   public readonly userControlledVelocityProperty: Property<boolean>;
   public readonly userControlledMassProperty: Property<boolean>;
@@ -64,9 +66,10 @@ export default class Body extends PhetioObject {
   public readonly colorProperty: TReadOnlyProperty<Color>;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  //TODO https://github.com/phetsims/my-solar-system/issues/226 Does this field need to be stateful?
   private pathDistance = 0;
 
-  public constructor( index: number, bodyInfo: BodyInfo, public userControlledProperty: Property<boolean>,
+  public constructor( index: number, bodyInfo: BodyInfo, userControlledProperty: Property<boolean>,
                       colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
     assert && assert( Number.isInteger( index ) && index >= 1, `invalid index: ${index}` );
 
@@ -120,6 +123,8 @@ export default class Body extends PhetioObject {
       tandem: tandem.createTandem( 'forceOffscaleProperty' ),
       phetioReadOnly: true
     } );
+
+    this.userControlledProperty = userControlledProperty;
 
     this.userControlledPositionProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'userControlledPositionProperty' ),
