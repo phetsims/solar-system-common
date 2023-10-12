@@ -100,6 +100,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public addingPathPoints = false;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  //TODO https://github.com/phetsims/my-solar-system/issues/225 move to LabVisibleProperties
   public readonly moreDataProperty: BooleanProperty;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
