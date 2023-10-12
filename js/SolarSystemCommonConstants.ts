@@ -66,7 +66,7 @@ const SolarSystemCommonConstants = {
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.1,
 
   // Multipliers that map from non-standard model units to standard units
-  POSITION_MULTIPLIER: 0.01, // Transforms from model units to AU
+  POSITION_MULTIPLIER: POSITION_MULTIPLIER, // Transforms from model units to AU
   VELOCITY_MULTIPLIER: VELOCITY_MULTIPLIER, // Transforms from model units to AU/yr then to km/s
   TIME_MULTIPLIER: TIME_MULTIPLIER // Transforms from model units to years
 };
