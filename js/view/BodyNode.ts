@@ -73,8 +73,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
   public readonly grabClip: SoundClip;
   public readonly releaseClip: SoundClip;
 
-  private readonly disposeBodyNode: () => void;
-
   public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: BodyNodeOptions ) {
     const accessibleName = `Body ${body.index}`;
 
@@ -100,6 +98,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       soundViewNode: null,
 
       // ShadedSphereNodeOptions
+      isDisposable: false, // see https://github.com/phetsims/my-solar-system/issues/230
       mainColor: body.colorProperty,
 
       // pdom
@@ -139,7 +138,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       } );
     }
 
-    const radiusMultilink = Multilink.multilink(
+    Multilink.multilink(
       [ body.radiusProperty, modelViewTransformProperty ],
       ( radius, modelViewTransform ) => {
         this.radius = modelViewTransform.modelToViewDeltaX( radius );
@@ -150,7 +149,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         this.focusHighlight = area;
       } );
 
-    const positionMultilink = Multilink.multilink(
+    Multilink.multilink(
       [ body.positionProperty, modelViewTransformProperty ],
       ( position, modelViewTransform ) => {
         this.translation = modelViewTransform.modelToViewPosition( position );
@@ -193,11 +192,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         mapPosition: map
       } );
       this.addInputListener( keyboardDragListener );
-
-      this.disposeEmitter.addListener( () => {
-        bodyDragListener.dispose();
-        keyboardDragListener.dispose();
-      } );
     }
 
     // Speed is the magnitude of velocity.
@@ -244,8 +238,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
     // Optional cueing arrows
-    let cueingVisibleProperty: TReadOnlyProperty<boolean>;
-    let cueingArrowsNode: Node;
     if ( options.useCueingArrows ) {
       const cueingVisibleProperty = new DerivedProperty( [ this.body.userControlledProperty ], wasDragged => ( options.draggable && !wasDragged ) );
       const cueingArrowsNode = new CueingArrowsNode( {
@@ -258,27 +250,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     this.addLinkedElement( body );
 
-    this.disposeBodyNode = () => {
-      speedDisplay.dispose(); // Because we provide the visibleProperty
-      positionMultilink.dispose();
-      radiusMultilink.dispose();
-      cueingVisibleProperty && cueingVisibleProperty.dispose();
-      cueingArrowsNode && cueingArrowsNode.dispose();
-
-      this.body.collidedEmitter.removeListener( bodyCollisionListener );
-      speedProperty.dispose();
-      speedStringProperty.dispose();
-      speedText.dispose();
-      this.stopSound();
-      if ( options.soundViewNode ) {
-        soundManager.removeSoundGenerator( this.soundClip );
-        soundManager.removeSoundGenerator( this.grabClip );
-        soundManager.removeSoundGenerator( this.releaseClip );
-      }
-      this.soundClip.dispose();
-      this.grabClip.dispose();
-      this.releaseClip.dispose();
-    };
+    // Stop sound when the associated Body becomes inactive.
+    body.isActiveProperty.link( isActive => !isActive && this.stopSound() );
   }
 
   public playSound(): void {
@@ -293,11 +266,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
   public stopSound(): void {
     this.soundClip.stop();
-  }
-
-  public override dispose(): void {
-    this.disposeBodyNode();
-    super.dispose();
   }
 }
 
