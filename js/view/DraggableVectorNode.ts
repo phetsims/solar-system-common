@@ -77,7 +77,7 @@ export default class DraggableVectorNode extends VectorNode {
       transformProperty,
       visibleProperty,
       vectorProperty,
-      new NumberProperty( 1.3 ),
+      new NumberProperty( 1.3 ), //TODO https://github.com/phetsims/my-solar-system/issues/235 why 1.3 ?
       options
     );
 
