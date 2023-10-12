@@ -57,7 +57,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     vectorProperty: TProperty<Vector2>,
     basePositionProperty: TReadOnlyProperty<Vector2>,
     scale: number,
-    labelText: TReadOnlyProperty<string>,
+    labelStringProperty: TReadOnlyProperty<string>,
     providedOptions?: DraggableVectorNodeOptions ) {
 
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
@@ -118,18 +118,18 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       focusHighlight: Shape.circle( 0, 0, circleRadius * 1.3 )
     } );
 
-    const text = new Text( labelText, {
+    const labelText = new Text( labelStringProperty, {
       font: new PhetFont( { size: 22, weight: 'bold' } ),
       fill: Color.gray,
       maxWidth: 25
     } );
     this.tipProperty.link( tip => {
-      text.center = tip;
+      labelText.center = tip;
       grabArea.center = tip;
     } );
 
     this.addChild( grabArea );
-    this.addChild( text );
+    this.addChild( labelText );
 
     // This represents the model coordinates of where the 'V' circle appears
     const vectorPositionProperty = new Vector2Property( vectorProperty.value.plus( basePositionProperty.value ) );
@@ -177,7 +177,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     grabArea.addInputListener( dragListener );
     // move behind the geometry created by the superclass
     grabArea.moveToBack();
-    text.moveToBack();
+    labelText.moveToBack();
 
     const keyboardDragListener = new KeyboardDragListener( {
       positionProperty: vectorProperty,
@@ -202,12 +202,12 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     // For PhET-iO, when the node does not support input, don't show the drag circle
     const onInputEnabled = ( inputEnabled: boolean ) => {
       grabArea.visible = inputEnabled;
-      text.visible = inputEnabled;
+      labelText.visible = inputEnabled;
     };
     this.inputEnabledProperty.link( onInputEnabled );
 
     this.disposeDraggableVectorNode = () => {
-      text.dispose();
+      labelText.dispose();
 
       this.inputEnabledProperty.unlink( onInputEnabled );
 
