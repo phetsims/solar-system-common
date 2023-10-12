@@ -13,11 +13,12 @@ import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, T
 import { combineOptions } from '../../phet-core/js/optionize.js';
 import { PanelOptions } from '../../sun/js/Panel.js';
 
-//TODO https://github.com/phetsims/my-solar-system/issues/213 almost all of these constant are undocumented
 export const METERS_PER_AU = 149597870700;
 export const SECONDS_PER_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
-export const G = 10000;
-export const G_ACTUAL = 6.6743e-11;
+export const G = 10000; //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+export const G_ACTUAL = 6.6743e-11; // gravitational constant
+
+// Multipliers that map from non-standard model units to standard units
 export const POSITION_MULTIPLIER = 0.01;
 export const MASS_MULTIPLIER = 1e28;
 export const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_PER_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_PER_YEAR );
