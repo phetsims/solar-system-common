@@ -144,7 +144,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
     const bodiesTandem = options.tandem.createTandem( 'availableBodies' );
     this.availableBodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
-      new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ], bodiesTandem.createTandem( `body${index + 1}` ) )
+      new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ],
+        bodiesTandem.createTandem( bodyInfo.tandemName ? bodyInfo.tandemName : `body${index + 1}` ) )
     );
     this.saveStartingBodyInfo();
 

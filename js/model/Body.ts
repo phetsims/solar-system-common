@@ -28,6 +28,7 @@ export type BodyInfo = {
   mass: number;
   position: Vector2;
   velocity: Vector2;
+  tandemName?: string;
 };
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
