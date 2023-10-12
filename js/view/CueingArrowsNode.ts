@@ -49,8 +49,6 @@ export default class CueingArrowsNode extends Path {
   }
 }
 
-//REVIEW: This looks somewhat copied from CueingArrowsNode in geometric-optics. Can we factor out cue arrow shape
-//REVIEW: creation to somewhere in common code, instead of copying?
 const ARROW_SHAPE_OPTIONS = {
   doubleHead: false,
   headWidth: 12,
