@@ -9,7 +9,7 @@
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 import solarSystemCommon from './solarSystemCommon.js';
-import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, TLayoutOptions } from '../../scenery/js/imports.js';
+import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, TLayoutOptions } from '../../scenery/js/imports.js';
 import { combineOptions } from '../../phet-core/js/optionize.js';
 import { PanelOptions } from '../../sun/js/Panel.js';
 
@@ -21,6 +21,11 @@ export const POSITION_MULTIPLIER = 0.01;
 export const MASS_MULTIPLIER = 1e28;
 export const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_PER_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_PER_YEAR );
 export const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_PER_AU / SECONDS_PER_YEAR / 1000;
+
+const COLUMN_TITLE_OPTIONS: RichTextOptions = {
+  font: new PhetFont( 16 ),
+    fill: SolarSystemCommonColors.foregroundProperty
+};
 
 const HSEPARATOR_OPTIONS: HSeparatorOptions = {
   lineWidth: 2,
@@ -46,6 +51,7 @@ const SolarSystemCommonConstants = {
   SCREEN_VIEW_Y_MARGIN: 10,
 
   // Default option values
+  COLUMN_TITLE_OPTIONS: COLUMN_TITLE_OPTIONS,
   HSEPARATOR_OPTIONS: HSEPARATOR_OPTIONS,
   PANEL_OPTIONS: PANEL_OPTIONS,
 
@@ -55,17 +61,8 @@ const SolarSystemCommonConstants = {
   NUMBER_DISPLAY_FONT: new PhetFont( 16 ),
 
   SLIDER_STEP: 25,
-
-  TEXT_OPTIONS: {
-    font: new PhetFont( 16 ),
-    fill: SolarSystemCommonColors.foregroundProperty,
-    lineWidth: 0.1
-  },
-
   GRID_SPACING: 100,
-
   VBOX_SPACING: 7,
-
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.1,
 
   // Multipliers that modify the numeric value shown in Number Displays

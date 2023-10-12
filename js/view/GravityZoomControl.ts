@@ -7,10 +7,8 @@
  */
 
 import solarSystemCommon from '../solarSystemCommon.js';
-import { HBox, RichText, Text, TextOptions } from '../../../scenery/js/imports.js';
+import { HBox, RichText, RichTextOptions, Text } from '../../../scenery/js/imports.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
-import { combineOptions } from '../../../phet-core/js/optionize.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
@@ -18,16 +16,23 @@ import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+
+const TICK_MARK_OPTIONS: RichTextOptions = {
+  font: new PhetFont( 16 ),
+  fill: SolarSystemCommonColors.foregroundProperty
+};
 
 export default class GravityZoomControl extends HBox {
 
   public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
 
-    const zoomText = new Text( SolarSystemCommonStrings.zoomStringProperty, combineOptions<TextOptions>(
-      {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
-        maxWidth: 100,
-        layoutOptions: { leftMargin: 20 }
-      } ) );
+    const zoomText = new Text( SolarSystemCommonStrings.zoomStringProperty, {
+      font: new PhetFont( 16 ),
+      fill: SolarSystemCommonColors.foregroundProperty,
+      layoutOptions: { leftMargin: 20 },
+      maxWidth: 100
+    } );
 
     const rangeMin = forceScaleProperty.range.min;
     const rangeMax = forceScaleProperty.range.max;
@@ -55,8 +60,8 @@ export default class GravityZoomControl extends HBox {
       phetioVisiblePropertyInstrumented: false
     } );
 
-    slider.addMajorTick( rangeMin, new RichText( MathSymbols.TIMES + `10<sup>${rangeMin}</sup`, SolarSystemCommonConstants.TEXT_OPTIONS ) );
-    slider.addMajorTick( rangeMax, new RichText( MathSymbols.TIMES + `10<sup>${rangeMax}</sup`, SolarSystemCommonConstants.TEXT_OPTIONS ) );
+    slider.addMajorTick( rangeMin, new RichText( MathSymbols.TIMES + `10<sup>${rangeMin}</sup`, TICK_MARK_OPTIONS ) );
+    slider.addMajorTick( rangeMax, new RichText( MathSymbols.TIMES + `10<sup>${rangeMax}</sup`, TICK_MARK_OPTIONS ) );
 
     for ( let i = 0; i <= 6; i += 2 ) {
       slider.addMinorTick( i );

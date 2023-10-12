@@ -11,12 +11,13 @@ import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import { HBox, Path, Rectangle } from '../../../scenery/js/imports.js';
 import { Shape } from '../../../kite/js/imports.js';
 import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 // constants
 const PLAY_PAUSE_BUTTON_RADIUS = 34;
@@ -76,7 +77,10 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       buttonGroupXSpacing: 20,
       speedRadioButtonGroupOnLeft: false,
       speedRadioButtonGroupOptions: {
-        labelOptions: SolarSystemCommonConstants.TEXT_OPTIONS,
+        labelOptions: {
+          font: new PhetFont( 16 ),
+          fill: SolarSystemCommonColors.foregroundProperty
+        },
         touchAreaXDilation: 10
       }
     }, providedOptions );
