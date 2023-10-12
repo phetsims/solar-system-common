@@ -159,8 +159,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         this.body.escapedProperty.value = body.positionProperty.value.magnitude > options.mapPosition( body.positionProperty.value, this.radius ).magnitude;
       } );
 
-    let keyboardDragListener: KeyboardDragListener;
-
     if ( options.draggable ) {
       const start = () => {
         body.clearPath();
@@ -185,17 +183,17 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       } );
       this.addInputListener( bodyDragListener );
 
-      keyboardDragListener = new KeyboardDragListener(
-        {
-          positionProperty: body.positionProperty,
-          transform: modelViewTransformProperty,
-          dragVelocity: options.dragVelocity,
-          shiftDragVelocity: options.shiftDragVelocity,
-          start: start,
-          end: end,
-          mapPosition: map
-        } );
+      const keyboardDragListener = new KeyboardDragListener( {
+        positionProperty: body.positionProperty,
+        transform: modelViewTransformProperty,
+        dragVelocity: options.dragVelocity,
+        shiftDragVelocity: options.shiftDragVelocity,
+        start: start,
+        end: end,
+        mapPosition: map
+      } );
       this.addInputListener( keyboardDragListener );
+
       this.disposeEmitter.addListener( () => {
         bodyDragListener.dispose();
         keyboardDragListener.dispose();
