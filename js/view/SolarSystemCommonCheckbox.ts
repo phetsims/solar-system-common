@@ -53,7 +53,7 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
         checkboxColor: SolarSystemCommonColors.foregroundProperty,
         checkboxColorBackground: SolarSystemCommonColors.backgroundProperty,
         touchAreaXDilation: 5,
-        touchAreaYDilation: SolarSystemCommonConstants.CHECKBOX_SPACING / 2,
+        touchAreaYDilation: SolarSystemCommonConstants.VBOX_SPACING / 2,
         containerTagName: 'div', // Just for easier visualization in a11y view
         accessibleName: stringProperty
       }, providedOptions );
