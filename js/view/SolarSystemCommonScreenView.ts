@@ -188,14 +188,14 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       textBackgroundCornerRadius: 5,
       basePositionProperty: new Vector2Property( new Vector2( 0, 100 ) ),
       tipPositionProperty: new Vector2Property( new Vector2( 100, 100 ) ),
-      tandem: providedOptions.tandem.createTandem( 'measuringTapeNode' ),
       significantFigures: 2,
       baseDragStarted: () => grabClip.play(),
       baseDragEnded: () => releaseClip.play(),
       keyboardDragListenerOptions: {
         baseShiftDragVelocity: 100,
         tipShiftDragVelocity: 100
-      }
+      },
+      tandem: providedOptions.tandem.createTandem( 'measuringTapeNode' )
     } );
     this.topLayer.addChild( this.measuringTapeNode );
 
