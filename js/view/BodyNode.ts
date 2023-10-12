@@ -91,7 +91,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       },
       textOptions: {
         fill: 'white', // Not a colorProperty because it is not dynamic
-        maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH,
+        maxWidth: 200,
         font: new PhetFont( 16 )
       },
       useCueingArrows: false,

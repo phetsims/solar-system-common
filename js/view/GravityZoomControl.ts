@@ -25,7 +25,7 @@ export default class GravityZoomControl extends HBox {
 
     const zoomText = new Text( SolarSystemCommonStrings.zoomStringProperty, combineOptions<TextOptions>(
       {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
-        maxWidth: SolarSystemCommonConstants.TEXT_MAX_WIDTH / 2,
+        maxWidth: 100,
         layoutOptions: { leftMargin: 20 }
       } ) );
 
