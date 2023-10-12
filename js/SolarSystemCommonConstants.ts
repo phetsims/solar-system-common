@@ -61,10 +61,6 @@ const SolarSystemCommonConstants = {
     fill: SolarSystemCommonColors.foregroundProperty,
     lineWidth: 0.1
   },
-  TITLE_OPTIONS: {
-    font: new PhetFont( { size: 18, weight: 'bold' } ),
-    fill: SolarSystemCommonColors.foregroundProperty
-  },
 
   GRID_SPACING: 100,
 
