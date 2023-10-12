@@ -25,6 +25,7 @@ import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 
 const ARROW_Y_COORDINATE = -10;
 
@@ -33,7 +34,7 @@ type SelfOptions = {
   icon?: Node; // optional icon, to the right of Text
 };
 
-export type SolarSystemCommonCheckboxOptions = SelfOptions & CheckboxOptions;
+export type SolarSystemCommonCheckboxOptions = SelfOptions & WithRequired<CheckboxOptions, 'tandem'>;
 
 export default class SolarSystemCommonCheckbox extends Checkbox {
 
