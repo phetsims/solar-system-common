@@ -179,7 +179,11 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     soundManager.addSoundGenerator( grabClip );
     soundManager.addSoundGenerator( releaseClip );
 
-    const measuringTapeUnitsProperty = new Property( { name: 'AU', multiplier: 0.01 } );
+    // Measuring tape units must update dynamically when AUStringProperty changes.
+    const measuringTapeUnitsProperty = new DerivedProperty( [ SolarSystemCommonStrings.units.AUStringProperty ],
+      AUString => {
+        return { name: AUString, multiplier: 0.01 };
+      } );
 
     // Add the MeasuringTapeNode
     this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
