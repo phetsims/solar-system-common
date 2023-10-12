@@ -1,6 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
- * Slider that handles the size of the gravity arrows.
+ * GravityZoomControl is the control for scaling the size of the gravity arrows. It is a labeled slider.
  *
  * @author Agustín Vallejo
  */
