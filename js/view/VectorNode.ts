@@ -58,6 +58,7 @@ export default class VectorNode extends ArrowNode {
       baseMagnitude: 500,
 
       // ArrowNodeOptions
+      isDisposable: false, // see https://github.com/phetsims/my-solar-system/issues/230
       headHeight: 15,
       headWidth: 15,
       tailWidth: 5,
@@ -104,13 +105,6 @@ export default class VectorNode extends ArrowNode {
       this.setTailAndTip( tail.x, tail.y, tip.x, tip.y );
       this.localBounds = Bounds2.point( tail ).addPoint( tip ).dilated( 10 ); // must set because boundsMethod: 'none'.
     } );
-  }
-
-  public override dispose(): void {
-    this.tailProperty.dispose();
-    this.tipProperty.dispose();
-
-    super.dispose();
   }
 }
 
