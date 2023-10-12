@@ -157,8 +157,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         body,
         this.modelViewTransformProperty,
         this.visibleProperties.velocityVisibleProperty,
-        body.velocityProperty,
-        body.positionProperty,
         combineOptions<DraggableVectorNodeOptions>( {
           soundViewNode: this,
           mapPosition: this.constrainBoundaryViewPoint.bind( this )

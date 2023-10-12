@@ -18,7 +18,6 @@ import optionize from '../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
-import TProperty from '../../../axon/js/TProperty.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
@@ -56,8 +55,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     body: Body,
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     visibleProperty: TReadOnlyProperty<boolean>,
-    velocityProperty: TProperty<Vector2>,
-    positionProperty: TReadOnlyProperty<Vector2>,
     providedOptions?: DraggableVectorNodeOptions ) {
 
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
@@ -72,6 +69,9 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       shiftDragVelocity: 100,
       fill: SolarSystemCommonColors.velocityColorProperty
     }, providedOptions );
+
+    const positionProperty = body.positionProperty;
+    const velocityProperty = body.velocityProperty;
 
     super(
       body,
