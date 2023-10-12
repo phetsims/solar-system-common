@@ -26,6 +26,7 @@ import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -68,7 +69,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       soundViewNode: null,
       mapPosition: _.identity,
       dragVelocity: 450,
-      shiftDragVelocity: 100
+      shiftDragVelocity: 100,
+      fill: SolarSystemCommonColors.velocityColorProperty
     }, providedOptions );
 
     super(

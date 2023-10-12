@@ -160,7 +160,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         body.velocityProperty,
         body.positionProperty,
         combineOptions<DraggableVectorNodeOptions>( {
-          fill: SolarSystemCommonColors.velocityColorProperty,
           soundViewNode: this,
           mapPosition: this.constrainBoundaryViewPoint.bind( this )
         }, options )
