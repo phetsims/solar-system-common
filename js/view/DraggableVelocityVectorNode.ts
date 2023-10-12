@@ -49,7 +49,6 @@ export type DraggableVectorNodeOptions = SelfOptions &
 
 export default class DraggableVelocityVectorNode extends VectorNode {
 
-  private readonly disposeDraggableVectorNode: () => void;
   public readonly grabClip: SoundClip;
   public readonly releaseClip: SoundClip;
 
@@ -65,7 +64,10 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       mapPosition: _.identity,
       dragVelocity: 450,
       shiftDragVelocity: 100,
-      fill: SolarSystemCommonColors.velocityColorProperty
+      fill: SolarSystemCommonColors.velocityColorProperty,
+
+      // VectorNodeOptions
+      isDisposable: false // see https://github.com/phetsims/my-solar-system/issues/230
     }, providedOptions );
 
     const positionProperty = body.positionProperty;
@@ -171,7 +173,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       tandem: options.tandem.createTandem( 'dragListener' )
     } );
     grabArea.addInputListener( dragListener );
-    // move behind the geometry created by the superclass
+
+    // Move behind the geometry created by the superclass.
     grabArea.moveToBack();
     labelText.moveToBack();
 
@@ -189,38 +192,11 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     } );
     this.addInputListener( keyboardDragListener );
 
-    this.disposeEmitter.addListener( () => {
-      dragListener.dispose();
-      keyboardDragListener.dispose();
-      vectorPositionProperty.dispose();
-      grabArea.dispose();
-    } );
-
-    // For PhET-iO, when the node does not support input, don't show the drag circle
-    const onInputEnabled = ( inputEnabled: boolean ) => {
+    // For PhET-iO, when the Node does not support input, don't show the drag circle.
+    this.inputEnabledProperty.link( inputEnabled => {
       grabArea.visible = inputEnabled;
       labelText.visible = inputEnabled;
-    };
-    this.inputEnabledProperty.link( onInputEnabled );
-
-    this.disposeDraggableVectorNode = () => {
-      labelText.dispose();
-
-      this.inputEnabledProperty.unlink( onInputEnabled );
-
-      if ( options.soundViewNode ) {
-        soundManager.removeSoundGenerator( this.grabClip );
-        soundManager.removeSoundGenerator( this.releaseClip );
-      }
-      this.grabClip.dispose();
-      this.releaseClip.dispose();
-    };
-  }
-
-  public override dispose(): void {
-    this.disposeDraggableVectorNode();
-
-    super.dispose();
+    } );
   }
 }
 
