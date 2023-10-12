@@ -18,7 +18,6 @@ import Multilink from '../../../axon/js/Multilink.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import EnumerationValue from '../../../phet-core/js/EnumerationValue.js';
 import Enumeration from '../../../phet-core/js/Enumeration.js';
-import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 
 // Determines if the vector exceeds the min or max values, used only if constrainSize is true
 class OversizeType extends EnumerationValue {
@@ -34,7 +33,7 @@ type SelfOptions = {
   baseMagnitude?: number; //TODO https://github.com/phetsims/my-solar-system/issues/213 document
 };
 
-export type VectorNodeOptions = SelfOptions & StrictOmit<ArrowNodeOptions, 'visibleProperty'>;
+export type VectorNodeOptions = SelfOptions & ArrowNodeOptions;
 
 export default class VectorNode extends ArrowNode {
 
@@ -47,7 +46,6 @@ export default class VectorNode extends ArrowNode {
   public constructor(
     body: Body,
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
-    visibleProperty: TReadOnlyProperty<boolean>,
     vectorProperty: TReadOnlyProperty<Vector2>,
     forceScaleProperty: TReadOnlyProperty<number>,
     providedOptions?: VectorNodeOptions
@@ -66,8 +64,7 @@ export default class VectorNode extends ArrowNode {
       stroke: '#404040',
       boundsMethod: 'none',
       isHeadDynamic: true,
-      scaleTailToo: true,
-      visibleProperty: visibleProperty
+      scaleTailToo: true
     }, providedOptions );
 
     super( 0, 0, 0, 0, options );

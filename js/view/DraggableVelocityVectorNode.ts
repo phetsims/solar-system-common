@@ -26,6 +26,7 @@ import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
+import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -43,7 +44,8 @@ type SelfOptions = {
   shiftDragVelocity?: number;
 };
 
-export type DraggableVectorNodeOptions = SelfOptions & VectorNodeOptions;
+export type DraggableVectorNodeOptions = SelfOptions &
+  WithRequired<VectorNodeOptions, 'tandem' | 'visibleProperty'>;
 
 export default class DraggableVelocityVectorNode extends VectorNode {
 
@@ -51,11 +53,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
   public readonly grabClip: SoundClip;
   public readonly releaseClip: SoundClip;
 
-  public constructor(
-    body: Body,
-    transformProperty: TReadOnlyProperty<ModelViewTransform2>,
-    visibleProperty: TReadOnlyProperty<boolean>,
-    providedOptions?: DraggableVectorNodeOptions ) {
+  public constructor( body: Body, transformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: DraggableVectorNodeOptions ) {
 
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
 
@@ -73,14 +71,10 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     const positionProperty = body.positionProperty;
     const velocityProperty = body.velocityProperty;
 
-    super(
-      body,
-      transformProperty,
-      visibleProperty,
-      velocityProperty,
-      new NumberProperty( 1.3 ), //TODO https://github.com/phetsims/my-solar-system/issues/235 why 1.3 ?
-      options
-    );
+    //TODO https://github.com/phetsims/my-solar-system/issues/235 why 1.3 ?
+    const forceScaleProperty = new NumberProperty( 1.3 );
+
+    super( body, transformProperty, velocityProperty, forceScaleProperty, options );
 
     const dragClipOptions = {
       initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
@@ -173,7 +167,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
         keyboardDragListener.interrupt();
         start();
       },
-      end: end
+      end: end,
+      tandem: options.tandem.createTandem( 'dragListener' )
     } );
     grabArea.addInputListener( dragListener );
     // move behind the geometry created by the superclass
@@ -189,7 +184,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
         dragListener.interrupt();
         start();
       },
-      end: end
+      end: end,
+      tandem: options.tandem.createTandem( 'keyboardDragListener' )
     } );
     this.addInputListener( keyboardDragListener );
 

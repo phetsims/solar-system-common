@@ -34,6 +34,7 @@ import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
+import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 
 const bodySounds = [
   Bodies_Brass_C3_mp3,
@@ -64,7 +65,7 @@ type SelfOptions = {
   soundViewNode?: Node | null;
 };
 
-export type BodyNodeOptions = SelfOptions & StrictOmit<ShadedSphereNodeOptions, 'cursor'>;
+export type BodyNodeOptions = SelfOptions & WithRequired<StrictOmit<ShadedSphereNodeOptions, 'cursor'>, 'tandem'>;
 
 export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode ) {
 
@@ -256,6 +257,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       } );
       this.addChild( cueingArrowsNode );
     }
+
+    this.addLinkedElement( body );
 
     this.disposeBodyNode = () => {
       speedDisplay.dispose(); // Because we provide the visibleProperty
