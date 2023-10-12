@@ -159,7 +159,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         this.visibleProperties.velocityVisibleProperty,
         body.velocityProperty,
         body.positionProperty,
-        1,
         SolarSystemCommonStrings.VStringProperty,
         combineOptions<DraggableVectorNodeOptions>( {
           fill: SolarSystemCommonColors.velocityColorProperty,

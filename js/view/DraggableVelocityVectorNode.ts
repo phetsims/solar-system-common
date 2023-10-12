@@ -56,7 +56,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     visibleProperty: TReadOnlyProperty<boolean>,
     vectorProperty: TProperty<Vector2>,
     basePositionProperty: TReadOnlyProperty<Vector2>,
-    scale: number,
     labelStringProperty: TReadOnlyProperty<string>,
     providedOptions?: DraggableVectorNodeOptions ) {
 
