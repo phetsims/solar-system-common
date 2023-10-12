@@ -170,8 +170,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
 
     // UI Elements ===================================================================================================
 
-    const measuringTapeUnitsProperty = new Property( { name: 'AU', multiplier: 0.01 } );
-
     const dragClipOptions = {
       initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     };
@@ -181,7 +179,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     soundManager.addSoundGenerator( releaseClip );
 
     // Add the MeasuringTapeNode
-    this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
+    this.measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'AU', multiplier: 0.01 } ), {
       visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,
       textColor: 'black',
       textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent red
