@@ -81,7 +81,8 @@ export default class Body extends PhetioObject {
     super( {
       tandem: tandem,
       phetioType: Body.BodyIO,
-      phetioState: false
+      phetioState: false,
+      isDisposable: false
     } );
 
     this.index = index;
