@@ -21,7 +21,7 @@ import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
 import Body from '../model/Body.js';
-import DraggableVectorNode, { DraggableVectorNodeOptions } from './DraggableVectorNode.js';
+import DraggableVelocityVectorNode, { DraggableVectorNodeOptions } from './DraggableVelocityVectorNode.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
@@ -61,7 +61,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
   protected readonly bodySoundManager: BodySoundManager;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  protected readonly createDraggableVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVectorNode;
+  protected readonly createDraggableVelocityVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVelocityVectorNode;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
   protected readonly modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>;
@@ -152,8 +152,8 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         tandem: options.tandem.createTandem( 'gridNode' )
       } ) );
 
-    this.createDraggableVectorNode = ( body: Body, options?: DraggableVectorNodeOptions ) => {
-      return new DraggableVectorNode(
+    this.createDraggableVelocityVectorNode = ( body: Body, options?: DraggableVectorNodeOptions ) => {
+      return new DraggableVelocityVectorNode(
         body,
         this.modelViewTransformProperty,
         this.visibleProperties.velocityVisibleProperty,

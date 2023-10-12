@@ -44,7 +44,7 @@ type SelfOptions = {
 
 export type DraggableVectorNodeOptions = SelfOptions & VectorNodeOptions;
 
-export default class DraggableVectorNode extends VectorNode {
+export default class DraggableVelocityVectorNode extends VectorNode {
 
   private readonly disposeDraggableVectorNode: () => void;
   public readonly grabClip: SoundClip;
@@ -233,4 +233,4 @@ class InteractivePath extends InteractiveHighlighting( Path ) {
     }
 }
 
-solarSystemCommon.register( 'DraggableVectorNode', DraggableVectorNode );
+solarSystemCommon.register( 'DraggableVelocityVectorNode', DraggableVelocityVectorNode );
