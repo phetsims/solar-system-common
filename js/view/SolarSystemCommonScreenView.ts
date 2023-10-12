@@ -16,12 +16,10 @@ import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
-import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
+import optionize from '../../../phet-core/js/optionize.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
-import Body from '../model/Body.js';
-import DraggableVelocityVectorNode, { DraggableVectorNodeOptions } from './DraggableVelocityVectorNode.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
@@ -59,9 +57,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document
   protected readonly bodySoundManager: BodySoundManager;
-
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  protected readonly createDraggableVelocityVectorNode: ( body: Body, options?: DraggableVectorNodeOptions ) => DraggableVelocityVectorNode;
 
   //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
   protected readonly modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>;
@@ -151,18 +146,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         visibleProperty: this.visibleProperties.gridVisibleProperty,
         tandem: options.tandem.createTandem( 'gridNode' )
       } ) );
-
-    this.createDraggableVelocityVectorNode = ( body: Body, options?: DraggableVectorNodeOptions ) => {
-      return new DraggableVelocityVectorNode(
-        body,
-        this.modelViewTransformProperty,
-        this.visibleProperties.velocityVisibleProperty,
-        combineOptions<DraggableVectorNodeOptions>( {
-          soundViewNode: this,
-          mapPosition: this.constrainBoundaryViewPoint.bind( this )
-        }, options )
-      );
-    };
 
     // UI Elements ===================================================================================================
 
