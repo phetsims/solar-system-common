@@ -106,7 +106,10 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       focusable: true,
       ariaLabel: accessibleName, // the screen reader Accessible Name
       innerContent: accessibleName, // needed to make it focusable in the PDOM
-      ariaRole: 'application'
+      ariaRole: 'application',
+
+      // phet-io
+      phetioInputEnabledPropertyInstrumented: true // see https://github.com/phetsims/my-solar-system/issues/231
     }, providedOptions );
 
     options.cursor = options.draggable ? 'pointer' : 'default';
