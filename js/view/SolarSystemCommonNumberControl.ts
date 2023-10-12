@@ -46,7 +46,7 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
       minSoundPlayer: ValueChangeSoundPlayer.USE_MIDDLE_SOUND,
       maxSoundPlayer: ValueChangeSoundPlayer.USE_MIDDLE_SOUND,
       middleMovingUpPlaybackRateMapper: playbackRateMapper,
-      interThresholdDelta: SolarSystemCommonConstants.SLIDER_STEP - 0.1
+      interThresholdDelta: SolarSystemCommonConstants.MASS_SLIDER_STEP - 0.1
     };
 
     const options = optionize<SolarSystemCommonNumberControlOptions, SelfOptions, NumberControlOptions>()( {

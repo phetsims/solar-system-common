@@ -60,7 +60,7 @@ const SolarSystemCommonConstants = {
   COMBO_BOX_ITEM_FONT: new PhetFont( 16 ),
   NUMBER_DISPLAY_FONT: new PhetFont( 16 ),
 
-  SLIDER_STEP: 25,
+  MASS_SLIDER_STEP: 25,
   GRID_SPACING: 100,
   VBOX_SPACING: 7,
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.1,
