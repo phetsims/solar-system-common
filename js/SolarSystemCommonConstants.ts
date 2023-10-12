@@ -11,6 +11,7 @@ import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 import solarSystemCommon from './solarSystemCommon.js';
 import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, TLayoutOptions } from '../../scenery/js/imports.js';
 import { combineOptions } from '../../phet-core/js/optionize.js';
+import { PanelOptions } from '../../sun/js/Panel.js';
 
 export const METERS_PER_AU = 149597870700;
 export const SECONDS_PER_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
@@ -21,6 +22,17 @@ export const MASS_MULTIPLIER = 1e28;
 export const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_PER_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_PER_YEAR );
 export const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_PER_AU / SECONDS_PER_YEAR / 1000;
 
+const PANEL_OPTIONS: PanelOptions = {
+  stroke: null,
+  fill: SolarSystemCommonColors.controlPanelFillProperty,
+  cornerRadius: 5,
+  xMargin: 10,
+  yMargin: 10,
+  layoutOptions: {
+    stretch: true
+  }
+};
+
 const SolarSystemCommonConstants = {
 
   SCREEN_VIEW_X_MARGIN: 10,
@@ -28,16 +40,8 @@ const SolarSystemCommonConstants = {
 
   SLIDER_STEP: 25,
 
-  CONTROL_PANEL_OPTIONS: {
-    stroke: null,
-    fill: SolarSystemCommonColors.controlPanelFillProperty,
-    cornerRadius: 5,
-    xMargin: 10,
-    yMargin: 10,
-    layoutOptions: {
-      stretch: true
-    }
-  },
+  PANEL_OPTIONS: PANEL_OPTIONS,
+
   HSEPARATOR_OPTIONS: {
     lineWidth: 2,
     stroke: '#8E9097',
