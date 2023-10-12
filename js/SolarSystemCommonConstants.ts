@@ -49,10 +49,13 @@ const SolarSystemCommonConstants = {
   HSEPARATOR_OPTIONS: HSEPARATOR_OPTIONS,
   PANEL_OPTIONS: PANEL_OPTIONS,
 
+  // Fonts
+  BUTTON_FONT: new PhetFont( 16 ),
+  COMBO_BOX_ITEM_FONT: new PhetFont( 16 ),
+  NUMBER_DISPLAY_FONT: new PhetFont( 16 ),
+
   SLIDER_STEP: 25,
 
-  PANEL_FONT: new PhetFont( 16 ),
-  TITLE_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
   TEXT_OPTIONS: {
     font: new PhetFont( 16 ),
     fill: SolarSystemCommonColors.foregroundProperty,
