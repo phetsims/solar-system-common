@@ -148,7 +148,8 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       100,
       {
         stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
-        visibleProperty: this.visibleProperties.gridVisibleProperty
+        visibleProperty: this.visibleProperties.gridVisibleProperty,
+        tandem: options.tandem.createTandem( 'gridNode' )
       } ) );
 
     this.createDraggableVectorNode = ( body: Body, options?: DraggableVectorNodeOptions ) => {
