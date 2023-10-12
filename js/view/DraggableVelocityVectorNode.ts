@@ -57,7 +57,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     visibleProperty: TReadOnlyProperty<boolean>,
     velocityProperty: TProperty<Vector2>,
-    basePositionProperty: TReadOnlyProperty<Vector2>,
+    positionProperty: TReadOnlyProperty<Vector2>,
     providedOptions?: DraggableVectorNodeOptions ) {
 
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
@@ -133,9 +133,9 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     this.addChild( labelText );
 
     // This represents the model coordinates of where the 'V' circle appears
-    const vectorPositionProperty = new Vector2Property( velocityProperty.value.plus( basePositionProperty.value ) );
+    const vectorPositionProperty = new Vector2Property( velocityProperty.value.plus( positionProperty.value ) );
     vectorPositionProperty.lazyLink( vectorPosition => {
-      const newVelocity = vectorPosition.subtract( basePositionProperty.value );
+      const newVelocity = vectorPosition.subtract( positionProperty.value );
       if ( newVelocity.magnitude < options.minimumMagnitude ) {
         if ( options.snapToZero ) {
           velocityProperty.value = new Vector2( 0, 0 );
