@@ -18,7 +18,7 @@ import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 
-export default class GravityScaleSlider extends HBox {
+export default class GravityZoomControl extends HBox {
 
   public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
 
@@ -69,4 +69,4 @@ export default class GravityScaleSlider extends HBox {
   }
 }
 
-solarSystemCommon.register( 'GravityScaleSlider', GravityScaleSlider );
+solarSystemCommon.register( 'GravityZoomControl', GravityZoomControl );
