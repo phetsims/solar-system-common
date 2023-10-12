@@ -179,8 +179,10 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     soundManager.addSoundGenerator( grabClip );
     soundManager.addSoundGenerator( releaseClip );
 
+    const measuringTapeUnitsProperty = new Property( { name: 'AU', multiplier: 0.01 } );
+
     // Add the MeasuringTapeNode
-    this.measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'AU', multiplier: 0.01 } ), {
+    this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
       visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,
       textColor: 'black',
       textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent red
