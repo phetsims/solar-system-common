@@ -25,6 +25,7 @@ import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import soundManager from '../../../tambo/js/soundManager.js';
+import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -56,7 +57,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     visibleProperty: TReadOnlyProperty<boolean>,
     vectorProperty: TProperty<Vector2>,
     basePositionProperty: TReadOnlyProperty<Vector2>,
-    labelStringProperty: TReadOnlyProperty<string>,
     providedOptions?: DraggableVectorNodeOptions ) {
 
     const options = optionize<DraggableVectorNodeOptions, SelfOptions, VectorNodeOptions>()( {
@@ -117,7 +117,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       focusHighlight: Shape.circle( 0, 0, circleRadius * 1.3 )
     } );
 
-    const labelText = new Text( labelStringProperty, {
+    const labelText = new Text( SolarSystemCommonStrings.VStringProperty, {
       font: new PhetFont( { size: 22, weight: 'bold' } ),
       fill: Color.gray,
       maxWidth: 25
