@@ -56,7 +56,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     body: Body,
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     visibleProperty: TReadOnlyProperty<boolean>,
-    vectorProperty: TProperty<Vector2>,
+    velocityProperty: TProperty<Vector2>,
     basePositionProperty: TReadOnlyProperty<Vector2>,
     providedOptions?: DraggableVectorNodeOptions ) {
 
@@ -77,7 +77,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       body,
       transformProperty,
       visibleProperty,
-      vectorProperty,
+      velocityProperty,
       new NumberProperty( 1.3 ), //TODO https://github.com/phetsims/my-solar-system/issues/235 why 1.3 ?
       options
     );
@@ -133,22 +133,22 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     this.addChild( labelText );
 
     // This represents the model coordinates of where the 'V' circle appears
-    const vectorPositionProperty = new Vector2Property( vectorProperty.value.plus( basePositionProperty.value ) );
+    const vectorPositionProperty = new Vector2Property( velocityProperty.value.plus( basePositionProperty.value ) );
     vectorPositionProperty.lazyLink( vectorPosition => {
       const newVelocity = vectorPosition.subtract( basePositionProperty.value );
       if ( newVelocity.magnitude < options.minimumMagnitude ) {
         if ( options.snapToZero ) {
-          vectorProperty.value = new Vector2( 0, 0 );
+          velocityProperty.value = new Vector2( 0, 0 );
         }
         else {
-          vectorProperty.value = newVelocity.withMagnitude( options.minimumMagnitude );
+          velocityProperty.value = newVelocity.withMagnitude( options.minimumMagnitude );
         }
       }
       else if ( options.maxMagnitudeProperty && newVelocity.magnitude > options.maxMagnitudeProperty.value ) {
-        vectorProperty.value = newVelocity.withMagnitude( options.maxMagnitudeProperty.value );
+        velocityProperty.value = newVelocity.withMagnitude( options.maxMagnitudeProperty.value );
       }
       else {
-        vectorProperty.value = newVelocity;
+        velocityProperty.value = newVelocity;
       }
     } );
 
@@ -181,7 +181,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     labelText.moveToBack();
 
     const keyboardDragListener = new KeyboardDragListener( {
-      positionProperty: vectorProperty,
+      positionProperty: velocityProperty,
       transform: transformProperty,
       dragVelocity: options.dragVelocity,
       shiftDragVelocity: options.shiftDragVelocity,
