@@ -9,7 +9,7 @@
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 import solarSystemCommon from './solarSystemCommon.js';
-import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, TLayoutOptions } from '../../scenery/js/imports.js';
+import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, TLayoutOptions } from '../../scenery/js/imports.js';
 import { combineOptions } from '../../phet-core/js/optionize.js';
 import { PanelOptions } from '../../sun/js/Panel.js';
 
@@ -21,6 +21,12 @@ export const POSITION_MULTIPLIER = 0.01;
 export const MASS_MULTIPLIER = 1e28;
 export const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_PER_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_PER_YEAR );
 export const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_PER_AU / SECONDS_PER_YEAR / 1000;
+
+const HSEPARATOR_OPTIONS: HSeparatorOptions = {
+  lineWidth: 2,
+  stroke: '#8E9097',
+  layoutOptions: combineOptions<TLayoutOptions>( {}, DEFAULT_SEPARATOR_LAYOUT_OPTIONS, { yMargin: 2 } )
+};
 
 const PANEL_OPTIONS: PanelOptions = {
   stroke: null,
@@ -35,18 +41,16 @@ const PANEL_OPTIONS: PanelOptions = {
 
 const SolarSystemCommonConstants = {
 
+  // ScreenView margins
   SCREEN_VIEW_X_MARGIN: 10,
   SCREEN_VIEW_Y_MARGIN: 10,
 
-  SLIDER_STEP: 25,
-
+  // Default option values
+  HSEPARATOR_OPTIONS: HSEPARATOR_OPTIONS,
   PANEL_OPTIONS: PANEL_OPTIONS,
 
-  HSEPARATOR_OPTIONS: {
-    lineWidth: 2,
-    stroke: '#8E9097',
-    layoutOptions: combineOptions<TLayoutOptions>( {}, DEFAULT_SEPARATOR_LAYOUT_OPTIONS, { yMargin: 2 } )
-  },
+  SLIDER_STEP: 25,
+
   PANEL_FONT: new PhetFont( 16 ),
   TITLE_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
   TEXT_OPTIONS: {
