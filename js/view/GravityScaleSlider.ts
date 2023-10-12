@@ -16,10 +16,11 @@ import Dimension2 from '../../../dot/js/Dimension2.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class GravityScaleSlider extends HBox {
 
-  public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean> ) {
+  public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
 
     const zoomText = new Text( SolarSystemCommonStrings.zoomStringProperty, combineOptions<TextOptions>(
       {}, SolarSystemCommonConstants.TEXT_OPTIONS, {
@@ -31,7 +32,7 @@ export default class GravityScaleSlider extends HBox {
     const rangeMax = forceScaleProperty.range.max;
     const rangeStep = 2;
 
-    // This slider controles the zoom level of the vector arrows
+    // This slider controls the zoom level of the vector arrows
     const slider = new HSlider( forceScaleProperty, forceScaleProperty.range, {
       trackSize: new Dimension2( 100, 4 ),
       thumbSize: new Dimension2( 14, 28 ),
@@ -48,7 +49,9 @@ export default class GravityScaleSlider extends HBox {
       accessibleName: SolarSystemCommonStrings.a11y.scaleSliderStringProperty,
       valueChangeSoundGeneratorOptions: {
         numberOfMiddleThresholds: ( rangeMax - rangeMin ) / rangeStep - 1
-      }
+      },
+      tandem: tandem.createTandem( 'slider' ),
+      phetioVisiblePropertyInstrumented: false
     } );
 
     slider.addMajorTick( rangeMin, new RichText( MathSymbols.TIMES + `10<sup>${rangeMin}</sup`, SolarSystemCommonConstants.TEXT_OPTIONS ) );
