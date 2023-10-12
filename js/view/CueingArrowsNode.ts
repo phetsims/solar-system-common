@@ -64,8 +64,7 @@ function createArrowsShape( radius: number, length: number ): Shape {
   const downArrowShape = new ArrowShape( 0, -radius, 0, -radius - length, ARROW_SHAPE_OPTIONS );
   const upArrowShape = new ArrowShape( 0, radius, 0, radius + length, ARROW_SHAPE_OPTIONS );
   const rightArrowShape = new ArrowShape( radius, 0, radius + length, 0, ARROW_SHAPE_OPTIONS );
-  const shape = Shape.union( [ leftArrowShape, downArrowShape, upArrowShape, rightArrowShape ] );
-  return shape;
+  return Shape.union( [ leftArrowShape, downArrowShape, upArrowShape, rightArrowShape ] );
 }
 
 solarSystemCommon.register( 'CueingArrowsNode', CueingArrowsNode );
