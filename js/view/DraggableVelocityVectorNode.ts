@@ -228,9 +228,9 @@ export default class DraggableVelocityVectorNode extends VectorNode {
 }
 
 class InteractivePath extends InteractiveHighlighting( Path ) {
-    public constructor( shape: Shape, options?: PathOptions ) {
-      super( shape, options );
-    }
+  public constructor( shape: Shape, options?: PathOptions ) {
+    super( shape, options );
+  }
 }
 
 solarSystemCommon.register( 'DraggableVelocityVectorNode', DraggableVelocityVectorNode );
