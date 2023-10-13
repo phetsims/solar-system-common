@@ -58,10 +58,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly availableBodies: Body[];
 
   // The set of Body instances in availableBodies that are active (body.isActive === true)
-  public readonly bodies: ObservableArray<Body>;
+  public readonly activeBodies: ObservableArray<Body>;
 
   // The number of Bodies that are 'active', and thus visible on the screen. This is controlled by a NumberSpinner,
-  // so may briefly have a value that is different from bodies.lengthProperty.
+  // so may briefly have a value that is different from activeBodies.lengthProperty.
   public readonly numberOfActiveBodiesProperty: NumberProperty;
 
   // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
@@ -143,39 +143,39 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.defaultBodyInfo = options.defaultBodyInfo;
 
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
-    const bodiesTandem = options.tandem.createTandem( 'availableBodies' );
+    const bodiesTandem = options.tandem.createTandem( 'bodies' );
     this.availableBodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
       new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ],
         bodiesTandem.createTandem( bodyInfo.tandemName ? bodyInfo.tandemName : `body${index + 1}` ) )
     );
     this.saveStartingBodyInfo();
 
-    this.bodies = createObservableArray( {
-      tandem: options.tandem.createTandem( 'bodies' ),
+    this.activeBodies = createObservableArray( {
+      tandem: options.tandem.createTandem( 'activeBodies' ),
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
       phetioDocumentation: 'The set of Body elements that are currently active, and thus visible on the screen'
     } );
 
-    // We want to synchronize availableBodies and bodies, so that bodies is effectively availableBodies.filter( isActive )
+    // We want to synchronize bodies and activeBodies, so that activeBodies is effectively availableBodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
     Multilink.multilinkAny( this.availableBodies.map( body => body.isActiveProperty ), () => {
       const idealBodies = this.availableBodies.filter( body => body.isActiveProperty.value );
 
       // Remove all inactive bodies
-      this.bodies.filter( body => !body.isActiveProperty.value ).forEach( body => {
-        this.bodies.remove( body );
+      this.activeBodies.filter( body => !body.isActiveProperty.value ).forEach( body => {
+        this.activeBodies.remove( body );
         body.reset();
       } );
 
       // Add in active bodies (in order)
       for ( let i = 0; i < idealBodies.length; i++ ) {
-        if ( this.bodies[ i ] !== idealBodies[ i ] ) {
-          this.bodies.splice( i, 0, idealBodies[ i ] );
+        if ( this.activeBodies[ i ] !== idealBodies[ i ] ) {
+          this.activeBodies.splice( i, 0, idealBodies[ i ] );
         }
       }
     } );
 
-    this.numberOfActiveBodiesProperty = new NumberProperty( this.bodies.length, {
+    this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
       range: new Range( 1, this.availableBodies.length ),
       tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
@@ -210,7 +210,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       );
     } );
 
-    this.engine = options.engineFactory( this.bodies );
+    this.engine = options.engineFactory( this.activeBodies );
     this.engine.reset();
 
     // Time settings
@@ -272,7 +272,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
         this.availableBodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity );
         this.availableBodies[ i ].reset();
         if ( preventCollision ) {
-          this.availableBodies[ i ].preventCollision( this.bodies );
+          this.availableBodies[ i ].preventCollision( this.activeBodies );
         }
       }
       else {
@@ -290,7 +290,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const newBody = this.availableBodies.find( body => !body.isActiveProperty.value );
     if ( newBody ) {
       newBody.reset();
-      newBody.preventCollision( this.bodies );
+      newBody.preventCollision( this.activeBodies );
       newBody.isActiveProperty.value = true;
     }
     this.saveStartingBodyInfo();
@@ -300,7 +300,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public removeLastBody(): void {
-    const lastBody = this.bodies[ this.bodies.length - 1 ];
+    const lastBody = this.activeBodies[ this.activeBodies.length - 1 ];
     lastBody.isActiveProperty.value = false;
     this.saveStartingBodyInfo();
 
@@ -337,8 +337,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
    * Updating for when the bodies are changed
    */
   public update(): void {
-    this.engine.update( this.bodies );
-    this.numberOfActiveBodiesProperty.value = this.bodies.length;
+    this.engine.update( this.activeBodies );
+    this.numberOfActiveBodiesProperty.value = this.activeBodies.length;
   }
 
   public stepOnce( dt: number ): void {
@@ -356,7 +356,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       this.engine.checkCollisions();
       this.timeProperty.value += adjustedDT * this.modelToViewTime;
       if ( this.addingPathPoints ) {
-        this.bodies.forEach( body => body.addPathPoint() );
+        this.activeBodies.forEach( body => body.addPathPoint() );
       }
     }
   }
@@ -370,7 +370,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public clearPaths(): void {
-    this.bodies.forEach( body => {
+    this.activeBodies.forEach( body => {
       body.clearPath();
     } );
   }
