@@ -55,9 +55,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   protected readonly defaultBodyInfo: BodyInfo[];
 
   // The complete set of Body instances, active and inactive
-  public readonly availableBodies: Body[];
+  public readonly bodies: Body[];
 
-  // The set of Body instances in availableBodies that are active (body.isActive === true)
+  // The set of Body instances in this.bodies that are active (body.isActive === true)
   public readonly activeBodies: ObservableArray<Body>;
 
   // The number of Bodies that are 'active', and thus visible on the screen. This is controlled by a NumberSpinner,
@@ -144,7 +144,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
     const bodiesTandem = options.tandem.createTandem( 'bodies' );
-    this.availableBodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
+    this.bodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
       new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ],
         bodiesTandem.createTandem( bodyInfo.tandemName ? bodyInfo.tandemName : `body${index + 1}` ) )
     );
@@ -156,10 +156,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioDocumentation: 'The set of Body elements that are currently active, and thus visible on the screen'
     } );
 
-    // We want to synchronize bodies and activeBodies, so that activeBodies is effectively availableBodies.filter( isActive )
+    // We want to synchronize bodies and activeBodies, so that activeBodies is effectively bodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
-    Multilink.multilinkAny( this.availableBodies.map( body => body.isActiveProperty ), () => {
-      const idealBodies = this.availableBodies.filter( body => body.isActiveProperty.value );
+    Multilink.multilinkAny( this.bodies.map( body => body.isActiveProperty ), () => {
+      const idealBodies = this.bodies.filter( body => body.isActiveProperty.value );
 
       // Remove all inactive bodies
       this.activeBodies.filter( body => !body.isActiveProperty.value ).forEach( body => {
@@ -177,7 +177,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
-      range: new Range( 1, this.availableBodies.length ),
+      range: new Range( 1, this.bodies.length ),
       tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
     } );
 
@@ -186,11 +186,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioReadOnly: true
     } );
 
-    this.isAnyBodyEscapedProperty = DerivedProperty.or( [ ...this.availableBodies.map( body => body.escapedProperty ), this.isAnyBodyCollidedProperty ] );
+    this.isAnyBodyEscapedProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.escapedProperty ), this.isAnyBodyCollidedProperty ] );
 
-    this.isAnyForceOffscaleProperty = DerivedProperty.or( this.availableBodies.map( body => body.forceOffscaleProperty ) );
+    this.isAnyForceOffscaleProperty = DerivedProperty.or( this.bodies.map( body => body.forceOffscaleProperty ) );
 
-    this.availableBodies.forEach( body => {
+    this.bodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
         this.isAnyBodyCollidedProperty.value = true;
       } );
@@ -253,30 +253,30 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public saveStartingBodyInfo(): void {
-    this.startingBodyInfo = this.availableBodies.map( body => body.info );
+    this.startingBodyInfo = this.bodies.map( body => body.info );
   }
 
   /**
-   * Sets availableBodies to have the specified values.
+   * Sets Body instances to have the specified values.
    */
   public loadBodyInfo( bodiesInfo: BodyInfo[], preventCollision = false ): void {
-    for ( let i = 0; i < this.availableBodies.length; i++ ) {
+    for ( let i = 0; i < this.bodies.length; i++ ) {
       const bodyInfo = bodiesInfo[ i ];
 
       if ( bodyInfo ) {
-        this.availableBodies[ i ].isActiveProperty.value = bodyInfo.isActive;
+        this.bodies[ i ].isActiveProperty.value = bodyInfo.isActive;
 
         // Setting initial values and then resetting the body to make sure the body is in the correct state
-        this.availableBodies[ i ].massProperty.setInitialValue( bodyInfo.mass );
-        this.availableBodies[ i ].positionProperty.setInitialValue( bodyInfo.position );
-        this.availableBodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity );
-        this.availableBodies[ i ].reset();
+        this.bodies[ i ].massProperty.setInitialValue( bodyInfo.mass );
+        this.bodies[ i ].positionProperty.setInitialValue( bodyInfo.position );
+        this.bodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity );
+        this.bodies[ i ].reset();
         if ( preventCollision ) {
-          this.availableBodies[ i ].preventCollision( this.activeBodies );
+          this.bodies[ i ].preventCollision( this.activeBodies );
         }
       }
       else {
-        this.availableBodies[ i ].isActiveProperty.value = false;
+        this.bodies[ i ].isActiveProperty.value = false;
       }
     }
 
@@ -287,7 +287,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
    * Adds the next available body to the system and checks that is doesn't collide with any other bodies.
    */
   public addNextBody(): void {
-    const newBody = this.availableBodies.find( body => !body.isActiveProperty.value );
+    const newBody = this.bodies.find( body => !body.isActiveProperty.value );
     if ( newBody ) {
       newBody.reset();
       newBody.preventCollision( this.activeBodies );
