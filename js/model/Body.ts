@@ -23,6 +23,8 @@ import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import IOType from '../../../tandem/js/types/IOType.js';
 import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
 
+const MAX_PATH_LENGTH = 2000;
+
 export type BodyInfo = {
   isActive: boolean;
   mass: number;
@@ -73,8 +75,8 @@ export default class Body extends PhetioObject {
   public readonly colorProperty: TReadOnlyProperty<Color>;
 
   // Total sum of the distance of the drawn path. Not using the word 'length' to not confuse it with the points array length.
-  //TODO https://github.com/phetsims/my-solar-system/issues/226 Does this field need to be stateful?
-  private pathDistance = 0;
+  // This is a Property because it needs to be stateful for PhET-iO.
+  private readonly pathDistanceProperty: NumberProperty;
 
   public constructor( index: number, bodyInfo: BodyInfo, userControlledProperty: Property<boolean>,
                       colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
@@ -154,7 +156,16 @@ export default class Body extends PhetioObject {
     this.addLinkedElement( colorProperty );
 
     // Data for rendering the path
-    this.pathPoints = createObservableArray();
+    this.pathPoints = createObservableArray( {
+      tandem: tandem.createTandem( 'pathPoints' ),
+      phetioType: createObservableArray.ObservableArrayIO( Vector2.Vector2IO ),
+      phetioDocumentation: 'The set of points used to draw the body\'s path'
+    } );
+
+    this.pathDistanceProperty = new NumberProperty( 0, {
+      tandem: tandem.createTandem( 'pathDistanceProperty' ),
+      phetioReadOnly: true
+    } );
   }
 
   public reset(): void {
@@ -181,12 +192,12 @@ export default class Body extends PhetioObject {
 
       // Add the length to the tracked path length
       if ( this.pathPoints.length >= 2 ) {
-        this.pathDistance += pathPoint.distance( this.pathPoints[ this.pathPoints.length - 2 ] );
+        this.pathDistanceProperty.value += pathPoint.distance( this.pathPoints[ this.pathPoints.length - 2 ] );
       }
 
       // Remove points from the path as the path gets too long
-      while ( this.pathDistance > 2000 ) {
-        this.pathDistance -= this.pathPoints[ 1 ].distance( this.pathPoints[ 0 ] );
+      while ( this.pathDistanceProperty.value > MAX_PATH_LENGTH ) {
+        this.pathDistanceProperty.value -= this.pathPoints[ 1 ].distance( this.pathPoints[ 0 ] );
         this.pathPoints.shift();
       }
 
@@ -223,7 +234,7 @@ export default class Body extends PhetioObject {
    */
   public clearPath(): void {
     this.pathPoints.clear();
-    this.pathDistance = 0;
+    this.pathDistanceProperty.reset();
   }
 
   public static massToRadius( mass: number ): number {
