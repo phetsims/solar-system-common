@@ -94,21 +94,25 @@ export default class Body extends PhetioObject {
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
     this.positionProperty = new Vector2Property( bodyInfo.position, {
+      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
       tandem: tandem.createTandem( 'positionProperty' ),
       phetioReadOnly: true
     } );
 
     this.velocityProperty = new Vector2Property( bodyInfo.velocity, {
+      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
       tandem: tandem.createTandem( 'velocityProperty' ),
       phetioReadOnly: true
     } );
 
     this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ), {
+      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
       tandem: tandem.createTandem( 'accelerationProperty' ),
       phetioReadOnly: true
     } );
 
     this.forceProperty = new Vector2Property( new Vector2( 0, 0 ), {
+      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
       tandem: tandem.createTandem( 'forceProperty' ),
       phetioReadOnly: true
     } );
