@@ -44,7 +44,7 @@ export default class Body extends PhetioObject {
   // Collision handling
   public readonly collidedEmitter = new TinyEmitter();
 
-  // Not resettable, common model will handle. Determines if the body is currently on-screen
+  // Determines if the body is currently visible on screen and considered in calculations.
   public readonly isActiveProperty: Property<boolean>;
 
   // True when the body goes off-screen
@@ -65,6 +65,7 @@ export default class Body extends PhetioObject {
   // Array of points for drawing the path
   public readonly pathPoints: ObservableArray<Vector2>;
 
+  // The color used for the Body in icons, paths, UI components, etc.
   public readonly colorProperty: TReadOnlyProperty<Color>;
 
   // Total sum of the distance of the drawn path. Not using the word 'length' to not confuse it with the points array length.
