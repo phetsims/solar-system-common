@@ -160,6 +160,7 @@ export default class Body extends PhetioObject {
     } );
 
     this.pathDistanceProperty = new NumberProperty( 0, {
+      //TODO https://github.com/phetsims/my-solar-system/issues/208 units?
       tandem: tandem.createTandem( 'pathDistanceProperty' ),
       phetioReadOnly: true
     } );

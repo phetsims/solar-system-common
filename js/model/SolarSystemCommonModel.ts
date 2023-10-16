@@ -220,6 +220,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     // Time Properties, grouped under a parent tandem
     const timeTandem = options.tandem.createTandem( 'time' );
     this.timeProperty = new NumberProperty( 0, {
+      //TODO https://github.com/phetsims/my-solar-system/issues/208 units
       tandem: timeTandem.createTandem( 'timeProperty' ),
       phetioReadOnly: true
     } );
