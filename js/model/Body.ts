@@ -22,16 +22,9 @@ import PhetioObject from '../../../tandem/js/PhetioObject.js';
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import IOType from '../../../tandem/js/types/IOType.js';
 import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
+import BodyInfo from './BodyInfo.js';
 
 const MAX_PATH_LENGTH = 2000;
-
-export type BodyInfo = {
-  isActive: boolean;
-  mass: number;
-  position: Vector2;
-  velocity: Vector2;
-  tandemName?: string;
-};
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 
@@ -205,12 +198,12 @@ export default class Body extends PhetioObject {
   }
 
   public get info(): BodyInfo {
-    return {
+    return new BodyInfo( {
       mass: this.massProperty.value,
       position: this.positionProperty.value.copy(),
       velocity: this.velocityProperty.value.copy(),
       isActive: this.isActiveProperty.value
-    };
+    } );
   }
 
   public isOverlapping( otherBody: Body ): boolean {

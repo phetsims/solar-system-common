@@ -8,7 +8,7 @@
  */
 
 import solarSystemCommon from '../solarSystemCommon.js';
-import Body, { BodyInfo } from './Body.js';
+import Body from './Body.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
@@ -28,6 +28,8 @@ import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import RangeWithValue from '../../../dot/js/RangeWithValue.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../axon/js/Property.js';
+import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
+import BodyInfo from './BodyInfo.js';
 
 // Constants
 const BODY_COLORS = [
@@ -65,7 +67,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly numberOfActiveBodiesProperty: NumberProperty;
 
   // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
-  private startingBodyInfo: BodyInfo[] = [];
+  // This needs to be stateful so that we return to the desired configuration when resetting the time control.
+  private startingBodyInfoProperty: Property<BodyInfo[]>;
 
   // The engine that will run all the physical calculations, including body interactions and collisions
   public readonly engine: EngineType;
@@ -146,6 +149,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       new Body( index + 1, bodyInfo, this.userControlledProperty, BODY_COLORS[ index ],
         bodiesTandem.createTandem( bodyInfo.tandemName ? bodyInfo.tandemName : `body${index + 1}` ) )
     );
+
+    this.startingBodyInfoProperty = new Property<BodyInfo[]>( [], {
+      tandem: options.tandem.createTandem( 'startingBodyInfoProperty' ),
+      phetioReadOnly: true,
+      phetioValueType: ArrayIO( BodyInfo.BodyInfoIO )
+    } );
     this.saveStartingBodyInfo();
 
     this.activeBodies = createObservableArray( {
@@ -248,7 +257,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public saveStartingBodyInfo(): void {
-    this.startingBodyInfo = this.bodies.map( body => body.info );
+    this.startingBodyInfoProperty.value = this.bodies.map( body => body.info );
   }
 
   /**
@@ -311,7 +320,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.userControlledProperty.reset();
     this.forceScaleProperty.reset();
 
-    this.startingBodyInfo = this.defaultBodyInfo;
+    this.startingBodyInfoProperty.value = this.defaultBodyInfo;
 
     this.restart();
   }
@@ -323,7 +332,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.hasPlayedProperty.value = false;
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
-    this.loadBodyInfo( this.startingBodyInfo ); // Reset the bodies
+    this.loadBodyInfo( this.startingBodyInfoProperty.value ); // Reset the bodies
     this.update();
   }
 
