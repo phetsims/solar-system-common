@@ -96,7 +96,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Indicates whether the sim has been played at least once, used to disable the "This body is draggable" arrow node.
   public readonly hasPlayedProperty: Property<boolean>;
 
-  // Boolean that determines if more path points are going to be stored for subsequent display in the paths
+  // Boolean that determines if more path points are going to be stored for subsequent display in the paths.
+  // This does not need to be stateful because it will be set correctly when pathVisibleProperty is set.
   public addingPathPoints = false;
 
   // Controls if the data panel shows all the numeric properties of the body
