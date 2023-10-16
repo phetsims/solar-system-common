@@ -103,7 +103,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // This does not need to be stateful because it will be set correctly when pathVisibleProperty is set.
   public addingPathPoints = false;
 
-  // Numerical level of zoom selected, it's not directly the zoom applied but a number to be used in the calculation
+  // Numerical level of zoom selected. It's not directly the zoom applied, but an integer to be used in the calculation.
   public readonly zoomLevelProperty: NumberProperty;
 
   // How much to scale the model-view transform when zooming in and out
