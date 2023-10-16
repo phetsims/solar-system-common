@@ -103,10 +103,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // This does not need to be stateful because it will be set correctly when pathVisibleProperty is set.
   public addingPathPoints = false;
 
-  // Controls if the data panel shows all the numeric properties of the body
-  //TODO https://github.com/phetsims/my-solar-system/issues/225 move to LabVisibleProperties
-  public readonly moreDataProperty: BooleanProperty;
-
   // Numerical level of zoom selected, it's not directly the zoom applied but a number to be used in the calculation
   public readonly zoomLevelProperty: NumberProperty;
 
@@ -240,11 +236,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       tandem: timeTandem.createTandem( 'hasPlayedProperty' ),
       phetioReadOnly: true
     } );
-
-    this.moreDataProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'moreDataProperty' )
-    } );
-
     this.forceScaleProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
     } );
@@ -316,7 +307,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
-    this.moreDataProperty.reset();
     this.forceScaleProperty.reset();
 
     this.startingBodyInfoProperty.value = this.defaultBodyInfo;
