@@ -16,21 +16,10 @@ import optionize from '../../../phet-core/js/optionize.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import solarSystemCommon from '../solarSystemCommon.js';
-import EnumerationValue from '../../../phet-core/js/EnumerationValue.js';
-import Enumeration from '../../../phet-core/js/Enumeration.js';
-
-// Determines if the vector exceeds the min or max values, used only if constrainSize is true
-class OversizeType extends EnumerationValue {
-  public static readonly NONE = new OversizeType();
-  public static readonly BIGGER = new OversizeType();
-  public static readonly SMALLER = new OversizeType();
-
-  public static readonly enumeration = new Enumeration( OversizeType );
-}
 
 type SelfOptions = {
-  constrainSize?: boolean; //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  baseMagnitude?: number; //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  //
+  baseMagnitude?: number;
 };
 
 export type VectorNodeOptions = SelfOptions & ArrowNodeOptions;
@@ -39,9 +28,6 @@ export default class VectorNode extends ArrowNode {
 
   protected readonly tipProperty: TReadOnlyProperty<Vector2>;
   protected readonly tailProperty: TReadOnlyProperty<Vector2>;
-
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  private oversizeType: OversizeType = OversizeType.NONE;
 
   public constructor(
     body: Body,
@@ -54,7 +40,6 @@ export default class VectorNode extends ArrowNode {
     const options = optionize<VectorNodeOptions, SelfOptions, ArrowNodeOptions>()( {
 
       // SelfOptions
-      constrainSize: false,
       baseMagnitude: 500,
 
       // ArrowNodeOptions
@@ -81,15 +66,12 @@ export default class VectorNode extends ArrowNode {
         // and 8 is scaling up for small vectors ~1/100000000 units of force
         const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScale;
         if ( magnitudeLog > -forceScale + 1.5 ) {
-          this.oversizeType = OversizeType.BIGGER;
           // body.forceOffscaleProperty.value = true;
         }
         else if ( magnitudeLog < -forceScale - 0.4 ) {
-          this.oversizeType = OversizeType.SMALLER;
           body.forceOffscaleProperty.value = true;
         }
         else {
-          this.oversizeType = OversizeType.NONE;
           body.forceOffscaleProperty.value = false;
         }
         const finalTip = vector.times( 0.05 * Math.pow( 10, forceScale ) );

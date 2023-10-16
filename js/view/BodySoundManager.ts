@@ -59,9 +59,14 @@ export default class BodySoundManager {
 
   private readonly model: SolarSystemCommonModel;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document these 3 fields
+  // Sounds for the number of bodies spinner
   private readonly bodyNumberSoundClips: SoundClip[];
+
+  // Sounds for the removal of bodies (different for every resulting number of bodies after each removal)
   private readonly removalSoundClips: SoundClip[];
+
+  // Sound for the orbital metronome
+  // TODO: https://github.com/phetsims/my-solar-system/issues/249 migrate to Kepler's Laws
   private readonly metronomeSoundClips: SoundClip[];
 
   public constructor( model: SolarSystemCommonModel ) {

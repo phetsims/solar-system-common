@@ -59,8 +59,10 @@ export default class Body extends PhetioObject {
   public readonly forceOffscaleProperty: Property<boolean>;
 
   // User modified Properties
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document these
+  // Determines if the user has changes anything about the body
   public readonly userControlledProperty: Property<boolean>;
+
+  // Determines if the user has changed the position, velocity, or mass of the body
   public readonly userControlledPositionProperty: Property<boolean>;
   public readonly userControlledVelocityProperty: Property<boolean>;
   public readonly userControlledMassProperty: Property<boolean>;
@@ -70,7 +72,7 @@ export default class Body extends PhetioObject {
 
   public readonly colorProperty: TReadOnlyProperty<Color>;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Total sum of the distance of the drawn path. Not using the word 'length' to not confuse it with the points array length.
   //TODO https://github.com/phetsims/my-solar-system/issues/226 Does this field need to be stateful?
   private pathDistance = 0;
 

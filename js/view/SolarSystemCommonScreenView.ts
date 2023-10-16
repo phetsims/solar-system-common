@@ -48,17 +48,17 @@ export type SolarSystemCommonScreenViewOptions = SelfOptions & ScreenViewOptions
 
 export default class SolarSystemCommonScreenView<GenericVisibleProperties extends SolarSystemCommonVisibleProperties> extends ScreenView {
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document - I'm having to guess at what these layers are for.
-  protected readonly bodiesLayer = new Node();
-  protected readonly componentsLayer = new Node();
-  protected readonly interfaceLayer = new Node();
-  protected readonly topLayer = new Node();
-  protected readonly bottomLayer = new Node();
+  // Layers are used to set the z-index of elements in the sim, so that they are drawn in the correct order.
+  protected readonly bottomLayer = new Node(); // Background layer
+  protected readonly bodiesLayer = new Node(); // Layer for the bodies
+  protected readonly componentsLayer = new Node(); // Layer for the components, e.g. vectors and paths
+  protected readonly interfaceLayer = new Node(); // Mostly UI elements
+  protected readonly topLayer = new Node(); // Anything that should be drawn on top of everything else, e.g. measuring tape
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Object that handles the logic for most sounds in the sim
   protected readonly bodySoundManager: BodySoundManager;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document - for what?
+  // Transforms between model coordinates and view coordinates
   protected readonly modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>;
 
   // Derived from visibleBoundsProperty to keep the UI elements centered on narrow screens
@@ -69,7 +69,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
 
   protected readonly measuringTapeNode: MeasuringTapeNode;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Used with the &dev query parameter, shows the path that the body is constrained to when dragging
   private readonly dragDebugPath: Path;
 
   protected constructor(

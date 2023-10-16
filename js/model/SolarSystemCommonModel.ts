@@ -67,13 +67,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
   private startingBodyInfo: BodyInfo[] = [];
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // The engine that will run all the physical calculations, including body interactions and collisions
   public readonly engine: EngineType;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Indicates whether the user has interacted with the bodies of the simulation (changing position, mass or velocity)
   public readonly userControlledProperty: Property<boolean>;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Emitter that fires when the user interaction starts
   public readonly userInteractingEmitter = new Emitter();
 
   // Controls the velocity of time by scaling dt
@@ -93,33 +93,30 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Indicates whether the sim has been played at least once, used to disable the "This body is draggable" arrow node.
   public readonly hasPlayedProperty: Property<boolean>;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/226 Does this field need to be stateful?
+  // Boolean that determines if more path points are going to be stored for subsequent display in the paths
   public addingPathPoints = false;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Controls if the data panel shows all the numeric properties of the body
   //TODO https://github.com/phetsims/my-solar-system/issues/225 move to LabVisibleProperties
   public readonly moreDataProperty: BooleanProperty;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  public readonly realUnitsProperty: BooleanProperty;
-
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Numerical level of zoom selected, it's not directly the zoom applied but a number to be used in the calculation
   public readonly zoomLevelProperty: NumberProperty;
 
   // How much to scale the model-view transform when zooming in and out
   public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Emitters tha fire when a body is added or removed from the bodies list
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
   // Indicates whether any Body is far from the play area
   public readonly isAnyBodyEscapedProperty: TReadOnlyProperty<boolean>;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Indicates whether any Body has collided with another Body
   public readonly isAnyBodyCollidedProperty: Property<boolean>;
 
   // Power of 10 to which the force is scaled
@@ -237,9 +234,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.moreDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'moreDataProperty' )
     } );
-    this.realUnitsProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'realUnitsProperty' )
-    } );
 
     this.forceScaleProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
@@ -313,7 +307,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
     this.moreDataProperty.reset();
-    this.realUnitsProperty.reset();
     this.userControlledProperty.reset();
     this.forceScaleProperty.reset();
 

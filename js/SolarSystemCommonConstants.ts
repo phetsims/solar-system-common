@@ -15,7 +15,7 @@ import { PanelOptions } from '../../sun/js/Panel.js';
 
 export const METERS_PER_AU = 149597870700;
 export const SECONDS_PER_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
-export const G = 10000; //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+export const G = 10000; // gravitational constant within the model. This value is easier for computations than the real G.
 export const G_ACTUAL = 6.6743e-11; // gravitational constant
 
 // Multipliers that map from non-standard model units to standard units

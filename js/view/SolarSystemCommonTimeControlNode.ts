@@ -106,7 +106,10 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
     this.addChild( restartButton );
     this.playPauseStepButtons.pdomOrder = [ restartButton, ...( this.playPauseStepButtons.pdomOrder ? this.playPauseStepButtons.pdomOrder : [] ) ];
 
-    //TODO https://github.com/phetsims/my-solar-system/issues/213 this complicated computation deserves a comment
+    // speedRadioButtonGroup is positioned differently on KeplersLaws and MySolarSystem.
+    // Here, the position when it's under the play pause step buttons is set as follows:
+    // X: Aligned with the play pause step buttons
+    // Y: Below the play pause step buttons
     if ( !options.speedRadioButtonGroupOnRight ) {
       this.speedRadioButtonGroupParent!.center = this.getPlayPauseButtonCenter().plusXY(
         -0.9 * ( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS ),
