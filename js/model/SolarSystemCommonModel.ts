@@ -82,8 +82,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Transform between model's and view's times
   public readonly modelToViewTime: number;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
-  public readonly timeFormatter = new Map<TimeSpeed, number>( [
+  // Maps a TimeSpeed to a multiplier for dt
+  public readonly timeSpeedMap = new Map<TimeSpeed, number>( [
     [ TimeSpeed.FAST, 7 / 4 ],
     [ TimeSpeed.NORMAL, 1 ],
     [ TimeSpeed.SLOW, 1 / 4 ]
@@ -343,7 +343,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   public stepOnce( dt: number ): void {
     this.hasPlayedProperty.value = true;
-    let adjustedDT = dt * this.timeFormatter.get( this.timeSpeedProperty.value )! * this.timeScale;
+    let adjustedDT = dt * this.timeSpeedMap.get( this.timeSpeedProperty.value )! * this.timeScale;
 
     // Limit the number of steps to 50 per frame
     const count = Math.ceil( adjustedDT / 0.02 );
