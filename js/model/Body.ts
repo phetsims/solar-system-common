@@ -85,10 +85,10 @@ export default class Body extends PhetioObject {
     this.index = index;
 
     this.massProperty = new NumberProperty( bodyInfo.mass, {
+      units: 'kg',
       isValidValue: v => v > 0,
       hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
-      tandem: tandem.createTandem( 'massProperty' ),
-      phetioReadOnly: true
+      tandem: tandem.createTandem( 'massProperty' )
     } );
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
