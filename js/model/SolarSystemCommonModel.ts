@@ -110,10 +110,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
-  // Indicates whether any Body is far from the play area
+  // Indicates whether any Body has gone off-screen.
   public readonly isAnyBodyEscapedProperty: TReadOnlyProperty<boolean>;
 
-  // Indicates whether any Body has collided with another Body
+  // Indicates whether any Body has collided with another Body.
   public readonly isAnyBodyCollidedProperty: Property<boolean>;
 
   // Power of 10 to which the force is scaled
