@@ -317,12 +317,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
     this.moreDataProperty.reset();
-    this.userControlledProperty.reset();
     this.forceScaleProperty.reset();
 
     this.startingBodyInfoProperty.value = this.defaultBodyInfo;
-
     this.restart();
+
+    this.userControlledProperty.reset();
   }
 
   // Restart is for when the time controls are brought back to 0
