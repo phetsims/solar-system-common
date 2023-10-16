@@ -50,11 +50,11 @@ type SelfOptions = {
   dragVelocity?: number;
   shiftDragVelocity?: number;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Function to constrain the potential drag position of the body
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
   speedVisibleProperty?: TReadOnlyProperty<boolean>;
 
-  //TODO https://github.com/phetsims/my-solar-system/issues/213 document
+  // Options for the speed display rectangle
   rectangleOptions?: RectangleOptions;
   textOptions?: TextOptions;
   useCueingArrows?: boolean;
