@@ -65,7 +65,7 @@ const SolarSystemCommonConstants = {
   MASS_SLIDER_STEP: 25,
   GRID_SPACING: 100,
   VBOX_SPACING: 7,
-  DEFAULT_SOUND_OUTPUT_LEVEL: 0.1,
+  DEFAULT_SOUND_OUTPUT_LEVEL: 0.2,
 
   // Multipliers that map from non-standard model units to standard units
   POSITION_MULTIPLIER: POSITION_MULTIPLIER, // Transforms from model units to AU

@@ -49,11 +49,11 @@ export default class BodySoundManager {
     this.model = model;
 
     this.bodyNumberSoundClips = bodyNumberSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
     this.removalSoundClips = removalSounds.map( sound => new SoundClip( sound, {
-      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
     this.bodyNumberSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );

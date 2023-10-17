@@ -80,7 +80,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     super( body, transformProperty, velocityProperty, forceScaleProperty, options );
 
     const dragClipOptions = {
-      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     };
     this.grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
     this.releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );

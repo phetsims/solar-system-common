@@ -120,12 +120,12 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     this.body = body;
 
     this.soundClip = new SoundClip( bodySounds[ body.index - 1 ], {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL,
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL / 2,
       loop: true
     } );
 
     const dragClipOptions = {
-      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     };
     this.grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
     this.releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );

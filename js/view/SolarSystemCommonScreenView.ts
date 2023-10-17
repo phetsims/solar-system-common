@@ -150,7 +150,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     // UI Elements ===================================================================================================
 
     const dragClipOptions = {
-      initialOutputLevel: 2 * SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     };
     const grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
     const releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
