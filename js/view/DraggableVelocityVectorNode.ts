@@ -151,11 +151,11 @@ export default class DraggableVelocityVectorNode extends VectorNode {
 
     // Add the drag handler
     const start = () => {
-      body.userControlledVelocityProperty.value = true;
+      body.userIsControllingVelocityProperty.value = true;
       this.grabClip.play();
     };
     const end = () => {
-      body.userControlledVelocityProperty.value = false;
+      body.userIsControllingVelocityProperty.value = false;
       this.releaseClip.play();
     };
 
@@ -165,7 +165,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
         return options.mapPosition( point, circleOuterRadius );
       },
       positionProperty: vectorPositionProperty,
-      canStartPress: () => !body.userControlledVelocityProperty.value,
+      canStartPress: () => !body.userIsControllingVelocityProperty.value,
       start: () => {
         keyboardDragListener.interrupt();
         start();

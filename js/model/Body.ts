@@ -53,14 +53,13 @@ export default class Body extends PhetioObject {
   // True when the body force is off-scale
   public readonly forceOffscaleProperty: Property<boolean>;
 
-  // User modified Properties
-  // Determines if the user has changes anything about the body
+  // True when the user has changed anything about the Body
   public readonly userControlledProperty: Property<boolean>;
 
-  // Determines if the user has changed the position, velocity, or mass of the body
-  public readonly userControlledPositionProperty: Property<boolean>;
-  public readonly userControlledVelocityProperty: Property<boolean>;
-  public readonly userControlledMassProperty: Property<boolean>;
+  // True when the user is controlling the mass, position, or velocity of the Body
+  public readonly userIsControllingMassProperty: Property<boolean>;
+  public readonly userIsControllingPositionProperty: Property<boolean>;
+  public readonly userIsControllingVelocityProperty: Property<boolean>;
 
   // Array of points for drawing the path
   public readonly pathPoints: ObservableArray<Vector2>;
@@ -136,19 +135,22 @@ export default class Body extends PhetioObject {
 
     this.userControlledProperty = userControlledProperty;
 
-    this.userControlledPositionProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'userControlledPositionProperty' ),
-      phetioReadOnly: true
+    this.userIsControllingMassProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'userIsControllingMassProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'True when the user is controlling the body\'s mass'
     } );
 
-    this.userControlledVelocityProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'userControlledVelocityProperty' ),
-      phetioReadOnly: true
+    this.userIsControllingPositionProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'userIsControllingPositionProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'True when the user is controlling the body\'s position'
     } );
 
-    this.userControlledMassProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'userControlledMassProperty' ),
-      phetioReadOnly: true
+    this.userIsControllingVelocityProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'userIsControllingVelocityProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'True when the user is controlling the body\'s velocity'
     } );
 
     this.colorProperty = colorProperty;

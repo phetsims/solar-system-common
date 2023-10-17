@@ -164,11 +164,11 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     if ( options.draggable ) {
       const start = () => {
         body.clearPath();
-        body.userControlledPositionProperty.value = true;
+        body.userIsControllingPositionProperty.value = true;
         this.grabClip.play();
       };
       const end = () => {
-        body.userControlledPositionProperty.value = false;
+        body.userIsControllingPositionProperty.value = false;
         this.releaseClip.play();
       };
       const map = ( point: Vector2 ) => {
@@ -177,7 +177,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
       const bodyDragListener = new DragListener( {
         positionProperty: body.positionProperty,
-        canStartPress: () => !body.userControlledPositionProperty.value,
+        canStartPress: () => !body.userIsControllingPositionProperty.value,
         mapPosition: map,
         transform: modelViewTransformProperty,
         start: start,

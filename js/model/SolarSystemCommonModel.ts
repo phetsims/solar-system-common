@@ -196,9 +196,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       } );
 
       Multilink.lazyMultilink(
-        [ body.userControlledPositionProperty, body.userControlledVelocityProperty, body.userControlledMassProperty ],
-        ( userControlledPosition: boolean, userControlledVelocity: boolean, userControlledMass: boolean ) => {
-          if ( userControlledPosition || userControlledVelocity ) {
+        [ body.userIsControllingPositionProperty, body.userIsControllingVelocityProperty, body.userIsControllingMassProperty ],
+        ( userIsControllingPosition: boolean, userIsControllingVelocity: boolean, userIsControllingMass: boolean ) => {
+          if ( userIsControllingPosition || userIsControllingVelocity ) {
             this.isPlayingProperty.value = false;
           }
           if ( !this.isAnyBodyEscapedProperty.value ) {
