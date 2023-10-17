@@ -41,7 +41,7 @@ const BODY_COLORS = [
 
 // Type definitions
 type SelfOptions<EngineType extends Engine> = {
-  engineFactory: ( bodies: ObservableArray<Body> ) => EngineType;
+  engineFactory: ( bodies: Body[] ) => EngineType;
   zoomLevelRange: RangeWithValue;
   defaultBodyInfo: BodyInfo[];
   timeScale?: number;
