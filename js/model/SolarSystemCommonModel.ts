@@ -206,8 +206,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           }
           this.userInteractingEmitter.emit();
           this.userControlledProperty.value = true;
-        }
-      );
+        } );
     } );
 
     this.engine = options.engineFactory( this.activeBodies );
