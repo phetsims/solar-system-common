@@ -87,6 +87,7 @@ export default class Body extends PhetioObject {
 
     this.massProperty = new NumberProperty( bodyInfo.mass, {
       //TODO https://github.com/phetsims/my-solar-system/issues/208 units
+      //TODO https://github.com/phetsims/my-solar-system/issues/208 range - use Range(0.000001,300), see MASS_RANGE in ValuesColumnNode and presets in LabModel
       isValidValue: v => v > 0,
       hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
       tandem: tandem.createTandem( 'massProperty' )
