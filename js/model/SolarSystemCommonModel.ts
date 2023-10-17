@@ -117,7 +117,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly isAnyBodyCollidedProperty: Property<boolean>;
 
   // Power of 10 to which the force is scaled
-  public readonly forceScaleProperty: NumberProperty;
+  public readonly forceScalePowerProperty: NumberProperty;
 
   // Indicates whether any force arrow is currently off scale
   public readonly isAnyForceOffscaleProperty: TReadOnlyProperty<boolean>;
@@ -230,7 +230,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       tandem: timeTandem.createTandem( 'timeSpeedProperty' )
     } );
 
-    this.forceScaleProperty = new NumberProperty( 0, {
+    this.forceScalePowerProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 )
     } );
 
@@ -301,7 +301,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
-    this.forceScaleProperty.reset();
+    this.forceScalePowerProperty.reset();
 
     this.startingBodyInfoProperty.value = this.defaultBodyInfo;
     this.restart();

@@ -67,6 +67,8 @@ const SolarSystemCommonConstants = {
   VBOX_SPACING: 7,
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.2,
 
+  INITIAL_VECTOR_OFFSCALE: -1.3, // The initial offscale value for the gravity vector arrows
+
   // Multipliers that map from non-standard model units to standard units
   POSITION_MULTIPLIER: POSITION_MULTIPLIER, // Transforms from model units to AU
   VELOCITY_MULTIPLIER: VELOCITY_MULTIPLIER, // Transforms from model units to AU/yr then to km/s

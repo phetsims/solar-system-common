@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * GravityZoomControl is the control for scaling the size of the gravity arrows. It is a labeled slider.
+ * GravityScaleControl is the control for scaling the size of the gravity arrows. It is a labeled slider.
  *
  * @author Agustín Vallejo
  */
@@ -23,9 +23,9 @@ const TICK_MARK_OPTIONS: RichTextOptions = {
   fill: SolarSystemCommonColors.foregroundProperty
 };
 
-export default class GravityZoomControl extends HBox {
+export default class GravityScaleControl extends HBox {
 
-  public constructor( forceScaleProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
+  public constructor( forceScalePowerProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
 
     const zoomText = new Text( SolarSystemCommonStrings.zoomStringProperty, {
       font: new PhetFont( 16 ),
@@ -34,12 +34,12 @@ export default class GravityZoomControl extends HBox {
       maxWidth: 100
     } );
 
-    const rangeMin = forceScaleProperty.range.min;
-    const rangeMax = forceScaleProperty.range.max;
+    const rangeMin = forceScalePowerProperty.range.min;
+    const rangeMax = forceScalePowerProperty.range.max;
     const rangeStep = 2;
 
     // This slider controls the zoom level of the vector arrows
-    const slider = new HSlider( forceScaleProperty, forceScaleProperty.range, {
+    const slider = new HSlider( forceScalePowerProperty, forceScalePowerProperty.range, {
       trackSize: new Dimension2( 100, 4 ),
       thumbSize: new Dimension2( 14, 28 ),
       tickLabelSpacing: 3,
@@ -75,4 +75,4 @@ export default class GravityZoomControl extends HBox {
   }
 }
 
-solarSystemCommon.register( 'GravityZoomControl', GravityZoomControl );
+solarSystemCommon.register( 'GravityScaleControl', GravityScaleControl );

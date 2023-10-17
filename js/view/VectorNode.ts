@@ -18,8 +18,11 @@ import Multilink from '../../../axon/js/Multilink.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 
 type SelfOptions = {
-  //
+  // Normalization factor by which the vector will be scaled
   baseMagnitude?: number;
+
+  // Power by which the scaling is offset. i.e. 2 means the vector will be originally scaled by 10^2
+  scalingOffset?: number;
 };
 
 export type VectorNodeOptions = SelfOptions & ArrowNodeOptions;
@@ -33,14 +36,15 @@ export default class VectorNode extends ArrowNode {
     body: Body,
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     vectorProperty: TReadOnlyProperty<Vector2>,
-    forceScaleProperty: TReadOnlyProperty<number>,
+    forceScalePowerProperty: TReadOnlyProperty<number>,
     providedOptions?: VectorNodeOptions
   ) {
 
     const options = optionize<VectorNodeOptions, SelfOptions, ArrowNodeOptions>()( {
 
       // SelfOptions
-      baseMagnitude: 500,
+      baseMagnitude: 1500,
+      scalingOffset: 0,
 
       // ArrowNodeOptions
       isDisposable: false, // see https://github.com/phetsims/my-solar-system/issues/230
@@ -60,21 +64,16 @@ export default class VectorNode extends ArrowNode {
         return transform.modelToViewPosition( bodyPosition );
       } );
 
-    this.tipProperty = new DerivedProperty( [ this.tailProperty, vectorProperty, transformProperty, forceScaleProperty ],
-      ( tail, vector, transform, forceScale ) => {
-        // forceScale currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
+    this.tipProperty = new DerivedProperty( [ this.tailProperty, vectorProperty, transformProperty, forceScalePowerProperty ],
+      ( tail, vector, transform, forceScalePower ) => {
+        // forceScalePower currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
         // and 8 is scaling up for small vectors ~1/100000000 units of force
-        const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScale;
-        if ( magnitudeLog > -forceScale + 1.5 ) {
-          // body.forceOffscaleProperty.value = true;
-        }
-        else if ( magnitudeLog < -forceScale - 0.4 ) {
+        const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScalePower;
+        body.forceOffscaleProperty.value = false;
+        if ( magnitudeLog < -forceScalePower - 0.4 ) {
           body.forceOffscaleProperty.value = true;
         }
-        else {
-          body.forceOffscaleProperty.value = false;
-        }
-        const finalTip = vector.times( 0.05 * Math.pow( 10, forceScale ) );
+        const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset ) );
         if ( finalTip.magnitude > 1e4 ) {
           finalTip.setMagnitude( 1e4 );
           body.forceOffscaleProperty.value = false;

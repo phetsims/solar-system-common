@@ -73,11 +73,10 @@ export default class DraggableVelocityVectorNode extends VectorNode {
 
     const positionProperty = body.positionProperty;
     const velocityProperty = body.velocityProperty;
+    
+    const forceScalePowerProperty = new NumberProperty( 0 );
 
-    //TODO https://github.com/phetsims/my-solar-system/issues/235 why 1.3 ?
-    const forceScaleProperty = new NumberProperty( 1.3 );
-
-    super( body, transformProperty, velocityProperty, forceScaleProperty, options );
+    super( body, transformProperty, velocityProperty, forceScalePowerProperty, options );
 
     const dragClipOptions = {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
