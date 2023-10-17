@@ -86,7 +86,7 @@ export default class Body extends PhetioObject {
     this.index = index;
 
     this.massProperty = new NumberProperty( bodyInfo.mass, {
-      units: 'kg',
+      //TODO https://github.com/phetsims/my-solar-system/issues/208 units
       isValidValue: v => v > 0,
       hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
       tandem: tandem.createTandem( 'massProperty' )
