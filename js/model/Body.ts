@@ -53,9 +53,6 @@ export default class Body extends PhetioObject {
   // True when the body force is off-scale
   public readonly forceOffscaleProperty: Property<boolean>;
 
-  // True when the user has changed anything about the Body
-  public readonly userControlledProperty: Property<boolean>;
-
   // True when the user is controlling the mass, position, or velocity of the Body
   public readonly userIsControllingMassProperty: Property<boolean>;
   public readonly userIsControllingPositionProperty: Property<boolean>;
@@ -71,8 +68,7 @@ export default class Body extends PhetioObject {
   // This is a Property because it needs to be stateful for PhET-iO.
   private readonly pathDistanceProperty: NumberProperty;
 
-  public constructor( index: number, bodyInfo: BodyInfo, userControlledProperty: Property<boolean>,
-                      colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
+  public constructor( index: number, bodyInfo: BodyInfo, colorProperty: ReadOnlyProperty<Color>, tandem: Tandem ) {
     assert && assert( Number.isInteger( index ) && index >= 1, `invalid index: ${index}` );
 
     super( {
@@ -132,8 +128,6 @@ export default class Body extends PhetioObject {
       tandem: tandem.createTandem( 'forceOffscaleProperty' ),
       phetioReadOnly: true
     } );
-
-    this.userControlledProperty = userControlledProperty;
 
     this.userIsControllingMassProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'userIsControllingMassProperty' ),
