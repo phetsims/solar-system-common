@@ -200,11 +200,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     // Speed is the magnitude of velocity.
     const speedProperty = new DerivedProperty(
-      [ this.body.velocityProperty ],
-      ( velocity: Vector2 ) => Utils.toFixed(
-        velocity.magnitude * SolarSystemCommonConstants.VELOCITY_MULTIPLIER,
-        2
-      )
+      [ this.body.velocityProperty ], ( velocity: Vector2 ) => Utils.toFixed( velocity.magnitude, 2 )
     );
 
     // Format the speed with units.
