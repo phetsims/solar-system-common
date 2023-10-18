@@ -30,7 +30,6 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../axon/js/Property.js';
 import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
 import BodyInfo from './BodyInfo.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 // Constants
 const BODY_COLORS = [
@@ -47,7 +46,6 @@ type SelfOptions<EngineType extends Engine> = {
   defaultBodyInfo: BodyInfo[];
   timeScale?: number;
   modelToViewTime?: number;
-  hasVariableNumberOfActiveBodies?: boolean; // for conditionally instrumenting some PhET-iO elements
 };
 
 export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
@@ -128,8 +126,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 1,
-      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER,
-      hasVariableNumberOfActiveBodies: false
+      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
     this.userControlledProperty = new BooleanProperty( false, {
@@ -154,7 +151,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.saveStartingBodyInfo();
 
     this.activeBodies = createObservableArray( {
-      tandem: options.hasVariableNumberOfActiveBodies ? options.tandem.createTandem( 'activeBodies' ) : Tandem.OPT_OUT,
+      tandem: options.tandem.createTandem( 'activeBodies' ),
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
       phetioDocumentation: 'The set of Body elements that are currently active, and thus visible on the screen'
     } );
@@ -181,7 +178,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
       range: new Range( 1, this.bodies.length ),
-      tandem: options.hasVariableNumberOfActiveBodies ? options.tandem.createTandem( 'numberOfActiveBodiesProperty' ) : Tandem.OPT_OUT
+      tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
     } );
 
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
