@@ -63,7 +63,7 @@ const SolarSystemCommonConstants = {
   NUMBER_DISPLAY_FONT: new PhetFont( 16 ),
 
   MASS_SLIDER_STEP: 25,
-  GRID_SPACING: 100,
+  GRID_SPACING: 1,
   VBOX_SPACING: 7,
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.2,
 

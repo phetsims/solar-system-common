@@ -96,7 +96,7 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
-    this.velocityProperty = new Vector2Property( bodyInfo.velocity, {
+    this.velocityProperty = new Vector2Property( bodyInfo.velocity.multiplyScalar( 0.01 ), {
       //TODO https://github.com/phetsims/my-solar-system/issues/244 units
       tandem: tandem.createTandem( 'velocityProperty' ),
       phetioReadOnly: true
@@ -234,8 +234,8 @@ export default class Body extends PhetioObject {
   }
 
   public static massToRadius( mass: number ): number {
-    const minRadius = 3;
-    return Math.max( minRadius, 2.3 * Math.pow( mass, 1 / 3 ) );
+    const minRadius = 0.03;
+    return Math.max( minRadius, 0.023 * Math.pow( mass, 1 / 3 ) );
   }
 
   /**
