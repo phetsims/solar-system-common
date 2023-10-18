@@ -16,8 +16,12 @@ import optionize from '../../../phet-core/js/optionize.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 type SelfOptions = {
+  // Boolean to determine if the vector will be checked for offscaling or not
+  checkForOffscaling?: boolean;
+
   // Normalization factor by which the vector will be scaled
   baseMagnitude?: number;
 
@@ -29,8 +33,8 @@ export type VectorNodeOptions = SelfOptions & ArrowNodeOptions;
 
 export default class VectorNode extends ArrowNode {
 
-  protected readonly tipProperty: TReadOnlyProperty<Vector2>;
-  protected readonly tailProperty: TReadOnlyProperty<Vector2>;
+  protected readonly tipPositionProperty: TReadOnlyProperty<Vector2>;
+  protected readonly tailPositionProperty: TReadOnlyProperty<Vector2>;
 
   public constructor(
     body: Body,
@@ -43,6 +47,7 @@ export default class VectorNode extends ArrowNode {
     const options = optionize<VectorNodeOptions, SelfOptions, ArrowNodeOptions>()( {
 
       // SelfOptions
+      checkForOffscaling: true,
       baseMagnitude: 1500,
       scalingOffset: 0,
 
@@ -59,30 +64,35 @@ export default class VectorNode extends ArrowNode {
 
     super( 0, 0, 0, 0, options );
 
-    this.tailProperty = new DerivedProperty( [ body.positionProperty, transformProperty ],
+    this.tailPositionProperty = new DerivedProperty( [ body.positionProperty, transformProperty ],
       ( bodyPosition, transform ) => {
         return transform.modelToViewPosition( bodyPosition );
       } );
 
-    this.tipProperty = new DerivedProperty( [ this.tailProperty, vectorProperty, transformProperty, forceScalePowerProperty ],
+    this.tipPositionProperty = new DerivedProperty( [ this.tailPositionProperty, vectorProperty, transformProperty, forceScalePowerProperty ],
       ( tail, vector, transform, forceScalePower ) => {
-        // forceScalePower currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
-        // and 8 is scaling up for small vectors ~1/100000000 units of force
-        const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScalePower;
-        body.forceOffscaleProperty.value = false;
-        if ( magnitudeLog < -forceScalePower - 0.4 ) {
-          body.forceOffscaleProperty.value = true;
+        if ( options.checkForOffscaling ) {
+          // forceScalePower currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
+          // and 8 is scaling up for small vectors ~1/100000000 units of force
+          const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScalePower;
+          body.forceOffscaleProperty.value = false;
+          if ( magnitudeLog < -forceScalePower - 0.4 ) {
+            body.forceOffscaleProperty.value = true;
+          }
         }
-        const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset - 1 ) );
+        const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset ) );
         if ( finalTip.magnitude > 1e4 ) {
           finalTip.setMagnitude( 1e4 );
           body.forceOffscaleProperty.value = false;
         }
+
+        // Scaling the tip position for it to properly fit in the view
+        finalTip.multiplyScalar( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER );
         const finalPosition = transform.modelToViewDelta( finalTip ).plus( tail );
         return finalPosition;
       } );
 
-    Multilink.multilink( [ this.tailProperty, this.tipProperty ], ( tail, tip ) => {
+    Multilink.multilink( [ this.tailPositionProperty, this.tipPositionProperty ], ( tail, tip ) => {
       this.setTailAndTip( tail.x, tail.y, tip.x, tip.y );
       this.localBounds = Bounds2.point( tail ).addPoint( tip ).dilated( 10 ); // must set because boundsMethod: 'none'.
     } );

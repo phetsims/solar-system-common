@@ -67,6 +67,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       fill: SolarSystemCommonColors.velocityColorProperty,
 
       // VectorNodeOptions
+      checkForOffscaling: false,
       isDisposable: false, // see https://github.com/phetsims/my-solar-system/issues/230
       phetioInputEnabledPropertyInstrumented: true // see https://github.com/phetsims/my-solar-system/issues/231
     }, providedOptions );
@@ -120,7 +121,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       fill: Color.gray,
       maxWidth: 25
     } );
-    this.tipProperty.link( tip => {
+    this.tipPositionProperty.link( tip => {
       labelText.center = tip;
       grabArea.center = tip;
     } );
@@ -129,24 +130,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     this.addChild( labelText );
 
     // This represents the model coordinates of where the 'V' circle appears
-    const vectorPositionProperty = new Vector2Property( velocityProperty.value.plus( positionProperty.value ) );
-    vectorPositionProperty.lazyLink( vectorPosition => {
-      const newVelocity = vectorPosition.subtract( positionProperty.value );
-      if ( newVelocity.magnitude < options.minimumMagnitude ) {
-        if ( options.snapToZero ) {
-          velocityProperty.value = new Vector2( 0, 0 );
-        }
-        else {
-          velocityProperty.value = newVelocity.withMagnitude( options.minimumMagnitude );
-        }
-      }
-      else if ( options.maxMagnitudeProperty && newVelocity.magnitude > options.maxMagnitudeProperty.value ) {
-        velocityProperty.value = newVelocity.withMagnitude( options.maxMagnitudeProperty.value );
-      }
-      else {
-        velocityProperty.value = newVelocity;
-      }
-    } );
+    const velocityCirclePositionProperty = new Vector2Property( this.tipPositionProperty.value );
 
     // Add the drag handler
     const start = () => {
@@ -163,7 +147,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       mapPosition: point => {
         return options.mapPosition( point, circleOuterRadius );
       },
-      positionProperty: vectorPositionProperty,
+      positionProperty: velocityCirclePositionProperty,
       canStartPress: () => !body.userIsControllingVelocityProperty.value,
       start: () => {
         keyboardDragListener.interrupt();
@@ -196,6 +180,25 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     this.inputEnabledProperty.link( inputEnabled => {
       grabArea.visible = inputEnabled;
       labelText.visible = inputEnabled;
+    } );
+
+    velocityCirclePositionProperty.lazyLink( velocityCirclePosition => {
+      // The velocity is obtained by scaling down the view velocity arrow by the VELOCITY_TO_VIEW_MULTIPLIER
+      const newVelocity = velocityCirclePosition.minus( positionProperty.value ).dividedScalar( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER );
+
+      if ( newVelocity.magnitude < options.minimumMagnitude ) {
+        if ( options.snapToZero ) {
+          newVelocity.setMagnitude( 0 );
+        }
+        else {
+          newVelocity.setMagnitude( options.minimumMagnitude );
+        }
+      }
+      else if ( options.maxMagnitudeProperty && newVelocity.magnitude > options.maxMagnitudeProperty.value ) {
+        newVelocity.setMagnitude( options.maxMagnitudeProperty.value );
+      }
+
+      velocityProperty.value = newVelocity;
     } );
   }
 }
