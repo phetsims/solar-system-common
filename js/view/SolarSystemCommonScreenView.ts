@@ -163,6 +163,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         return { name: AUString, multiplier: 0.01 };
       } );
 
+    // TODO: Set the proper scaling for the MeasuringTapeNode, see https://github.com/phetsims/my-solar-system/issues/252
     // Add the MeasuringTapeNode
     this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
       visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,

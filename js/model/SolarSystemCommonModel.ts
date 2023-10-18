@@ -125,7 +125,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
-      timeScale: 1,
+      timeScale: 0.05,
       modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
