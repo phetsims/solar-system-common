@@ -12,6 +12,7 @@ import solarSystemCommon from './solarSystemCommon.js';
 import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, TLayoutOptions } from '../../scenery/js/imports.js';
 import { combineOptions } from '../../phet-core/js/optionize.js';
 import { PanelOptions } from '../../sun/js/Panel.js';
+import Vector2 from '../../dot/js/Vector2.js';
 
 export const METERS_PER_AU = 149597870700;
 export const SECONDS_PER_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
@@ -24,9 +25,20 @@ export const MASS_MULTIPLIER = 1e28;
 export const TIME_MULTIPLIER = Math.pow( POSITION_MULTIPLIER, 3 / 2 ) * Math.sqrt( G ) * Math.pow( METERS_PER_AU, 3 / 2 ) / ( Math.sqrt( G_ACTUAL ) * Math.sqrt( MASS_MULTIPLIER ) * SECONDS_PER_YEAR );
 export const VELOCITY_MULTIPLIER = POSITION_MULTIPLIER / TIME_MULTIPLIER * METERS_PER_AU / SECONDS_PER_YEAR / 1000;
 
+console.log( VELOCITY_MULTIPLIER );
+
+const allVectors = [
+  new Vector2( 0, 81.6 )
+];
+
+const rounding = 10000;
+console.log( allVectors.map( ( object, index ) => {
+  return object.timesScalar( VELOCITY_MULTIPLIER * rounding ).roundedSymmetric().dividedScalar( rounding );
+} ) );
+
 const COLUMN_TITLE_OPTIONS: RichTextOptions = {
   font: new PhetFont( 16 ),
-    fill: SolarSystemCommonColors.foregroundProperty
+  fill: SolarSystemCommonColors.foregroundProperty
 };
 
 const HSEPARATOR_OPTIONS: HSeparatorOptions = {
@@ -77,3 +89,4 @@ const SolarSystemCommonConstants = {
 
 solarSystemCommon.register( 'SolarSystemCommonConstants', SolarSystemCommonConstants );
 export default SolarSystemCommonConstants;
+

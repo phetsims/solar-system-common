@@ -73,7 +73,7 @@ export default class VectorNode extends ArrowNode {
         if ( magnitudeLog < -forceScalePower - 0.4 ) {
           body.forceOffscaleProperty.value = true;
         }
-        const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset ) );
+        const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset - 1 ) );
         if ( finalTip.magnitude > 1e4 ) {
           finalTip.setMagnitude( 1e4 );
           body.forceOffscaleProperty.value = false;

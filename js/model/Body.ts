@@ -96,7 +96,7 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
-    this.velocityProperty = new Vector2Property( bodyInfo.velocity.multiplyScalar( 0.01 ), {
+    this.velocityProperty = new Vector2Property( bodyInfo.velocity, {
       //TODO https://github.com/phetsims/my-solar-system/issues/244 units
       tandem: tandem.createTandem( 'velocityProperty' ),
       phetioReadOnly: true
