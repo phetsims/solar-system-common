@@ -80,6 +80,7 @@ export default class Body extends PhetioObject {
 
     this.index = index;
 
+    //TODO https://github.com/phetsims/my-solar-system/issues/237 should be phetioReadOnly:true for keplers-law
     this.massProperty = new NumberProperty( bodyInfo.mass, {
       //TODO https://github.com/phetsims/my-solar-system/issues/208 units
       //TODO https://github.com/phetsims/my-solar-system/issues/208 range - use Range(0.000001,300), see MASS_RANGE in ValuesColumnNode and presets in LabModel
@@ -114,6 +115,7 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
+    //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-law
     this.isActiveProperty = new BooleanProperty( bodyInfo.isActive, {
       tandem: tandem.createTandem( 'isActiveProperty' ),
       phetioReadOnly: true

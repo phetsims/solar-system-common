@@ -106,7 +106,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // How much to scale the model-view transform when zooming in and out
   public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
-  // Emitters tha fire when a body is added or removed from the bodies list
+  // Emitters that fire when a body is added or removed from activeBodies
   public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
   public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
 
@@ -150,6 +150,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
     this.saveStartingBodyInfo();
 
+    //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-laws
     this.activeBodies = createObservableArray( {
       tandem: options.tandem.createTandem( 'activeBodies' ),
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
@@ -175,6 +176,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       }
     } );
 
+    //TODO https://github.com/phetsims/my-solar-system/issues/237 should be phetioReadOnly:false only for Lab screen
+    //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-laws
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
       range: new Range( 1, this.bodies.length ),
