@@ -40,7 +40,7 @@ export default class CueingArrowsNode extends Path {
 
     }, providedOptions );
 
-    super( createArrowsShape( options.bodyRadius + 5, options.length ), options );
+    super( createArrowsShape( options.bodyRadius + 15, options.length ), options );
 
     this.localBoundsProperty.link( localBounds => {
       this.touchArea = localBounds.dilated( 5 );
