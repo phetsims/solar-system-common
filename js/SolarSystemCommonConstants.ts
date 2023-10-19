@@ -67,7 +67,9 @@ const SolarSystemCommonConstants = {
   VBOX_SPACING: 7,
   DEFAULT_SOUND_OUTPUT_LEVEL: 0.2,
 
-    INITIAL_VECTOR_OFFSCALE: -6.3, // The initial offscale value for the gravity vector arrows
+  INITIAL_VECTOR_OFFSCALE: -6.3, // The initial offscale value for the gravity vector arrows
+
+  MAX_PATH_DISTANCE: 20, // Maximum distance of the drawn path behind the body
 
   // Multipliers that map from non-standard model units to standard units
   POSITION_MULTIPLIER: POSITION_MULTIPLIER, // Transforms from model units to AU

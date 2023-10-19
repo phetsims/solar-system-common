@@ -23,8 +23,7 @@ import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import IOType from '../../../tandem/js/types/IOType.js';
 import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
 import BodyInfo from './BodyInfo.js';
-
-const MAX_PATH_LENGTH = 2000;
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 
@@ -194,7 +193,7 @@ export default class Body extends PhetioObject {
       }
 
       // Remove points from the path as the path gets too long
-      while ( this.pathDistanceProperty.value > MAX_PATH_LENGTH ) {
+      while ( this.pathDistanceProperty.value > SolarSystemCommonConstants.MAX_PATH_DISTANCE ) {
         this.pathDistanceProperty.value -= this.pathPoints[ 1 ].distance( this.pathPoints[ 0 ] );
         this.pathPoints.shift();
       }
