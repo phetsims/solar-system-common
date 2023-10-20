@@ -160,7 +160,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     // Measuring tape units must update dynamically when AUStringProperty changes.
     const measuringTapeUnitsProperty = new DerivedProperty( [ SolarSystemCommonStrings.units.AUStringProperty ],
       AUString => {
-        return { name: AUString, multiplier: 0.01 };
+        return { name: AUString, multiplier: 1 };
       } );
 
     // TODO: Set the proper scaling for the MeasuringTapeNode, see https://github.com/phetsims/my-solar-system/issues/252
