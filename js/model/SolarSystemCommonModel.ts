@@ -126,7 +126,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
       timeScale: 0.05,
-      modelToViewTime: SolarSystemCommonConstants.TIME_MULTIPLIER
+      modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
     this.userControlledProperty = new BooleanProperty( false, {
