@@ -168,7 +168,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
       visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,
       textColor: 'black',
-      textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent red
+      textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent white
       textBackgroundXMargin: 10,
       textBackgroundYMargin: 3,
       textBackgroundCornerRadius: 5,
