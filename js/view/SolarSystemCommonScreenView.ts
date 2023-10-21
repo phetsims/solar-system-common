@@ -166,14 +166,14 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     // TODO: Set the proper scaling for the MeasuringTapeNode, see https://github.com/phetsims/my-solar-system/issues/252
     // Add the MeasuringTapeNode
     this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
+      basePositionProperty: new Vector2Property( new Vector2( 0, 100 ) ),
+      tipPositionProperty: new Vector2Property( new Vector2( 100, 100 ) ),
       visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,
       textColor: 'black',
       textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent white
       textBackgroundXMargin: 10,
       textBackgroundYMargin: 3,
       textBackgroundCornerRadius: 5,
-      basePositionProperty: new Vector2Property( new Vector2( 0, 100 ) ),
-      tipPositionProperty: new Vector2Property( new Vector2( 100, 100 ) ),
       significantFigures: 2,
       baseDragStarted: () => grabClip.play(),
       baseDragEnded: () => releaseClip.play(),
