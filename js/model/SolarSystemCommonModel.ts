@@ -146,7 +146,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.startingBodyInfoProperty = new Property<BodyInfo[]>( [], {
       tandem: options.tandem.createTandem( 'startingBodyInfoProperty' ),
       phetioReadOnly: true,
-      phetioValueType: ArrayIO( BodyInfo.BodyInfoIO )
+      phetioValueType: ArrayIO( BodyInfo.BodyInfoIO ),
+      phetioDocumentation: 'For internal use only'
     } );
     this.saveStartingBodyInfo();
 
@@ -224,15 +225,19 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     // Time Properties, grouped under a parent tandem
     const timeTandem = options.tandem.createTandem( 'time' );
     this.timeProperty = new NumberProperty( 0, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/208 units
+      units: 'years',
       tandem: timeTandem.createTandem( 'timeProperty' ),
       phetioReadOnly: true
     } );
+
     this.isPlayingProperty = new BooleanProperty( false, {
-      tandem: timeTandem.createTandem( 'isPlayingProperty' )
+      tandem: timeTandem.createTandem( 'isPlayingProperty' ),
+      phetioDocumentation: 'True when the clock is running'
     } );
+
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
-      tandem: timeTandem.createTandem( 'timeSpeedProperty' )
+      tandem: timeTandem.createTandem( 'timeSpeedProperty' ),
+      phetioDocumentation: 'Controls how fast the simulation\'s internal clock runs'
     } );
 
     this.gravityForceScalePowerProperty = new NumberProperty( 0, {
@@ -242,7 +247,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
       range: options.zoomLevelRange,
       numberType: 'Integer',
-      tandem: options.tandem.createTandem( 'zoomLevelProperty' )
+      tandem: options.tandem.createTandem( 'zoomLevelProperty' ),
+      phetioDocumentation: 'Integer index that is used to compute how the view is scaled. Larger values are more zoomed in.'
     } );
 
     // TODO: Set the proper scaling for measuringTape, see https://github.com/phetsims/my-solar-system/issues/252
