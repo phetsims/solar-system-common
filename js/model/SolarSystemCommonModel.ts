@@ -161,6 +161,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
       phetioReadOnly: true
+      //TODO https://github.com/phetsims/my-solar-system/issues/237 phetioDocumentation
     } );
 
     // We want to synchronize bodies and activeBodies, so that activeBodies is effectively bodies.filter( isActive )
@@ -241,7 +242,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
 
     this.gravityForceScalePowerProperty = new NumberProperty( 0, {
-      range: new Range( -2, 8 )
+      range: new Range( -2, 8 ),
+      tandem: options.tandem.createTandem( 'gravityForceScalePowerProperty' )
+      //TODO https://github.com/phetsims/my-solar-system/issues/237 phetioDocumentation
     } );
 
     this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
