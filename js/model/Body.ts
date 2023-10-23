@@ -122,7 +122,6 @@ export default class Body extends PhetioObject {
       phetioDocumentation: 'This value is not in standard units and is for internal use only.'
     } );
 
-    //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-law
     this.isActiveProperty = new BooleanProperty( bodyInfo.isActive, {
       tandem: tandem.createTandem( 'isActiveProperty' ),
       phetioReadOnly: true
