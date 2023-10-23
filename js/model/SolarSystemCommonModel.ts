@@ -108,7 +108,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
   // Indicates whether any Body has gone off-screen.
-  public readonly isAnyBodyEscapedProperty: TReadOnlyProperty<boolean>;
+  public readonly bodiesAreReturnableProperty: TReadOnlyProperty<boolean>;
 
   // Indicates whether any Body has collided with another Body.
   public readonly isAnyBodyCollidedProperty: Property<boolean>;
@@ -190,9 +190,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
     } );
 
-    this.isAnyBodyEscapedProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.escapedProperty ), this.isAnyBodyCollidedProperty ] );
+    this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
 
-    this.isAnyForceOffscaleProperty = DerivedProperty.or( this.bodies.map( body => body.forceOffscaleProperty ) );
+    this.isAnyForceOffscaleProperty = DerivedProperty.or( this.bodies.map( body => body.gravityForceOffscaleProperty ) );
 
     this.bodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
@@ -205,7 +205,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           if ( userIsControllingPosition || userIsControllingVelocity ) {
             this.isPlayingProperty.value = false;
           }
-          if ( !this.isAnyBodyEscapedProperty.value ) {
+          if ( !this.bodiesAreReturnableProperty.value ) {
             this.saveStartingBodyInfo();
           }
           this.userInteractingEmitter.emit();

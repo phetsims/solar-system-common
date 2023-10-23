@@ -38,7 +38,7 @@ export default class Body extends PhetioObject {
   public readonly positionProperty: Property<Vector2>;
   public readonly velocityProperty: Property<Vector2>;
   public readonly accelerationProperty: Property<Vector2>;
-  public readonly forceProperty: Property<Vector2>;
+  public readonly gravityForceProperty: Property<Vector2>;
 
   // Collision handling
   public readonly collidedEmitter = new TinyEmitter();
@@ -47,10 +47,10 @@ export default class Body extends PhetioObject {
   public readonly isActiveProperty: Property<boolean>;
 
   // True when the body goes off-screen
-  public readonly escapedProperty: Property<boolean>;
+  public readonly isOffscreenProperty: Property<boolean>;
 
   // True when the body force is off-scale
-  public readonly forceOffscaleProperty: Property<boolean>;
+  public readonly gravityForceOffscaleProperty: Property<boolean>;
 
   // True when the user is controlling the mass, position, or velocity of the Body
   public readonly userIsControllingMassProperty: Property<boolean>;
@@ -79,7 +79,6 @@ export default class Body extends PhetioObject {
 
     this.index = index;
 
-    //TODO https://github.com/phetsims/my-solar-system/issues/237 should be phetioReadOnly:true for keplers-law
     this.massProperty = new NumberProperty( bodyInfo.mass, {
       //TODO https://github.com/phetsims/my-solar-system/issues/208 range - use Range(0.000001,300), see MASS_RANGE in ValuesColumnNode and presets in LabModel
       isValidValue: mass => ( mass > 0 ),
@@ -106,13 +105,13 @@ export default class Body extends PhetioObject {
     this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ), {
       tandem: tandem.createTandem( 'accelerationProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'For internal use only'
+      phetioDocumentation: 'This value is not in standard units and is for internal use only.'
     } );
 
-    this.forceProperty = new Vector2Property( new Vector2( 0, 0 ), {
-      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
-      tandem: tandem.createTandem( 'forceProperty' ),
-      phetioReadOnly: true
+    this.gravityForceProperty = new Vector2Property( new Vector2( 0, 0 ), {
+      tandem: tandem.createTandem( 'gravityForceProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This value is not in standard units and is for internal use only.'
     } );
 
     //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-law
@@ -121,13 +120,13 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
-    this.escapedProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'escapedProperty' ),
+    this.isOffscreenProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'isOffscreenProperty' ),
       phetioReadOnly: true
     } );
 
-    this.forceOffscaleProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'forceOffscaleProperty' ),
+    this.gravityForceOffscaleProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'gravityForceOffscaleProperty' ),
       phetioReadOnly: true
     } );
 
@@ -171,9 +170,9 @@ export default class Body extends PhetioObject {
     this.positionProperty.reset();
     this.velocityProperty.reset();
     this.accelerationProperty.reset();
-    this.forceProperty.reset();
-    this.escapedProperty.reset();
-    this.forceOffscaleProperty.reset();
+    this.gravityForceProperty.reset();
+    this.isOffscreenProperty.reset();
+    this.gravityForceOffscaleProperty.reset();
     this.clearPath();
   }
 

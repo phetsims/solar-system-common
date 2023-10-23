@@ -75,15 +75,15 @@ export default class VectorNode extends ArrowNode {
           // forceScalePower currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
           // and 8 is scaling up for small vectors ~1/100000000 units of force
           const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScalePower;
-          body.forceOffscaleProperty.value = false;
+          body.gravityForceOffscaleProperty.value = false;
           if ( magnitudeLog < -forceScalePower - 0.4 ) {
-            body.forceOffscaleProperty.value = true;
+            body.gravityForceOffscaleProperty.value = true;
           }
         }
         const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset ) );
         if ( finalTip.magnitude > 1e4 ) {
           finalTip.setMagnitude( 1e4 );
-          body.forceOffscaleProperty.value = false;
+          body.gravityForceOffscaleProperty.value = false;
         }
 
         // Scaling the tip position for it to properly fit in the view
