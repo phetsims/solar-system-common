@@ -33,7 +33,6 @@ export default class Body extends PhetioObject {
   // Index of the body, 1-based to correspond to the UI and PhET-iO.
   public readonly index: number;
 
-  // Unitless body quantities (physical properties)
   public readonly massProperty: NumberProperty;
   public readonly radiusProperty: TReadOnlyProperty<number>;
   public readonly positionProperty: Property<Vector2>;
