@@ -161,6 +161,7 @@ export default class Body extends PhetioObject {
     // Data for rendering the path
     this.pathPoints = createObservableArray( {
       tandem: tandem.createTandem( 'pathPoints' ),
+      phetioReadOnly: true,
       phetioType: createObservableArray.ObservableArrayIO( Vector2.Vector2IO ),
       phetioDocumentation: 'The set of points used to draw the body\'s path'
     } );
