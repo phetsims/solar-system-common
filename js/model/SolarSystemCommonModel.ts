@@ -30,6 +30,8 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../axon/js/Property.js';
 import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
 import BodyInfo from './BodyInfo.js';
+import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
+import Vector2 from '../../../dot/js/Vector2.js';
 
 // Constants
 const BODY_COLORS = [
@@ -121,6 +123,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   // Indicates whether any force arrow is currently off scale
   public readonly isAnyForceOffscaleProperty: TReadOnlyProperty<boolean>;
+
+  public readonly measuringTape: SolarSystemCommonMeasuringTape;
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
@@ -242,6 +246,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       numberType: 'Integer',
       tandem: options.tandem.createTandem( 'zoomLevelProperty' )
     } );
+
+    // TODO: Set the proper scaling for measuringTape, see https://github.com/phetsims/my-solar-system/issues/252
+    this.measuringTape = new SolarSystemCommonMeasuringTape( {
+      basePosition: new Vector2( 0, 100 ),
+      tipPosition: new Vector2( 0, 100 ),
+      tandem: options.tandem.createTandem( 'measuringTape' )
+    } );
   }
 
   public saveStartingBodyInfo(): void {
@@ -305,6 +316,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
     this.forceScalePowerProperty.reset();
+    this.measuringTape.reset();
 
     this.startingBodyInfoProperty.value = this.defaultBodyInfo;
     this.restart();

@@ -19,7 +19,6 @@ import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSyste
 import optionize from '../../../phet-core/js/optionize.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
-import Vector2Property from '../../../dot/js/Vector2Property.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
@@ -163,11 +162,10 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         return { name: AUString, multiplier: 1 };
       } );
 
-    // TODO: Set the proper scaling for the MeasuringTapeNode, see https://github.com/phetsims/my-solar-system/issues/252
     // Add the MeasuringTapeNode
     this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
-      basePositionProperty: new Vector2Property( new Vector2( 0, 100 ) ),
-      tipPositionProperty: new Vector2Property( new Vector2( 100, 100 ) ),
+      basePositionProperty: model.measuringTape.basePositionProperty,
+      tipPositionProperty: model.measuringTape.tipPositionProperty,
       visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,
       textColor: 'black',
       textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent white
