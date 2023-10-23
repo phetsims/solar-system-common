@@ -81,11 +81,11 @@ export default class Body extends PhetioObject {
 
     //TODO https://github.com/phetsims/my-solar-system/issues/237 should be phetioReadOnly:true for keplers-law
     this.massProperty = new NumberProperty( bodyInfo.mass, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/208 units
       //TODO https://github.com/phetsims/my-solar-system/issues/208 range - use Range(0.000001,300), see MASS_RANGE in ValuesColumnNode and presets in LabModel
       isValidValue: mass => ( mass > 0 ),
       hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
-      tandem: tandem.createTandem( 'massProperty' )
+      tandem: tandem.createTandem( 'massProperty' ),
+      phetioDocumentation: 'This is the value of N, where mass is N x 10<sup>28</sup> kg.'
     } );
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
