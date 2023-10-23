@@ -85,27 +85,28 @@ export default class Body extends PhetioObject {
       isValidValue: mass => ( mass > 0 ),
       hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
       tandem: tandem.createTandem( 'massProperty' ),
-      phetioDocumentation: 'This is the value of N, where mass is N x 10<sup>28</sup> kg.'
+      phetioDocumentation: 'This is the value of N, where mass is N x 10<sup>28</sup> kg.',
+      phetioFeatured: true
     } );
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
     this.positionProperty = new Vector2Property( bodyInfo.position, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
+      units: 'AU',
       tandem: tandem.createTandem( 'positionProperty' ),
-      phetioReadOnly: true
+      phetioFeatured: true
     } );
 
     this.velocityProperty = new Vector2Property( bodyInfo.velocity, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
+      units: 'km/s',
       tandem: tandem.createTandem( 'velocityProperty' ),
-      phetioReadOnly: true
+      phetioFeatured: true
     } );
 
     this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ), {
-      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
       tandem: tandem.createTandem( 'accelerationProperty' ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioDocumentation: 'For internal use only'
     } );
 
     this.forceProperty = new Vector2Property( new Vector2( 0, 0 ), {
@@ -159,7 +160,7 @@ export default class Body extends PhetioObject {
     } );
 
     this.pathDistanceProperty = new NumberProperty( 0, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/208 units?
+      units: 'AU',
       tandem: tandem.createTandem( 'pathDistanceProperty' ),
       phetioReadOnly: true
     } );
