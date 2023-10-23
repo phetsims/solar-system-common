@@ -49,7 +49,7 @@ export default class Body extends PhetioObject {
   // True when the body goes off-screen
   public readonly isOffscreenProperty: Property<boolean>;
 
-  // True when the body force is off-scale
+  // True when the body gravity force is off-scale
   public readonly gravityForceOffscaleProperty: Property<boolean>;
 
   // True when the user is controlling the mass, position, or velocity of the Body

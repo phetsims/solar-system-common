@@ -25,7 +25,7 @@ const TICK_MARK_OPTIONS: RichTextOptions = {
 
 export default class GravityZoomControl extends HBox {
 
-  public constructor( forceScalePowerProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
+  public constructor( gravityForceScalePowerProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
 
     const zoomText = new Text( SolarSystemCommonStrings.zoomStringProperty, {
       font: new PhetFont( 16 ),
@@ -34,12 +34,12 @@ export default class GravityZoomControl extends HBox {
       maxWidth: 100
     } );
 
-    const rangeMin = forceScalePowerProperty.range.min;
-    const rangeMax = forceScalePowerProperty.range.max;
+    const rangeMin = gravityForceScalePowerProperty.range.min;
+    const rangeMax = gravityForceScalePowerProperty.range.max;
     const rangeStep = 2;
 
     // This slider controls the zoom level of the vector arrows
-    const slider = new HSlider( forceScalePowerProperty, forceScalePowerProperty.range, {
+    const slider = new HSlider( gravityForceScalePowerProperty, gravityForceScalePowerProperty.range, {
       trackSize: new Dimension2( 100, 4 ),
       thumbSize: new Dimension2( 14, 28 ),
       tickLabelSpacing: 3,

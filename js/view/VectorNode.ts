@@ -40,7 +40,7 @@ export default class VectorNode extends ArrowNode {
     body: Body,
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     vectorProperty: TReadOnlyProperty<Vector2>,
-    forceScalePowerProperty: TReadOnlyProperty<number>,
+    vectorScalePowerProperty: TReadOnlyProperty<number>,
     providedOptions?: VectorNodeOptions
   ) {
 
@@ -69,9 +69,10 @@ export default class VectorNode extends ArrowNode {
         return transform.modelToViewPosition( bodyPosition );
       } );
 
-    this.tipPositionProperty = new DerivedProperty( [ this.tailPositionProperty, vectorProperty, transformProperty, forceScalePowerProperty ],
+    this.tipPositionProperty = new DerivedProperty( [ this.tailPositionProperty, vectorProperty, transformProperty, vectorScalePowerProperty ],
       ( tail, vector, transform, forceScalePower ) => {
         if ( options.checkForOffscaling ) {
+          // NOTE: All this mention of force is incorrect here, as VectorNode also supports the velocity. More reason to move this part to the model
           // forceScalePower currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
           // and 8 is scaling up for small vectors ~1/100000000 units of force
           const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScalePower;
