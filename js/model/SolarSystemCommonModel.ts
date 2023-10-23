@@ -22,7 +22,6 @@ import Multilink from '../../../axon/js/Multilink.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import optionize from '../../../phet-core/js/optionize.js';
-import TinyEmitter from '../../../axon/js/TinyEmitter.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import RangeWithValue from '../../../dot/js/RangeWithValue.js';
@@ -108,10 +107,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // How much to scale the model-view transform when zooming in and out
   public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
-  // Emitters that fire when a body is added or removed from activeBodies
-  public readonly bodyAddedEmitter: TinyEmitter = new TinyEmitter();
-  public readonly bodyRemovedEmitter: TinyEmitter = new TinyEmitter();
-
   // Indicates whether any Body has gone off-screen.
   public readonly isAnyBodyEscapedProperty: TReadOnlyProperty<boolean>;
 
@@ -161,6 +156,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioDocumentation: 'The set of Body elements that are currently active, and thus visible on the screen'
     } );
 
+    this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
+      phetioReadOnly: true
+    } );
+
     // We want to synchronize bodies and activeBodies, so that activeBodies is effectively bodies.filter( isActive )
     // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
     Multilink.multilinkAny( this.bodies.map( body => body.isActiveProperty ), () => {
@@ -178,6 +178,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           this.activeBodies.splice( i, 0, idealBodies[ i ] );
         }
       }
+
+      this.isAnyBodyCollidedProperty.reset();
     } );
 
     //TODO https://github.com/phetsims/my-solar-system/issues/237 should be phetioReadOnly:false only for Lab screen
@@ -186,11 +188,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       numberType: 'Integer',
       range: new Range( 1, this.bodies.length ),
       tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
-    } );
-
-    this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
-      phetioReadOnly: true
     } );
 
     this.isAnyBodyEscapedProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.escapedProperty ), this.isAnyBodyCollidedProperty ] );
@@ -297,8 +294,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       newBody.isActiveProperty.value = true;
     }
     this.saveStartingBodyInfo();
-
-    this.bodyAddedEmitter.emit();
     this.isAnyBodyCollidedProperty.reset();
   }
 
@@ -306,8 +301,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const lastBody = this.activeBodies[ this.activeBodies.length - 1 ];
     lastBody.isActiveProperty.value = false;
     this.saveStartingBodyInfo();
-
-    this.bodyRemovedEmitter.emit();
     this.isAnyBodyCollidedProperty.reset();
   }
 
