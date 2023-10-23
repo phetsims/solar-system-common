@@ -69,7 +69,10 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       // VectorNodeOptions
       checkForOffscaling: false,
       isDisposable: false, // see https://github.com/phetsims/my-solar-system/issues/230
-      phetioInputEnabledPropertyInstrumented: true // see https://github.com/phetsims/my-solar-system/issues/231
+      phetioInputEnabledPropertyInstrumented: true, // see https://github.com/phetsims/my-solar-system/issues/231
+      inputEnabledPropertyOptions: {
+        phetioFeatured: true
+      }
     }, providedOptions );
 
     const positionProperty = body.positionProperty;
