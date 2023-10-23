@@ -37,6 +37,7 @@ export default class Body extends PhetioObject {
   public readonly radiusProperty: TReadOnlyProperty<number>;
   public readonly positionProperty: Property<Vector2>;
   public readonly velocityProperty: Property<Vector2>;
+  public readonly speedProperty: TReadOnlyProperty<number>;
   public readonly accelerationProperty: Property<Vector2>;
   public readonly gravityForceProperty: Property<Vector2>;
 
@@ -100,6 +101,13 @@ export default class Body extends PhetioObject {
       units: 'km/s',
       tandem: tandem.createTandem( 'velocityProperty' ),
       phetioFeatured: true
+    } );
+
+    this.speedProperty = new DerivedProperty( [ this.velocityProperty ], velocity => velocity.magnitude, {
+      units: 'km/s',
+      tandem: tandem.createTandem( 'speedProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'The magnitude of velocity'
     } );
 
     this.accelerationProperty = new Vector2Property( new Vector2( 0, 0 ), {

@@ -201,15 +201,10 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       this.addInputListener( keyboardDragListener );
     }
 
-    // Speed is the magnitude of velocity.
-    const speedProperty = new DerivedProperty(
-      [ this.body.velocityProperty ], ( velocity: Vector2 ) => Utils.toFixed( velocity.magnitude, 2 )
-    );
-
     // Format the speed with units.
     const speedStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
       index: options.showVelocityIndex ? body.index : '',
-      value: speedProperty,
+      value: new DerivedProperty( [ this.body.speedProperty ], speed => Utils.toFixed( speed, 2 ) ),
       units: SolarSystemCommonStrings.units.kmsStringProperty
     } );
 
