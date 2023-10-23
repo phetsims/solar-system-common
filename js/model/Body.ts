@@ -24,6 +24,7 @@ import IOType from '../../../tandem/js/types/IOType.js';
 import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
 import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import Range from '../../../dot/js/Range.js';
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 
@@ -33,7 +34,7 @@ export default class Body extends PhetioObject {
   public readonly index: number;
 
   // Unitless body quantities (physical properties)
-  public readonly massProperty: Property<number>;
+  public readonly massProperty: NumberProperty;
   public readonly radiusProperty: TReadOnlyProperty<number>;
   public readonly positionProperty: Property<Vector2>;
   public readonly velocityProperty: Property<Vector2>;
@@ -80,7 +81,7 @@ export default class Body extends PhetioObject {
     this.index = index;
 
     this.massProperty = new NumberProperty( bodyInfo.mass, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/208 range - use Range(0.000001,300), see MASS_RANGE in ValuesColumnNode and presets in LabModel
+      range: new Range( 0.000001, 300 ),
       isValidValue: mass => ( mass > 0 ),
       hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
       tandem: tandem.createTandem( 'massProperty' ),
