@@ -75,7 +75,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly engine: EngineType;
 
   // Indicates whether the user has interacted with the bodies of the simulation (changing position, mass or velocity)
-  public readonly userControlledProperty: Property<boolean>;
+  public readonly userHasInteractedProperty: Property<boolean>;
 
   // Emitter that fires when the user interaction starts
   public readonly userInteractingEmitter = new Emitter();
@@ -128,9 +128,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
-    this.userControlledProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'userControlledProperty' ),
-      phetioReadOnly: true
+    this.userHasInteractedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'userHasInteractedProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'For internal use only'
     } );
 
     this.defaultBodyInfo = options.defaultBodyInfo;
@@ -209,7 +210,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
             this.saveStartingBodyInfo();
           }
           this.userInteractingEmitter.emit();
-          this.userControlledProperty.value = true;
+          this.userHasInteractedProperty.value = true;
         } );
     } );
 
@@ -314,7 +315,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.startingBodyInfoProperty.value = this.defaultBodyInfo;
     this.restart();
 
-    this.userControlledProperty.reset();
+    this.userHasInteractedProperty.reset();
   }
 
   // Restart is for when the time controls are brought back to 0

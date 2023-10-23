@@ -74,7 +74,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
   public readonly releaseClip: SoundClip;
 
   public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>,
-                      userControlledProperty: TReadOnlyProperty<boolean>, providedOptions?: BodyNodeOptions ) {
+                      userHasInteractedProperty: TReadOnlyProperty<boolean>, providedOptions?: BodyNodeOptions ) {
     const accessibleName = `Body ${body.index}`;
 
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
@@ -242,7 +242,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     // Optional cueing arrows
     if ( options.useCueingArrows ) {
-      const cueingVisibleProperty = new DerivedProperty( [ userControlledProperty ], wasDragged => ( options.draggable && !wasDragged ) );
+      const cueingVisibleProperty = new DerivedProperty( [ userHasInteractedProperty ], wasDragged => ( options.draggable && !wasDragged ) );
       const cueingArrowsNode = new CueingArrowsNode( {
         bodyRadius: this.radius,
         fill: options.mainColor,
