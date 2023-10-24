@@ -218,7 +218,7 @@ export default class Body extends PhetioObject {
   public preventCollision( bodies: Body[] ): void {
     bodies.forEach( body => {
       if ( body !== this && this.isOverlapping( body ) ) {
-        // If it's going to collide, arbitrarily move it 100 pixels up
+        // If it's going to collide, arbitrarily move it 1 AU up
         this.positionProperty.value = this.positionProperty.value.plus( new Vector2( 0, 1 ) );
         this.preventCollision( bodies );
       }
