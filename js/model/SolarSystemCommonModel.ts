@@ -116,8 +116,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Power of 10 to which the gravity force is scaled
   public readonly gravityForceScalePowerProperty: NumberProperty;
 
-  // Indicates whether any gravity force arrow is currently off scale
-  public readonly isAnyForceOffscaleProperty: Property<boolean>;
+  // Indicates whether any gravity force vector is currently off scale (too small to see).
+  public readonly isAnyGravityForceOffscaleProperty: Property<boolean>;
 
   public readonly measuringTape: SolarSystemCommonMeasuringTape;
 
@@ -199,8 +199,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       range: new Range( -2, 8 )
     } );
 
-    this.isAnyForceOffscaleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isAnyForceOffscaleProperty' )
+    this.isAnyGravityForceOffscaleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isAnyGravityForceOffscaleProperty' )
     } );
 
     this.bodies.forEach( body => {
@@ -379,12 +379,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   protected checkForOffscaleForces(): void {
-    this.isAnyForceOffscaleProperty.value = false;
+    this.isAnyGravityForceOffscaleProperty.value = false;
     this.activeBodies.forEach( body => {
       const magnitudeLog = Math.log10( body.gravityForceProperty.value.magnitude );
       // 3.2 is the magnitude at which the vector starts being too small to see
       if ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value ) {
-        this.isAnyForceOffscaleProperty.value = true;
+        this.isAnyGravityForceOffscaleProperty.value = true;
       }
     } );
   }
