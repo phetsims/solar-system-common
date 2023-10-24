@@ -259,10 +259,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioDocumentation: 'Integer index that is used to compute how the view is scaled. Larger values are more zoomed in.'
     } );
 
-    // TODO: Set the proper scaling for measuringTape, see https://github.com/phetsims/my-solar-system/issues/252
     this.measuringTape = new SolarSystemCommonMeasuringTape( {
-      basePosition: new Vector2( 0, 100 ),
-      tipPosition: new Vector2( 0, 100 ),
+      basePosition: new Vector2( 0, 1 ),
+      tipPosition: new Vector2( 1, 1 ),
       tandem: options.tandem.createTandem( 'measuringTape' )
     } );
   }
