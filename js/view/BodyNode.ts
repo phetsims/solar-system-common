@@ -246,7 +246,9 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       this.addChild( cueingArrowsNode );
     }
 
-    this.addLinkedElement( body );
+    this.addLinkedElement( body, {
+      tandemName: 'body' // so that all BodyNode elements have the same linked element name
+    } );
 
     // Stop sound when the associated Body becomes inactive.
     body.isActiveProperty.link( isActive => !isActive && this.stopSound() );

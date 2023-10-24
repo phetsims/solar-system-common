@@ -149,7 +149,7 @@ export default class Body extends PhetioObject {
 
     this.colorProperty = colorProperty;
     this.addLinkedElement( colorProperty, {
-      tandemName: 'colorProperty' // use a generic tandem name so that all Body elements have the same linked element
+      tandemName: 'colorProperty' // so that all Body elements have the same linked element name
     } );
 
     // Data for rendering the path

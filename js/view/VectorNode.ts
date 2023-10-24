@@ -83,7 +83,9 @@ export default class VectorNode extends ArrowNode {
       this.localBounds = Bounds2.point( tail ).addPoint( tip ).dilated( 10 ); // must set because boundsMethod: 'none'.
     } );
 
-    this.addLinkedElement( body );
+    this.addLinkedElement( body, {
+      tandemName: 'body' // so that all VectorNode elements have the same linked element name
+    } );
   }
 }
 
