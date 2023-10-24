@@ -277,7 +277,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
 
   public reset(): void {
     this.interruptSubtreeInput(); // cancel interactions that may be in progress
-    this.measuringTapeNode.reset();
     this.visibleProperties.reset();
   }
 }
