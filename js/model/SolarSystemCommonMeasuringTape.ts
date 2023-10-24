@@ -34,12 +34,12 @@ export default class SolarSystemCommonMeasuringTape {
     }, providedOptions );
 
     this.basePositionProperty = new Vector2Property( options.basePosition, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
+      units: 'AU',
       tandem: options.tandem.createTandem( 'basePositionProperty' )
     } );
 
     this.tipPositionProperty = new Vector2Property( options.tipPosition, {
-      //TODO https://github.com/phetsims/my-solar-system/issues/244 units
+      units: 'AU',
       tandem: options.tandem.createTandem( 'tipPositionProperty' )
     } );
   }
