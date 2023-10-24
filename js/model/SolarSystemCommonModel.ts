@@ -274,7 +274,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   /**
    * Sets Body instances to have the specified values.
    */
-  public loadBodyInfo( bodiesInfo: BodyInfo[], preventCollision = false ): void {
+  public loadBodyInfo( bodiesInfo: BodyInfo[] ): void {
     for ( let i = 0; i < this.bodies.length; i++ ) {
       const bodyInfo = bodiesInfo[ i ];
 
@@ -286,9 +286,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
         this.bodies[ i ].positionProperty.setInitialValue( bodyInfo.position );
         this.bodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity );
         this.bodies[ i ].reset();
-        if ( preventCollision ) {
-          this.bodies[ i ].preventCollision( this.activeBodies );
-        }
       }
       else {
         this.bodies[ i ].isActiveProperty.value = false;
