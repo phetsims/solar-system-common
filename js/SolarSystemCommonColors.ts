@@ -43,10 +43,6 @@ const SolarSystemCommonColors = {
     projector: 'black'
   } ),
 
-  userControlledBackgroundColorProperty: new ProfileColorProperty( solarSystemCommon, 'userControlledBackgroundColor', {
-    default: PhetColorScheme.BUTTON_YELLOW
-  } ),
-
   velocityColorProperty: new ProfileColorProperty( solarSystemCommon, 'velocityColor', {
     default: PhetColorScheme.VELOCITY,
     projector: '#44b052'
