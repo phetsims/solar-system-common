@@ -15,8 +15,7 @@
       "twixt",
       "vegas"
     ],
-    "supportsOutputJS": true,
-    "generatedUnitTests": true
+    "supportsOutputJS": true
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
