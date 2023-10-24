@@ -19,9 +19,6 @@ import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 type SelfOptions = {
-  // Boolean to determine if the vector will be checked for offscaling or not
-  checkForOffscaling?: boolean;
-
   // Normalization factor by which the vector will be scaled
   baseMagnitude?: number;
 
@@ -47,7 +44,6 @@ export default class VectorNode extends ArrowNode {
     const options = optionize<VectorNodeOptions, SelfOptions, ArrowNodeOptions>()( {
 
       // SelfOptions
-      checkForOffscaling: true,
       baseMagnitude: 1500,
       scalingOffset: 0,
 
@@ -71,20 +67,9 @@ export default class VectorNode extends ArrowNode {
 
     this.tipPositionProperty = new DerivedProperty( [ this.tailPositionProperty, vectorProperty, transformProperty, vectorScalePowerProperty ],
       ( tail, vector, transform, forceScalePower ) => {
-        if ( options.checkForOffscaling ) {
-          // NOTE: All this mention of force is incorrect here, as VectorNode also supports the velocity. More reason to move this part to the model
-          // forceScalePower currently goes from -2 to 8, where -2 is scaling down for big vectors ~100 units of force
-          // and 8 is scaling up for small vectors ~1/100000000 units of force
-          const magnitudeLog = vector.magnitude ? Math.log10( vector.magnitude / options.baseMagnitude ) : -forceScalePower;
-          body.gravityForceOffscaleProperty.value = false;
-          if ( magnitudeLog < -forceScalePower - 0.4 ) {
-            body.gravityForceOffscaleProperty.value = true;
-          }
-        }
         const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset ) );
         if ( finalTip.magnitude > 1e4 ) {
           finalTip.setMagnitude( 1e4 );
-          body.gravityForceOffscaleProperty.value = false;
         }
 
         // Scaling the tip position for it to properly fit in the view

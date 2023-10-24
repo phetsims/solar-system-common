@@ -67,7 +67,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       fill: SolarSystemCommonColors.velocityColorProperty,
 
       // VectorNodeOptions
-      checkForOffscaling: false,
       isDisposable: false, // see https://github.com/phetsims/my-solar-system/issues/230
       phetioInputEnabledPropertyInstrumented: true, // see https://github.com/phetsims/my-solar-system/issues/231
       inputEnabledPropertyOptions: {

@@ -50,9 +50,6 @@ export default class Body extends PhetioObject {
   // True when the body goes off-screen
   public readonly isOffscreenProperty: Property<boolean>;
 
-  // True when the body gravity force is off-scale
-  public readonly gravityForceOffscaleProperty: Property<boolean>;
-
   // True when the user is controlling the mass, position, or velocity of the Body
   public readonly userIsControllingMassProperty: Property<boolean>;
   public readonly userIsControllingPositionProperty: Property<boolean>;
@@ -131,11 +128,6 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
-    this.gravityForceOffscaleProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'gravityForceOffscaleProperty' ),
-      phetioReadOnly: true
-    } );
-
     this.userIsControllingMassProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'userIsControllingMassProperty' ),
       phetioReadOnly: true,
@@ -180,7 +172,6 @@ export default class Body extends PhetioObject {
     this.accelerationProperty.reset();
     this.gravityForceProperty.reset();
     this.isOffscreenProperty.reset();
-    this.gravityForceOffscaleProperty.reset();
     this.clearPath();
   }
 

@@ -117,7 +117,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly gravityForceScalePowerProperty: NumberProperty;
 
   // Indicates whether any force arrow is currently off scale
-  public readonly isAnyForceOffscaleProperty: TReadOnlyProperty<boolean>;
+  public readonly isAnyForceOffscaleProperty: Property<boolean>;
 
   public readonly measuringTape: SolarSystemCommonMeasuringTape;
 
@@ -195,7 +195,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
 
-    this.isAnyForceOffscaleProperty = DerivedProperty.or( this.bodies.map( body => body.gravityForceOffscaleProperty ) );
+    this.gravityForceScalePowerProperty = new NumberProperty( 0, {
+      range: new Range( -2, 8 )
+    } );
+
+    this.isAnyForceOffscaleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isAnyForceOffscaleProperty' )
+    } );
 
     this.bodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
@@ -239,12 +245,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       tandem: timeTandem.createTandem( 'timeSpeedProperty' ),
       phetioDocumentation: 'Controls how fast the simulation\'s internal clock runs'
-    } );
-
-    this.gravityForceScalePowerProperty = new NumberProperty( 0, {
-      range: new Range( -2, 8 ),
-      tandem: options.tandem.createTandem( 'gravityForceScalePowerProperty' )
-      //TODO https://github.com/phetsims/my-solar-system/issues/237 phetioDocumentation
     } );
 
     this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
@@ -375,6 +375,17 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public clearPaths(): void {
     this.activeBodies.forEach( body => {
       body.clearPath();
+    } );
+  }
+
+  protected checkForOffscaleForces(): void {
+    this.isAnyForceOffscaleProperty.value = false;
+    this.activeBodies.forEach( body => {
+      const magnitudeLog = Math.log10( body.gravityForceProperty.value.magnitude );
+      // 3.2 is the magnitude at which the vector starts being too small to see
+      if ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value ) {
+        this.isAnyForceOffscaleProperty.value = true;
+      }
     } );
   }
 }
