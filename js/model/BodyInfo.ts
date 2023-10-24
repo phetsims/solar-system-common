@@ -8,16 +8,19 @@
  */
 
 import Vector2, { Vector2StateObject } from '../../../dot/js/Vector2.js';
+import Range, { RangeStateObject } from '../../../dot/js/Range.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import IOType from '../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
 import BooleanIO from '../../../tandem/js/types/BooleanIO.js';
 import NullableIO from '../../../tandem/js/types/NullableIO.js';
 import StringIO from '../../../tandem/js/types/StringIO.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 type SelfOptions = {
   isActive: boolean;
   mass: number;
+  massRange?: Range;
   position: Vector2;
   velocity: Vector2;
   tandemName?: string;
@@ -29,6 +32,7 @@ type BodyInfoOptions = SelfOptions;
 type BodyInfoStateObject = {
   isActive: boolean;
   mass: number;
+  massRange: RangeStateObject;
   position: Vector2StateObject;
   velocity: Vector2StateObject;
   tandemName: string | null;
@@ -38,6 +42,7 @@ export default class BodyInfo {
 
   public readonly isActive: boolean;
   public readonly mass: number;
+  public readonly massRange: Range;
   public readonly position: Vector2;
   public readonly velocity: Vector2;
   public readonly tandemName: string | null;
@@ -45,6 +50,7 @@ export default class BodyInfo {
   public constructor( providedOptions: BodyInfoOptions ) {
     this.isActive = providedOptions.isActive;
     this.mass = providedOptions.mass;
+    this.massRange = providedOptions.massRange || SolarSystemCommonConstants.DEFAULT_MASS_RANGE;
     this.position = providedOptions.position;
     this.velocity = providedOptions.velocity;
     this.velocity = providedOptions.velocity;
@@ -63,6 +69,7 @@ export default class BodyInfo {
     stateSchema: {
       isActive: BooleanIO,
       mass: NumberIO,
+      massRange: Range.RangeIO,
       position: Vector2.Vector2IO,
       velocity: Vector2.Vector2IO,
       tandemName: NullableIO( StringIO )
@@ -71,6 +78,7 @@ export default class BodyInfo {
     fromStateObject: stateObject => new BodyInfo( {
       isActive: stateObject.isActive,
       mass: stateObject.mass,
+      massRange: Range.RangeIO.fromStateObject( stateObject.massRange ),
       position: Vector2.fromStateObject( stateObject.position ),
       velocity: Vector2.fromStateObject( stateObject.velocity ),
       tandemName: stateObject.tandemName || undefined

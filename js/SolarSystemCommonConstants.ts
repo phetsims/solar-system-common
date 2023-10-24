@@ -12,6 +12,7 @@ import solarSystemCommon from './solarSystemCommon.js';
 import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, TLayoutOptions } from '../../scenery/js/imports.js';
 import { combineOptions } from '../../phet-core/js/optionize.js';
 import { PanelOptions } from '../../sun/js/Panel.js';
+import Range from '../../dot/js/Range.js';
 
 export const METERS_PER_AU = 149597870700;
 export const SECONDS_PER_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
@@ -76,7 +77,10 @@ const SolarSystemCommonConstants = {
   VELOCITY_MULTIPLIER: VELOCITY_MULTIPLIER, // Transforms from model units to AU/yr then to km/s
   TIME_MULTIPLIER: TIME_MULTIPLIER, // Transforms from model units to years
 
-  VELOCITY_TO_VIEW_MULTIPLIER: 50 * POSITION_MULTIPLIER / VELOCITY_MULTIPLIER
+  VELOCITY_TO_VIEW_MULTIPLIER: 50 * POSITION_MULTIPLIER / VELOCITY_MULTIPLIER,
+
+  // See https://github.com/phetsims/keplers-laws/issues/197. Note that this default is specific to My Solar System.
+  DEFAULT_MASS_RANGE: new Range( 0.000001, 300 )
 };
 
 /**
