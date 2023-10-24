@@ -117,7 +117,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly gravityForceScalePowerProperty: NumberProperty;
 
   // Indicates whether any gravity force vector is currently off scale (too small to see).
-  public readonly isAnyGravityForceOffscaleProperty: Property<boolean>;
+  public readonly isAnyGravityForceOffscaleProperty: TReadOnlyProperty<boolean>;
 
   public readonly measuringTape: SolarSystemCommonMeasuringTape;
 
@@ -199,9 +199,14 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       range: new Range( -2, 8 )
     } );
 
-    this.isAnyGravityForceOffscaleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isAnyGravityForceOffscaleProperty' )
-    } );
+    // True if any gravity force vector would be too small to see when drawn.
+    this.isAnyGravityForceOffscaleProperty = DerivedProperty.deriveAny(
+      [ ...this.bodies.map( body => body.gravityForceProperty ), this.gravityForceScalePowerProperty ],
+      () => !!_.find( this.bodies, body => {
+        const magnitudeLog = Math.log10( body.gravityForceProperty.value.magnitude );
+        // 3.2 is the magnitude at which the vector starts being too small to see
+        return ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
+      } ) );
 
     this.bodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
@@ -375,17 +380,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public clearPaths(): void {
     this.activeBodies.forEach( body => {
       body.clearPath();
-    } );
-  }
-
-  protected checkForOffscaleForces(): void {
-    this.isAnyGravityForceOffscaleProperty.value = false;
-    this.activeBodies.forEach( body => {
-      const magnitudeLog = Math.log10( body.gravityForceProperty.value.magnitude );
-      // 3.2 is the magnitude at which the vector starts being too small to see
-      if ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value ) {
-        this.isAnyGravityForceOffscaleProperty.value = true;
-      }
     } );
   }
 }
