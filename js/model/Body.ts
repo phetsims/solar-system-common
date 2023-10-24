@@ -25,6 +25,7 @@ import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/Referenc
 import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Range from '../../../dot/js/Range.js';
+import NumberIO from '../../../tandem/js/types/NumberIO.js';
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 
@@ -102,6 +103,7 @@ export default class Body extends PhetioObject {
     this.speedProperty = new DerivedProperty( [ this.velocityProperty ], velocity => velocity.magnitude, {
       units: 'km/s',
       tandem: tandem.createTandem( 'speedProperty' ),
+      phetioValueType: NumberIO,
       phetioFeatured: true,
       phetioDocumentation: 'The magnitude of velocity'
     } );
