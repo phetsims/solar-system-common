@@ -11,6 +11,9 @@ import { Color, ProfileColorProperty } from '../../scenery/js/imports.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import solarSystemCommon from './solarSystemCommon.js';
 
+const PANEL_FILL_DEFAULT = new Color( 40, 40, 40 );
+const PANEL_FILL_PROJECTOR = new Color( 222, 234, 255 );
+
 const SolarSystemCommonColors = {
 
   // Color mainly used for foreground things like text
@@ -24,9 +27,15 @@ const SolarSystemCommonColors = {
     projector: 'white'
   } ),
 
-  controlPanelFillProperty: new ProfileColorProperty( solarSystemCommon, 'controlPanelFill', {
-    default: 'rgb( 40, 40, 40 )',
-    projector: new Color( 222, 234, 255 )
+  panelFillProperty: new ProfileColorProperty( solarSystemCommon, 'panelFill', {
+    default: PANEL_FILL_DEFAULT,
+    projector: PANEL_FILL_PROJECTOR
+  } ),
+
+  // Subtle stroke to give Panels and AccordionBoxes a crisp edge
+  panelStrokeProperty: new ProfileColorProperty( solarSystemCommon, 'panelStroke', {
+    default: PANEL_FILL_DEFAULT.brighterColor( 0.65 ),
+    projector: PANEL_FILL_PROJECTOR.darkerColor( 0.85 )
   } ),
 
   gridIconStrokeColorProperty: new ProfileColorProperty( solarSystemCommon, 'gridIconStroke', {

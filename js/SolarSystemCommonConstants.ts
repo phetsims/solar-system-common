@@ -37,8 +37,8 @@ const HSEPARATOR_OPTIONS: HSeparatorOptions = {
 };
 
 const PANEL_OPTIONS: PanelOptions = {
-  stroke: null,
-  fill: SolarSystemCommonColors.controlPanelFillProperty,
+  fill: SolarSystemCommonColors.panelFillProperty,
+  stroke: SolarSystemCommonColors.panelStrokeProperty,
   cornerRadius: 5,
   xMargin: 10,
   yMargin: 10,
