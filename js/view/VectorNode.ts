@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Draws a vector for a Body, such as a force vector or velocity vector.
+ * Draws a vector for a Body, such as a gravity force vector or velocity vector.
  *
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
@@ -66,8 +66,8 @@ export default class VectorNode extends ArrowNode {
       } );
 
     this.tipPositionProperty = new DerivedProperty( [ this.tailPositionProperty, vectorProperty, transformProperty, vectorScalePowerProperty ],
-      ( tail, vector, transform, forceScalePower ) => {
-        const finalTip = vector.times( Math.pow( 10, forceScalePower + options.scalingOffset ) );
+      ( tail, vector, transform, vectorScalePower ) => {
+        const finalTip = vector.times( Math.pow( 10, vectorScalePower + options.scalingOffset ) );
         if ( finalTip.magnitude > 1e4 ) {
           finalTip.setMagnitude( 1e4 );
         }

@@ -113,10 +113,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Indicates whether any Body has collided with another Body.
   public readonly isAnyBodyCollidedProperty: Property<boolean>;
 
-  // Power of 10 to which the force is scaled
+  // Power of 10 to which the gravity force is scaled
   public readonly gravityForceScalePowerProperty: NumberProperty;
 
-  // Indicates whether any force arrow is currently off scale
+  // Indicates whether any gravity force arrow is currently off scale
   public readonly isAnyForceOffscaleProperty: Property<boolean>;
 
   public readonly measuringTape: SolarSystemCommonMeasuringTape;
