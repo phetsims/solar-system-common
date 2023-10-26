@@ -154,8 +154,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
-      phetioReadOnly: true
-      //TODO https://github.com/phetsims/my-solar-system/issues/237 phetioDocumentation
+      phetioReadOnly: true,
+      phetioDocumentation: 'True if any of the bodies have collided.'
     } );
 
     // We want to synchronize bodies and activeBodies, so that activeBodies is effectively bodies.filter( isActive )
