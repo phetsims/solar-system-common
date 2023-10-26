@@ -190,7 +190,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
 
       if ( newVelocity.magnitude < options.minimumMagnitude ) {
         if ( options.snapToZero ) {
-          newVelocity.setMagnitude( 0 );
+          newVelocity.setXY( 0, 0 ); // Not using setMagnitude because newVelocity could already be a 0 vector.
         }
         else {
           newVelocity.setMagnitude( options.minimumMagnitude );
