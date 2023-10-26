@@ -190,7 +190,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
 
     this.gravityForceScalePowerProperty = new NumberProperty( 0, {
-      range: new Range( -2, 8 )
+      range: new Range( -2, 8 ),
+      tandem: options.tandem.createTandem( 'gravityForceScalePowerProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'Power of 10 to which the gravity force is scaled'
     } );
 
     // True if any gravity force vector would be too small to see when drawn.
