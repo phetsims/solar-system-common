@@ -267,7 +267,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public saveStartingBodyInfo(): void {
-    this.startingBodyInfoProperty.value = this.bodies.map( body => body.info );
+    this.startingBodyInfoProperty.value = this.bodies.map( body => body.getBodyInfo() );
   }
 
   /**

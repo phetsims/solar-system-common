@@ -203,7 +203,10 @@ export default class Body extends PhetioObject {
     }
   }
 
-  public get info(): BodyInfo {
+  /**
+   * Gets the subset of BodyInfo that is needed by SolarSystemCommonModel loadBodyInfo.
+   */
+  public getBodyInfo(): BodyInfo {
     return new BodyInfo( {
       mass: this.massProperty.value,
       position: this.positionProperty.value.copy(),
