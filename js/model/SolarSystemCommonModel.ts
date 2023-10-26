@@ -187,7 +187,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
       range: options.numberOfActiveBodiesIsVariable ? new Range( 1, this.bodies.length ) : new Range( this.bodies.length, this.bodies.length ),
-      tandem: options.numberOfActiveBodiesIsVariable ? options.tandem.createTandem( 'numberOfActiveBodiesProperty' ) : Tandem.OPT_OUT
+      tandem: options.numberOfActiveBodiesIsVariable ? options.tandem.createTandem( 'numberOfActiveBodiesProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true
     } );
 
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
