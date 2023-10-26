@@ -149,7 +149,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.activeBodies = createObservableArray( {
       tandem: options.tandem.createTandem( 'activeBodies' ),
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
-      phetioDocumentation: 'The set of Body elements that are currently active, and thus visible on the screen'
+      phetioDocumentation: 'The set of bodies that are currently active, and thus visible on the screen.'
     } );
 
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
