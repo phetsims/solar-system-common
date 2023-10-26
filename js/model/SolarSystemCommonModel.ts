@@ -128,12 +128,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
-    this.userHasInteractedProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'userHasInteractedProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'For internal use only'
-    } );
-
     this.defaultBodyInfo = options.defaultBodyInfo;
 
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
@@ -207,6 +201,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
         // 3.2 is the magnitude at which the vector starts being too small to see
         return ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
       } ) );
+
+    this.userHasInteractedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'userHasInteractedProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'For internal use only'
+    } );
 
     this.bodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
