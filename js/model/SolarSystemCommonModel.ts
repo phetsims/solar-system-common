@@ -31,6 +31,7 @@ import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
 import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
 import Vector2 from '../../../dot/js/Vector2.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 // Constants
 const BODY_COLORS = [
@@ -47,6 +48,7 @@ type SelfOptions<EngineType extends Engine> = {
   defaultBodyInfo: BodyInfo[];
   timeScale?: number;
   modelToViewTime?: number;
+  numberOfActiveBodiesIsVariable?: boolean;
 };
 
 export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
@@ -124,8 +126,11 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
 
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
+
+      // SelfOptions
       timeScale: 0.05,
-      modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER
+      modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER,
+      numberOfActiveBodiesIsVariable: false
     }, providedOptions );
 
     this.defaultBodyInfo = options.defaultBodyInfo;
@@ -147,7 +152,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-laws
     this.activeBodies = createObservableArray( {
-      tandem: options.tandem.createTandem( 'activeBodies' ),
+      tandem: options.numberOfActiveBodiesIsVariable ? options.tandem.createTandem( 'activeBodies' ) : Tandem.OPT_OUT,
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
       phetioDocumentation: 'The set of bodies that are currently active, and thus visible on the screen.'
     } );
@@ -179,12 +184,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       this.isAnyBodyCollidedProperty.reset();
     } );
 
-    //TODO https://github.com/phetsims/my-solar-system/issues/237 should be phetioReadOnly:false only for Lab screen
-    //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-laws
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
-      range: new Range( 1, this.bodies.length ),
-      tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' )
+      range: options.numberOfActiveBodiesIsVariable ? new Range( 1, this.bodies.length ) : new Range( this.bodies.length, this.bodies.length ),
+      tandem: options.numberOfActiveBodiesIsVariable ? options.tandem.createTandem( 'numberOfActiveBodiesProperty' ) : Tandem.OPT_OUT
     } );
 
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
