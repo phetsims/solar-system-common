@@ -110,6 +110,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       ariaRole: 'application',
 
       // phet-io
+      phetioFeatured: true,
       phetioInputEnabledPropertyInstrumented: true, // see https://github.com/phetsims/my-solar-system/issues/231
       inputEnabledPropertyOptions: {
         phetioFeatured: true

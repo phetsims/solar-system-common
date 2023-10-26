@@ -68,10 +68,11 @@ export default class Body extends PhetioObject {
     assert && assert( Number.isInteger( index ) && index >= 1, `invalid index: ${index}` );
 
     super( {
+      isDisposable: false,
       tandem: tandem,
       phetioType: Body.BodyIO,
       phetioState: false,
-      isDisposable: false
+      phetioFeatured: true
     } );
 
     this.index = index;
