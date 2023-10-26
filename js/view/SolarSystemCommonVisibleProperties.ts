@@ -37,22 +37,28 @@ export default class SolarSystemCommonVisibleProperties {
     // Properties that control visibility of things in the UI, controlled by checkboxes, grouped under a parent tandem
 
     this.speedVisibleProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'speedVisibleProperty' )
+      tandem: tandem.createTandem( 'speedVisibleProperty' ),
+      phetioFeatured: true
     } );
     this.velocityVisibleProperty = new BooleanProperty( true, {
-      tandem: tandem.createTandem( 'velocityVisibleProperty' )
+      tandem: tandem.createTandem( 'velocityVisibleProperty' ),
+      phetioFeatured: true
     } );
     this.gravityVisibleProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'gravityVisibleProperty' )
+      tandem: tandem.createTandem( 'gravityVisibleProperty' ),
+      phetioFeatured: true
     } );
     this.pathVisibleProperty = new BooleanProperty( true, {
-      tandem: tandem.createTandem( 'pathVisibleProperty' )
+      tandem: tandem.createTandem( 'pathVisibleProperty' ),
+      phetioFeatured: true
     } );
     this.gridVisibleProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'gridVisibleProperty' )
+      tandem: tandem.createTandem( 'gridVisibleProperty' ),
+      phetioFeatured: true
     } );
     this.measuringTapeVisibleProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'measuringTapeVisibleProperty' )
+      tandem: tandem.createTandem( 'measuringTapeVisibleProperty' ),
+      phetioFeatured: true
     } );
 
   }
