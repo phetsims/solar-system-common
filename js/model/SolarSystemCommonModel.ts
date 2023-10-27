@@ -48,7 +48,9 @@ type SelfOptions<EngineType extends Engine> = {
   defaultBodyInfo: BodyInfo[];
   timeScale?: number;
   modelToViewTime?: number;
-  numberOfActiveBodiesIsVariable?: boolean;
+
+  // Is the number of bodies variable via the user interface?
+  numberOfBodiesIsVariable?: boolean;
 };
 
 export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
@@ -130,7 +132,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       // SelfOptions
       timeScale: 0.05,
       modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER,
-      numberOfActiveBodiesIsVariable: false
+      numberOfBodiesIsVariable: false
     }, providedOptions );
 
     this.defaultBodyInfo = options.defaultBodyInfo;
@@ -152,7 +154,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-laws
     this.activeBodies = createObservableArray( {
-      tandem: options.numberOfActiveBodiesIsVariable ? options.tandem.createTandem( 'activeBodies' ) : Tandem.OPT_OUT,
+      tandem: options.numberOfBodiesIsVariable ? options.tandem.createTandem( 'activeBodies' ) : Tandem.OPT_OUT,
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
       phetioDocumentation: 'The set of bodies that are currently active, and thus visible on the screen.'
     } );
@@ -186,8 +188,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
-      range: options.numberOfActiveBodiesIsVariable ? new Range( 1, this.bodies.length ) : new Range( this.bodies.length, this.bodies.length ),
-      tandem: options.numberOfActiveBodiesIsVariable ? options.tandem.createTandem( 'numberOfActiveBodiesProperty' ) : Tandem.OPT_OUT,
+      range: new Range( 1, this.bodies.length ),
+      tandem: options.numberOfBodiesIsVariable ? options.tandem.createTandem( 'numberOfActiveBodiesProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true
     } );
 
