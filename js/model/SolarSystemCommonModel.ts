@@ -67,8 +67,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // The set of Body instances in this.bodies that are active (body.isActive === true)
   public readonly activeBodies: ObservableArray<Body>;
 
-  // The number of Bodies that are 'active', and thus visible on the screen. This is controlled by a NumberSpinner,
-  // so may briefly have a value that is different from activeBodies.lengthProperty.
+  // The number of Bodies that are 'active', and thus visible on the screen.
   public readonly numberOfActiveBodiesProperty: NumberProperty;
 
   // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
