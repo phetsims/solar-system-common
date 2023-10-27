@@ -44,6 +44,9 @@ const PANEL_OPTIONS: PanelOptions = {
   yMargin: 10,
   layoutOptions: {
     stretch: true
+  },
+  visiblePropertyOptions: {
+    phetioFeatured: true
   }
 };
 

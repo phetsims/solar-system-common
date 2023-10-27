@@ -180,6 +180,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         tipShiftDragVelocity: 100
       },
       tandem: providedOptions.tandem.createTandem( 'measuringTapeNode' ),
+      phetioFeatured: true,
       phetioReadoutStringPropertyInstrumented: false
     } );
     this.topLayer.addChild( this.measuringTapeNode );
