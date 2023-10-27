@@ -81,7 +81,7 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
    */
   public static createSpeedCheckbox( speedVisibleProperty: Property<boolean>, tandem: Tandem ): SolarSystemCommonCheckbox {
     return new SolarSystemCommonCheckbox( speedVisibleProperty, SolarSystemCommonStrings.speedStringProperty, {
-      tandem: tandem.createTandem( 'speedCheckbox' )
+      tandem: tandem
     } );
   }
 
@@ -93,7 +93,7 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
       icon: new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, {
         fill: SolarSystemCommonColors.velocityColorProperty
       } ),
-      tandem: tandem.createTandem( 'velocityCheckbox' )
+      tandem: tandem
     } );
   }
 
@@ -105,7 +105,7 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
       icon: new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, {
         fill: SolarSystemCommonColors.gravityColorProperty
       } ),
-      tandem: tandem.createTandem( 'gravityForceCheckbox' )
+      tandem: tandem
     } );
   }
 
@@ -128,7 +128,7 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
   public static createMeasuringTapeCheckbox( measuringTapeVisibleProperty: Property<boolean>, tandem: Tandem ): SolarSystemCommonCheckbox {
     return new SolarSystemCommonCheckbox( measuringTapeVisibleProperty, SolarSystemCommonStrings.measuringTapeStringProperty, {
       icon: MeasuringTapeNode.createIcon( { scale: 0.3 } ),
-      tandem: tandem.createTandem( 'measuringTapeCheckbox' )
+      tandem: tandem
     } );
   }
 }
