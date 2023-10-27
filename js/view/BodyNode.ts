@@ -43,6 +43,9 @@ const bodySounds = [
   Bodies_Flute_g3_mp3
 ];
 
+// Defaults to speed not visible. PhET-iO instrumentation is not needed.
+const DEFAULT_SPEED_VISIBLE_PROPERTY = new BooleanProperty( false );
+
 type SelfOptions = {
   draggable?: boolean;
 
@@ -87,7 +90,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       dragVelocity: 450,
       shiftDragVelocity: 100,
       mapPosition: _.identity,
-      speedVisibleProperty: new BooleanProperty( false ),
+      speedVisibleProperty: DEFAULT_SPEED_VISIBLE_PROPERTY,
       rectangleOptions: {
         cornerRadius: 2,
         fill: new Color( 0, 0, 0, 0.5 )
