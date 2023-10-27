@@ -70,7 +70,12 @@ export default class GravityZoomControl extends HBox {
     super( {
       spacing: 0,
       enabledProperty: gravityVisibleProperty,
-      children: [ zoomText, slider ]
+      children: [ zoomText, slider ],
+      tandem: tandem,
+      phetioVisiblePropertyInstrumented: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
   }
 }
