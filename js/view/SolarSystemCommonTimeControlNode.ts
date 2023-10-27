@@ -18,7 +18,6 @@ import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
-import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 
 // constants
 const PLAY_PAUSE_BUTTON_RADIUS = 34;
@@ -90,7 +89,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
 
     const restartButton = new RoundPushButton( {
       content: restartIcon,
-      enabledProperty: new DerivedProperty( [ model.timeProperty ], time => time > 0 ),
+      enabledProperty: model.hasPlayedProperty,
       radius: STEP_BUTTON_RADIUS,
       touchAreaDilation: 2,
       xMargin: 9.5,

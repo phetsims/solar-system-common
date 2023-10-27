@@ -99,6 +99,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
 
+  // Indicates whether the sim has been played at least once.
+  public readonly hasPlayedProperty: Property<boolean>;
+
   // Boolean that determines if more path points are going to be stored for subsequent display in the paths.
   // This does not need to be stateful because it will be set correctly when pathVisibleProperty is set.
   public addingPathPoints = false;
@@ -251,14 +254,20 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioReadOnly: true
     } );
 
+    this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
+      tandem: timeTandem.createTandem( 'timeSpeedProperty' ),
+      phetioDocumentation: 'Controls how fast the simulation\'s internal clock runs'
+    } );
+
     this.isPlayingProperty = new BooleanProperty( false, {
       tandem: timeTandem.createTandem( 'isPlayingProperty' ),
       phetioDocumentation: 'True when the clock is running'
     } );
 
-    this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
-      tandem: timeTandem.createTandem( 'timeSpeedProperty' ),
-      phetioDocumentation: 'Controls how fast the simulation\'s internal clock runs'
+    this.hasPlayedProperty = new BooleanProperty( false, {
+      tandem: timeTandem.createTandem( 'hasPlayedProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'True if the clock has been started at least once'
     } );
 
     this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
@@ -341,6 +350,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Bodies move to their last modified position
   public restart(): void {
     this.isAnyBodyCollidedProperty.reset();
+    this.hasPlayedProperty.value = false;
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
     this.loadBodyInfo( this.startingBodyInfoProperty.value ); // Reset the bodies
@@ -356,6 +366,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public stepOnce( dt: number ): void {
+    this.hasPlayedProperty.value = true;
     let adjustedDT = dt * this.timeSpeedMap.get( this.timeSpeedProperty.value )! * this.timeScale;
 
     // Limit the number of steps to 50 per frame
