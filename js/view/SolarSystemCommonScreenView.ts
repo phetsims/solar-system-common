@@ -181,7 +181,8 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       },
       tandem: providedOptions.tandem.createTandem( 'measuringTapeNode' ),
       phetioFeatured: true,
-      phetioReadoutStringPropertyInstrumented: false
+      phetioReadoutStringPropertyInstrumented: false,
+      phetioFeaturedMeasuredDistanceProperty: true
     } );
     this.topLayer.addChild( this.measuringTapeNode );
 
