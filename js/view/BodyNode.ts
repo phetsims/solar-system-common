@@ -69,12 +69,15 @@ export type BodyNodeOptions = SelfOptions & WithRequired<StrictOmit<ShadedSphere
 
 export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode ) {
 
+  public readonly body: Body;
   public readonly soundClip: SoundClip;
   public readonly grabClip: SoundClip;
   public readonly releaseClip: SoundClip;
 
-  public constructor( public readonly body: Body, modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>,
-                      userHasInteractedProperty: TReadOnlyProperty<boolean>, providedOptions?: BodyNodeOptions ) {
+  public constructor( body: Body,
+                      modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>,
+                      userHasInteractedProperty: TReadOnlyProperty<boolean>,
+                      providedOptions?: BodyNodeOptions ) {
     const accessibleName = `Body ${body.index}`;
 
     const options = optionize<BodyNodeOptions, SelfOptions, ShadedSphereNodeOptions>()( {
