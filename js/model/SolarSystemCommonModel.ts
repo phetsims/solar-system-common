@@ -31,7 +31,6 @@ import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
 import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
 import Vector2 from '../../../dot/js/Vector2.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 // Constants
 const BODY_COLORS = [
@@ -49,8 +48,8 @@ type SelfOptions<EngineType extends Engine> = {
   timeScale?: number;
   modelToViewTime?: number;
 
-  // Is the number of bodies variable via the user interface?
-  numberOfBodiesIsVariable?: boolean;
+  // phetioReadOnly value for numberOfActiveBodiesProperty
+  numberOfActiveBodiesPropertyPhetioReadOnly?: boolean;
 };
 
 export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
@@ -131,7 +130,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       // SelfOptions
       timeScale: 0.05,
       modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER,
-      numberOfBodiesIsVariable: false
+      numberOfActiveBodiesPropertyPhetioReadOnly: true
     }, providedOptions );
 
     this.defaultBodyInfo = options.defaultBodyInfo;
@@ -151,10 +150,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
     this.saveStartingBodyInfo();
 
-    //TODO https://github.com/phetsims/my-solar-system/issues/237 should not be instrumented for keplers-laws
     this.activeBodies = createObservableArray( {
-      tandem: options.numberOfBodiesIsVariable ? options.tandem.createTandem( 'activeBodies' ) : Tandem.OPT_OUT,
+      tandem: options.tandem.createTandem( 'activeBodies' ),
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
+      phetioReadOnly: true,
       phetioDocumentation: 'The set of bodies that are currently active, and thus visible on the screen.'
     } );
 
@@ -188,8 +187,9 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
       numberType: 'Integer',
       range: new Range( 1, this.bodies.length ),
-      tandem: options.numberOfBodiesIsVariable ? options.tandem.createTandem( 'numberOfActiveBodiesProperty' ) : Tandem.OPT_OUT,
-      phetioFeatured: true
+      tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' ),
+      phetioReadOnly: options.numberOfActiveBodiesPropertyPhetioReadOnly,
+      phetioFeatured: !options.numberOfActiveBodiesPropertyPhetioReadOnly // featured if it's not readonly
     } );
 
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
