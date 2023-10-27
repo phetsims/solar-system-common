@@ -77,7 +77,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
 
     const positionProperty = body.positionProperty;
     const velocityProperty = body.velocityProperty;
-    
+
+    // Constants, does not require PhET-iO instrumentation.
     const vectorScalePowerProperty = new NumberProperty( 0 );
 
     super( body, transformProperty, velocityProperty, vectorScalePowerProperty, options );

@@ -52,7 +52,9 @@ export default class ExplosionNode extends Path {
     const startingRadius = 0.1;
     const maximumRadius = 1;
 
+    // Not necessary to instrument for PhET-iO.
     const scaleProperty = new NumberProperty( startingRadius );
+
     scaleProperty.link( scale => explosionPath.setScaleMagnitude( scale ) );
 
     const duration = 0.16;
