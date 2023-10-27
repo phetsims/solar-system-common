@@ -7,9 +7,9 @@
  */
 
 import solarSystemCommon from '../solarSystemCommon.js';
-import GridNode, { GridNodeOptions } from '../../../scenery-phet/js/GridNode.js';
+import GridNode from '../../../scenery-phet/js/GridNode.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import { Node, NodeOptions, Path, PathOptions } from '../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path } from '../../../scenery/js/imports.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
@@ -17,10 +17,12 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Shape } from '../../../kite/js/imports.js';
 
+const STROKE_PROPERTY = SolarSystemCommonColors.gridIconStrokeColorProperty;
+const GRID_NODE_LINE_WIDTH = 1;
+const ORIGIN_AXES_LINE_WIDTH = 2;
+
 type SelfOptions = {
   boldOriginAxes?: boolean; // Adds a thicker grid line at the origin x=0 and y=0
-  gridNodeOptions?: GridNodeOptions;
-  originAxesNodeOptions?: PathOptions;
 };
 
 type SolarSystemCommonGridNodeOptions = SelfOptions & PickRequired<NodeOptions, 'tandem' | 'visibleProperty'>;
@@ -36,30 +38,21 @@ export default class SolarSystemCommonGridNode extends Node {
 
     const options = optionize<SolarSystemCommonGridNodeOptions, SelfOptions, NodeOptions>()( {
       // SelfOptions
-      boldOriginAxes: false,
-
-      // GridNodeOptions
-      gridNodeOptions: {
-        stroke: SolarSystemCommonColors.gridIconStrokeColorProperty
-      },
-
-      // OriginAxesNodeOptions
-      originAxesNodeOptions: {
-        lineWidth: 2,
-        stroke: 'gray'
-      }
+      boldOriginAxes: false
     }, providedOptions );
 
-    const gridNode = new GridNode(
-      transformProperty,
-      spacing,
-      center,
-      100,
-      options.gridNodeOptions
-    );
+    // The primary grid lines
+    const gridNode = new GridNode( transformProperty, spacing, center, 100, {
+      lineWidth: GRID_NODE_LINE_WIDTH,
+      stroke: STROKE_PROPERTY
+    } );
 
+    // Additional lines for the origin axes
     if ( options.boldOriginAxes ) {
-      const originAxesNode = new Path( null, options.originAxesNodeOptions );
+      const originAxesNode = new Path( null, {
+        lineWidth: ORIGIN_AXES_LINE_WIDTH,
+        stroke: STROKE_PROPERTY
+      } );
       transformProperty.link( ( transform: ModelViewTransform2 ) => {
         const shape = new Shape();
 

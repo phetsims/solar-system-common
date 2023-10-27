@@ -30,7 +30,6 @@ import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import { Shape } from '../../../kite/js/imports.js';
 import SolarSystemCommonVisibleProperties from './SolarSystemCommonVisibleProperties.js';
 import SolarSystemCommonGridNode from './SolarSystemCommonGridNode.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 export type BodyBoundsItem = {
   node: Node;
