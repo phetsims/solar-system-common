@@ -55,9 +55,8 @@ export default class GravityZoomControl extends HBox {
       accessibleName: SolarSystemCommonStrings.a11y.scaleSliderStringProperty,
       valueChangeSoundGeneratorOptions: {
         numberOfMiddleThresholds: ( rangeMax - rangeMin ) / rangeStep - 1
-      },
-      tandem: tandem.createTandem( 'slider' ),
-      phetioVisiblePropertyInstrumented: false
+      }
+      // Do not instrument for PhET-iO
     } );
 
     slider.addMajorTick( rangeMin, new RichText( MathSymbols.TIMES + `10<sup>${rangeMin}</sup`, TICK_MARK_OPTIONS ) );
@@ -72,11 +71,14 @@ export default class GravityZoomControl extends HBox {
       enabledProperty: gravityVisibleProperty,
       children: [ zoomText, slider ],
       tandem: tandem,
+      phetioFeatured: true,
       phetioVisiblePropertyInstrumented: true,
       visiblePropertyOptions: {
         phetioFeatured: true
       }
     } );
+
+    this.addLinkedElement( gravityForceScalePowerProperty );
   }
 }
 

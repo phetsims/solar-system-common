@@ -198,6 +198,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       range: new Range( -2, 8 ),
       tandem: options.tandem.createTandem( 'gravityForceScalePowerProperty' ),
       phetioReadOnly: true,
+      phetioFeatured: true,
       phetioDocumentation: 'Power of 10 to which the gravity force is scaled'
     } );
 
