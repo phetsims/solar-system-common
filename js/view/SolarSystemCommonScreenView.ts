@@ -23,14 +23,14 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import BodySoundManager from './BodySoundManager.js';
-import GridNode from '../../../scenery-phet/js/GridNode.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import { Shape } from '../../../kite/js/imports.js';
 import SolarSystemCommonVisibleProperties from './SolarSystemCommonVisibleProperties.js';
+import SolarSystemCommonGridNode from './SolarSystemCommonGridNode.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 export type BodyBoundsItem = {
   node: Node;
@@ -135,16 +135,21 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       } );
 
     // Add the node for the overlay grid, setting its visibility based on the model.showGridProperty
-    this.interfaceLayer.addChild( new GridNode(
+    this.interfaceLayer.addChild( new SolarSystemCommonGridNode(
       this.modelViewTransformProperty,
       SolarSystemCommonConstants.GRID_SPACING,
       Vector2.ZERO,
       100,
       {
-        stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
+        tandem: options.tandem.createTandem( 'gridNode' ),
         visibleProperty: this.visibleProperties.gridVisibleProperty,
-        tandem: options.tandem.createTandem( 'gridNode' )
-      } ) );
+        boldOriginAxes: true,
+        gridNodeOptions: {
+          stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
+          tandem: options.tandem.createTandem( 'gridNode' )
+        }
+      }
+    ) );
 
     // UI Elements ===================================================================================================
 
