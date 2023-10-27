@@ -143,11 +143,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       {
         tandem: options.tandem.createTandem( 'gridNode' ),
         visibleProperty: this.visibleProperties.gridVisibleProperty,
-        boldOriginAxes: true,
-        gridNodeOptions: {
-          stroke: SolarSystemCommonColors.gridIconStrokeColorProperty,
-          tandem: options.tandem.createTandem( 'gridNode' )
-        }
+        boldOriginAxes: true
       }
     ) );
 
