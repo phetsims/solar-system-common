@@ -370,7 +370,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     let adjustedDT = dt * this.timeSpeedMap.get( this.timeSpeedProperty.value )! * this.timeScale;
 
     // Limit the number of steps to 50 per frame
-    const count = Math.ceil( adjustedDT / 0.02 );
+    const count = Math.ceil( adjustedDT / 0.0002 );
     adjustedDT /= count;
 
     for ( let i = 0; i < count; i++ ) {
