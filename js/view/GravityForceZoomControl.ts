@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * GravityZoomControl is the control for scaling the size of the gravity arrows. It is a labeled slider.
+ * GravityForceZoomControl is the control for scaling the size of the gravity arrows. It is a labeled slider.
  *
  * @author Agustín Vallejo
  */
@@ -23,7 +23,7 @@ const TICK_MARK_OPTIONS: RichTextOptions = {
   fill: SolarSystemCommonColors.foregroundProperty
 };
 
-export default class GravityZoomControl extends HBox {
+export default class GravityForceZoomControl extends HBox {
 
   public constructor( gravityForceScalePowerProperty: NumberProperty, gravityVisibleProperty: TReadOnlyProperty<boolean>, tandem: Tandem ) {
 
@@ -82,4 +82,4 @@ export default class GravityZoomControl extends HBox {
   }
 }
 
-solarSystemCommon.register( 'GravityZoomControl', GravityZoomControl );
+solarSystemCommon.register( 'GravityForceZoomControl', GravityForceZoomControl );
