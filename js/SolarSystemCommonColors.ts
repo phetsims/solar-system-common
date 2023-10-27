@@ -56,26 +56,30 @@ const SolarSystemCommonColors = {
     default: 'yellow',
     projector: '#FFAE00'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'body1ColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body1ColorProperty' ),
+    phetioFeatured: true
   } ),
 
   body2ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body2Color', {
     default: 'magenta'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'body2ColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body2ColorProperty' ),
+    phetioFeatured: true
   } ),
 
   body3ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body3Color', {
     default: 'cyan',
     projector: '#0055FF'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'body3ColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body3ColorProperty' ),
+    phetioFeatured: true
   } ),
 
   body4ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body4Color', {
     default: 'green'
   }, {
-    tandem: Tandem.COLORS.createTandem( 'body4ColorProperty' )
+    tandem: Tandem.COLORS.createTandem( 'body4ColorProperty' ),
+    phetioFeatured: true
   } ),
 
   explosionColorProperty: new ProfileColorProperty( solarSystemCommon, 'explosionColor', {

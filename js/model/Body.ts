@@ -123,7 +123,8 @@ export default class Body extends PhetioObject {
     this.isActiveProperty = new BooleanProperty( bodyInfo.isActive, {
       tandem: tandem.createTandem( 'isActiveProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'Whether this body is included in the orbital system, and is therefore visible on the screen.'
+      phetioFeatured: true,
+      phetioDocumentation: 'False if this body is not part of the selected orbital system, or if the body has collided and exploded.'
     } );
 
     this.isOffscreenProperty = new BooleanProperty( false, {
