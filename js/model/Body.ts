@@ -88,13 +88,15 @@ export default class Body extends PhetioObject {
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
-    this.positionProperty = new Vector2Property( bodyInfo.position, {
+    // bodyInfo.position.copy() because velocityProperty's value may be mutated directly
+    this.positionProperty = new Vector2Property( bodyInfo.position.copy(), {
       units: 'AU',
       tandem: tandem.createTandem( 'positionProperty' ),
       phetioFeatured: true
     } );
 
-    this.velocityProperty = new Vector2Property( bodyInfo.velocity, {
+    // bodyInfo.velocity.copy() because velocityProperty's value may be mutated directly
+    this.velocityProperty = new Vector2Property( bodyInfo.velocity.copy(), {
       units: 'km/s',
       tandem: tandem.createTandem( 'velocityProperty' ),
       phetioFeatured: true
@@ -212,8 +214,8 @@ export default class Body extends PhetioObject {
   public getBodyInfo(): BodyInfo {
     return new BodyInfo( {
       mass: this.massProperty.value,
-      position: this.positionProperty.value.copy(),
-      velocity: this.velocityProperty.value.copy(),
+      position: this.positionProperty.value.copy(), // copy because positionProperty value may be mutated directly
+      velocity: this.velocityProperty.value.copy(), // copy because positionProperty value may be mutated directly
       isActive: this.isActiveProperty.value
     } );
   }
