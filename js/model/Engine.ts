@@ -24,7 +24,7 @@ export default abstract class Engine {
   }
 
   // The child class should implement this method to advance time and update the bodies properties
-  public abstract run( dt: number, updateProperties: boolean ): void;
+  public abstract run( dt: number, notifyPropertyListeners: boolean ): void;
 
   // The child class should implement this method to update the system: run it, check for collisions, update forces.
   public abstract update( bodies: Body[] ): void;
