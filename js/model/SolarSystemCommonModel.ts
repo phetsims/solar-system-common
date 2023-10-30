@@ -369,7 +369,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.hasPlayedProperty.value = true;
     let adjustedDT = dt * this.timeSpeedMap.get( this.timeSpeedProperty.value )! * this.timeScale;
 
-    // Limit the number of steps to 50 per frame
+    // Number of steps is an arbitrary function of adjustedDT, where bigger adjustedDT results in more steps.
     const numberOfSteps = Math.ceil( adjustedDT / 0.0002 );
     adjustedDT /= numberOfSteps;
 
