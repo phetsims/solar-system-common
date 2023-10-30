@@ -62,8 +62,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       maxMagnitudeProperty: null,
       soundViewNode: null,
       mapPosition: _.identity,
-      dragVelocity: 450,
-      shiftDragVelocity: 100,
+      dragVelocity: 4500,
+      shiftDragVelocity: 1000,
       fill: SolarSystemCommonColors.velocityColorProperty,
 
       // VectorNodeOptions
