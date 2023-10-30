@@ -300,8 +300,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
         // Setting initial values and then resetting the body to make sure the body is in the correct state
         this.bodies[ i ].massProperty.setInitialValue( bodyInfo.mass );
-        this.bodies[ i ].positionProperty.setInitialValue( bodyInfo.position );
-        this.bodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity );
+        this.bodies[ i ].positionProperty.setInitialValue( bodyInfo.position.copy() );
+        this.bodies[ i ].velocityProperty.setInitialValue( bodyInfo.velocity.copy() );
         this.bodies[ i ].reset();
       }
       else {
