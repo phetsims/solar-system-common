@@ -370,13 +370,14 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     let adjustedDT = dt * this.timeSpeedMap.get( this.timeSpeedProperty.value )! * this.timeScale;
 
     // Limit the number of steps to 50 per frame
-    const count = Math.ceil( adjustedDT / 0.0002 );
-    adjustedDT /= count;
+    const numberOfSteps = Math.ceil( adjustedDT / 0.0002 );
+    adjustedDT /= numberOfSteps;
 
-    for ( let i = 0; i < count; i++ ) {
-      // Only modify the properties on the last step
-      const updateProperties = i === count - 1;
-      this.engine.run( adjustedDT, updateProperties );
+    for ( let i = 0; i < numberOfSteps; i++ ) {
+
+      // Only notify Body Property listeners on the last step, as a performance optimization.
+      const notifyPropertyListeners = ( i === numberOfSteps - 1 );
+      this.engine.run( adjustedDT, notifyPropertyListeners );
       this.engine.checkCollisions();
       this.timeProperty.value += adjustedDT * this.modelToViewTime;
       if ( this.addingPathPoints ) {
