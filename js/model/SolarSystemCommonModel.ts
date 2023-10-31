@@ -45,8 +45,8 @@ type SelfOptions<EngineType extends Engine> = {
   engineFactory: ( bodies: Body[] ) => EngineType;
   zoomLevelRange: RangeWithValue;
   defaultBodyInfo: BodyInfo[];
-  timeScale?: number;
-  modelToViewTime?: number;
+  engineTimeScale: number; // Scales down the normal dt (in seconds) to engine times
+  modelToViewTime?: number; // Scales times from model to view (years)
 
   // phetioReadOnly value for numberOfActiveBodiesProperty
   numberOfActiveBodiesPropertyPhetioReadOnly?: boolean;
@@ -83,7 +83,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly userInteractingEmitter = new Emitter();
 
   // Controls the velocity of time by scaling dt
-  public readonly timeScale: number;
+  public readonly engineTimeScale: number;
 
   // Transform between model's and view's times
   public readonly modelToViewTime: number;
@@ -129,7 +129,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
 
       // SelfOptions
-      timeScale: 0.05,
       modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER,
       numberOfActiveBodiesPropertyPhetioReadOnly: true
     }, providedOptions );
@@ -251,7 +250,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.engine.reset();
 
     // Time settings
-    this.timeScale = options.timeScale;
+    this.engineTimeScale = options.engineTimeScale;
     this.modelToViewTime = options.modelToViewTime;
 
     // Time Properties, grouped under a parent tandem
