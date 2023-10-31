@@ -99,9 +99,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
 
-  // Indicates whether the sim has been played at least once.
-  public readonly hasPlayedProperty: Property<boolean>;
-
   // Boolean that determines if more path points are going to be stored for subsequent display in the paths.
   // This does not need to be stateful because it will be set correctly when pathVisibleProperty is set.
   public addingPathPoints = false;
@@ -264,12 +261,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioDocumentation: 'True when the clock is running'
     } );
 
-    this.hasPlayedProperty = new BooleanProperty( false, {
-      tandem: timeTandem.createTandem( 'hasPlayedProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'True if the clock has been started at least once'
-    } );
-
     this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
       range: options.zoomLevelRange,
       numberType: 'Integer',
@@ -350,7 +341,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // Bodies move to their last modified position
   public restart(): void {
     this.isAnyBodyCollidedProperty.reset();
-    this.hasPlayedProperty.value = false;
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
     this.loadBodyInfo( this.startingBodyInfoProperty.value ); // Reset the bodies
@@ -365,26 +355,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.numberOfActiveBodiesProperty.value = this.activeBodies.length;
   }
 
-  public stepOnce( dt: number ): void {
-    this.hasPlayedProperty.value = true;
-    let adjustedDT = dt * this.timeSpeedMap.get( this.timeSpeedProperty.value )! * this.timeScale;
-
-    // Number of steps is an arbitrary function of adjustedDT, where bigger adjustedDT results in more steps.
-    const numberOfSteps = Math.ceil( adjustedDT / 0.0002 );
-    adjustedDT /= numberOfSteps;
-
-    for ( let i = 0; i < numberOfSteps; i++ ) {
-
-      // Only notify Body Property listeners on the last step, as a performance optimization.
-      const notifyPropertyListeners = ( i === numberOfSteps - 1 );
-      this.engine.run( adjustedDT, notifyPropertyListeners );
-      this.engine.checkCollisions();
-      this.timeProperty.value += adjustedDT * this.modelToViewTime;
-      if ( this.addingPathPoints ) {
-        this.activeBodies.forEach( body => body.addPathPoint() );
-      }
-    }
-  }
+  // The child class should implement this method to advance time and update the bodies properties
+  public abstract stepOnce( dt: number ): void;
 
   public step( dt: number ): void {
     this.update();
