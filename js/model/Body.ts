@@ -190,21 +190,29 @@ export default class Body extends PhetioObject {
   public addPathPoint(): void {
     const pathPoint = this.positionProperty.value.copy();
 
-    // Only add or remove points if the body is effectively moving
-    if ( this.pathPoints.length === 0 || !pathPoint.equals( this.pathPoints[ this.pathPoints.length - 1 ] ) ) {
+    if ( this.pathPoints.length === 0 ) {
+
+      // First point in the path, so no distance to add, and no need to check if the path length has exceeded limit.
       this.pathPoints.push( pathPoint );
+    }
+    else {
 
-      // Add the length to the tracked path length
-      if ( this.pathPoints.length >= 2 ) {
-        this.pathLengthProperty.value += pathPoint.distance( this.pathPoints[ this.pathPoints.length - 2 ] );
+      // The last point in the array that defines the path.
+      const lastPoint = this.pathPoints[ this.pathPoints.length - 1 ];
+
+      // Only add or remove points if the body is effectively moving.
+      if ( !pathPoint.equals( lastPoint ) ) {
+        this.pathPoints.push( pathPoint );
+
+        // Add the length to the tracked path length
+        this.pathLengthProperty.value += pathPoint.distance( lastPoint );
+
+        // Remove points from the path when the path length exceeds the limit.
+        while ( this.pathLengthProperty.value > SolarSystemCommonConstants.MAX_PATH_DISTANCE ) {
+          this.pathLengthProperty.value -= this.pathPoints[ 1 ].distance( this.pathPoints[ 0 ] );
+          this.pathPoints.shift();
+        }
       }
-
-      // Remove points from the path as the path gets too long
-      while ( this.pathLengthProperty.value > SolarSystemCommonConstants.MAX_PATH_DISTANCE ) {
-        this.pathLengthProperty.value -= this.pathPoints[ 1 ].distance( this.pathPoints[ 0 ] );
-        this.pathPoints.shift();
-      }
-
     }
   }
 
