@@ -109,7 +109,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // How much to scale the model-view transform when zooming in and out
   public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
-  // Indicates whether any Body has gone off-screen.
+  // Indicates whether any Body has gone off-screen or has collided an exploded.
+  // This controls the visibility of the 'Return Bodies' button in the view.
   public readonly bodiesAreReturnableProperty: TReadOnlyProperty<boolean>;
 
   // Indicates whether any Body has collided with another Body.
@@ -192,8 +193,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioFeatured: !options.numberOfActiveBodiesPropertyPhetioReadOnly // featured if it's not readonly
     } );
 
-    this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
-
     this.gravityForceScalePowerProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 ),
       tandem: options.tandem.createTandem( 'gravityForceScalePowerProperty' ),
@@ -216,6 +215,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       phetioReadOnly: true,
       phetioDocumentation: 'For internal use only'
     } );
+
+    this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
 
     this.bodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
