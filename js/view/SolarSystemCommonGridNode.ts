@@ -33,7 +33,7 @@ export default class SolarSystemCommonGridNode extends Node {
     transformProperty: TReadOnlyProperty<ModelViewTransform2>,
     spacing: number,
     center: Vector2,
-    numGridLines: number,
+    numberOfGridLines: number,
     providedOptions?: SolarSystemCommonGridNodeOptions ) {
 
     const options = optionize<SolarSystemCommonGridNodeOptions, SelfOptions, NodeOptions>()( {
@@ -42,7 +42,7 @@ export default class SolarSystemCommonGridNode extends Node {
     }, providedOptions );
 
     // The primary grid lines
-    const gridNode = new GridNode( transformProperty, spacing, center, numGridLines, {
+    const gridNode = new GridNode( transformProperty, spacing, center, numberOfGridLines, {
       lineWidth: GRID_NODE_LINE_WIDTH,
       stroke: STROKE_PROPERTY
     } );
@@ -56,7 +56,7 @@ export default class SolarSystemCommonGridNode extends Node {
       transformProperty.link( ( transform: ModelViewTransform2 ) => {
         const shape = new Shape();
 
-        const axisLength = numGridLines * spacing;
+        const axisLength = numberOfGridLines * spacing;
         shape.moveTo( center.x - axisLength, center.y ).lineTo( center.x + axisLength, center.y ); // horizontal line
         shape.moveTo( center.x, center.y - axisLength ).lineTo( center.x, center.y + axisLength ); // vertical line
 

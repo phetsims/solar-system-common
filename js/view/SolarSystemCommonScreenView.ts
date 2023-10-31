@@ -132,17 +132,18 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       } );
 
     // Add the node for the overlay grid, setting its visibility based on the model.showGridProperty
-    this.interfaceLayer.addChild( new SolarSystemCommonGridNode(
+    const gridNode = new SolarSystemCommonGridNode(
       this.modelViewTransformProperty,
-      SolarSystemCommonConstants.GRID_SPACING,
-      Vector2.ZERO,
-      100,
+      SolarSystemCommonConstants.GRID_SPACING, // spacing
+      Vector2.ZERO, // center
+      100, // numberOfGridLines
       {
         tandem: options.tandem.createTandem( 'gridNode' ),
         visibleProperty: this.visibleProperties.gridVisibleProperty,
         boldOriginAxes: true
       }
-    ) );
+    );
+    this.interfaceLayer.addChild( gridNode );
 
     // Sound =========================================================================================================
 
