@@ -193,9 +193,9 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       touchAreaDilation: 10,
       tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );
-    this.visibleBoundsProperty.link( visibleBounds => {
-      this.resetAllButton.right = visibleBounds.right - SolarSystemCommonConstants.SCREEN_VIEW_X_MARGIN;
-      this.resetAllButton.bottom = visibleBounds.bottom - SolarSystemCommonConstants.SCREEN_VIEW_Y_MARGIN;
+    this.interfaceBoundsProperty.link( interfaceBounds => {
+      this.resetAllButton.right = interfaceBounds.right - SolarSystemCommonConstants.SCREEN_VIEW_X_MARGIN;
+      this.resetAllButton.bottom = interfaceBounds.bottom - SolarSystemCommonConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
     Multilink.multilink(
