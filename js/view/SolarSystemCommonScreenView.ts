@@ -31,7 +31,7 @@ import { Shape } from '../../../kite/js/imports.js';
 import SolarSystemCommonVisibleProperties from './SolarSystemCommonVisibleProperties.js';
 import SolarSystemCommonGridNode from './SolarSystemCommonGridNode.js';
 
-export type BodyBoundsItem = {
+export type DragBoundsItem = {
   node: Node;
   expandX: 'left' | 'right';
   expandY: 'top' | 'bottom';
@@ -208,9 +208,9 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
   }
 
   /**
-   * Return the bounds items that should be used to constrain the areas for body dragging.
+   * Return the bounds items that should be used to constrain the areas for dragging.
    */
-  protected getBodyBoundsItems(): BodyBoundsItem[] {
+  protected getDragBoundsItems(): DragBoundsItem[] {
     return [
       {
         node: this.resetAllButton,
@@ -220,40 +220,41 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     ];
   }
 
-  protected constrainBoundaryViewPoint( point: Vector2, radius: number ): Vector2 {
+  /**
+   * Constrains dragging of BodyNode and DraggableVectorNode instances.
+   * @param point - the drag point, in model coordinates
+   * @param radius - the radius of the thing being dragged, in view coordinates
+   */
+  protected constrainDragPoint( point: Vector2, radius: number ): Vector2 {
 
-    const bodyBoundsItems = this.getBodyBoundsItems();
+    const dragBoundsItems = this.getDragBoundsItems();
 
-    if ( !_.every( [ this.dragDebugPath, ...bodyBoundsItems.map( item => item.node ) ] ) ) {
+    if ( !_.every( [ this.dragDebugPath, ...dragBoundsItems.map( item => item.node ) ] ) ) {
       return point;
     }
 
     const modelViewTransform = this.modelViewTransformProperty.value;
     const interfaceBounds = this.interfaceBoundsProperty.value;
 
-    const expandToLeft = ( bounds: Bounds2 ) => bounds.withMinX( interfaceBounds.minX );
-    const expandToRight = ( bounds: Bounds2 ) => bounds.withMaxX( interfaceBounds.maxX );
-    const expandToTop = ( bounds: Bounds2 ) => bounds.withMinY( interfaceBounds.minY );
-    const expandToBottom = ( bounds: Bounds2 ) => bounds.withMaxY( interfaceBounds.maxY );
-
     let shape = Shape.bounds( modelViewTransform.viewToModelBounds( interfaceBounds.eroded( radius ) ) );
 
-    bodyBoundsItems.forEach( item => {
+    dragBoundsItems.forEach( item => {
       if ( item.node.visible ) {
         let viewBounds = this.boundsOf( item.node );
         if ( viewBounds.isValid() ) {
+
           if ( item.expandX === 'left' ) {
-            viewBounds = expandToLeft( viewBounds );
+            viewBounds = viewBounds.withMinX( interfaceBounds.minX ); // expand to left
           }
           else if ( item.expandX === 'right' ) {
-            viewBounds = expandToRight( viewBounds );
+            viewBounds = viewBounds.withMaxX( interfaceBounds.maxX ); // expand to right
           }
 
           if ( item.expandY === 'top' ) {
-            viewBounds = expandToTop( viewBounds );
+            viewBounds = viewBounds.withMinY( interfaceBounds.minY ); // expand to top
           }
           else if ( item.expandY === 'bottom' ) {
-            viewBounds = expandToBottom( viewBounds );
+            viewBounds = viewBounds.withMaxY( interfaceBounds.maxY ); // expand to bottom
           }
 
           const modelBounds = modelViewTransform.viewToModelBounds( viewBounds.dilated( radius ) );
