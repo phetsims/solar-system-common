@@ -18,7 +18,7 @@ import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2
 import { Shape } from '../../../kite/js/imports.js';
 
 const STROKE_PROPERTY = SolarSystemCommonColors.gridIconStrokeColorProperty;
-const GRID_NODE_LINE_WIDTH = 1;
+const GRID_NODE_LINE_WIDTH = 0.5;
 const ORIGIN_AXES_LINE_WIDTH = 2;
 
 type SelfOptions = {
