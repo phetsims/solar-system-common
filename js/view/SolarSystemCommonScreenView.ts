@@ -59,9 +59,8 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
   // Transforms between model coordinates and view coordinates
   protected readonly modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>;
 
-  // Derived from visibleBoundsProperty to keep the UI elements centered on narrow screens
-  // Tracks only the vertical bounds and constrains them to layoutBounds
-  protected readonly availableBoundsProperty: TReadOnlyProperty<Bounds2>;
+  // Used for layout of UI elements, mostly things in interfaceLayer. Matches visibleBounds horizontally, layoutBounds vertically.
+  protected readonly interfaceBoundsProperty: TReadOnlyProperty<Bounds2>;
 
   protected readonly resetAllButton: ResetAllButton;
 
@@ -91,11 +90,9 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       this.addChild( this.dragDebugPath );
     }
 
-    this.availableBoundsProperty = new DerivedProperty(
-      [ this.visibleBoundsProperty ],
-      visibleBounds => {
-        return visibleBounds.withMinY( this.layoutBounds.minY ).withMaxY( this.layoutBounds.maxY );
-      }
+    // Matches visibleBounds horizontally, layoutBounds vertically
+    this.interfaceBoundsProperty = new DerivedProperty( [ this.visibleBoundsProperty ],
+      visibleBounds => visibleBounds.withMinY( this.layoutBounds.minY ).withMaxY( this.layoutBounds.maxY )
     );
 
     this.addChild( this.bottomLayer );
