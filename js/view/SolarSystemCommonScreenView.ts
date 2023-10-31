@@ -144,8 +144,9 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       }
     ) );
 
-    // UI Elements ===================================================================================================
+    // Sound =========================================================================================================
 
+    // Sounds used for draggable UI elements
     const dragClipOptions = {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     };
@@ -153,6 +154,8 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     const releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
     soundManager.addSoundGenerator( grabClip );
     soundManager.addSoundGenerator( releaseClip );
+
+    // UI Elements ===================================================================================================
 
     // Measuring tape units must update dynamically when AUStringProperty changes.
     const measuringTapeUnitsProperty = new DerivedProperty( [ SolarSystemCommonStrings.units.AUStringProperty ],
@@ -184,6 +187,15 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     } );
     this.topLayer.addChild( this.measuringTapeNode );
 
+    // Constrain dragging of measuringTapeNode to visibleBounds.
+    Multilink.multilink(
+      [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
+      ( visibleBounds, modelViewTransform ) => {
+        this.measuringTapeNode.setDragBounds( modelViewTransform.viewToModelBounds( visibleBounds.eroded( 10 ) ) );
+        this.measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
+      }
+    );
+
     // NOTE: It is the responsibility of the subclass to add resetAllButton to the scene graph.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -197,14 +209,11 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       this.resetAllButton.right = interfaceBounds.right - SolarSystemCommonConstants.SCREEN_VIEW_X_MARGIN;
       this.resetAllButton.bottom = interfaceBounds.bottom - SolarSystemCommonConstants.SCREEN_VIEW_Y_MARGIN;
     } );
+  }
 
-    Multilink.multilink(
-      [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
-      ( visibleBounds, modelViewTransform ) => {
-        this.measuringTapeNode.setDragBounds( modelViewTransform.viewToModelBounds( visibleBounds.eroded( 10 ) ) );
-        this.measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
-      }
-    );
+  public reset(): void {
+    this.interruptSubtreeInput(); // cancel interactions that may be in progress
+    this.visibleProperties.reset();
   }
 
   /**
@@ -275,11 +284,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     else {
       return shape.getClosestPoint( point );
     }
-  }
-
-  public reset(): void {
-    this.interruptSubtreeInput(); // cancel interactions that may be in progress
-    this.visibleProperties.reset();
   }
 }
 
