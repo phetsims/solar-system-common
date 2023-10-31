@@ -136,7 +136,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       this.modelViewTransformProperty,
       SolarSystemCommonConstants.GRID_SPACING, // spacing
       Vector2.ZERO, // center
-      100, // numberOfGridLines
+      60, // numberOfGridLines
       {
         tandem: options.tandem.createTandem( 'gridNode' ),
         visibleProperty: this.visibleProperties.gridVisibleProperty,
