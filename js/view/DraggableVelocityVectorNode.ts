@@ -147,17 +147,15 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     };
 
     const dragListener = new DragListener( {
-      transform: transformProperty,
-      mapPosition: point => {
-        return options.mapPosition( point, circleOuterRadius );
-      },
       positionProperty: velocityCirclePositionProperty,
-      canStartPress: () => !body.userIsControllingVelocityProperty.value,
+      transform: transformProperty,
+      mapPosition: point => options.mapPosition( point, circleOuterRadius ),
       start: () => {
         keyboardDragListener.interrupt();
         start();
       },
       end: end,
+      canStartPress: () => !body.userIsControllingVelocityProperty.value,
       tandem: options.tandem.createTandem( 'dragListener' )
     } );
     grabArea.addInputListener( dragListener );
@@ -169,13 +167,13 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     const keyboardDragListener = new KeyboardDragListener( {
       positionProperty: velocityProperty,
       transform: transformProperty,
-      dragVelocity: options.dragVelocity,
-      shiftDragVelocity: options.shiftDragVelocity,
       start: () => {
         dragListener.interrupt();
         start();
       },
       end: end,
+      shiftDragVelocity: options.shiftDragVelocity,
+      dragVelocity: options.dragVelocity,
       tandem: options.tandem.createTandem( 'keyboardDragListener' )
     } );
     this.addInputListener( keyboardDragListener );
