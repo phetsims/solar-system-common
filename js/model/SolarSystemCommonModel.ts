@@ -226,14 +226,24 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       Multilink.lazyMultilink(
         [ body.userIsControllingPositionProperty, body.userIsControllingVelocityProperty, body.userIsControllingMassProperty ],
         ( userIsControllingPosition: boolean, userIsControllingVelocity: boolean, userIsControllingMass: boolean ) => {
+
+          // It's OK to keep playing when the user is changing mass.
           if ( userIsControllingPosition || userIsControllingVelocity ) {
             this.isPlayingProperty.value = false;
           }
-          if ( !this.bodiesAreReturnableProperty.value ) {
+
+          if ( userIsControllingPosition || userIsControllingVelocity || userIsControllingMass ) {
+
+            // The user has started changing one or more of the body Properties.
+            this.userInteractingEmitter.emit();
+            this.userHasInteractedProperty.value = true;
+          }
+          else if ( !this.bodiesAreReturnableProperty.value ) {
+
+            // The user has finished changing one or more of the body Properties, and the 'Return Bodies' button
+            // is not visible.
             this.saveStartingBodyInfo();
           }
-          this.userInteractingEmitter.emit();
-          this.userHasInteractedProperty.value = true;
         } );
     } );
 
