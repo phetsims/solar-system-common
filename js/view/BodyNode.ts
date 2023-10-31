@@ -182,28 +182,28 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         body.userIsControllingPositionProperty.value = false;
         this.releaseClip.play();
       };
-      const map = ( point: Vector2 ) => {
-        return options.mapPosition( point, this.radius );
-      };
+
+      // Constrain dragging for DragListener and KeyboardDragListener.
+      const map = ( point: Vector2 ) => options.mapPosition( point, this.radius );
 
       const bodyDragListener = new DragListener( {
         positionProperty: body.positionProperty,
-        canStartPress: () => !body.userIsControllingPositionProperty.value,
-        mapPosition: map,
         transform: modelViewTransformProperty,
+        mapPosition: map,
         start: start,
-        end: end
+        end: end,
+        canStartPress: () => !body.userIsControllingPositionProperty.value
       } );
       this.addInputListener( bodyDragListener );
 
       const keyboardDragListener = new KeyboardDragListener( {
         positionProperty: body.positionProperty,
         transform: modelViewTransformProperty,
-        dragVelocity: options.dragVelocity,
-        shiftDragVelocity: options.shiftDragVelocity,
+        mapPosition: map,
         start: start,
         end: end,
-        mapPosition: map
+        dragVelocity: options.dragVelocity,
+        shiftDragVelocity: options.shiftDragVelocity
       } );
       this.addInputListener( keyboardDragListener );
     }
