@@ -82,9 +82,10 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
 
     super( options );
 
+    // Show dragDebugPath if running with &dev. Shape is set by constrainBoundaryViewPoint.
     this.dragDebugPath = new Path( null, {
       stroke: 'red',
-      fill: 'rgba(255,0,0,0.2)'
+      fill: 'rgba( 255, 0, 0, 0.2 )'
     } );
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( this.dragDebugPath );
@@ -227,15 +228,15 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       return point;
     }
 
-    const mvt = this.modelViewTransformProperty.value;
+    const modelViewTransform = this.modelViewTransformProperty.value;
+    const interfaceBounds = this.interfaceBoundsProperty.value;
 
-    const expandToTop = ( bounds: Bounds2 ) => bounds.withMinY( this.layoutBounds.minY );
-    const expandToBottom = ( bounds: Bounds2 ) => bounds.withMaxY( this.layoutBounds.maxY );
-    const expandToLeft = ( bounds: Bounds2 ) => bounds.withMinX( this.visibleBoundsProperty.value.minX );
-    const expandToRight = ( bounds: Bounds2 ) => bounds.withMaxX( this.visibleBoundsProperty.value.maxX );
+    const expandToLeft = ( bounds: Bounds2 ) => bounds.withMinX( interfaceBounds.minX );
+    const expandToRight = ( bounds: Bounds2 ) => bounds.withMaxX( interfaceBounds.maxX );
+    const expandToTop = ( bounds: Bounds2 ) => bounds.withMinY( interfaceBounds.minY );
+    const expandToBottom = ( bounds: Bounds2 ) => bounds.withMaxY( interfaceBounds.maxY );
 
-    // Use visible bounds (horizontally) and layout bounds (vertically) to create the main shape
-    let shape = Shape.bounds( mvt.viewToModelBounds( expandToLeft( expandToRight( this.layoutBounds ) ).eroded( radius ) ) );
+    let shape = Shape.bounds( modelViewTransform.viewToModelBounds( interfaceBounds.eroded( radius ) ) );
 
     bodyBoundsItems.forEach( item => {
       if ( item.node.visible ) {
@@ -255,16 +256,16 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
             viewBounds = expandToBottom( viewBounds );
           }
 
-          const modelBounds = mvt.viewToModelBounds( viewBounds.dilated( radius ) );
+          const modelBounds = modelViewTransform.viewToModelBounds( viewBounds.dilated( radius ) );
 
           shape = shape.shapeDifference( Shape.bounds( modelBounds ) );
         }
       }
     } );
 
-    // Only show drag debug path if ?dev is specified, temporarily for https://github.com/phetsims/my-solar-system/issues/129
+    // Update dragDebugPath if running with &dev
     if ( phet.chipper.queryParameters.dev ) {
-      this.dragDebugPath.shape = mvt.modelToViewShape( shape );
+      this.dragDebugPath.shape = modelViewTransform.modelToViewShape( shape );
     }
 
     if ( shape.containsPoint( point ) || shape.getArea() === 0 ) {
