@@ -42,7 +42,7 @@ export default class SolarSystemCommonGridNode extends Node {
     }, providedOptions );
 
     // The primary grid lines
-    const gridNode = new GridNode( transformProperty, spacing, center, 100, {
+    const gridNode = new GridNode( transformProperty, spacing, center, numGridLines, {
       lineWidth: GRID_NODE_LINE_WIDTH,
       stroke: STROKE_PROPERTY
     } );
