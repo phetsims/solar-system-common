@@ -22,10 +22,13 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type SolarSystemCommonNumberControlOptions = SelfOptions & StrictOmit<NumberControlOptions, 'isDisposable'>;
+export type SolarSystemCommonNumberControlOptions = SelfOptions &
+  StrictOmit<NumberControlOptions, 'isDisposable'> &
+  PickRequired<NumberControlOptions, 'tandem'>;
 
 export default class SolarSystemCommonNumberControl extends NumberControl {
 
