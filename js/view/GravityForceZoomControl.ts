@@ -55,8 +55,8 @@ export default class GravityForceZoomControl extends HBox {
       accessibleName: SolarSystemCommonStrings.a11y.scaleSliderStringProperty,
       valueChangeSoundGeneratorOptions: {
         numberOfMiddleThresholds: ( rangeMax - rangeMin ) / rangeStep - 1
-      }
-      // Do not instrument for PhET-iO
+      },
+      tandem: Tandem.OPT_OUT
     } );
 
     slider.addMajorTick( rangeMin, new RichText( MathSymbols.TIMES + `10<sup>${rangeMin}</sup`, TICK_MARK_OPTIONS ) );
