@@ -60,7 +60,9 @@ type SelfOptions = {
   // Options for the speed display rectangle
   rectangleOptions?: RectangleOptions;
   textOptions?: TextOptions;
-  useCueingArrows?: boolean;
+
+  // Visible property for the cueing arrows
+  cueingArrowsVisibleProperty?: TReadOnlyProperty<boolean> | null;
 
   showVelocityIndex?: boolean;
 
@@ -79,7 +81,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
   public constructor( body: Body,
                       modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>,
-                      userHasInteractedProperty: TReadOnlyProperty<boolean>,
                       providedOptions?: BodyNodeOptions ) {
     const accessibleName = `Body ${body.index}`;
 
@@ -100,7 +101,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         maxWidth: 200,
         font: new PhetFont( 16 )
       },
-      useCueingArrows: false,
+      cueingArrowsVisibleProperty: null,
       showVelocityIndex: true,
       soundViewNode: null,
 
@@ -243,12 +244,11 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     this.body.collidedEmitter.addListener( bodyCollisionListener );
 
     // Optional cueing arrows
-    if ( options.useCueingArrows ) {
-      const cueingVisibleProperty = new DerivedProperty( [ userHasInteractedProperty ], wasDragged => ( options.draggable && !wasDragged ) );
+    if ( options.cueingArrowsVisibleProperty ) {
       const cueingArrowsNode = new CueingArrowsNode( {
         bodyRadius: this.radius,
         fill: options.mainColor,
-        visibleProperty: cueingVisibleProperty
+        visibleProperty: options.cueingArrowsVisibleProperty
       } );
       this.addChild( cueingArrowsNode );
     }

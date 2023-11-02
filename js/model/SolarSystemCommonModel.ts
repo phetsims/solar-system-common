@@ -76,9 +76,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // The engine that will run all the physical calculations, including body interactions and collisions
   public readonly engine: EngineType;
 
-  // Indicates whether the user has interacted with the bodies of the simulation (changing position, mass or velocity)
-  public readonly userHasInteractedProperty: Property<boolean>;
-
   // Emitter that fires when the user interaction starts
   public readonly userInteractingEmitter = new Emitter();
 
@@ -209,12 +206,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
         return ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
       } ) );
 
-    this.userHasInteractedProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'userHasInteractedProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'For internal use only'
-    } );
-
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
 
     this.bodies.forEach( body => {
@@ -225,20 +216,16 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       Multilink.lazyMultilink(
         [ body.userIsControllingPositionProperty, body.userIsControllingVelocityProperty, body.userIsControllingMassProperty ],
         ( userIsControllingPosition: boolean, userIsControllingVelocity: boolean, userIsControllingMass: boolean ) => {
-
           // It's OK to keep playing when the user is changing mass.
           if ( userIsControllingPosition || userIsControllingVelocity ) {
             this.isPlayingProperty.value = false;
           }
 
           if ( userIsControllingPosition || userIsControllingVelocity || userIsControllingMass ) {
-
             // The user has started changing one or more of the body Properties.
             this.userInteractingEmitter.emit();
-            this.userHasInteractedProperty.value = true;
           }
           else if ( !this.bodiesAreReturnableProperty.value ) {
-
             // The user has finished changing one or more of the body Properties, and the 'Return Bodies' button
             // is not visible.
             this.saveStartingBodyInfo();
@@ -343,8 +330,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     this.startingBodyInfoProperty.value = this.defaultBodyInfo;
     this.restart();
-
-    this.userHasInteractedProperty.reset();
   }
 
   // Restart is for when the time controls are brought back to 0
