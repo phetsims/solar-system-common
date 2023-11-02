@@ -78,7 +78,7 @@ export default class BodyInfo {
     fromStateObject: stateObject => new BodyInfo( {
       isActive: stateObject.isActive,
       mass: stateObject.mass,
-      massRange: Range.RangeIO.fromStateObject( stateObject.massRange ),
+      massRange: Range.fromStateObject( stateObject.massRange ),
       position: Vector2.fromStateObject( stateObject.position ),
       velocity: Vector2.fromStateObject( stateObject.velocity ),
       tandemName: stateObject.tandemName || undefined
