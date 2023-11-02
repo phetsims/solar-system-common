@@ -101,7 +101,8 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         xMargin: 5
       },
       innerContent: SolarSystemCommonStrings.a11y.restartStringProperty,
-      tandem: providedOptions.tandem.createTandem( 'restartButton' )
+      tandem: providedOptions.tandem.createTandem( 'restartButton' ),
+      phetioVisiblePropertyInstrumented: false // there's no reason to hide this button
     } );
 
     this.addChild( restartButton );
