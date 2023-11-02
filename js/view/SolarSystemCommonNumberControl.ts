@@ -63,7 +63,8 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         trackStroke: SolarSystemCommonColors.foregroundProperty,
 
         //a11y
-        accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty
+        accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty,
+        tandem: Tandem.OPT_OUT
       },
       titleNodeOptions: {
         tandem: Tandem.OPT_OUT
