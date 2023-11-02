@@ -187,15 +187,16 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       // Constrain dragging for DragListener and KeyboardDragListener.
       const map = ( point: Vector2 ) => options.mapPosition( point, this.radius );
 
-      const bodyDragListener = new DragListener( {
+      const dragListener = new DragListener( {
         positionProperty: body.positionProperty,
         transform: modelViewTransformProperty,
         mapPosition: map,
         start: start,
         end: end,
-        canStartPress: () => !body.userIsControllingPositionProperty.value
+        canStartPress: () => !body.userIsControllingPositionProperty.value,
+        tandem: options.tandem.createTandem( 'dragListener' )
       } );
-      this.addInputListener( bodyDragListener );
+      this.addInputListener( dragListener );
 
       const keyboardDragListener = new KeyboardDragListener( {
         positionProperty: body.positionProperty,
@@ -204,7 +205,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         start: start,
         end: end,
         dragVelocity: options.dragVelocity,
-        shiftDragVelocity: options.shiftDragVelocity
+        shiftDragVelocity: options.shiftDragVelocity,
+        tandem: options.tandem.createTandem( 'keyboardDragListener' )
       } );
       this.addInputListener( keyboardDragListener );
     }
