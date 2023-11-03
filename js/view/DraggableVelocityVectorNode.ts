@@ -153,7 +153,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       start: () => {
         keyboardDragListener.interrupt();
         start();
-        console.log( 'start', velocityCirclePositionProperty.value );
       },
       end: end,
       canStartPress: () => !body.userIsControllingVelocityProperty.value,
@@ -187,7 +186,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     } );
 
     velocityCirclePositionProperty.link( velocityCirclePosition => {
-      console.log( 'link', velocityCirclePositionProperty.value );
 
       // The velocity is obtained by scaling down the view velocity arrow by the VELOCITY_TO_VIEW_MULTIPLIER
       const newVelocity = velocityCirclePosition.minus( positionProperty.value ).dividedScalar( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER );
