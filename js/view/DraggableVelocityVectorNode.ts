@@ -185,7 +185,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       labelText.visible = inputEnabled;
     } );
 
-    velocityCirclePositionProperty.link( velocityCirclePosition => {
+    velocityCirclePositionProperty.lazyLink( velocityCirclePosition => {
 
       // The velocity is obtained by scaling down the view velocity arrow by the VELOCITY_TO_VIEW_MULTIPLIER
       const newVelocity = velocityCirclePosition.minus( positionProperty.value ).dividedScalar( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER );
