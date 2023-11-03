@@ -62,8 +62,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       maxMagnitudeProperty: null,
       soundViewNode: null,
       mapPosition: _.identity,
-      dragVelocity: 4500,
-      shiftDragVelocity: 1000,
+      dragVelocity: 450,
+      shiftDragVelocity: 100,
       fill: SolarSystemCommonColors.velocityColorProperty,
 
       // VectorNodeOptions
@@ -133,8 +133,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     this.addChild( grabArea );
     this.addChild( labelText );
 
-    // This represents the model coordinates of where the 'V' circle appears
-    const velocityCirclePositionProperty = new Vector2Property( this.tipPositionProperty.value );
+    // This represents the model coordinates of where the 'V' circle appears, it is linked down below
+    const velocityCirclePositionProperty = new Vector2Property( transformProperty.value.viewToModelPosition( this.tipPositionProperty.value ) );
 
     // Add the drag handler
     const start = () => {
@@ -153,6 +153,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       start: () => {
         keyboardDragListener.interrupt();
         start();
+        console.log( 'start', velocityCirclePositionProperty.value );
       },
       end: end,
       canStartPress: () => !body.userIsControllingVelocityProperty.value,
@@ -165,8 +166,9 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     labelText.moveToBack();
 
     const keyboardDragListener = new KeyboardDragListener( {
-      positionProperty: velocityProperty,
+      positionProperty: velocityCirclePositionProperty,
       transform: transformProperty,
+      mapPosition: point => options.mapPosition( point, circleOuterRadius ),
       start: () => {
         dragListener.interrupt();
         start();
@@ -184,7 +186,9 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       labelText.visible = inputEnabled;
     } );
 
-    velocityCirclePositionProperty.lazyLink( velocityCirclePosition => {
+    velocityCirclePositionProperty.link( velocityCirclePosition => {
+      console.log( 'link', velocityCirclePositionProperty.value );
+
       // The velocity is obtained by scaling down the view velocity arrow by the VELOCITY_TO_VIEW_MULTIPLIER
       const newVelocity = velocityCirclePosition.minus( positionProperty.value ).dividedScalar( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER );
 
