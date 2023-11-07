@@ -151,7 +151,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       tandem: options.tandem.createTandem( 'activeBodies' ),
       phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
       phetioReadOnly: true,
-      phetioDocumentation: 'The set of bodies that are currently active, and thus visible on the screen.'
+      phetioDocumentation: 'The set of bodies that part of the selected orbital system, and are thus visible on the screen.'
     } );
 
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
@@ -186,7 +186,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       range: new Range( 1, this.bodies.length ),
       tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' ),
       phetioReadOnly: options.numberOfActiveBodiesPropertyPhetioReadOnly,
-      phetioFeatured: !options.numberOfActiveBodiesPropertyPhetioReadOnly // featured if it's not readonly
+      phetioFeatured: !options.numberOfActiveBodiesPropertyPhetioReadOnly, // featured if it's not readonly
+      phetioDocumentation: 'The number of bodies that are present in the orbital system shown on the screen'
     } );
 
     this.gravityForceScalePowerProperty = new NumberProperty( 0, {
@@ -245,7 +246,8 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.timeProperty = new NumberProperty( 0, {
       units: 'years',
       tandem: timeTandem.createTandem( 'timeProperty' ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioDocumentation: 'The model time, in years'
     } );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {

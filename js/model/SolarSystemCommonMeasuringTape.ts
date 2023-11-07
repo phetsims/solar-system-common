@@ -44,13 +44,15 @@ export default class SolarSystemCommonMeasuringTape extends PhetioObject {
     this.basePositionProperty = new Vector2Property( options.basePosition, {
       units: 'AU',
       tandem: options.tandem.createTandem( 'basePositionProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'Position of the measuring tape\'s base, or body'
     } );
 
     this.tipPositionProperty = new Vector2Property( options.tipPosition, {
       units: 'AU',
       tandem: options.tandem.createTandem( 'tipPositionProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'Position of the tip of the measuring tape\'s retractable tape'
     } );
   }
 
