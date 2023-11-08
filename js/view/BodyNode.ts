@@ -261,11 +261,14 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     // Stop sound when the associated Body becomes inactive.
     body.isActiveProperty.link( isActive => !isActive && this.stopSound() );
+
+    this.body.accelerationProperty.link( acceleration => {
+      this.soundClip.setOutputLevel( acceleration.magnitude / 2000 );
+    } );
   }
 
   public playSound(): void {
     if ( this.body.isActiveProperty.value ) {
-      this.soundClip.setOutputLevel( this.body.accelerationProperty.value.magnitude / 2000 );
       this.soundClip.play();
     }
     else {
