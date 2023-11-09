@@ -204,7 +204,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
       () => !!_.find( this.bodies, body => {
         const magnitudeLog = Math.log10( body.gravityForceProperty.value.magnitude );
         // 3.2 is the magnitude at which the vector starts being too small to see
-        return ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
+        return body.isActiveProperty.value && ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
       } ) );
 
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
