@@ -208,7 +208,8 @@ export default class Body extends PhetioObject {
         this.pathLengthProperty.value += pathPoint.distance( lastPoint );
 
         // Remove points from the path when the path length exceeds the limit.
-        while ( this.pathLengthProperty.value > SolarSystemCommonConstants.MAX_PATH_DISTANCE ) {
+        while ( ( this.pathLengthProperty.value > SolarSystemCommonConstants.MAX_PATH_DISTANCE ) ||
+                ( this.pathPoints.length > SolarSystemCommonConstants.MAX_PATH_POINTS ) ) {
           this.pathLengthProperty.value -= this.pathPoints[ 1 ].distance( this.pathPoints[ 0 ] );
           this.pathPoints.shift();
         }

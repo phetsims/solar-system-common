@@ -74,6 +74,7 @@ const SolarSystemCommonConstants = {
   INITIAL_VECTOR_OFFSCALE: -2.7, // The initial offscale value for the gravity vector arrows
 
   MAX_PATH_DISTANCE: 20, // Maximum distance of the drawn path behind the body
+  MAX_PATH_POINTS: 5800, // Maximum number of points in the path
 
   // Multipliers that map from non-standard model units to standard units
   POSITION_MULTIPLIER: POSITION_MULTIPLIER, // Transforms from model units to AU
