@@ -67,15 +67,15 @@ export default class BodySoundManager {
     soundManager.addSoundGenerator( this.bodyCollidedSoundClip );
   }
 
-  public playBodyAddedSound( bodyNumber: number ): void {
-    const soundClip = this.bodyAddedSoundClips[ bodyNumber ];
-    assert && assert( soundClip, `No soundClip found for bodyNumber ${bodyNumber}` );
+  public playBodyAddedSound( numberOfBodies: number ): void {
+    const soundClip = this.bodyAddedSoundClips[ numberOfBodies - 1 ];
+    assert && assert( soundClip, `No soundClip found for numberOfBodies ${numberOfBodies}` );
     soundClip.play();
   }
 
-  public playBodyRemovedSound( bodyNumber: number ): void {
-    const soundClip = this.bodyRemovedSoundClips[ bodyNumber ];
-    assert && assert( soundClip, `No soundClip found for bodyNumber ${bodyNumber}` );
+  public playBodyRemovedSound( numberOfBodies: number ): void {
+    const soundClip = this.bodyRemovedSoundClips[ numberOfBodies - 1 ];
+    assert && assert( soundClip, `No soundClip found for numberOfBodies ${numberOfBodies}` );
     soundClip.play();
   }
 
