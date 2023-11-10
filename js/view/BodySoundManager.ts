@@ -27,12 +27,11 @@ const bodyNumberSounds = [
   Mass_Selection_4_mp3
 ];
 
-// Sounds for when the bodies are reduced from the number control or collision
+// Sounds for when the bodies are reduced from the number control
 const removalSounds = [
   Bodies_Collide_Absorb_2_to_1_mp3,
   Bodies_Collide_Absorb_3_to_2_mp3,
-  Bodies_Collide_Absorb_4_to_3_mp3,
-  Collision_Sound_mp3
+  Bodies_Collide_Absorb_4_to_3_mp3
 ];
 
 export default class BodySoundManager {
@@ -45,6 +44,9 @@ export default class BodySoundManager {
   // Sounds for the removal of bodies (different for every resulting number of bodies after each removal)
   private readonly removalSoundClips: SoundClip[];
 
+  // Played when bodies collide
+  private readonly collidedSoundClip: SoundClip;
+
   public constructor( model: SolarSystemCommonModel ) {
     this.model = model;
 
@@ -56,11 +58,13 @@ export default class BodySoundManager {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
+    this.collidedSoundClip = new SoundClip( Collision_Sound_mp3, {
+      initialOutputLevel: 10 // louder than the other sounds
+    } );
+
     this.bodyNumberSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
     this.removalSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
-
-    // Increasing the level of the collision sound
-    this.removalSoundClips[ this.removalSoundClips.length - 1 ].setOutputLevel( 10 );
+    soundManager.addSoundGenerator( this.collidedSoundClip );
   }
 
   public playBodyAddedSound( bodyNumber: number ): void {
@@ -73,6 +77,10 @@ export default class BodySoundManager {
     const soundClip = this.removalSoundClips[ bodyNumber ];
     assert && assert( soundClip, `No soundClip found for bodyNumber ${bodyNumber}` );
     soundClip.play();
+  }
+
+  public playBodyCollidedSound(): void {
+    this.collidedSoundClip.play();
   }
 }
 

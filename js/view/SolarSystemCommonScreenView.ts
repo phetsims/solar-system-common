@@ -116,7 +116,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     this.bodySoundManager = new BodySoundManager( model );
     model.bodies.forEach( body => {
       body.collidedEmitter.addListener( () => {
-        this.bodySoundManager.playBodyRemovedSound( 3 ); // Plays the collision sound instead of body index
+        this.bodySoundManager.playBodyCollidedSound();
       } );
     } );
 
