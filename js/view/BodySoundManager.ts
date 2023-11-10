@@ -38,49 +38,49 @@ export default class BodySoundManager {
 
   private readonly model: SolarSystemCommonModel;
 
-  // Sounds for the number of bodies spinner
-  private readonly bodyNumberSoundClips: SoundClip[];
+  // Sounds for when a body is added to the current orbital system
+  private readonly bodyAddedSoundClips: SoundClip[];
 
-  // Sounds for the removal of bodies (different for every resulting number of bodies after each removal)
-  private readonly removalSoundClips: SoundClip[];
+  // Sounds for when a body is removed from the current orbital system
+  private readonly bodyRemovedSoundClips: SoundClip[];
 
-  // Played when bodies collide
-  private readonly collidedSoundClip: SoundClip;
+  // Played when a body collides
+  private readonly bodyCollidedSoundClip: SoundClip;
 
   public constructor( model: SolarSystemCommonModel ) {
     this.model = model;
 
-    this.bodyNumberSoundClips = bodyNumberSounds.map( sound => new SoundClip( sound, {
+    this.bodyAddedSoundClips = bodyNumberSounds.map( sound => new SoundClip( sound, {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
-    this.removalSoundClips = removalSounds.map( sound => new SoundClip( sound, {
+    this.bodyRemovedSoundClips = removalSounds.map( sound => new SoundClip( sound, {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
     } ) );
 
-    this.collidedSoundClip = new SoundClip( Collision_Sound_mp3, {
+    this.bodyCollidedSoundClip = new SoundClip( Collision_Sound_mp3, {
       initialOutputLevel: 10 // louder than the other sounds
     } );
 
-    this.bodyNumberSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
-    this.removalSoundClips.forEach( sound => soundManager.addSoundGenerator( sound ) );
-    soundManager.addSoundGenerator( this.collidedSoundClip );
+    this.bodyAddedSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
+    this.bodyRemovedSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
+    soundManager.addSoundGenerator( this.bodyCollidedSoundClip );
   }
 
   public playBodyAddedSound( bodyNumber: number ): void {
-    const soundClip = this.bodyNumberSoundClips[ bodyNumber ];
+    const soundClip = this.bodyAddedSoundClips[ bodyNumber ];
     assert && assert( soundClip, `No soundClip found for bodyNumber ${bodyNumber}` );
     soundClip.play();
   }
 
   public playBodyRemovedSound( bodyNumber: number ): void {
-    const soundClip = this.removalSoundClips[ bodyNumber ];
+    const soundClip = this.bodyRemovedSoundClips[ bodyNumber ];
     assert && assert( soundClip, `No soundClip found for bodyNumber ${bodyNumber}` );
     soundClip.play();
   }
 
   public playBodyCollidedSound(): void {
-    this.collidedSoundClip.play();
+    this.bodyCollidedSoundClip.play();
   }
 }
 
