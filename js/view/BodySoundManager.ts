@@ -64,11 +64,15 @@ export default class BodySoundManager {
   }
 
   public playBodyAddedSound( bodyNumber: number ): void {
-    this.bodyNumberSoundClips[ bodyNumber ].play();
+    const soundClip = this.bodyNumberSoundClips[ bodyNumber ];
+    assert && assert( soundClip, `No soundClip found for bodyNumber ${bodyNumber}` );
+    soundClip.play();
   }
 
   public playBodyRemovedSound( bodyNumber: number ): void {
-    this.removalSoundClips[ bodyNumber ].play();
+    const soundClip = this.removalSoundClips[ bodyNumber ];
+    assert && assert( soundClip, `No soundClip found for bodyNumber ${bodyNumber}` );
+    soundClip.play();
   }
 }
 
