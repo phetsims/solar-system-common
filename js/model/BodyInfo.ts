@@ -23,13 +23,13 @@ type SelfOptions = {
   massRange?: Range;
   position: Vector2;
   velocity: Vector2;
-  tandemName?: string;
+  tandemName?: string | null;
 };
 
-type BodyInfoOptions = SelfOptions;
+export type BodyInfoOptions = SelfOptions;
 
 // The serialized state of BodyInfo. For PhET-iO serialization, fields must have types that are JSON-compatible.
-type BodyInfoStateObject = {
+export type BodyInfoStateObject = {
   isActive: boolean;
   mass: number;
   massRange: RangeStateObject;
@@ -57,12 +57,21 @@ export default class BodyInfo {
     this.tandemName = providedOptions.tandemName || null;
   }
 
+  private static fromStateObject( stateObject: BodyInfoStateObject ): BodyInfo {
+    return new BodyInfo( {
+      isActive: stateObject.isActive,
+      mass: stateObject.mass,
+      massRange: Range.fromStateObject( stateObject.massRange ),
+      position: Vector2.fromStateObject( stateObject.position ),
+      velocity: Vector2.fromStateObject( stateObject.velocity ),
+      tandemName: stateObject.tandemName || undefined
+    } );
+  }
+
   /**
    * BodyInfoIO implements 'Data type serialization', as described in the Serialization section of
    * https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
-   * Data type serialization is appropriate because BodyInfoIO itself is not a PhetioObject. Its role is as
-   * a data type for a Property - similar to number, string, or Vector2. See startingBodyInfoProperty in
-   * SolarSystemCommonModel.
+   * Data type serialization is appropriate because BodyInfo is a data type for a Property.
    */
   public static readonly BodyInfoIO = new IOType<BodyInfo, BodyInfoStateObject>( 'BodyInfoIO', {
     valueType: BodyInfo,
@@ -75,14 +84,7 @@ export default class BodyInfo {
       tandemName: NullableIO( StringIO )
     },
     // toStateObject: The default works fine here.
-    fromStateObject: stateObject => new BodyInfo( {
-      isActive: stateObject.isActive,
-      mass: stateObject.mass,
-      massRange: Range.fromStateObject( stateObject.massRange ),
-      position: Vector2.fromStateObject( stateObject.position ),
-      velocity: Vector2.fromStateObject( stateObject.velocity ),
-      tandemName: stateObject.tandemName || undefined
-    } )
+    fromStateObject: stateObject => BodyInfo.fromStateObject( stateObject )
   } );
 }
 
