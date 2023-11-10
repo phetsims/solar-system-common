@@ -185,11 +185,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       labelText.visible = inputEnabled;
     } );
 
-    // Updating the velocity position when the body's position changes
-    positionProperty.link( position => {
-      velocityCirclePositionProperty.value = position.plus( velocityProperty.value.times( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER ) );
-    } );
-
     velocityCirclePositionProperty.lazyLink( velocityCirclePosition => {
 
       // The velocity is obtained by scaling down the view velocity arrow by the VELOCITY_TO_VIEW_MULTIPLIER
