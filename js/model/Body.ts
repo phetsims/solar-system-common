@@ -25,6 +25,7 @@ import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/Referenc
 import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
+import isSettingPhetioStateProperty from '../../../tandem/js/isSettingPhetioStateProperty.js';
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 
@@ -249,8 +250,14 @@ export default class Body extends PhetioObject {
    * Clear the whole path of points tracking the body's trajectory.
    */
   public clearPath(): void {
-    this.pathPoints.clear();
-    this.pathLengthProperty.reset();
+
+    // This guard is a workaround for https://github.com/phetsims/my-solar-system/issues/294. When restoring state,
+    // clearPath should not be called. This is not the greatest place to be putting this guard. But there are so many
+    // places where body.clearPath or body.reset is called that this was the only viable option.
+    if ( !isSettingPhetioStateProperty.value ) {
+      this.pathPoints.clear();
+      this.pathLengthProperty.reset();
+    }
   }
 
   public static massToRadius( mass: number ): number {
