@@ -133,7 +133,9 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     this.addChild( grabArea );
     this.addChild( labelText );
 
-    // This represents the model coordinates of where the 'V' circle appears, it is linked down below
+    // This represents the model coordinates of where the 'V' circle appears, it is linked down below.
+    // PhET-iO instrumentation is not needed, as this Property is controlled solely by DragListener
+    // and KeyboardDragListener, and changes made to it resulted in changes to other stateful Properties.
     const velocityCirclePositionProperty = new Vector2Property( transformProperty.value.viewToModelPosition( this.tipPositionProperty.value ) );
 
     // Add the drag handler
