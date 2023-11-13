@@ -185,24 +185,35 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       labelText.visible = inputEnabled;
     } );
 
+    // Workaround for https://github.com/phetsims/my-solar-system/issues/278#issuecomment-1806360130
+    let changingByPosition = false;
+
+    // Updating the velocity position when the body's position changes
+    positionProperty.link( position => {
+      changingByPosition = true;
+      velocityCirclePositionProperty.value = position.plus( velocityProperty.value.times( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER ) );
+      changingByPosition = false;
+    } );
+
     velocityCirclePositionProperty.lazyLink( velocityCirclePosition => {
+      if ( !changingByPosition ) {
+        // The velocity is obtained by scaling down the view velocity arrow by the VELOCITY_TO_VIEW_MULTIPLIER
+        const newVelocity = velocityCirclePosition.minus( positionProperty.value ).dividedScalar( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER );
 
-      // The velocity is obtained by scaling down the view velocity arrow by the VELOCITY_TO_VIEW_MULTIPLIER
-      const newVelocity = velocityCirclePosition.minus( positionProperty.value ).dividedScalar( SolarSystemCommonConstants.VELOCITY_TO_VIEW_MULTIPLIER );
-
-      if ( newVelocity.magnitude < options.minimumMagnitude ) {
-        if ( options.snapToZero ) {
-          newVelocity.setXY( 0, 0 ); // Not using setMagnitude because newVelocity could already be a 0 vector.
+        if ( newVelocity.magnitude < options.minimumMagnitude ) {
+          if ( options.snapToZero ) {
+            newVelocity.setXY( 0, 0 ); // Not using setMagnitude because newVelocity could already be a 0 vector.
+          }
+          else {
+            newVelocity.setMagnitude( options.minimumMagnitude );
+          }
         }
-        else {
-          newVelocity.setMagnitude( options.minimumMagnitude );
+        else if ( options.maxMagnitudeProperty && newVelocity.magnitude > options.maxMagnitudeProperty.value ) {
+          newVelocity.setMagnitude( options.maxMagnitudeProperty.value );
         }
-      }
-      else if ( options.maxMagnitudeProperty && newVelocity.magnitude > options.maxMagnitudeProperty.value ) {
-        newVelocity.setMagnitude( options.maxMagnitudeProperty.value );
-      }
 
-      velocityProperty.value = newVelocity;
+        velocityProperty.value = newVelocity;
+      }
     } );
   }
 }
