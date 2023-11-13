@@ -360,9 +360,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   }
 
   public clearPaths(): void {
-    this.activeBodies.forEach( body => {
-      body.clearPath();
-    } );
+    this.activeBodies.forEach( body => body.clearPath() );
   }
 }
 
