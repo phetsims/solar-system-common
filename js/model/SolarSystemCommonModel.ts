@@ -96,10 +96,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   public readonly isPlayingProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
 
-  // Boolean that determines if more path points are going to be stored for subsequent display in the paths.
-  // This does not need to be stateful because it will be set correctly when pathVisibleProperty is set.
-  public addingPathPoints = false;
-
   // Numerical level of zoom selected. It's not directly the zoom applied, but an integer to be used in the calculation.
   public readonly zoomLevelProperty: NumberProperty;
 
