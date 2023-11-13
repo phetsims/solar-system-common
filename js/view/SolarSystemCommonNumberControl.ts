@@ -37,6 +37,7 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     const SLIDER_INITIAL_OUTPUT_LEVEL = 0.1;
 
     // Create a function to map the mass value to the playback rate of the associated sound.
+    // Larger mass values result in lower pitch, so that bigger bodies have a deeper sound.
     const playbackRateMapper = ( value: number ) => 0.5 + ( range.max - value ) / range.getLength();
 
     // sound clip for mass changes
