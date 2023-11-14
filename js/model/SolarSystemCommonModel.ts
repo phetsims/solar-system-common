@@ -196,14 +196,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
     // True if any gravity force vector would be too small to see when drawn.
     this.isAnyGravityForceOffscaleProperty = DerivedProperty.deriveAny(
-      [ ...this.bodies.map( body => body.gravityForceProperty ), this.gravityForceScalePowerProperty ],
+      [ ...this.bodies.map( body => body.gravityForceProperty ), ...this.bodies.map( body => body.isActiveProperty ), this.gravityForceScalePowerProperty ],
       () => !!_.find( this.bodies, body => {
         const magnitudeLog = Math.log10( body.gravityForceProperty.value.magnitude );
         // 3.2 is the magnitude at which the vector starts being too small to see
         return body.isActiveProperty.value && ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
-      } ), {
-        accessNonDependencies: true //TODO https://github.com/phetsims/my-solar-system/issues/296
-      } );
+      } ) );
 
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
 
