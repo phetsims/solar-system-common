@@ -202,7 +202,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
         // 3.2 is the magnitude at which the vector starts being too small to see
         return body.isActiveProperty.value && ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
       } ), {
-        accessNonDependencies: true
+        accessNonDependencies: true //TODO https://github.com/phetsims/my-solar-system/issues/296
       } );
 
     this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
