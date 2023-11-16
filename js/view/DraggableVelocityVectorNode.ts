@@ -58,7 +58,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
 
       // SelfOptions
       snapToZero: true,
-      minimumMagnitude: 10,
+      minimumMagnitude: 2.11,
       maxMagnitudeProperty: null,
       soundViewNode: null,
       mapPosition: _.identity,
