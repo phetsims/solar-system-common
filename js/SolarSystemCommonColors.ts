@@ -8,7 +8,6 @@
 
 import PhetColorScheme from '../../scenery-phet/js/PhetColorScheme.js';
 import { Color, ProfileColorProperty } from '../../scenery/js/imports.js';
-import Tandem from '../../tandem/js/Tandem.js';
 import solarSystemCommon from './solarSystemCommon.js';
 
 const PANEL_FILL_DEFAULT = new Color( 40, 40, 40 );
@@ -52,42 +51,8 @@ const SolarSystemCommonColors = {
     default: PhetColorScheme.GRAVITATIONAL_FORCE
   } ),
 
-  body1ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body1Color', {
-    default: 'yellow',
-    projector: '#FFAE00'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'body1ColorProperty' ),
-    phetioFeatured: true
-  } ),
-
-  body2ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body2Color', {
-    default: 'magenta'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'body2ColorProperty' ),
-    phetioFeatured: true
-  } ),
-
-  body3ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body3Color', {
-    default: 'cyan',
-    projector: '#0055FF'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'body3ColorProperty' ),
-    phetioFeatured: true
-  } ),
-
-  body4ColorProperty: new ProfileColorProperty( solarSystemCommon, 'body4Color', {
-    default: 'green'
-  }, {
-    tandem: Tandem.COLORS.createTandem( 'body4ColorProperty' ),
-    phetioFeatured: true
-  } ),
-
   explosionColorProperty: new ProfileColorProperty( solarSystemCommon, 'explosionColor', {
     default: 'yellow'
-  } ),
-
-  orbitColorProperty: new ProfileColorProperty( solarSystemCommon, 'orbitColor', {
-    default: 'fuchsia'
   } )
 };
 

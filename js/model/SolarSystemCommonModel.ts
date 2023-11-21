@@ -16,7 +16,6 @@ import Engine from './Engine.js';
 import Range from '../../../dot/js/Range.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import optionize from '../../../phet-core/js/optionize.js';
@@ -29,19 +28,13 @@ import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
 import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
 import Vector2 from '../../../dot/js/Vector2.js';
-
-// Constants
-const BODY_COLORS = [
-  SolarSystemCommonColors.body1ColorProperty,
-  SolarSystemCommonColors.body2ColorProperty,
-  SolarSystemCommonColors.body3ColorProperty,
-  SolarSystemCommonColors.body4ColorProperty
-];
+import { ProfileColorProperty } from '../../../scenery/js/imports.js';
 
 // Type definitions
 type SelfOptions = {
   zoomLevelRange: RangeWithValue;
   defaultBodyInfo: BodyInfo[];
+  bodyColors: ProfileColorProperty[];
   engineTimeScale: number; // Scales down the normal dt (in seconds) to engine times
   modelToViewTime?: number; // Scales times from model to view (years)
 };
@@ -107,12 +100,14 @@ export default abstract class SolarSystemCommonModel {
       modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
+    assert && assert( options.defaultBodyInfo.length === options.bodyColors.length, 'Body colors must be provided for each body' );
+
     this.defaultBodyInfo = options.defaultBodyInfo;
 
     // The complete set of Body elements, grouped under a parent tandem, in ascending order of index.
     const bodiesTandem = options.tandem.createTandem( 'bodies' );
     this.bodies = this.defaultBodyInfo.map( ( bodyInfo, index ) =>
-      new Body( index + 1, bodyInfo, BODY_COLORS[ index ],
+      new Body( index + 1, bodyInfo, options.bodyColors[ index ],
         bodiesTandem.createTandem( bodyInfo.tandemName ? bodyInfo.tandemName : `body${index + 1}` ) )
     );
 
