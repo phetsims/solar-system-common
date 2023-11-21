@@ -12,7 +12,6 @@ import Body from './Body.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
-import createObservableArray, { ObservableArray } from '../../../axon/js/createObservableArray.js';
 import Engine from './Engine.js';
 import Range from '../../../dot/js/Range.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
@@ -41,21 +40,17 @@ const BODY_COLORS = [
 ];
 
 // Type definitions
-type SelfOptions<EngineType extends Engine> = {
-  engineFactory: ( bodies: Body[] ) => EngineType;
+type SelfOptions = {
   zoomLevelRange: RangeWithValue;
   defaultBodyInfo: BodyInfo[];
   engineTimeScale: number; // Scales down the normal dt (in seconds) to engine times
   modelToViewTime?: number; // Scales times from model to view (years)
-
-  // phetioReadOnly value for numberOfActiveBodiesProperty
-  numberOfActiveBodiesPropertyPhetioReadOnly?: boolean;
 };
 
-export type SolarSystemCommonModelOptions<EngineType extends Engine> = SelfOptions<EngineType> &
+export type SolarSystemCommonModelOptions = SelfOptions &
   PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default abstract class SolarSystemCommonModel<EngineType extends Engine = Engine> {
+export default abstract class SolarSystemCommonModel {
 
   // Initial values that were used to instantiate Body instances
   protected readonly defaultBodyInfo: BodyInfo[];
@@ -63,18 +58,13 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   // The complete set of Body instances, active and inactive
   public readonly bodies: Body[];
 
-  // The set of Body instances in this.bodies that are active (body.isActive === true)
-  public readonly activeBodies: ObservableArray<Body>;
-
-  // The number of Bodies that are 'active', and thus visible on the screen.
-  public readonly numberOfActiveBodiesProperty: NumberProperty;
-
   // Bodies will be set to these values when restart is called. Updated when the user changes a Body.
   // This needs to be stateful so that we return to the desired configuration when resetting the time control.
   private startingBodyInfoProperty: Property<BodyInfo[]>;
 
-  // The engine that will run all the physical calculations, including body interactions and collisions
-  public readonly engine: EngineType;
+  // The engine that will run all the physical calculations, including body interactions and collisions.
+  // Must be instantiated by the subclass.
+  public abstract readonly engine: Engine;
 
   // Emitter that fires when the user interaction starts
   public readonly userInteractingEmitter = new Emitter();
@@ -117,13 +107,12 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
 
   public readonly measuringTape: SolarSystemCommonMeasuringTape;
 
-  protected constructor( providedOptions: SolarSystemCommonModelOptions<EngineType> ) {
+  protected constructor( providedOptions: SolarSystemCommonModelOptions ) {
 
-    const options = optionize<SolarSystemCommonModelOptions<EngineType>, SelfOptions<EngineType>>()( {
+    const options = optionize<SolarSystemCommonModelOptions, SelfOptions>()( {
 
       // SelfOptions
-      modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER,
-      numberOfActiveBodiesPropertyPhetioReadOnly: true
+      modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER
     }, providedOptions );
 
     this.defaultBodyInfo = options.defaultBodyInfo;
@@ -143,45 +132,10 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     } );
     this.saveStartingBodyInfo();
 
-    this.activeBodies = createObservableArray( {
-      tandem: options.tandem.createTandem( 'activeBodies' ),
-      phetioType: createObservableArray.ObservableArrayIO( Body.BodyIO ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'The set of bodies that part of the selected orbital system, and are thus visible on the screen.'
-    } );
-
     this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'True if any of the bodies have collided.'
-    } );
-
-    // We want to synchronize bodies and activeBodies, so that activeBodies is effectively bodies.filter( isActive )
-    // Order matters, AND we don't want to remove items unnecessarily, so some additional logic is required.
-    Multilink.multilinkAny( this.bodies.map( body => body.isActiveProperty ), () => {
-      const idealBodies = this.bodies.filter( body => body.isActiveProperty.value );
-
-      // Remove all inactive bodies
-      this.activeBodies.filter( body => !body.isActiveProperty.value ).forEach( body => {
-        this.activeBodies.remove( body );
-        body.reset();
-      } );
-
-      // Add in active bodies (in order)
-      for ( let i = 0; i < idealBodies.length; i++ ) {
-        if ( this.activeBodies[ i ] !== idealBodies[ i ] ) {
-          this.activeBodies.splice( i, 0, idealBodies[ i ] );
-        }
-      }
-    } );
-
-    this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
-      numberType: 'Integer',
-      range: new Range( 1, this.bodies.length ),
-      tandem: options.tandem.createTandem( 'numberOfActiveBodiesProperty' ),
-      phetioReadOnly: options.numberOfActiveBodiesPropertyPhetioReadOnly,
-      phetioFeatured: !options.numberOfActiveBodiesPropertyPhetioReadOnly, // featured if it's not readonly
-      phetioDocumentation: 'The number of bodies that are present in the orbital system shown on the screen'
     } );
 
     this.gravityForceScalePowerProperty = new NumberProperty( 0, {
@@ -227,9 +181,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           }
         } );
     } );
-
-    this.engine = options.engineFactory( this.activeBodies );
-    this.engine.reset();
 
     // Time settings
     this.engineTimeScale = options.engineTimeScale;
@@ -296,27 +247,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     this.saveStartingBodyInfo();
   }
 
-  /**
-   * Adds the next available body to the system and checks that is doesn't collide with any other bodies.
-   */
-  public addNextBody(): void {
-    const newBody = this.bodies.find( body => !body.isActiveProperty.value );
-    if ( newBody ) {
-      newBody.reset();
-      newBody.preventCollision( this.activeBodies );
-      newBody.isActiveProperty.value = true;
-    }
-    this.saveStartingBodyInfo();
-    this.isAnyBodyCollidedProperty.reset();
-  }
-
-  public removeLastBody(): void {
-    const lastBody = this.activeBodies[ this.activeBodies.length - 1 ];
-    lastBody.isActiveProperty.value = false;
-    this.saveStartingBodyInfo();
-    this.isAnyBodyCollidedProperty.reset();
-  }
-
   public reset(): void {
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeSpeedProperty.reset();
@@ -341,10 +271,7 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
   /**
    * Updating for when the bodies are changed
    */
-  public update(): void {
-    this.engine.update( this.activeBodies );
-    this.numberOfActiveBodiesProperty.value = this.activeBodies.length;
-  }
+  public abstract update(): void;
 
   // The child class should implement this method to advance time and update the bodies properties
   public abstract stepOnce( dt: number ): void;
@@ -355,10 +282,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
     if ( this.isPlayingProperty.value ) {
       this.stepOnce( dt );
     }
-  }
-
-  public clearPaths(): void {
-    this.activeBodies.forEach( body => body.clearPath() );
   }
 }
 
