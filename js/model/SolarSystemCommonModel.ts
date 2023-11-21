@@ -17,7 +17,6 @@ import Range from '../../../dot/js/Range.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
-import Multilink from '../../../axon/js/Multilink.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
 import optionize from '../../../phet-core/js/optionize.js';
@@ -92,13 +91,6 @@ export default abstract class SolarSystemCommonModel {
   // How much to scale the model-view transform when zooming in and out
   public abstract zoomScaleProperty: TReadOnlyProperty<number>;
 
-  // Indicates whether any Body has gone off-screen or has collided an exploded.
-  // This controls the visibility of the 'Return Bodies' button in the view.
-  public readonly bodiesAreReturnableProperty: TReadOnlyProperty<boolean>;
-
-  // Indicates whether any Body has collided with another Body.
-  public readonly isAnyBodyCollidedProperty: Property<boolean>;
-
   // Power of 10 to which the gravity force is scaled
   public readonly gravityForceScalePowerProperty: NumberProperty;
 
@@ -132,12 +124,6 @@ export default abstract class SolarSystemCommonModel {
     } );
     this.saveStartingBodyInfo();
 
-    this.isAnyBodyCollidedProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isAnyBodyCollidedProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'True if any of the bodies have collided.'
-    } );
-
     this.gravityForceScalePowerProperty = new NumberProperty( 0, {
       range: new Range( -2, 8 ),
       tandem: options.tandem.createTandem( 'gravityForceScalePowerProperty' ),
@@ -154,33 +140,6 @@ export default abstract class SolarSystemCommonModel {
         // 3.2 is the magnitude at which the vector starts being too small to see
         return body.isActiveProperty.value && ( magnitudeLog < 3.2 - this.gravityForceScalePowerProperty.value );
       } ) );
-
-    this.bodiesAreReturnableProperty = DerivedProperty.or( [ ...this.bodies.map( body => body.isOffscreenProperty ), this.isAnyBodyCollidedProperty ] );
-
-    this.bodies.forEach( body => {
-      body.collidedEmitter.addListener( () => {
-        this.isAnyBodyCollidedProperty.value = true;
-      } );
-
-      Multilink.lazyMultilink(
-        [ body.userIsControllingPositionProperty, body.userIsControllingVelocityProperty, body.userIsControllingMassProperty ],
-        ( userIsControllingPosition: boolean, userIsControllingVelocity: boolean, userIsControllingMass: boolean ) => {
-          // It's OK to keep playing when the user is changing mass.
-          if ( userIsControllingPosition || userIsControllingVelocity ) {
-            this.isPlayingProperty.value = false;
-          }
-
-          if ( userIsControllingPosition || userIsControllingVelocity || userIsControllingMass ) {
-            // The user has started changing one or more of the body Properties.
-            this.userInteractingEmitter.emit();
-          }
-          else if ( !this.bodiesAreReturnableProperty.value ) {
-            // The user has finished changing one or more of the body Properties, and the 'Return Bodies' button
-            // is not visible.
-            this.saveStartingBodyInfo();
-          }
-        } );
-    } );
 
     // Time settings
     this.engineTimeScale = options.engineTimeScale;
@@ -261,7 +220,6 @@ export default abstract class SolarSystemCommonModel {
   // Restart is for when the time controls are brought back to 0
   // Bodies move to their last modified position
   public restart(): void {
-    this.isAnyBodyCollidedProperty.reset();
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
     this.loadBodyInfo( this.startingBodyInfoProperty.value ); // Reset the bodies
