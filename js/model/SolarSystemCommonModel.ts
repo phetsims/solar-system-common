@@ -173,8 +173,6 @@ export default abstract class SolarSystemCommonModel<EngineType extends Engine =
           this.activeBodies.splice( i, 0, idealBodies[ i ] );
         }
       }
-
-      this.isAnyBodyCollidedProperty.reset();
     } );
 
     this.numberOfActiveBodiesProperty = new NumberProperty( this.activeBodies.length, {
