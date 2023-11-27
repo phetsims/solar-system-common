@@ -100,7 +100,8 @@ export default class Body extends PhetioObject {
     this.velocityProperty = new Vector2Property( bodyInfo.velocity.copy(), {
       units: 'km/s',
       tandem: tandem.createTandem( 'velocityProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      reentrant: true
     } );
 
     this.speedProperty = new DerivedProperty( [ this.velocityProperty ], velocity => velocity.magnitude, {
