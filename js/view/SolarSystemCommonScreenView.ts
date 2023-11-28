@@ -187,6 +187,9 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       phetioFeaturedMeasuredDistanceProperty: true
     } );
     this.topLayer.addChild( this.measuringTapeNode );
+    this.measuringTapeNode.addLinkedElement( model.measuringTape, {
+      tandemName: 'measuringTape'
+    } );
 
     // Constrain dragging of measuringTapeNode to visibleBounds.
     Multilink.multilink(
