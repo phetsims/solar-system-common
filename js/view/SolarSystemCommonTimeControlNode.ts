@@ -19,6 +19,7 @@ import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSyste
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 // constants
 const PLAY_PAUSE_BUTTON_RADIUS = 34;
@@ -73,7 +74,8 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
           radius: STEP_BUTTON_RADIUS,
           listener: providedOptions.stepForwardListener,
           touchAreaDilation: 2
-        }
+        },
+        tandem: Tandem.OPT_OUT
       },
       buttonGroupXSpacing: 20,
       speedRadioButtonGroupOnLeft: false,
@@ -101,8 +103,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         xMargin: 5
       },
       innerContent: SolarSystemCommonStrings.a11y.restartStringProperty,
-      tandem: providedOptions.tandem.createTandem( 'restartButton' ),
-      phetioVisiblePropertyInstrumented: false // there's no reason to hide this button
+      tandem: Tandem.OPT_OUT
     } );
 
     this.addChild( restartButton );
