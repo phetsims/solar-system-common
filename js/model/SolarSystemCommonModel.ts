@@ -146,24 +146,28 @@ export default abstract class SolarSystemCommonModel {
       units: 'years',
       tandem: timeTandem.createTandem( 'timeProperty' ),
       phetioReadOnly: true,
+      phetioFeatured: true,
       phetioDocumentation: 'The model time, in years'
     } );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       tandem: timeTandem.createTandem( 'timeSpeedProperty' ),
-      phetioDocumentation: 'Controls how fast the simulation\'s internal clock runs'
+      phetioDocumentation: 'Controls how fast the simulation\'s internal clock runs',
+      phetioFeatured: true
     } );
 
     this.isPlayingProperty = new BooleanProperty( false, {
       tandem: timeTandem.createTandem( 'isPlayingProperty' ),
-      phetioDocumentation: 'True when the clock is running'
+      phetioDocumentation: 'True when the clock is running',
+      phetioFeatured: true
     } );
 
     this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
       range: options.zoomLevelRange,
       numberType: 'Integer',
       tandem: options.tandem.createTandem( 'zoomLevelProperty' ),
-      phetioDocumentation: 'Integer index that is used to compute how the view is scaled. Larger values are more zoomed in.'
+      phetioDocumentation: 'Integer index that is used to compute how the view is scaled. Larger values are more zoomed in.',
+      phetioFeatured: true
     } );
 
     this.measuringTape = new SolarSystemCommonMeasuringTape( {
