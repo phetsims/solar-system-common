@@ -85,6 +85,17 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
           fill: SolarSystemCommonColors.foregroundProperty
         },
         touchAreaXDilation: 10
+      },
+
+      //TODO https://github.com/phetsims/scenery-phet/issues/826 Remove this workaround when TimeControlNode dynamic layout is fixed.
+      // Workaround for https://github.com/phetsims/my-solar-system/issues/300. Putting the radio button group in
+      // a panel makes the layout behave properly when speedRadioButtonGroup.visibleProperty is set to false via PhET-iO.
+      wrapSpeedRadioButtonGroupInPanel: true,
+      speedRadioButtonGroupPanelOptions: {
+        fill: null,
+        stroke: null,
+        xMargin: 0,
+        yMargin: 0
       }
     }, providedOptions );
 
@@ -109,6 +120,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
     this.addChild( restartButton );
     this.playPauseStepButtons.pdomOrder = [ restartButton, ...( this.playPauseStepButtons.pdomOrder ? this.playPauseStepButtons.pdomOrder : [] ) ];
 
+    //TODO https://github.com/phetsims/scenery-phet/issues/826 Remove this block, set speedRadioButtonGroupPosition: 'bottom'
     // speedRadioButtonGroup is positioned differently on KeplersLaws and MySolarSystem.
     // Here, the position when it's under the play pause step buttons is set as follows:
     // X: Aligned with the play pause step buttons
