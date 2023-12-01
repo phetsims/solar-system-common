@@ -263,7 +263,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     body.isActiveProperty.link( isActive => !isActive && this.stopSound() );
 
     this.body.accelerationProperty.link( acceleration => {
-      this.soundClip.setOutputLevel( acceleration.magnitude / 2000 );
+      this.soundClip.setOutputLevel( acceleration.magnitude / 10000 );
     } );
   }
 
