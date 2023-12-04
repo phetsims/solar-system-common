@@ -76,6 +76,7 @@ export default abstract class SolarSystemCommonModel {
 
   public readonly timeProperty: NumberProperty;
   public readonly isPlayingProperty: BooleanProperty;
+  public readonly hasPlayedProperty: BooleanProperty;
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
 
   // Numerical level of zoom selected. It's not directly the zoom applied, but an integer to be used in the calculation.
@@ -162,6 +163,18 @@ export default abstract class SolarSystemCommonModel {
       phetioFeatured: true
     } );
 
+    this.hasPlayedProperty = new BooleanProperty( false, {
+      tandem: timeTandem.createTandem( 'hasPlayedProperty' ),
+      phetioDocumentation: 'True when the clock has ran',
+      phetioReadOnly: true
+    } );
+
+    this.timeProperty.link( time => {
+      if ( time > 0 ) {
+        this.hasPlayedProperty.value = true;
+      }
+    } );
+
     this.zoomLevelProperty = new NumberProperty( options.zoomLevelRange.defaultValue, {
       range: options.zoomLevelRange,
       numberType: 'Integer',
@@ -207,6 +220,7 @@ export default abstract class SolarSystemCommonModel {
 
   public reset(): void {
     this.isPlayingProperty.value = false; // Pause the sim
+    this.hasPlayedProperty.reset();
     this.timeSpeedProperty.reset();
     this.zoomLevelProperty.reset();
     this.gravityForceScalePowerProperty.reset();
