@@ -215,6 +215,13 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     model.interruptSubtreeEmitter.addListener( () => {
       this.interruptSubtreeInput();
     } );
+
+    visibleProperties.measuringTapeVisibleProperty.lazyLink( () => {
+      this.interruptSubtreeInput();
+    } );
+    visibleProperties.velocityVisibleProperty.lazyLink( () => {
+      this.interruptSubtreeInput();
+    } );
   }
 
   public reset(): void {
