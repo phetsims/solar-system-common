@@ -211,6 +211,13 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       this.addInputListener( keyboardDragListener );
     }
 
+    // If this Node becomes invisible, interrupt user interaction.
+    this.visibleProperty.lazyLink( visible => {
+      if ( !visible ) {
+        this.interruptSubtreeInput();
+      }
+    } );
+
     // Format the speed with units.
     const speedStringProperty = new PatternStringProperty( SolarSystemCommonStrings.pattern.velocityValueUnitsStringProperty, {
       index: options.showVelocityIndex ? body.index : '',
@@ -238,12 +245,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       speedDisplay.center = new Vector2( 0, velocity.y > 0 ? 30 : -30 );
     } );
 
-    const bodyCollisionListener = () => {
-      this.interruptSubtreeInput();
-      ExplosionNode.explode( this );
-    };
-
-    this.body.collidedEmitter.addListener( bodyCollisionListener );
+    this.body.collidedEmitter.addListener( () => ExplosionNode.explode( this ) );
 
     // Optional cueing arrows
     if ( options.cueingArrowsVisibleProperty ) {

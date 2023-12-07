@@ -188,6 +188,11 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     } );
     this.topLayer.addChild( this.measuringTapeNode );
     this.measuringTapeNode.addLinkedElement( model.measuringTape );
+    visibleProperties.measuringTapeVisibleProperty.lazyLink( visible => {
+      if ( !visible ) {
+        this.measuringTapeNode.interruptSubtreeInput();
+      }
+    } );
 
     // Constrain dragging of measuringTapeNode to visibleBounds.
     Multilink.multilink(
@@ -213,13 +218,6 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     } );
 
     model.interruptSubtreeEmitter.addListener( () => {
-      this.interruptSubtreeInput();
-    } );
-
-    visibleProperties.measuringTapeVisibleProperty.lazyLink( () => {
-      this.interruptSubtreeInput();
-    } );
-    visibleProperties.velocityVisibleProperty.lazyLink( () => {
       this.interruptSubtreeInput();
     } );
   }

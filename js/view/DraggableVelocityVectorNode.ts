@@ -181,6 +181,13 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     } );
     this.addInputListener( keyboardDragListener );
 
+    // If this Node becomes invisible, interrupt user interaction.
+    this.visibleProperty.lazyLink( visible => {
+      if ( !visible ) {
+        this.interruptSubtreeInput();
+      }
+    } );
+
     // For PhET-iO, when the Node does not support input, don't show the drag circle.
     this.inputEnabledProperty.link( inputEnabled => {
       grabArea.visible = inputEnabled;
