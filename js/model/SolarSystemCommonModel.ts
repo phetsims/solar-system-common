@@ -165,6 +165,12 @@ export default abstract class SolarSystemCommonModel {
       phetioFeatured: true
     } );
 
+    this.isPlayingProperty.link( isPlaying => {
+      if ( isPlaying ) {
+        this.interruptSubtreeEmitter.emit();
+      }
+    } );
+
     this.hasPlayedProperty = new BooleanProperty( false, {
       tandem: timeTandem.createTandem( 'hasPlayedProperty' ),
       phetioDocumentation: 'True when the clock has ran',
