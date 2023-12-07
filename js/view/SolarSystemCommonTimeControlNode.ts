@@ -110,10 +110,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       touchAreaDilation: 2,
       xMargin: 9.5,
       yMargin: 9.5,
-      listener: () => {
-        model.interruptSubtreeEmitter.emit();
-        model.restart();
-      },
+      listener: () => model.restart(),
       center: this.getPlayPauseButtonCenter().minusXY( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS + PUSH_BUTTON_SPACING, 0 ),
       layoutOptions: {
         xMargin: 5

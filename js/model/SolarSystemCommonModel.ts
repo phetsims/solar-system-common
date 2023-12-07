@@ -241,6 +241,7 @@ export default abstract class SolarSystemCommonModel {
   // Restart is for when the time controls are brought back to 0
   // Bodies move to their last modified position
   public restart(): void {
+    this.interruptSubtreeEmitter.emit();
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
     this.loadBodyInfo( this.startingBodyInfoProperty.value ); // Reset the bodies
