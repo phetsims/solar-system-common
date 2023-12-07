@@ -75,9 +75,9 @@ export type BodyNodeOptions = SelfOptions & WithRequired<StrictOmit<ShadedSphere
 export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode ) {
 
   public readonly body: Body;
-  public readonly soundClip: SoundClip;
-  public readonly grabClip: SoundClip;
-  public readonly releaseClip: SoundClip;
+  private readonly soundClip: SoundClip;
+  private readonly grabClip: SoundClip;
+  private readonly releaseClip: SoundClip;
 
   public constructor( body: Body,
                       modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>,
@@ -263,17 +263,14 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     body.isActiveProperty.link( isActive => !isActive && this.stopSound() );
 
     this.body.accelerationProperty.link( acceleration => {
-      this.soundClip.setOutputLevel( acceleration.magnitude / 10000 );
+      if ( this.soundClip.isPlayingProperty.value ) {
+        this.soundClip.setOutputLevel( acceleration.magnitude / 10000 );
+      }
     } );
   }
 
   public playSound(): void {
-    if ( this.body.isActiveProperty.value ) {
-      this.soundClip.play();
-    }
-    else {
-      this.soundClip.stop();
-    }
+    this.soundClip.play();
   }
 
   public stopSound(): void {
