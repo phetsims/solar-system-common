@@ -71,7 +71,10 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         },
         stepForwardButtonOptions: {
           radius: STEP_BUTTON_RADIUS,
-          listener: providedOptions.stepForwardListener,
+          listener: () => {
+            model.interruptSubtreeEmitter.emit();
+            providedOptions.stepForwardListener();
+          },
           touchAreaDilation: 2
         },
         tandem: Tandem.OPT_OUT
@@ -107,7 +110,10 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       touchAreaDilation: 2,
       xMargin: 9.5,
       yMargin: 9.5,
-      listener: () => model.restart(),
+      listener: () => {
+        model.interruptSubtreeEmitter.emit();
+        model.restart();
+      },
       center: this.getPlayPauseButtonCenter().minusXY( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS + PUSH_BUTTON_SPACING, 0 ),
       layoutOptions: {
         xMargin: 5

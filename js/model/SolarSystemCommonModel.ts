@@ -93,6 +93,8 @@ export default abstract class SolarSystemCommonModel {
 
   public readonly measuringTape: SolarSystemCommonMeasuringTape;
 
+  public readonly interruptSubtreeEmitter = new Emitter();
+
   protected constructor( providedOptions: SolarSystemCommonModelOptions ) {
 
     const options = optionize<SolarSystemCommonModelOptions, SelfOptions>()( {

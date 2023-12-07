@@ -211,6 +211,10 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
       this.resetAllButton.right = interfaceBounds.right - SolarSystemCommonConstants.SCREEN_VIEW_X_MARGIN;
       this.resetAllButton.bottom = interfaceBounds.bottom - SolarSystemCommonConstants.SCREEN_VIEW_Y_MARGIN;
     } );
+
+    model.interruptSubtreeEmitter.addListener( () => {
+      this.interruptSubtreeInput();
+    } );
   }
 
   public reset(): void {
