@@ -7,7 +7,6 @@
  */
 
 import Vector2 from '../../../dot/js/Vector2.js';
-import Multilink from '../../../axon/js/Multilink.js';
 import ScreenView, { ScreenViewOptions } from '../../../joist/js/ScreenView.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
@@ -15,7 +14,6 @@ import { Node, Path } from '../../../scenery/js/imports.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
@@ -23,13 +21,10 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import BodySoundManager from './BodySoundManager.js';
-import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../tambo/js/soundManager.js';
-import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
-import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import { Shape } from '../../../kite/js/imports.js';
 import SolarSystemCommonVisibleProperties from './SolarSystemCommonVisibleProperties.js';
 import SolarSystemCommonGridNode from './SolarSystemCommonGridNode.js';
+import SolarSystemCommonMeasuringTapeNode from './SolarSystemCommonMeasuringTapeNode.js';
 
 export type DragBoundsItem = {
   node: Node;
@@ -145,63 +140,14 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     );
     this.interfaceLayer.addChild( gridNode );
 
-    // Sound =========================================================================================================
-
-    // Sounds used for draggable UI elements
-    const dragClipOptions = {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-    };
-    const grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
-    const releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
-    soundManager.addSoundGenerator( grabClip );
-    soundManager.addSoundGenerator( releaseClip );
-
     // UI Elements ===================================================================================================
 
-    // Measuring tape units must update dynamically when AUStringProperty changes.
-    const measuringTapeUnitsProperty = new DerivedProperty( [ SolarSystemCommonStrings.units.AUStringProperty ],
-      AUString => {
-        return { name: AUString, multiplier: 1 };
-      } );
-
     // Add the MeasuringTapeNode
-    this.measuringTapeNode = new MeasuringTapeNode( measuringTapeUnitsProperty, {
-      basePositionProperty: model.measuringTape.basePositionProperty,
-      tipPositionProperty: model.measuringTape.tipPositionProperty,
-      visibleProperty: this.visibleProperties.measuringTapeVisibleProperty,
-      textColor: 'black',
-      textBackgroundColor: 'rgba( 255, 255, 255, 0.5 )', // translucent white
-      textBackgroundXMargin: 10,
-      textBackgroundYMargin: 3,
-      textBackgroundCornerRadius: 5,
-      significantFigures: 2,
-      baseDragStarted: () => grabClip.play(),
-      baseDragEnded: () => releaseClip.play(),
-      keyboardDragListenerOptions: {
-        baseShiftDragVelocity: 100,
-        tipShiftDragVelocity: 100
-      },
-      tandem: providedOptions.tandem.createTandem( 'measuringTapeNode' ),
-      phetioFeatured: true,
-      phetioReadoutStringPropertyInstrumented: false,
-      phetioFeaturedMeasuredDistanceProperty: true
-    } );
+    this.measuringTapeNode = new SolarSystemCommonMeasuringTapeNode( model.measuringTape,
+      visibleProperties.measuringTapeVisibleProperty,
+      this.visibleBoundsProperty, this.modelViewTransformProperty,
+      options.tandem.createTandem( 'measuringTapeNode' ) );
     this.topLayer.addChild( this.measuringTapeNode );
-    this.measuringTapeNode.addLinkedElement( model.measuringTape );
-    visibleProperties.measuringTapeVisibleProperty.lazyLink( visible => {
-      if ( !visible ) {
-        this.measuringTapeNode.interruptSubtreeInput();
-      }
-    } );
-
-    // Constrain dragging of measuringTapeNode to visibleBounds.
-    Multilink.multilink(
-      [ this.visibleBoundsProperty, this.modelViewTransformProperty ],
-      ( visibleBounds, modelViewTransform ) => {
-        this.measuringTapeNode.setDragBounds( modelViewTransform.viewToModelBounds( visibleBounds.eroded( 10 ) ) );
-        this.measuringTapeNode.modelViewTransformProperty.value = modelViewTransform;
-      }
-    );
 
     // NOTE: It is the responsibility of the subclass to add resetAllButton to the scene graph.
     this.resetAllButton = new ResetAllButton( {
@@ -210,7 +156,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         this.reset();
       },
       touchAreaDilation: 10,
-      tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
+      tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
     this.interfaceBoundsProperty.link( interfaceBounds => {
       this.resetAllButton.right = interfaceBounds.right - SolarSystemCommonConstants.SCREEN_VIEW_X_MARGIN;
