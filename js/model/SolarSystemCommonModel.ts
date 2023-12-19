@@ -37,6 +37,7 @@ type SelfOptions = {
   bodyColors: ProfileColorProperty[];
   engineTimeScale: number; // Scales down the normal dt (in seconds) to engine times
   modelToViewTime?: number; // Scales times from model to view (years)
+  phetioFeaturedTimeProperty?: boolean;
 };
 
 export type SolarSystemCommonModelOptions = SelfOptions &
@@ -100,7 +101,8 @@ export default abstract class SolarSystemCommonModel {
     const options = optionize<SolarSystemCommonModelOptions, SelfOptions>()( {
 
       // SelfOptions
-      modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER
+      modelToViewTime: 1000 * SolarSystemCommonConstants.TIME_MULTIPLIER,
+      phetioFeaturedTimeProperty: true
     }, providedOptions );
 
     assert && assert( options.defaultBodyInfo.length === options.bodyColors.length, 'Body colors must be provided for each body' );
@@ -148,7 +150,7 @@ export default abstract class SolarSystemCommonModel {
       units: 'years',
       tandem: timeTandem.createTandem( 'timeProperty' ),
       phetioReadOnly: true,
-      phetioFeatured: true,
+      phetioFeatured: options.phetioFeaturedTimeProperty,
       phetioDocumentation: 'The model time, in years'
     } );
 
