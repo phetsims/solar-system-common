@@ -72,7 +72,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         stepForwardButtonOptions: {
           radius: STEP_BUTTON_RADIUS,
           listener: () => {
-            model.interruptSubtreeEmitter.emit();
+            model.interruptBodiesSubtreeEmitter.emit();
             providedOptions.stepForwardListener();
           },
           touchAreaDilation: 2
