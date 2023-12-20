@@ -95,6 +95,7 @@ export default abstract class SolarSystemCommonModel {
   public readonly measuringTape: SolarSystemCommonMeasuringTape;
 
   public readonly interruptSubtreeEmitter = new Emitter();
+  public readonly interruptBodiesSubtreeEmitter = new Emitter();
 
   protected constructor( providedOptions: SolarSystemCommonModelOptions ) {
 
