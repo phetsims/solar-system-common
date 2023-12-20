@@ -93,7 +93,8 @@ export default class Body extends PhetioObject {
     this.positionProperty = new Vector2Property( bodyInfo.position.copy(), {
       units: 'AU',
       tandem: tandem.createTandem( 'positionProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      reentrant: true
     } );
 
     // bodyInfo.velocity.copy() because velocityProperty's value may be mutated directly
