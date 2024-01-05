@@ -43,6 +43,15 @@ type SelfOptions = {
 export type SolarSystemCommonModelOptions = SelfOptions &
   PickRequired<PhetioObjectOptions, 'tandem'>;
 
+// BodyInfo[] for unspecified bodies
+const INACTIVE_BODIES_DEFAULT_STATE = [
+  new BodyInfo( { isActive: true, mass: 0.1, position: new Vector2( 0, 3 ), velocity: new Vector2( -10, 0 ) } ),
+  new BodyInfo( { isActive: true, mass: 0.1, position: new Vector2( 0, -3 ), velocity: new Vector2( 10, 0 ) } ),
+  new BodyInfo( { isActive: true, mass: 0.1, position: new Vector2( 3, 0 ), velocity: new Vector2( 0, 10 ) } ),
+  new BodyInfo( { isActive: true, mass: 0.1, position: new Vector2( -3, 0 ), velocity: new Vector2( 0, -10 ) } )
+];
+
+
 export default abstract class SolarSystemCommonModel {
 
   // Initial values that were used to instantiate Body instances
@@ -221,7 +230,11 @@ export default abstract class SolarSystemCommonModel {
         this.bodies[ i ].reset();
       }
       else {
+        const defaultBodyInfo = INACTIVE_BODIES_DEFAULT_STATE[ i ];
         this.bodies[ i ].isActiveProperty.value = false;
+        this.bodies[ i ].massProperty.setInitialValue( defaultBodyInfo.mass );
+        this.bodies[ i ].positionProperty.setInitialValue( defaultBodyInfo.position.copy() ); // copy because positionProperty value may be mutated directly
+        this.bodies[ i ].velocityProperty.setInitialValue( defaultBodyInfo.velocity.copy() ); // copy because velocityProperty value may be mutated directly
       }
     }
 
