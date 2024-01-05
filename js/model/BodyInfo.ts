@@ -16,13 +16,16 @@ import BooleanIO from '../../../tandem/js/types/BooleanIO.js';
 import NullableIO from '../../../tandem/js/types/NullableIO.js';
 import StringIO from '../../../tandem/js/types/StringIO.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
 
 type SelfOptions = {
   isActive: boolean;
   mass: number;
   massRange?: Range;
   position: Vector2;
+  positionPropertyOptions?: Vector2PropertyOptions; // no PhET-iO serialization needed because all Body instances are created at startup
   velocity: Vector2;
+  velocityPropertyOptions?: Vector2PropertyOptions; // no PhET-iO serialization needed because all Body instances are created at startup
   tandemName?: string | null;
 };
 
@@ -44,7 +47,9 @@ export default class BodyInfo {
   public readonly mass: number;
   public readonly massRange: Range;
   public readonly position: Vector2;
+  public readonly positionPropertyOptions?: Vector2PropertyOptions;
   public readonly velocity: Vector2;
+  public readonly velocityPropertyOptions?: Vector2PropertyOptions;
   public readonly tandemName: string | null;
 
   public constructor( providedOptions: BodyInfoOptions ) {
@@ -52,8 +57,9 @@ export default class BodyInfo {
     this.mass = providedOptions.mass;
     this.massRange = providedOptions.massRange || SolarSystemCommonConstants.DEFAULT_MASS_RANGE;
     this.position = providedOptions.position;
+    this.positionPropertyOptions = providedOptions.positionPropertyOptions;
     this.velocity = providedOptions.velocity;
-    this.velocity = providedOptions.velocity;
+    this.velocityPropertyOptions = providedOptions.velocityPropertyOptions;
     this.tandemName = providedOptions.tandemName || null;
   }
 

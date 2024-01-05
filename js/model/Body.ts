@@ -11,7 +11,7 @@ import Vector2 from '../../../dot/js/Vector2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import Vector2Property from '../../../dot/js/Vector2Property.js';
+import Vector2Property, { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import { Color } from '../../../scenery/js/imports.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
@@ -26,6 +26,7 @@ import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
 import isSettingPhetioStateProperty from '../../../tandem/js/isSettingPhetioStateProperty.js';
+import { combineOptions } from '../../../phet-core/js/optionize.js';
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 
@@ -90,20 +91,22 @@ export default class Body extends PhetioObject {
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
     // bodyInfo.position.copy() because velocityProperty's value may be mutated directly
-    this.positionProperty = new Vector2Property( bodyInfo.position.copy(), {
-      units: 'AU',
-      tandem: tandem.createTandem( 'positionProperty' ),
-      phetioFeatured: true,
-      reentrant: true
-    } );
+    this.positionProperty = new Vector2Property( bodyInfo.position.copy(),
+      combineOptions<Vector2PropertyOptions>( {
+        units: 'AU',
+        tandem: tandem.createTandem( 'positionProperty' ),
+        phetioFeatured: true,
+        reentrant: true
+      }, bodyInfo.positionPropertyOptions ) );
 
     // bodyInfo.velocity.copy() because velocityProperty's value may be mutated directly
-    this.velocityProperty = new Vector2Property( bodyInfo.velocity.copy(), {
+    this.velocityProperty = new Vector2Property( bodyInfo.velocity.copy(),
+      combineOptions<Vector2PropertyOptions>( {
       units: 'km/s',
       tandem: tandem.createTandem( 'velocityProperty' ),
       phetioFeatured: true,
       reentrant: true
-    } );
+    }, bodyInfo.velocityPropertyOptions ) );
 
     this.speedProperty = new DerivedProperty( [ this.velocityProperty ], velocity => velocity.magnitude, {
       units: 'km/s',
