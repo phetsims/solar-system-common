@@ -242,6 +242,7 @@ export default abstract class SolarSystemCommonModel {
   }
 
   public reset(): void {
+    this.interruptSubtreeEmitter.emit();
     this.isPlayingProperty.value = false; // Pause the sim
     this.hasPlayedProperty.reset();
     this.timeSpeedProperty.reset();
