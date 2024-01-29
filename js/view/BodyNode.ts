@@ -49,9 +49,9 @@ const DEFAULT_SPEED_VISIBLE_PROPERTY = new BooleanProperty( false );
 type SelfOptions = {
   draggable?: boolean;
 
-  // Velocities for keyboard drag controls
-  dragVelocity?: number;
-  shiftDragVelocity?: number;
+  // Speeds for keyboard drag controls
+  dragSpeed?: number;
+  shiftDragSpeed?: number;
 
   // Function to constrain the potential drag position of the body
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
@@ -88,8 +88,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
       // SelfOptions
       draggable: true,
-      dragVelocity: 450,
-      shiftDragVelocity: 100,
+      dragSpeed: 450,
+      shiftDragSpeed: 100,
       mapPosition: _.identity,
       speedVisibleProperty: DEFAULT_SPEED_VISIBLE_PROPERTY,
       rectangleOptions: {
@@ -204,8 +204,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         mapPosition: map,
         start: start,
         end: end,
-        dragVelocity: options.dragVelocity,
-        shiftDragVelocity: options.shiftDragVelocity,
+        dragSpeed: options.dragSpeed,
+        shiftDragSpeed: options.shiftDragSpeed,
         tandem: options.tandem.createTandem( 'keyboardDragListener' )
       } );
       this.addInputListener( keyboardDragListener );

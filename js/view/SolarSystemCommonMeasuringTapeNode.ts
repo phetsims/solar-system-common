@@ -60,8 +60,8 @@ export default class SolarSystemCommonMeasuringTapeNode extends MeasuringTapeNod
       baseDragStarted: () => grabClip.play(),
       baseDragEnded: () => releaseClip.play(),
       keyboardDragListenerOptions: {
-        baseShiftDragVelocity: 100,
-        tipShiftDragVelocity: 100
+        baseShiftDragSpeed: 100,
+        tipShiftDragSpeed: 100
       },
       tandem: tandem,
       phetioFeatured: true,

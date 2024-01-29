@@ -39,9 +39,9 @@ type SelfOptions = {
   // For drag "bounds"-like handling
   mapPosition?: ( position: Vector2, radius: number ) => Vector2;
 
-  // Velocities for keyboard drag controls
-  dragVelocity?: number;
-  shiftDragVelocity?: number;
+  // Speeds for keyboard drag controls
+  dragSpeed?: number;
+  shiftDragSpeed?: number;
 };
 
 export type DraggableVectorNodeOptions = SelfOptions &
@@ -62,8 +62,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       maxMagnitudeProperty: null,
       soundViewNode: null,
       mapPosition: _.identity,
-      dragVelocity: 450,
-      shiftDragVelocity: 100,
+      dragSpeed: 450,
+      shiftDragSpeed: 100,
       fill: SolarSystemCommonColors.velocityColorProperty,
 
       // VectorNodeOptions
@@ -175,8 +175,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
         start();
       },
       end: end,
-      shiftDragVelocity: options.shiftDragVelocity,
-      dragVelocity: options.dragVelocity,
+      shiftDragSpeed: options.shiftDragSpeed,
+      dragSpeed: options.dragSpeed,
       tandem: options.tandem.createTandem( 'keyboardDragListener' )
     } );
     this.addInputListener( keyboardDragListener );
