@@ -260,6 +260,7 @@ export default abstract class SolarSystemCommonModel {
     this.interruptSubtreeEmitter.emit();
     this.isPlayingProperty.value = false; // Pause the sim
     this.timeProperty.reset(); // Reset the time
+    this.hasPlayedProperty.value = false;
     this.loadBodyInfo( this.startingBodyInfoProperty.value ); // Reset the bodies
     this.update();
   }
