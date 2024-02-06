@@ -131,7 +131,6 @@ export default class Body extends PhetioObject {
     this.isActiveProperty = new BooleanProperty( bodyInfo.isActive, {
       tandem: tandem.createTandem( 'isActiveProperty' ),
       phetioReadOnly: true,
-      phetioFeatured: true,
       phetioDocumentation: 'False if this body is not part of the selected orbital system, or if the body has collided and exploded.'
     } );
 
