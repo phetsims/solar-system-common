@@ -9,7 +9,7 @@
 import createObservableArray, { ObservableArray } from '../../../axon/js/createObservableArray.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import solarSystemCommon from '../solarSystemCommon.js';
-import NumberProperty from '../../../axon/js/NumberProperty.js';
+import NumberProperty, { NumberPropertyOptions } from '../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Vector2Property, { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
@@ -79,14 +79,15 @@ export default class Body extends PhetioObject {
 
     this.index = index;
 
-    this.massProperty = new NumberProperty( bodyInfo.mass, {
-      range: bodyInfo.massRange,
-      isValidValue: mass => ( mass > 0 ),
-      hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
-      tandem: tandem.createTandem( 'massProperty' ),
-      phetioDocumentation: 'This is the value of N, where mass is N x 10<sup>28</sup> kg.',
-      phetioFeatured: true
-    } );
+    this.massProperty = new NumberProperty( bodyInfo.mass,
+      combineOptions<NumberPropertyOptions>( {
+        range: bodyInfo.massRange,
+        isValidValue: mass => ( mass > 0 ),
+        hasListenerOrderDependencies: true, // during reset listener order is key for calculating correct values.
+        tandem: tandem.createTandem( 'massProperty' ),
+        phetioDocumentation: 'This is the value of N, where mass is N x 10<sup>28</sup> kg.',
+        phetioFeatured: true
+      }, bodyInfo.massPropertyOptions ) );
 
     this.radiusProperty = new DerivedProperty( [ this.massProperty ], mass => Body.massToRadius( mass ) );
 
@@ -102,11 +103,11 @@ export default class Body extends PhetioObject {
     // bodyInfo.velocity.copy() because velocityProperty's value may be mutated directly
     this.velocityProperty = new Vector2Property( bodyInfo.velocity.copy(),
       combineOptions<Vector2PropertyOptions>( {
-      units: 'km/s',
-      tandem: tandem.createTandem( 'velocityProperty' ),
-      phetioFeatured: true,
-      reentrant: true
-    }, bodyInfo.velocityPropertyOptions ) );
+        units: 'km/s',
+        tandem: tandem.createTandem( 'velocityProperty' ),
+        phetioFeatured: true,
+        reentrant: true
+      }, bodyInfo.velocityPropertyOptions ) );
 
     this.speedProperty = new DerivedProperty( [ this.velocityProperty ], velocity => velocity.magnitude, {
       units: 'km/s',

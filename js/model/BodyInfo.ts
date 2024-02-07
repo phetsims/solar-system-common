@@ -17,10 +17,12 @@ import NullableIO from '../../../tandem/js/types/NullableIO.js';
 import StringIO from '../../../tandem/js/types/StringIO.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
+import { NumberPropertyOptions } from '../../../axon/js/NumberProperty.js';
 
 type SelfOptions = {
   isActive: boolean;
   mass: number;
+  massPropertyOptions?: NumberPropertyOptions; // no PhET-iO serialization needed because all Body instances are created at startup
   massRange?: Range;
   position: Vector2;
   positionPropertyOptions?: Vector2PropertyOptions; // no PhET-iO serialization needed because all Body instances are created at startup
@@ -45,6 +47,7 @@ export default class BodyInfo {
 
   public readonly isActive: boolean;
   public readonly mass: number;
+  public readonly massPropertyOptions?: NumberPropertyOptions;
   public readonly massRange: Range;
   public readonly position: Vector2;
   public readonly positionPropertyOptions?: Vector2PropertyOptions;
@@ -55,6 +58,7 @@ export default class BodyInfo {
   public constructor( providedOptions: BodyInfoOptions ) {
     this.isActive = providedOptions.isActive;
     this.mass = providedOptions.mass;
+    this.massPropertyOptions = providedOptions.massPropertyOptions;
     this.massRange = providedOptions.massRange || SolarSystemCommonConstants.DEFAULT_MASS_RANGE;
     this.position = providedOptions.position;
     this.positionPropertyOptions = providedOptions.positionPropertyOptions;
