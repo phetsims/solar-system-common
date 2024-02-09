@@ -140,23 +140,11 @@ export default class Body extends PhetioObject {
       phetioReadOnly: true
     } );
 
-    this.userIsControllingMassProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'userIsControllingMassProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'True when the user is controlling the body\'s mass'
-    } );
+    this.userIsControllingMassProperty = new BooleanProperty( false );
 
-    this.userIsControllingPositionProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'userIsControllingPositionProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'True when the user is controlling the body\'s position'
-    } );
+    this.userIsControllingPositionProperty = new BooleanProperty( false );
 
-    this.userIsControllingVelocityProperty = new BooleanProperty( false, {
-      tandem: tandem.createTandem( 'userIsControllingVelocityProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'True when the user is controlling the body\'s velocity'
-    } );
+    this.userIsControllingVelocityProperty = new BooleanProperty( false );
 
     this.colorProperty = colorProperty;
     this.addLinkedElement( colorProperty, {
