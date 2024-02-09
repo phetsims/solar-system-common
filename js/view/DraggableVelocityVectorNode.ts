@@ -27,6 +27,7 @@ import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
+import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -188,10 +189,13 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       }
     } );
 
-    // For PhET-iO, when the Node does not support input, don't show the drag circle.
-    this.inputEnabledProperty.link( inputEnabled => {
-      grabArea.visible = inputEnabled;
-      labelText.visible = inputEnabled;
+    const internalEnabledProperty = new DerivedProperty( [ this.enabledProperty, this.inputEnabledProperty ],
+      ( enabled, inputEnabled ) => enabled && inputEnabled );
+
+    // If DraggableVector is disabled, don't show the drag circle.
+    internalEnabledProperty.link( enabled => {
+      grabArea.visible = enabled;
+      labelText.visible = enabled;
     } );
 
     // Workaround for https://github.com/phetsims/my-solar-system/issues/278#issuecomment-1806360130
