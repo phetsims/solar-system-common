@@ -252,7 +252,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       const cueingArrowsNode = new CueingArrowsNode( {
         bodyRadius: this.radius,
         fill: options.mainColor,
-        visibleProperty: options.cueingArrowsVisibleProperty
+        visibleProperty: new DerivedProperty( [ options.cueingArrowsVisibleProperty, this.inputEnabledProperty ],
+          ( cueingArrowsVisible, inputEnabled ) => cueingArrowsVisible && inputEnabled )
       } );
       this.addChild( cueingArrowsNode );
     }
