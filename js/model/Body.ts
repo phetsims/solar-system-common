@@ -104,6 +104,10 @@ export default class Body extends PhetioObject {
     this.velocityProperty = new Vector2Property( bodyInfo.velocity.copy(),
       combineOptions<Vector2PropertyOptions>( {
         units: 'km/s',
+
+        // To prevent an infinite loop based on how the EllipticalOrbitEngine.update() sometimes constrains Body
+        // Property values, see https://github.com/phetsims/keplers-laws/issues/264
+        valueComparisonStrategy: 'equalsFunction',
         tandem: tandem.createTandem( 'velocityProperty' ),
         phetioFeatured: true,
         reentrant: true
