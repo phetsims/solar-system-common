@@ -138,7 +138,7 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
         boldOriginAxes: true
       }
     );
-    this.bottomLayer.addChild( gridNode );
+    this.interfaceLayer.addChild( gridNode );
 
     // UI Elements ===================================================================================================
 
