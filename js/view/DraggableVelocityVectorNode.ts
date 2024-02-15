@@ -28,6 +28,7 @@ import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
+import { BooleanProperty } from '../../../axon/js/imports.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -43,6 +44,9 @@ type SelfOptions = {
   // Speeds for keyboard drag controls
   dragSpeed?: number;
   shiftDragSpeed?: number;
+
+  // Custom property that isn't linked to inputEnabledProperty
+  isVelocityInteractiveProperty?: TReadOnlyProperty<boolean>;
 };
 
 export type DraggableVectorNodeOptions = SelfOptions &
@@ -73,7 +77,9 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       phetioInputEnabledPropertyInstrumented: true, // see https://github.com/phetsims/my-solar-system/issues/231
       inputEnabledPropertyOptions: {
         phetioFeatured: true
-      }
+      },
+
+      isVelocityInteractiveProperty: new BooleanProperty( true )
     }, providedOptions );
 
     const positionProperty = body.positionProperty;
@@ -189,8 +195,8 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       }
     } );
 
-    const internalEnabledProperty = new DerivedProperty( [ this.enabledProperty, this.inputEnabledProperty ],
-      ( enabled, inputEnabled ) => enabled && inputEnabled );
+    const internalEnabledProperty = new DerivedProperty( [ options.isVelocityInteractiveProperty, this.inputEnabledProperty ],
+      ( interactive, inputEnabled ) => interactive && inputEnabled );
 
     // If DraggableVector is disabled, don't show the drag circle.
     internalEnabledProperty.link( enabled => {
