@@ -28,7 +28,7 @@ import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import { BooleanProperty } from '../../../axon/js/imports.js';
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
