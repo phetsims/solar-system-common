@@ -24,6 +24,8 @@ import Bounds2 from '../../../dot/js/Bounds2.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import Multilink from '../../../axon/js/Multilink.js';
 
+const SHIFT_DRAG_SPEED = 100; // for keyboard dragging
+
 export default class SolarSystemCommonMeasuringTapeNode extends MeasuringTapeNode {
 
   public constructor( measuringTape: SolarSystemCommonMeasuringTape,
@@ -59,9 +61,11 @@ export default class SolarSystemCommonMeasuringTapeNode extends MeasuringTapeNod
       significantFigures: 2,
       baseDragStarted: () => grabClip.play(),
       baseDragEnded: () => releaseClip.play(),
-      keyboardDragListenerOptions: {
-        baseShiftDragSpeed: 100,
-        tipShiftDragSpeed: 100
+      baseKeyboardDragListenerOptions: {
+        shiftDragSpeed: SHIFT_DRAG_SPEED
+      },
+      tipKeyboardDragListenerOptions: {
+        shiftDragSpeed: SHIFT_DRAG_SPEED
       },
       tandem: tandem,
       phetioFeatured: true,
