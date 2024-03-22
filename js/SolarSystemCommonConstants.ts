@@ -112,4 +112,3 @@ testUnits();
 
 solarSystemCommon.register( 'SolarSystemCommonConstants', SolarSystemCommonConstants );
 export default SolarSystemCommonConstants;
-
