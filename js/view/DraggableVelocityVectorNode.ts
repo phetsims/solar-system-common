@@ -9,26 +9,26 @@
 
 import { Shape } from '../../../kite/js/imports.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Color, DragListener, InteractiveHighlighting, KeyboardDragListener, Node, Path, PathOptions, Text } from '../../../scenery/js/imports.js';
+import { Color, InteractiveHighlighting, Node, Path, PathOptions, Text } from '../../../scenery/js/imports.js';
 import VectorNode, { VectorNodeOptions } from './VectorNode.js';
 import Body from '../model/Body.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../dot/js/Vector2.js';
-import optionize from '../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
-import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
 import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-import soundManager from '../../../tambo/js/soundManager.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import RichDragListener, { RichDragListenerOptions } from '../../../scenery-phet/js/RichDragListener.js';
+import RichKeyboardDragListener, { RichKeyboardDragListenerOptions } from '../../../scenery-phet/js/RichKeyboardDragListener.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -53,9 +53,6 @@ export type DraggableVectorNodeOptions = SelfOptions &
   WithRequired<VectorNodeOptions, 'tandem' | 'visibleProperty'>;
 
 export default class DraggableVelocityVectorNode extends VectorNode {
-
-  public readonly grabClip: SoundClip;
-  public readonly releaseClip: SoundClip;
 
   public constructor( body: Body, transformProperty: TReadOnlyProperty<ModelViewTransform2>, providedOptions?: DraggableVectorNodeOptions ) {
 
@@ -89,21 +86,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     const vectorScalePowerProperty = new NumberProperty( 0 );
 
     super( body, transformProperty, velocityProperty, vectorScalePowerProperty, options );
-
-    const dragClipOptions = {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-    };
-    this.grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
-    this.releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
-
-    if ( options.soundViewNode ) {
-      soundManager.addSoundGenerator( this.grabClip, {
-        associatedViewNode: options.soundViewNode
-      } );
-      soundManager.addSoundGenerator( this.releaseClip, {
-        associatedViewNode: options.soundViewNode
-      } );
-    }
 
     const circleRadius = 18;
     const circleLineWidth = 3;
@@ -148,14 +130,30 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     // Add the drag handler
     const start = () => {
       body.userIsControllingVelocityProperty.value = true;
-      this.grabClip.play();
     };
     const end = () => {
       body.userIsControllingVelocityProperty.value = false;
-      this.releaseClip.play();
     };
 
-    const dragListener = new DragListener( {
+    // TODO: Are we ok with always creating the sounds? SoundViewNode is more for the orbiting sound, see https://github.com/phetsims/solar-system-common/issues/2
+    const richDragListenerOptions = {
+      grabSound: options.soundViewNode ? Grab_Sound_mp3 : null,
+      releaseSound: options.soundViewNode ? Release_Sound_mp3 : null,
+      grabSoundClipOptions: {
+        initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      },
+      releaseSoundClipOptions: {
+        initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      },
+      grabSoundGeneratorAddOptions: {
+        associatedViewNode: options.soundViewNode
+      },
+      releaseSoundGeneratorAddOptions: {
+        associatedViewNode: options.soundViewNode
+      }
+    };
+
+    const dragListener = new RichDragListener( combineOptions<RichDragListenerOptions>( {
       positionProperty: velocityCirclePositionProperty,
       transform: transformProperty,
       mapPosition: point => options.mapPosition( point, circleOuterRadius ),
@@ -166,14 +164,14 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       end: end,
       canStartPress: () => !body.userIsControllingVelocityProperty.value,
       tandem: options.tandem.createTandem( 'dragListener' )
-    } );
+    }, richDragListenerOptions ) );
     grabArea.addInputListener( dragListener );
 
     // Move behind the geometry created by the superclass.
     grabArea.moveToBack();
     labelText.moveToBack();
 
-    const keyboardDragListener = new KeyboardDragListener( {
+    const keyboardDragListener = new RichKeyboardDragListener( combineOptions<RichKeyboardDragListenerOptions>( {
       positionProperty: velocityCirclePositionProperty,
       transform: transformProperty,
       mapPosition: point => options.mapPosition( point, circleOuterRadius ),
@@ -185,7 +183,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       shiftDragSpeed: options.shiftDragSpeed,
       dragSpeed: options.dragSpeed,
       tandem: options.tandem.createTandem( 'keyboardDragListener' )
-    } );
+    }, richDragListenerOptions ) );
     this.addInputListener( keyboardDragListener );
 
     // If this Node becomes invisible, interrupt user interaction.

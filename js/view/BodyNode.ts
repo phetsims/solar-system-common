@@ -6,12 +6,12 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { Color, DragListener, InteractiveHighlighting, KeyboardDragListener, Node, Rectangle, RectangleOptions, RichText, TextOptions } from '../../../scenery/js/imports.js';
+import { Color, InteractiveHighlighting, Node, Rectangle, RectangleOptions, RichText, TextOptions } from '../../../scenery/js/imports.js';
 import Utils from '../../../dot/js/Utils.js';
 import Body from '../model/Body.js';
 import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../scenery-phet/js/ShadedSphereNode.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import optionize from '../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
 import Multilink from '../../../axon/js/Multilink.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
@@ -35,6 +35,8 @@ import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
+import RichDragListener, { RichDragListenerOptions } from '../../../scenery-phet/js/RichDragListener.js';
+import RichKeyboardDragListener, { RichKeyboardDragListenerOptions } from '../../../scenery-phet/js/RichKeyboardDragListener.js';
 
 const bodySounds = [
   Bodies_Brass_C3_mp3,
@@ -76,8 +78,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
   public readonly body: Body;
   private readonly soundClip: SoundClip;
-  private readonly grabClip: SoundClip;
-  private readonly releaseClip: SoundClip;
 
   public constructor( body: Body,
                       modelViewTransformProperty: TReadOnlyProperty<ModelViewTransform2>,
@@ -135,20 +135,8 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       loop: true
     } );
 
-    const dragClipOptions = {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-    };
-    this.grabClip = new SoundClip( Grab_Sound_mp3, dragClipOptions );
-    this.releaseClip = new SoundClip( Release_Sound_mp3, dragClipOptions );
-
     if ( options.soundViewNode ) {
       soundManager.addSoundGenerator( this.soundClip, {
-        associatedViewNode: options.soundViewNode
-      } );
-      soundManager.addSoundGenerator( this.grabClip, {
-        associatedViewNode: options.soundViewNode
-      } );
-      soundManager.addSoundGenerator( this.releaseClip, {
         associatedViewNode: options.soundViewNode
       } );
     }
@@ -177,17 +165,33 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       const start = () => {
         body.clearPath();
         body.userIsControllingPositionProperty.value = true;
-        this.grabClip.play();
       };
       const end = () => {
         body.userIsControllingPositionProperty.value = false;
-        this.releaseClip.play();
       };
 
       // Constrain dragging for DragListener and KeyboardDragListener.
       const map = ( point: Vector2 ) => options.mapPosition( point, this.radius );
 
-      const dragListener = new DragListener( {
+      // TODO: Are we ok with always creating the sounds? SoundViewNode is more for the orbiting sound, see https://github.com/phetsims/solar-system-common/issues/2
+      const richDragListenerOptions = {
+        grabSound: options.soundViewNode ? Grab_Sound_mp3 : null,
+        releaseSound: options.soundViewNode ? Release_Sound_mp3 : null,
+        grabSoundClipOptions: {
+          initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+        },
+        releaseSoundClipOptions: {
+          initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+        },
+        grabSoundGeneratorAddOptions: {
+          associatedViewNode: options.soundViewNode
+        },
+        releaseSoundGeneratorAddOptions: {
+          associatedViewNode: options.soundViewNode
+        }
+      };
+
+      const dragListener = new RichDragListener( combineOptions<RichDragListenerOptions>( {
         positionProperty: body.positionProperty,
         transform: modelViewTransformProperty,
         mapPosition: map,
@@ -195,10 +199,10 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         end: end,
         canStartPress: () => !body.userIsControllingPositionProperty.value,
         tandem: options.tandem.createTandem( 'dragListener' )
-      } );
+      }, richDragListenerOptions ) );
       this.addInputListener( dragListener );
 
-      const keyboardDragListener = new KeyboardDragListener( {
+      const keyboardDragListener = new RichKeyboardDragListener( combineOptions<RichKeyboardDragListenerOptions>( {
         positionProperty: body.positionProperty,
         transform: modelViewTransformProperty,
         mapPosition: map,
@@ -207,7 +211,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         dragSpeed: options.dragSpeed,
         shiftDragSpeed: options.shiftDragSpeed,
         tandem: options.tandem.createTandem( 'keyboardDragListener' )
-      } );
+      }, richDragListenerOptions ) );
       this.addInputListener( keyboardDragListener );
     }
 
