@@ -29,8 +29,6 @@ import Bodies_Brass_C3_mp3 from '../../sounds/Bodies_Brass_C3_mp3.js';
 import Bodies_Flute_g3_mp3 from '../../sounds/Bodies_Flute_g3_mp3.js';
 import Bodies_Strings_e3_v2_mp3 from '../../sounds/Bodies_Strings_e3_v2_mp3.js';
 import Bodies_Woodwinds_e3_mp3 from '../../sounds/Bodies_Woodwinds_e3_mp3.js';
-import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
-import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
@@ -173,22 +171,12 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       // Constrain dragging for DragListener and KeyboardDragListener.
       const map = ( point: Vector2 ) => options.mapPosition( point, this.radius );
 
-      // TODO: Are we ok with always creating the sounds? SoundViewNode is more for the orbiting sound, see https://github.com/phetsims/solar-system-common/issues/2
+      const soundClipOptions = {
+        initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+      };
       const richDragListenerOptions = {
-        grabSound: options.soundViewNode ? Grab_Sound_mp3 : null,
-        releaseSound: options.soundViewNode ? Release_Sound_mp3 : null,
-        grabSoundClipOptions: {
-          initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-        },
-        releaseSoundClipOptions: {
-          initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-        },
-        grabSoundGeneratorAddOptions: {
-          associatedViewNode: options.soundViewNode
-        },
-        releaseSoundGeneratorAddOptions: {
-          associatedViewNode: options.soundViewNode
-        }
+        grabSoundClipOptions: soundClipOptions,
+        releaseSoundClipOptions: soundClipOptions
       };
 
       const dragListener = new RichDragListener( combineOptions<RichDragListenerOptions>( {

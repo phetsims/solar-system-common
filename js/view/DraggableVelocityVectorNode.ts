@@ -19,8 +19,6 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
-import Grab_Sound_mp3 from '../../sounds/Grab_Sound_mp3.js';
-import Release_Sound_mp3 from '../../sounds/Release_Sound_mp3.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
@@ -135,22 +133,12 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       body.userIsControllingVelocityProperty.value = false;
     };
 
-    // TODO: Are we ok with always creating the sounds? SoundViewNode is more for the orbiting sound, see https://github.com/phetsims/solar-system-common/issues/2
+    const soundClipOptions = {
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
+    };
     const richDragListenerOptions = {
-      grabSound: options.soundViewNode ? Grab_Sound_mp3 : null,
-      releaseSound: options.soundViewNode ? Release_Sound_mp3 : null,
-      grabSoundClipOptions: {
-        initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-      },
-      releaseSoundClipOptions: {
-        initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-      },
-      grabSoundGeneratorAddOptions: {
-        associatedViewNode: options.soundViewNode
-      },
-      releaseSoundGeneratorAddOptions: {
-        associatedViewNode: options.soundViewNode
-      }
+      grabSoundClipOptions: soundClipOptions,
+      releaseSoundClipOptions: soundClipOptions
     };
 
     const dragListener = new RichDragListener( combineOptions<RichDragListenerOptions>( {
