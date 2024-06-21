@@ -11,7 +11,7 @@ import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
-import { HBox, Path, Rectangle } from '../../../scenery/js/imports.js';
+import { HBox, Node, Path, Rectangle } from '../../../scenery/js/imports.js';
 import { Shape } from '../../../kite/js/imports.js';
 import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
 import solarSystemCommon from '../solarSystemCommon.js';
@@ -104,7 +104,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
     super( model.isPlayingProperty, options );
 
     const restartButton = new RoundPushButton( {
-      content: restartIcon,
+      content: new Node( { children: [ restartIcon ] } ),
       enabledProperty: model.hasPlayedProperty,
       radius: STEP_BUTTON_RADIUS,
       touchAreaDilation: 2,
