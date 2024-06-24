@@ -26,7 +26,7 @@ import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import SoundDragListener, { SoundDragListenerOptions } from '../../../scenery-phet/js/SoundDragListener.js';
-import RichKeyboardDragListener, { RichKeyboardDragListenerOptions } from '../../../scenery-phet/js/RichKeyboardDragListener.js';
+import SoundKeyboardDragListener, { SoundKeyboardDragListenerOptions } from '../../../scenery-phet/js/SoundKeyboardDragListener.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
@@ -159,7 +159,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
     grabArea.moveToBack();
     labelText.moveToBack();
 
-    const keyboardDragListener = new RichKeyboardDragListener( combineOptions<RichKeyboardDragListenerOptions>( {
+    const keyboardDragListener = new SoundKeyboardDragListener( combineOptions<SoundKeyboardDragListenerOptions>( {
       positionProperty: velocityCirclePositionProperty,
       transform: transformProperty,
       mapPosition: point => options.mapPosition( point, circleOuterRadius ),
