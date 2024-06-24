@@ -25,7 +25,7 @@ import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import RichPointerDragListener, { RichPointerDragListenerOptions } from '../../../scenery-phet/js/RichPointerDragListener.js';
+import SoundDragListener, { SoundDragListenerOptions } from '../../../scenery-phet/js/SoundDragListener.js';
 import RichKeyboardDragListener, { RichKeyboardDragListenerOptions } from '../../../scenery-phet/js/RichKeyboardDragListener.js';
 
 type SelfOptions = {
@@ -141,7 +141,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       releaseSoundClipOptions: soundClipOptions
     };
 
-    const dragListener = new RichPointerDragListener( combineOptions<RichPointerDragListenerOptions>( {
+    const dragListener = new SoundDragListener( combineOptions<SoundDragListenerOptions>( {
       positionProperty: velocityCirclePositionProperty,
       transform: transformProperty,
       mapPosition: point => options.mapPosition( point, circleOuterRadius ),

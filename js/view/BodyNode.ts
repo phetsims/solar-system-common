@@ -33,7 +33,7 @@ import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
-import RichPointerDragListener, { RichPointerDragListenerOptions } from '../../../scenery-phet/js/RichPointerDragListener.js';
+import SoundDragListener, { SoundDragListenerOptions } from '../../../scenery-phet/js/SoundDragListener.js';
 import RichKeyboardDragListener, { RichKeyboardDragListenerOptions } from '../../../scenery-phet/js/RichKeyboardDragListener.js';
 
 const bodySounds = [
@@ -179,7 +179,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         releaseSoundClipOptions: soundClipOptions
       };
 
-      const dragListener = new RichPointerDragListener( combineOptions<RichPointerDragListenerOptions>( {
+      const dragListener = new SoundDragListener( combineOptions<SoundDragListenerOptions>( {
         positionProperty: body.positionProperty,
         transform: modelViewTransformProperty,
         mapPosition: map,
