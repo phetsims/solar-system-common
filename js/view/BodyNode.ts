@@ -29,7 +29,7 @@ import Bodies_Brass_C3_mp3 from '../../sounds/Bodies_Brass_C3_mp3.js';
 import Bodies_Flute_g3_mp3 from '../../sounds/Bodies_Flute_g3_mp3.js';
 import Bodies_Strings_e3_v2_mp3 from '../../sounds/Bodies_Strings_e3_v2_mp3.js';
 import Bodies_Woodwinds_e3_mp3 from '../../sounds/Bodies_Woodwinds_e3_mp3.js';
-import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
+import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
@@ -128,15 +128,20 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
 
     this.body = body;
 
+    const soundClipOptions: SoundClipOptions = {
+      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL / 2,
+      loop: true
+    };
+    if ( options.soundViewNode ) {
+      soundClipOptions.associatedViewNode = options.soundViewNode;
+    }
     this.soundClip = new SoundClip( bodySounds[ body.index - 1 ], {
       initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL / 2,
       loop: true
     } );
 
     if ( options.soundViewNode ) {
-      soundManager.addSoundGenerator( this.soundClip, {
-        associatedViewNode: options.soundViewNode
-      } );
+      soundManager.addSoundGenerator( this.soundClip );
     }
 
     Multilink.multilink(
