@@ -29,7 +29,7 @@ import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
-import isSettingPhetioStateProperty from '../../../tandem/js/isSettingPhetioStateProperty.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 // Type definitions
 type SelfOptions = {
@@ -209,11 +209,9 @@ export default abstract class SolarSystemCommonModel {
       tandem: options.tandem.createTandem( 'measuringTape' )
     } );
 
-    // Saving starting body info when phetioState is finished being set (turned false after being true)
-    isSettingPhetioStateProperty.lazyLink( ( isSettingPhetioState, wasSettingPhetioState ) => {
-      if ( !isSettingPhetioState && wasSettingPhetioState ) {
+    // Saving starting body info when phetioState is finished being set
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
         this.saveStartingBodyInfo();
-      }
     } );
   }
 
