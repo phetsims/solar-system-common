@@ -29,7 +29,7 @@ import BodyInfo from './BodyInfo.js';
 import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
-import Tandem from '../../../tandem/js/Tandem.js';
+import phetioStateSetEmitter from '../../../tandem/js/phetioStateSetEmitter.js';
 
 // Type definitions
 type SelfOptions = {
@@ -210,7 +210,7 @@ export default abstract class SolarSystemCommonModel {
     } );
 
     // Saving starting body info when phetioState is finished being set
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+    phetioStateSetEmitter.addListener( () => {
         this.saveStartingBodyInfo();
     } );
   }
