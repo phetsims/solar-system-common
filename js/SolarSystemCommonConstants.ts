@@ -6,13 +6,13 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import SolarSystemCommonColors from './SolarSystemCommonColors.js';
-import solarSystemCommon from './solarSystemCommon.js';
-import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, TLayoutOptions } from '../../scenery/js/imports.js';
-import { combineOptions } from '../../phet-core/js/optionize.js';
-import { PanelOptions } from '../../sun/js/Panel.js';
 import Range from '../../dot/js/Range.js';
+import { combineOptions } from '../../phet-core/js/optionize.js';
+import PhetFont from '../../scenery-phet/js/PhetFont.js';
+import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, TLayoutOptions } from '../../scenery/js/imports.js';
+import { PanelOptions } from '../../sun/js/Panel.js';
+import solarSystemCommon from './solarSystemCommon.js';
+import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 
 export const METERS_PER_AU = 149597870700;
 export const SECONDS_PER_YEAR = 31557600; // 365.25 days/year x 24 hrs/day x 60 min/hr x 60 sec/min
@@ -108,6 +108,7 @@ function testUnits(): void {
   const convertedToSI = gravityForceSimUnits * MASS_MULTIPLIER * POSITION_MULTIPLIER * METERS_PER_AU / TIME_MULTIPLIER / TIME_MULTIPLIER / SECONDS_PER_YEAR / SECONDS_PER_YEAR;
   assert && assert( Math.abs( gravityForce - convertedToSI ) < 1e-10, 'gravityForce and convertedToSI should be the same, within some small tolerance' );
 }
+
 testUnits();
 
 solarSystemCommon.register( 'SolarSystemCommonConstants', SolarSystemCommonConstants );
