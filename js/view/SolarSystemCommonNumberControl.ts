@@ -58,6 +58,9 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
       // NumberControlOptions
       isDisposable: false,
       valueChangeSoundGeneratorOptions: valueChangeSoundGeneratorOptions,
+
+      //a11y
+      accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty,
       sliderOptions: {
         trackSize: new Dimension2( 226, 2 ),
         thumbSize: new Dimension2( 15, 25 ),
@@ -65,9 +68,6 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
         thumbCenterLineStroke: 'black',
         trackFillEnabled: SolarSystemCommonColors.foregroundProperty,
         trackStroke: SolarSystemCommonColors.foregroundProperty,
-
-        //a11y
-        accessibleName: SolarSystemCommonStrings.a11y.massSliderStringProperty,
         tandem: Tandem.OPT_OUT
       },
       titleNodeOptions: {
