@@ -11,6 +11,9 @@ import { combineOptions } from '../../phet-core/js/optionize.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
 import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, TLayoutOptions } from '../../scenery/js/imports.js';
 import { PanelOptions } from '../../sun/js/Panel.js';
+import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
+import grab_mp3 from '../../tambo/sounds/grab_mp3.js';
+import release_mp3 from '../../tambo/sounds/release_mp3.js';
 import solarSystemCommon from './solarSystemCommon.js';
 import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 
@@ -50,6 +53,15 @@ const PANEL_OPTIONS: PanelOptions = {
   }
 };
 
+const DEFAULT_SOUND_OUTPUT_LEVEL = 0.2;
+const DRAG_SOUND_CLIP_OPTIONS = {
+  initialOutputLevel: DEFAULT_SOUND_OUTPUT_LEVEL
+};
+
+// Sound players for the grab/release sounds.
+const GRAB_SOUND_PLAYER = new SoundClip( grab_mp3, DRAG_SOUND_CLIP_OPTIONS );
+const RELEASE_SOUND_PLAYER = new SoundClip( release_mp3, DRAG_SOUND_CLIP_OPTIONS );
+
 const SolarSystemCommonConstants = {
 
   // ScreenView margins
@@ -69,7 +81,13 @@ const SolarSystemCommonConstants = {
   MASS_SLIDER_STEP: 25,
   GRID_SPACING: 1,
   VBOX_SPACING: 7,
-  DEFAULT_SOUND_OUTPUT_LEVEL: 0.2,
+  DEFAULT_SOUND_OUTPUT_LEVEL: DEFAULT_SOUND_OUTPUT_LEVEL,
+  GRAB_SOUND_PLAYER: GRAB_SOUND_PLAYER,
+  RELEASE_SOUND_PLAYER: RELEASE_SOUND_PLAYER,
+  RICH_DRAG_LISTENER_OPTIONS: {
+    grabSoundPlayer: GRAB_SOUND_PLAYER,
+    releaseSoundPlayer: RELEASE_SOUND_PLAYER
+  },
 
   INITIAL_VECTOR_OFFSCALE: -2.7, // The initial offscale value for the gravity vector arrows
 

@@ -133,14 +133,6 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       body.userIsControllingVelocityProperty.value = false;
     };
 
-    const soundClipOptions = {
-      initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-    };
-    const richDragListenerOptions = {
-      grabSoundClipOptions: soundClipOptions,
-      releaseSoundClipOptions: soundClipOptions
-    };
-
     const dragListener = new SoundDragListener( combineOptions<SoundDragListenerOptions>( {
       positionProperty: velocityCirclePositionProperty,
       transform: transformProperty,
@@ -152,7 +144,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       end: end,
       canStartPress: () => !body.userIsControllingVelocityProperty.value,
       tandem: options.tandem.createTandem( 'dragListener' )
-    }, richDragListenerOptions ) );
+    }, SolarSystemCommonConstants.RICH_DRAG_LISTENER_OPTIONS ) );
     grabArea.addInputListener( dragListener );
 
     // Move behind the geometry created by the superclass.
@@ -171,7 +163,7 @@ export default class DraggableVelocityVectorNode extends VectorNode {
       shiftDragSpeed: options.shiftDragSpeed,
       dragSpeed: options.dragSpeed,
       tandem: options.tandem.createTandem( 'keyboardDragListener' )
-    }, richDragListenerOptions ) );
+    }, SolarSystemCommonConstants.RICH_DRAG_LISTENER_OPTIONS ) );
     this.addInputListener( keyboardDragListener );
 
     // If this Node becomes invisible, interrupt user interaction.

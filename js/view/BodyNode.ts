@@ -6,35 +6,35 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { Color, InteractiveHighlighting, Node, Rectangle, RectangleOptions, RichText, TextOptions } from '../../../scenery/js/imports.js';
-import Utils from '../../../dot/js/Utils.js';
-import Body from '../model/Body.js';
-import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../scenery-phet/js/ShadedSphereNode.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
-import Multilink from '../../../axon/js/Multilink.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import PatternStringProperty from '../../../axon/js/PatternStringProperty.js';
-import ExplosionNode from './ExplosionNode.js';
-import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import { Shape } from '../../../kite/js/imports.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../axon/js/DerivedProperty.js';
+import Multilink from '../../../axon/js/Multilink.js';
+import PatternStringProperty from '../../../axon/js/PatternStringProperty.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Utils from '../../../dot/js/Utils.js';
+import Vector2 from '../../../dot/js/Vector2.js';
+import { Shape } from '../../../kite/js/imports.js';
+import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
-import solarSystemCommon from '../solarSystemCommon.js';
+import WithRequired from '../../../phet-core/js/types/WithRequired.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../scenery-phet/js/ShadedSphereNode.js';
+import SoundDragListener, { SoundDragListenerOptions } from '../../../scenery-phet/js/SoundDragListener.js';
+import SoundKeyboardDragListener, { SoundKeyboardDragListenerOptions } from '../../../scenery-phet/js/SoundKeyboardDragListener.js';
+import { Color, InteractiveHighlighting, Node, Rectangle, RectangleOptions, RichText, TextOptions } from '../../../scenery/js/imports.js';
+import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
+import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../tambo/js/soundManager.js';
 import Bodies_Brass_C3_mp3 from '../../sounds/Bodies_Brass_C3_mp3.js';
 import Bodies_Flute_g3_mp3 from '../../sounds/Bodies_Flute_g3_mp3.js';
 import Bodies_Strings_e3_v2_mp3 from '../../sounds/Bodies_Strings_e3_v2_mp3.js';
 import Bodies_Woodwinds_e3_mp3 from '../../sounds/Bodies_Woodwinds_e3_mp3.js';
-import SoundClip, { SoundClipOptions } from '../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../tambo/js/soundManager.js';
+import Body from '../model/Body.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
-import WithRequired from '../../../phet-core/js/types/WithRequired.js';
-import SoundDragListener, { SoundDragListenerOptions } from '../../../scenery-phet/js/SoundDragListener.js';
-import SoundKeyboardDragListener, { SoundKeyboardDragListenerOptions } from '../../../scenery-phet/js/SoundKeyboardDragListener.js';
+import ExplosionNode from './ExplosionNode.js';
 
 const bodySounds = [
   Bodies_Brass_C3_mp3,
@@ -176,14 +176,6 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
       // Constrain dragging for DragListener and KeyboardDragListener.
       const map = ( point: Vector2 ) => options.mapPosition( point, this.radius );
 
-      const soundClipOptions = {
-        initialOutputLevel: SolarSystemCommonConstants.DEFAULT_SOUND_OUTPUT_LEVEL
-      };
-      const richDragListenerOptions = {
-        grabSoundClipOptions: soundClipOptions,
-        releaseSoundClipOptions: soundClipOptions
-      };
-
       const dragListener = new SoundDragListener( combineOptions<SoundDragListenerOptions>( {
         positionProperty: body.positionProperty,
         transform: modelViewTransformProperty,
@@ -192,7 +184,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         end: end,
         canStartPress: () => !body.userIsControllingPositionProperty.value,
         tandem: options.tandem.createTandem( 'dragListener' )
-      }, richDragListenerOptions ) );
+      }, SolarSystemCommonConstants.RICH_DRAG_LISTENER_OPTIONS ) );
       this.addInputListener( dragListener );
 
       const keyboardDragListener = new SoundKeyboardDragListener( combineOptions<SoundKeyboardDragListenerOptions>( {
@@ -204,7 +196,7 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
         dragSpeed: options.dragSpeed,
         shiftDragSpeed: options.shiftDragSpeed,
         tandem: options.tandem.createTandem( 'keyboardDragListener' )
-      }, richDragListenerOptions ) );
+      }, SolarSystemCommonConstants.RICH_DRAG_LISTENER_OPTIONS ) );
       this.addInputListener( keyboardDragListener );
     }
 
