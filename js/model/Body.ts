@@ -6,27 +6,27 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import createObservableArray, { ObservableArray } from '../../../axon/js/createObservableArray.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import solarSystemCommon from '../solarSystemCommon.js';
-import NumberProperty, { NumberPropertyOptions } from '../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import Vector2Property, { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import { Color } from '../../../scenery/js/imports.js';
-import TinyEmitter from '../../../axon/js/TinyEmitter.js';
-import Property from '../../../axon/js/Property.js';
+import createObservableArray, { ObservableArray } from '../../../axon/js/createObservableArray.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import PhetioObject from '../../../tandem/js/PhetioObject.js';
+import NumberProperty, { NumberPropertyOptions } from '../../../axon/js/NumberProperty.js';
+import Property from '../../../axon/js/Property.js';
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
-import IOType from '../../../tandem/js/types/IOType.js';
-import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
-import BodyInfo from './BodyInfo.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-import NumberIO from '../../../tandem/js/types/NumberIO.js';
-import isSettingPhetioStateProperty from '../../../tandem/js/isSettingPhetioStateProperty.js';
+import TinyEmitter from '../../../axon/js/TinyEmitter.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Vector2 from '../../../dot/js/Vector2.js';
+import Vector2Property, { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
+import { Color } from '../../../scenery/js/imports.js';
+import isSettingPhetioStateProperty from '../../../tandem/js/isSettingPhetioStateProperty.js';
+import PhetioObject from '../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import IOType from '../../../tandem/js/types/IOType.js';
+import NumberIO from '../../../tandem/js/types/NumberIO.js';
+import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import BodyInfo from './BodyInfo.js';
 
 export type BodyStateObject = ReferenceIOState; // because BodyIO is a subtype of ReferenceIO
 

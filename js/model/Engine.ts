@@ -6,8 +6,8 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import Body from './Body.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import Body from './Body.js';
 
 export default abstract class Engine {
 

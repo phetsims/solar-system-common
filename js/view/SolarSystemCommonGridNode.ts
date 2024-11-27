@@ -6,16 +6,16 @@
  * @author Agustín Vallejo
  */
 
-import solarSystemCommon from '../solarSystemCommon.js';
-import GridNode from '../../../scenery-phet/js/GridNode.js';
-import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import { Node, NodeOptions, Path } from '../../../scenery/js/imports.js';
-import optionize from '../../../phet-core/js/optionize.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import Vector2 from '../../../dot/js/Vector2.js';
 import { Shape } from '../../../kite/js/imports.js';
+import optionize from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import GridNode from '../../../scenery-phet/js/GridNode.js';
+import { Node, NodeOptions, Path } from '../../../scenery/js/imports.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 const STROKE_PROPERTY = SolarSystemCommonColors.gridIconStrokeColorProperty;
 const GRID_NODE_LINE_WIDTH = 0.5;

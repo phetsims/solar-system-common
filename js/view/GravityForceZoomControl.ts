@@ -6,17 +6,17 @@
  * @author Agustín Vallejo
  */
 
-import solarSystemCommon from '../solarSystemCommon.js';
-import { HBox, RichText, RichTextOptions, Text } from '../../../scenery/js/imports.js';
-import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import HSlider from '../../../sun/js/HSlider.js';
-import Dimension2 from '../../../dot/js/Dimension2.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
-import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
-import Tandem from '../../../tandem/js/Tandem.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Dimension2 from '../../../dot/js/Dimension2.js';
+import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import { HBox, RichText, RichTextOptions, Text } from '../../../scenery/js/imports.js';
+import HSlider from '../../../sun/js/HSlider.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
+import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 
 const TICK_MARK_OPTIONS: RichTextOptions = {
   font: new PhetFont( 16 ),

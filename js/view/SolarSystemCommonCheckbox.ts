@@ -8,24 +8,24 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Checkbox, { CheckboxOptions } from '../../../sun/js/Checkbox.js';
-import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
-import { HBox, Node, Text, TextOptions } from '../../../scenery/js/imports.js';
 import Property from '../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Vector2 from '../../../dot/js/Vector2.js';
+import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import WithRequired from '../../../phet-core/js/types/WithRequired.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
+import GridNode from '../../../scenery-phet/js/GridNode.js';
+import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import { HBox, Node, Text, TextOptions } from '../../../scenery/js/imports.js';
+import Checkbox, { CheckboxOptions } from '../../../sun/js/Checkbox.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
-import GridNode from '../../../scenery-phet/js/GridNode.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
-import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
-import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import WithRequired from '../../../phet-core/js/types/WithRequired.js';
 
 const ARROW_Y_COORDINATE = -10;
 

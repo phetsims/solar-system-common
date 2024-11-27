@@ -8,16 +8,16 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
-import SolarSystemCommonMeasuringTape from '../model/SolarSystemCommonMeasuringTape.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import Bounds2 from '../../../dot/js/Bounds2.js';
 import Multilink from '../../../axon/js/Multilink.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../dot/js/Bounds2.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import SolarSystemCommonMeasuringTape from '../model/SolarSystemCommonMeasuringTape.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 
 const SHIFT_DRAG_SPEED = 100; // for keyboard dragging
 

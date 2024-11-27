@@ -7,29 +7,29 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import solarSystemCommon from '../solarSystemCommon.js';
-import Body from './Body.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
-import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
-import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
-import Engine from './Engine.js';
-import Range from '../../../dot/js/Range.js';
-import NumberProperty from '../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Emitter from '../../../axon/js/Emitter.js';
-import optionize from '../../../phet-core/js/optionize.js';
-import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import RangeWithValue from '../../../dot/js/RangeWithValue.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
+import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Property from '../../../axon/js/Property.js';
-import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
-import BodyInfo from './BodyInfo.js';
-import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Range from '../../../dot/js/Range.js';
+import RangeWithValue from '../../../dot/js/RangeWithValue.js';
 import Vector2 from '../../../dot/js/Vector2.js';
+import optionize from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import phetioStateSetEmitter from '../../../tandem/js/phetioStateSetEmitter.js';
+import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import Body from './Body.js';
+import BodyInfo from './BodyInfo.js';
+import Engine from './Engine.js';
+import SolarSystemCommonMeasuringTape from './SolarSystemCommonMeasuringTape.js';
 
 // Type definitions
 type SelfOptions = {

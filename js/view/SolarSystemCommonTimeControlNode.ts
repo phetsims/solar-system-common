@@ -6,19 +6,19 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import TimeControlNode, { TimeControlNodeOptions } from '../../../scenery-phet/js/TimeControlNode.js';
-import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
-import optionize from '../../../phet-core/js/optionize.js';
-import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
-import { HBox, Node, Path, Rectangle } from '../../../scenery/js/imports.js';
 import { Shape } from '../../../kite/js/imports.js';
-import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
-import solarSystemCommon from '../solarSystemCommon.js';
-import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
+import optionize from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
+import TimeControlNode, { TimeControlNodeOptions } from '../../../scenery-phet/js/TimeControlNode.js';
+import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
+import { HBox, Node, Path, Rectangle } from '../../../scenery/js/imports.js';
+import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
+import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 // constants
 const PLAY_PAUSE_BUTTON_RADIUS = 34;

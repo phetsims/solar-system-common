@@ -6,23 +6,23 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import Property from '../../../axon/js/Property.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Range from '../../../dot/js/Range.js';
-import Property from '../../../axon/js/Property.js';
-import brightMarimba_mp3 from '../../sounds/brightMarimba_mp3.js';
-import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../tambo/js/soundManager.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
-import solarSystemCommon from '../solarSystemCommon.js';
-import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import NumberControl, { NumberControlOptions } from '../../../scenery-phet/js/NumberControl.js';
 import { HBox } from '../../../scenery/js/imports.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
-import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
-import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import soundManager from '../../../tambo/js/soundManager.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import brightMarimba_mp3 from '../../sounds/brightMarimba_mp3.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 
 type SelfOptions = EmptySelfOptions;
 

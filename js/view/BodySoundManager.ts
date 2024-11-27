@@ -6,7 +6,6 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../tambo/js/soundManager.js';
 import Bodies_Collide_Absorb_2_to_1_mp3 from '../../sounds/Bodies_Collide_Absorb_2_to_1_mp3.js';
@@ -17,6 +16,7 @@ import Mass_Selection_1_mp3 from '../../sounds/Mass_Selection_1_mp3.js';
 import Mass_Selection_2_mp3 from '../../sounds/Mass_Selection_2_mp3.js';
 import Mass_Selection_3_mp3 from '../../sounds/Mass_Selection_3_mp3.js';
 import Mass_Selection_4_mp3 from '../../sounds/Mass_Selection_4_mp3.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 

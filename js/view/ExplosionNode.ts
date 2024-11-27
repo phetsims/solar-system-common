@@ -4,16 +4,16 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { NodeTranslationOptions, Path, PathOptions } from '../../../scenery/js/imports.js';
+import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import { Shape } from '../../../kite/js/imports.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import NumberProperty from '../../../axon/js/NumberProperty.js';
+import { NodeTranslationOptions, Path, PathOptions } from '../../../scenery/js/imports.js';
 import Animation from '../../../twixt/js/Animation.js';
 import Easing from '../../../twixt/js/Easing.js';
-import BodyNode from './BodyNode.js';
 import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
+import BodyNode from './BodyNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type ExplosionNodeOptions = SelfOptions & NodeTranslationOptions;

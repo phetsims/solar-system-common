@@ -6,25 +6,25 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import Vector2 from '../../../dot/js/Vector2.js';
-import ScreenView, { ScreenViewOptions } from '../../../joist/js/ScreenView.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Node, Path } from '../../../scenery/js/imports.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import optionize from '../../../phet-core/js/optionize.js';
-import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import solarSystemCommon from '../solarSystemCommon.js';
-import BodySoundManager from './BodySoundManager.js';
+import Vector2 from '../../../dot/js/Vector2.js';
+import ScreenView, { ScreenViewOptions } from '../../../joist/js/ScreenView.js';
 import { Shape } from '../../../kite/js/imports.js';
-import SolarSystemCommonVisibleProperties from './SolarSystemCommonVisibleProperties.js';
+import optionize from '../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
+import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
+import { Node, Path } from '../../../scenery/js/imports.js';
+import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import BodySoundManager from './BodySoundManager.js';
 import SolarSystemCommonGridNode from './SolarSystemCommonGridNode.js';
 import SolarSystemCommonMeasuringTapeNode from './SolarSystemCommonMeasuringTapeNode.js';
+import SolarSystemCommonVisibleProperties from './SolarSystemCommonVisibleProperties.js';
 
 export type DragBoundsItem = {
   node: Node;

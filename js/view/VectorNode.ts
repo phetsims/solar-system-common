@@ -6,15 +6,15 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import Body from '../model/Body.js';
-import Bounds2 from '../../../dot/js/Bounds2.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import ArrowNode, { ArrowNodeOptions } from '../../../scenery-phet/js/ArrowNode.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import optionize from '../../../phet-core/js/optionize.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../axon/js/Multilink.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../dot/js/Bounds2.js';
+import Vector2 from '../../../dot/js/Vector2.js';
+import optionize from '../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import ArrowNode, { ArrowNodeOptions } from '../../../scenery-phet/js/ArrowNode.js';
+import Body from '../model/Body.js';
 import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 

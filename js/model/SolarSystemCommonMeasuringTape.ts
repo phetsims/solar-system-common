@@ -9,10 +9,10 @@
 import Property from '../../../axon/js/Property.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Vector2Property from '../../../dot/js/Vector2Property.js';
-import solarSystemCommon from '../solarSystemCommon.js';
+import optionize from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
-import optionize from '../../../phet-core/js/optionize.js';
+import solarSystemCommon from '../solarSystemCommon.js';
 
 type SelfOptions = {
   basePosition?: Vector2;

@@ -7,26 +7,26 @@
  * @author Aaron Davis (PhET Interactive Simulations)
  */
 
-import { Shape } from '../../../kite/js/imports.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Color, InteractiveHighlighting, Node, Path, PathOptions, Text } from '../../../scenery/js/imports.js';
-import VectorNode, { VectorNodeOptions } from './VectorNode.js';
-import Body from '../model/Body.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
-import solarSystemCommon from '../solarSystemCommon.js';
-import Vector2Property from '../../../dot/js/Vector2Property.js';
-import NumberProperty from '../../../axon/js/NumberProperty.js';
-import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
-import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
-import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
-import WithRequired from '../../../phet-core/js/types/WithRequired.js';
-import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../axon/js/DerivedProperty.js';
+import NumberProperty from '../../../axon/js/NumberProperty.js';
+import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import Vector2 from '../../../dot/js/Vector2.js';
+import Vector2Property from '../../../dot/js/Vector2Property.js';
+import { Shape } from '../../../kite/js/imports.js';
+import optionize, { combineOptions } from '../../../phet-core/js/optionize.js';
+import WithRequired from '../../../phet-core/js/types/WithRequired.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import SoundDragListener, { SoundDragListenerOptions } from '../../../scenery-phet/js/SoundDragListener.js';
 import SoundKeyboardDragListener, { SoundKeyboardDragListenerOptions } from '../../../scenery-phet/js/SoundKeyboardDragListener.js';
+import { Color, InteractiveHighlighting, Node, Path, PathOptions, Text } from '../../../scenery/js/imports.js';
+import Body from '../model/Body.js';
+import solarSystemCommon from '../solarSystemCommon.js';
+import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
+import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
+import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
+import VectorNode, { VectorNodeOptions } from './VectorNode.js';
 
 type SelfOptions = {
   snapToZero?: boolean; // When the user sets the vector's magnitude to less than minimumMagnitude, it snaps to zero
