@@ -48,15 +48,15 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
 
     const options = optionize<SolarSystemCommonCheckboxOptions, StrictOmit<SelfOptions, 'textOptions' | 'icon'>, CheckboxOptions>()( {
 
-        // CheckboxOptions
-        boxWidth: 14,
-        checkboxColor: SolarSystemCommonColors.foregroundProperty,
-        checkboxColorBackground: SolarSystemCommonColors.backgroundProperty,
-        touchAreaXDilation: 5,
-        touchAreaYDilation: SolarSystemCommonConstants.VBOX_SPACING / 2,
-        containerTagName: 'div', // Just for easier visualization in a11y view
-        accessibleName: stringProperty
-      }, providedOptions );
+      // CheckboxOptions
+      boxWidth: 14,
+      checkboxColor: SolarSystemCommonColors.foregroundProperty,
+      checkboxColorBackground: SolarSystemCommonColors.backgroundProperty,
+      touchAreaXDilation: 5,
+      touchAreaYDilation: SolarSystemCommonConstants.VBOX_SPACING / 2,
+      containerTagName: 'div', // Just for easier visualization in a11y view
+      accessibleName: stringProperty
+    }, providedOptions );
 
     const text = new Text( stringProperty, combineOptions<TextOptions>( {}, SolarSystemCommonCheckbox.TEXT_OPTIONS, {
       maxWidth: 125
@@ -93,7 +93,8 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
       icon: new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, {
         fill: SolarSystemCommonColors.velocityColorProperty
       } ),
-      tandem: tandem
+      tandem: tandem,
+      phetioDisplayOnlyPropertyInstrumented: true
     } );
   }
 
@@ -105,7 +106,8 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
       icon: new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, {
         fill: SolarSystemCommonColors.gravityColorProperty
       } ),
-      tandem: tandem
+      tandem: tandem,
+      phetioDisplayOnlyPropertyInstrumented: true
     } );
   }
 
