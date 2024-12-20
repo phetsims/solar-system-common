@@ -93,8 +93,8 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
       icon: new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, {
         fill: SolarSystemCommonColors.velocityColorProperty
       } ),
-      tandem: tandem,
-      phetioDisplayOnlyPropertyInstrumented: true
+      phetioDisplayOnlyPropertyInstrumented: true,
+      tandem: tandem
     } );
   }
 
@@ -106,8 +106,8 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
       icon: new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, {
         fill: SolarSystemCommonColors.gravityColorProperty
       } ),
-      tandem: tandem,
-      phetioDisplayOnlyPropertyInstrumented: true
+      phetioDisplayOnlyPropertyInstrumented: true,
+      tandem: tandem
     } );
   }
 
