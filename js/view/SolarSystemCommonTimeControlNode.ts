@@ -49,7 +49,7 @@ type SelfOptions = {
   speedRadioButtonGroupOnRight?: boolean;
 };
 
-type SolarSystemCommonTimeControlNodeOptions = SelfOptions & PickRequired<TimeControlNodeOptions, 'tandem' | 'enabledProperty'>;
+type SolarSystemCommonTimeControlNodeOptions = SelfOptions & PickRequired<TimeControlNodeOptions, 'tandem' | 'enabledProperty' | 'orientation' | 'align' | 'spacing'>;
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
 
@@ -80,24 +80,13 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         tandem: Tandem.OPT_OUT
       },
       buttonGroupXSpacing: 20,
-      speedRadioButtonGroupOnLeft: false,
+      speedRadioButtonGroupPlacement: 'after',
       speedRadioButtonGroupOptions: {
         labelOptions: {
           font: new PhetFont( 16 ),
           fill: SolarSystemCommonColors.foregroundProperty
         },
         touchAreaXDilation: 10
-      },
-
-      //TODO https://github.com/phetsims/scenery-phet/issues/826 Remove this workaround when TimeControlNode dynamic layout is fixed.
-      // Workaround for https://github.com/phetsims/my-solar-system/issues/300. Putting the radio button group in
-      // a panel makes the layout behave properly when speedRadioButtonGroup.visibleProperty is set to false via PhET-iO.
-      wrapSpeedRadioButtonGroupInPanel: true,
-      speedRadioButtonGroupPanelOptions: {
-        fill: null,
-        stroke: null,
-        xMargin: 0,
-        yMargin: 0
       }
     }, providedOptions );
 
@@ -108,31 +97,14 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       enabledProperty: model.hasPlayedProperty,
       radius: STEP_BUTTON_RADIUS,
       touchAreaDilation: 2,
-      xMargin: 9.5,
-      yMargin: 9.5,
       listener: () => model.restart(),
-      center: this.getPlayPauseButtonCenter().minusXY( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS + PUSH_BUTTON_SPACING, 0 ),
-      layoutOptions: {
-        xMargin: 5
-      },
       innerContent: SolarSystemCommonStrings.a11y.restartStringProperty,
       tandem: Tandem.OPT_OUT
     } );
 
-    this.addChild( restartButton );
-    this.playPauseStepButtons.pdomOrder = [ restartButton, ...( this.playPauseStepButtons.pdomOrder ? this.playPauseStepButtons.pdomOrder : [] ) ];
-
-    //TODO https://github.com/phetsims/scenery-phet/issues/826 Remove this block, set speedRadioButtonGroupPosition: 'bottom'
-    // speedRadioButtonGroup is positioned differently on KeplersLaws and MySolarSystem.
-    // Here, the position when it's under the play pause step buttons is set as follows:
-    // X: Aligned with the play pause step buttons
-    // Y: Below the play pause step buttons
-    if ( !options.speedRadioButtonGroupOnRight ) {
-      this.speedRadioButtonGroupParent!.center = this.getPlayPauseButtonCenter().plusXY(
-        -0.9 * ( PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS ),
-        PLAY_PAUSE_BUTTON_RADIUS + STEP_BUTTON_RADIUS + 3 * PUSH_BUTTON_SPACING
-      );
-    }
+    // TODO: Why doesn't the layout update automatically on insertChild? See https://github.com/phetsims/scenery-phet/issues/826
+    this.playPauseStepButtons.insertChild( 0, restartButton );
+    this.playPauseStepButtons.updateLayout();
   }
 }
 
