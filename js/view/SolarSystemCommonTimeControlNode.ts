@@ -106,9 +106,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
       tandem: Tandem.OPT_OUT
     } );
 
-    // TODO: Why doesn't the layout update automatically on insertChild? See https://github.com/phetsims/scenery-phet/issues/826
-    this.playPauseStepButtons.insertChild( 0, restartButton );
-    this.playPauseStepButtons.updateLayout();
+    this.addPushButton( restartButton, 0 );
   }
 }
 
