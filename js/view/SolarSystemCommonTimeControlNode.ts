@@ -8,6 +8,7 @@
 
 import { Shape } from '../../../kite/js/imports.js';
 import optionize from '../../../phet-core/js/optionize.js';
+import PickOptional from '../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import TimeControlNode, { TimeControlNodeOptions } from '../../../scenery-phet/js/TimeControlNode.js';
@@ -49,7 +50,10 @@ type SelfOptions = {
   speedRadioButtonGroupOnRight?: boolean;
 };
 
-type SolarSystemCommonTimeControlNodeOptions = SelfOptions & PickRequired<TimeControlNodeOptions, 'tandem' | 'enabledProperty' | 'orientation' | 'align' | 'spacing'>;
+type SolarSystemCommonTimeControlNodeOptions =
+  SelfOptions &
+  PickRequired<TimeControlNodeOptions, 'tandem' | 'enabledProperty' | 'flowBoxOrientation' | 'flowBoxAlign'> &
+  PickOptional<TimeControlNodeOptions, 'buttonGroupXSpacing'>;
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
 
