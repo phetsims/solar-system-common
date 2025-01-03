@@ -53,7 +53,7 @@ type SelfOptions = {
 type SolarSystemCommonTimeControlNodeOptions =
   SelfOptions &
   PickRequired<TimeControlNodeOptions, 'tandem' | 'enabledProperty' | 'flowBoxAlign'> &
-  PickOptional<TimeControlNodeOptions, 'buttonGroupXSpacing' | 'speedRadioButtonGroupPlacement'>;
+  PickOptional<TimeControlNodeOptions, 'flowBoxSpacing' | 'speedRadioButtonGroupPlacement'>;
 
 export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
 
@@ -83,7 +83,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
         },
         tandem: Tandem.OPT_OUT
       },
-      buttonGroupXSpacing: 20,
+      flowBoxSpacing: 20,
       speedRadioButtonGroupPlacement: 'left',
       speedRadioButtonGroupOptions: {
         labelOptions: {
