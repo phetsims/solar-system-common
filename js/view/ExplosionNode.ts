@@ -6,9 +6,10 @@
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Vector2 from '../../../dot/js/Vector2.js';
-import { Shape } from '../../../kite/js/imports.js';
+import Shape from '../../../kite/js/Shape.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import { NodeTranslationOptions, Path, PathOptions } from '../../../scenery/js/imports.js';
+import { NodeTranslationOptions } from '../../../scenery/js/nodes/Node.js';
+import Path, { PathOptions } from '../../../scenery/js/nodes/Path.js';
 import Animation from '../../../twixt/js/Animation.js';
 import Easing from '../../../twixt/js/Easing.js';
 import solarSystemCommon from '../solarSystemCommon.js';

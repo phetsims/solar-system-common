@@ -20,7 +20,7 @@ import Vector2 from '../../../dot/js/Vector2.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
-import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import ProfileColorProperty from '../../../scenery/js/util/ProfileColorProperty.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import phetioStateSetEmitter from '../../../tandem/js/phetioStateSetEmitter.js';
 import ArrayIO from '../../../tandem/js/types/ArrayIO.js';

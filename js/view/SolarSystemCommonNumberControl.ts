@@ -13,7 +13,7 @@ import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js'
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import NumberControl, { NumberControlOptions } from '../../../scenery-phet/js/NumberControl.js';
-import { HBox } from '../../../scenery/js/imports.js';
+import HBox from '../../../scenery/js/layout/nodes/HBox.js';
 import SoundClip from '../../../tambo/js/sound-generators/SoundClip.js';
 import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import soundManager from '../../../tambo/js/soundManager.js';

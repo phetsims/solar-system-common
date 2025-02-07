@@ -9,7 +9,10 @@
 import Range from '../../dot/js/Range.js';
 import { combineOptions } from '../../phet-core/js/optionize.js';
 import PhetFont from '../../scenery-phet/js/PhetFont.js';
-import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS, HSeparatorOptions, RichTextOptions, TLayoutOptions } from '../../scenery/js/imports.js';
+import { HSeparatorOptions } from '../../scenery/js/layout/nodes/HSeparator.js';
+import { DEFAULT_SEPARATOR_LAYOUT_OPTIONS } from '../../scenery/js/layout/nodes/Separator.js';
+import TLayoutOptions from '../../scenery/js/layout/TLayoutOptions.js';
+import { RichTextOptions } from '../../scenery/js/nodes/RichText.js';
 import { PanelOptions } from '../../sun/js/Panel.js';
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import grab_mp3 from '../../tambo/sounds/grab_mp3.js';

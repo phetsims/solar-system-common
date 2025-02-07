@@ -17,7 +17,7 @@ import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Vector2Property, { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
-import { Color } from '../../../scenery/js/imports.js';
+import Color from '../../../scenery/js/util/Color.js';
 import isSettingPhetioStateProperty from '../../../tandem/js/isSettingPhetioStateProperty.js';
 import PhetioObject from '../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../tandem/js/Tandem.js';

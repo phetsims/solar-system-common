@@ -6,14 +6,17 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import { Shape } from '../../../kite/js/imports.js';
+import Shape from '../../../kite/js/Shape.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import PickOptional from '../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import TimeControlNode, { TimeControlNodeOptions } from '../../../scenery-phet/js/TimeControlNode.js';
 import TimeSpeed from '../../../scenery-phet/js/TimeSpeed.js';
-import { HBox, Node, Path, Rectangle } from '../../../scenery/js/imports.js';
+import HBox from '../../../scenery/js/layout/nodes/HBox.js';
+import Node from '../../../scenery/js/nodes/Node.js';
+import Path from '../../../scenery/js/nodes/Path.js';
+import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSystemCommonStrings.js';
 import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
 import Tandem from '../../../tandem/js/Tandem.js';
