@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * SolarSystemCommonModel is the base class for the top-level model, used by all screens in my-solar-system and

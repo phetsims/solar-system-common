@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * GravityForceZoomControl is the control for scaling the size of the gravity arrows. It is a labeled slider.
