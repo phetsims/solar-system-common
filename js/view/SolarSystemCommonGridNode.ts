@@ -1,4 +1,5 @@
 // Copyright 2023-2025, University of Colorado Boulder
+
 /**
  * GridNode used in My Solar System and Kepler's Laws,
  * it supports the option of adding bolder axes lines.

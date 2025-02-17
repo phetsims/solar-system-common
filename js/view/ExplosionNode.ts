@@ -1,5 +1,8 @@
 // Copyright 2023-2025, University of Colorado Boulder
+
 /**
+ *
+ * A star shaped node that represents an explosion.
  *
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
