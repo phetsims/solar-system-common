@@ -20,7 +20,7 @@ const SolarSystemCommonColors = {
   foregroundProperty: new ProfileColorProperty( solarSystemCommon, 'foreground', {
     default: 'white',
     projector: 'black'
-  } ),
+  }, { disableListenerLimit: true } ),
 
   backgroundProperty: new ProfileColorProperty( solarSystemCommon, 'background', {
     default: 'black',
