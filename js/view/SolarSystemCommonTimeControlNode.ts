@@ -69,7 +69,7 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
 
       // TimeControlNodeOptions
       timeSpeedProperty: model.timeSpeedProperty,
-      timeSpeeds: [ TimeSpeed.FAST, TimeSpeed.NORMAL, TimeSpeed.SLOW ],
+      timeSpeeds: [ TimeSpeed.FAST, TimeSpeed.NORMAL, TimeSpeed.SLOW, TimeSpeed.SUPER_SLOW ],
       scale: 0.9,
       playPauseStepButtonOptions: {
         playPauseStepXSpacing: PUSH_BUTTON_SPACING,
