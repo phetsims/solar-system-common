@@ -82,7 +82,8 @@ export default abstract class SolarSystemCommonModel {
   public readonly timeSpeedMap = new Map<TimeSpeed, number>( [
     [ TimeSpeed.FAST, 7 / 4 ],
     [ TimeSpeed.NORMAL, 1 ],
-    [ TimeSpeed.SLOW, 1 / 4 ]
+    [ TimeSpeed.SLOW, 1 / 4 ],
+    [ TimeSpeed.SUPER_SLOW, 1 / 16 ]
   ] );
 
   public readonly timeProperty: NumberProperty;
