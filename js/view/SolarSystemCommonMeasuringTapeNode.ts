@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * SolarSystemCommonMeasuringTapeNode is the specialization of MeasuringTapeNode using in sims that depend on
