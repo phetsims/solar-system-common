@@ -13,7 +13,7 @@ import NumberProperty, { NumberPropertyOptions } from '../../../axon/js/NumberPr
 import Property from '../../../axon/js/Property.js';
 import ReadOnlyProperty from '../../../axon/js/ReadOnlyProperty.js';
 import TinyEmitter from '../../../axon/js/TinyEmitter.js';
-import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Vector2Property, { Vector2PropertyOptions } from '../../../dot/js/Vector2Property.js';
 import { combineOptions } from '../../../phet-core/js/optionize.js';
