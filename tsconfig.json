@@ -11,9 +11,6 @@
       "path": "../twixt/tsconfig.json"
     },
     {
-      "path": "../vegas/tsconfig.json"
-    },
-    {
       "path": "../perennial-alias/tsconfig/buildjson/tsconfig.json"
     }
   ]

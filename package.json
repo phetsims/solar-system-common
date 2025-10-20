@@ -12,8 +12,7 @@
   "phet": {
     "requirejsNamespace": "SOLAR_SYSTEM_COMMON",
     "phetLibs": [
-      "twixt",
-      "vegas"
+      "twixt"
     ],
     "supportsOutputJS": true
   }
