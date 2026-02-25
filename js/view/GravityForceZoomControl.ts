@@ -3,7 +3,7 @@
 /**
  * GravityForceZoomControl is the control for scaling the size of the gravity arrows. It is a labeled slider.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';

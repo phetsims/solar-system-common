@@ -4,7 +4,7 @@
  * SolarSystemCommonVisibleProperties is the parent abstract class that has common visible properties,
  * and is extended by MySolarSystemVisibleProperties and KeplersLawsVisibleProperties.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';

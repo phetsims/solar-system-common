@@ -4,7 +4,7 @@
  * CueingArrowsNode is the cueing arrows used to indicate that something can be dragged in some direction.
  *
  * @author Chris Malley (PixelZoom, Inc.)
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import Shape from '../../../kite/js/Shape.js';

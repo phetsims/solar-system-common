@@ -4,7 +4,7 @@
  * GridNode used in My Solar System and Kepler's Laws,
  * it supports the option of adding bolder axes lines.
  *
- * @author Agustín Vallejo
+ * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
 import { TReadOnlyProperty } from '../../../axon/js/TReadOnlyProperty.js';
