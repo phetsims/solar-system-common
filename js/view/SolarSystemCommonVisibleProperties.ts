@@ -9,7 +9,6 @@
 
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 
 export default class SolarSystemCommonVisibleProperties {
 
@@ -72,5 +71,3 @@ export default class SolarSystemCommonVisibleProperties {
     this.measuringTapeVisibleProperty.reset();
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonVisibleProperties', SolarSystemCommonVisibleProperties );

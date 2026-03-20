@@ -12,7 +12,6 @@ import Vector2Property from '../../../dot/js/Vector2Property.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 
 type SelfOptions = {
   basePosition?: Vector2;
@@ -61,5 +60,3 @@ export default class SolarSystemCommonMeasuringTape extends PhetioObject {
     this.tipPositionProperty.reset();
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonMeasuringTape', SolarSystemCommonMeasuringTape );

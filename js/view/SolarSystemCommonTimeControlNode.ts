@@ -21,7 +21,6 @@ import SolarSystemCommonStrings from '../../../solar-system-common/js/SolarSyste
 import RoundPushButton from '../../../sun/js/buttons/RoundPushButton.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 // constants
@@ -112,5 +111,3 @@ export default class SolarSystemCommonTimeControlNode extends TimeControlNode {
     this.addPushButton( restartButton, 0 );
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonTimeControlNode', SolarSystemCommonTimeControlNode );

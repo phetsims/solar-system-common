@@ -57,5 +57,4 @@ const SolarSystemCommonColors = {
   } )
 };
 
-solarSystemCommon.register( 'SolarSystemCommonColors', SolarSystemCommonColors );
 export default SolarSystemCommonColors;

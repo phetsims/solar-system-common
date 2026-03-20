@@ -13,7 +13,6 @@ import PickOptional from '../../../phet-core/js/types/PickOptional.js';
 import ArrowShape from '../../../scenery-phet/js/ArrowShape.js';
 import { NodeTranslationOptions } from '../../../scenery/js/nodes/Node.js';
 import Path, { PathOptions } from '../../../scenery/js/nodes/Path.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 
 type SelfOptions = {
   length?: number;
@@ -69,5 +68,3 @@ function createArrowsShape( spacing: number, length: number ): Shape {
   const rightArrowShape = new ArrowShape( spacing, 0, spacing + length, 0, ARROW_SHAPE_OPTIONS );
   return Shape.union( [ leftArrowShape, downArrowShape, upArrowShape, rightArrowShape ] );
 }
-
-solarSystemCommon.register( 'CueingArrowsNode', CueingArrowsNode );

@@ -17,7 +17,6 @@ import { PanelOptions } from '../../sun/js/Panel.js';
 import SoundClip from '../../tambo/js/sound-generators/SoundClip.js';
 import grab_mp3 from '../../tambo/sounds/grab_mp3.js';
 import release_mp3 from '../../tambo/sounds/release_mp3.js';
-import solarSystemCommon from './solarSystemCommon.js';
 import SolarSystemCommonColors from './SolarSystemCommonColors.js';
 
 export const METERS_PER_AU = 149597870700;
@@ -132,5 +131,4 @@ function testUnits(): void {
 
 testUnits();
 
-solarSystemCommon.register( 'SolarSystemCommonConstants', SolarSystemCommonConstants );
 export default SolarSystemCommonConstants;

@@ -16,7 +16,6 @@ import IOType from '../../../tandem/js/types/IOType.js';
 import NullableIO from '../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
 import StringIO from '../../../tandem/js/types/StringIO.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 type SelfOptions = {
@@ -97,5 +96,3 @@ export default class BodyInfo {
     fromStateObject: stateObject => BodyInfo.fromStateObject( stateObject )
   } );
 }
-
-solarSystemCommon.register( 'BodyInfo', BodyInfo );

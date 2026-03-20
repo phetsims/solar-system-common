@@ -16,7 +16,6 @@ import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2
 import GridNode from '../../../scenery-phet/js/GridNode.js';
 import Node, { NodeOptions } from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 
 const STROKE_PROPERTY = SolarSystemCommonColors.gridIconStrokeColorProperty;
@@ -74,5 +73,3 @@ export default class SolarSystemCommonGridNode extends Node {
     super( options );
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonGridNode', SolarSystemCommonGridNode );

@@ -24,7 +24,6 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import IOType from '../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../tandem/js/types/NumberIO.js';
 import ReferenceIO, { ReferenceIOState } from '../../../tandem/js/types/ReferenceIO.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import BodyInfo from './BodyInfo.js';
 
@@ -273,5 +272,3 @@ export default class Body extends PhetioObject {
     supertype: ReferenceIO( IOType.ObjectIO )
   } );
 }
-
-solarSystemCommon.register( 'Body', Body );

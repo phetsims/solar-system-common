@@ -16,7 +16,6 @@ import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2
 import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import SolarSystemCommonMeasuringTape from '../model/SolarSystemCommonMeasuringTape.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 
 const SHIFT_DRAG_SPEED = 100; // for keyboard dragging
@@ -69,5 +68,3 @@ export default class SolarSystemCommonMeasuringTapeNode extends MeasuringTapeNod
     );
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonMeasuringTapeNode', SolarSystemCommonMeasuringTapeNode );

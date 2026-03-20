@@ -26,7 +26,6 @@ import Path, { PathOptions } from '../../../scenery/js/nodes/Path.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Color from '../../../scenery/js/util/Color.js';
 import Body from '../model/Body.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
@@ -224,5 +223,3 @@ class InteractivePath extends InteractiveHighlighting( Path ) {
     super( shape, options );
   }
 }
-
-solarSystemCommon.register( 'DraggableVelocityVectorNode', DraggableVelocityVectorNode );

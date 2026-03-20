@@ -20,7 +20,6 @@ import MeasuringTapeNode from '../../../scenery-phet/js/MeasuringTapeNode.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Path from '../../../scenery/js/nodes/Path.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import BodySoundManager from './BodySoundManager.js';
 import SolarSystemCommonGridNode from './SolarSystemCommonGridNode.js';
@@ -244,5 +243,3 @@ export default class SolarSystemCommonScreenView<GenericVisibleProperties extend
     }
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonScreenView', SolarSystemCommonScreenView );

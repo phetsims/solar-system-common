@@ -15,7 +15,6 @@ import { NodeTranslationOptions } from '../../../scenery/js/nodes/Node.js';
 import Path, { PathOptions } from '../../../scenery/js/nodes/Path.js';
 import Animation from '../../../twixt/js/Animation.js';
 import Easing from '../../../twixt/js/Easing.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import BodyNode from './BodyNode.js';
 
@@ -82,5 +81,3 @@ export default class ExplosionNode extends Path {
     } );
   }
 }
-
-solarSystemCommon.register( 'ExplosionNode', ExplosionNode );

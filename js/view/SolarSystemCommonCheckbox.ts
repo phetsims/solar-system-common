@@ -24,7 +24,6 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text, { TextOptions } from '../../../scenery/js/nodes/Text.js';
 import Checkbox, { CheckboxOptions } from '../../../sun/js/Checkbox.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
@@ -136,5 +135,3 @@ export default class SolarSystemCommonCheckbox extends Checkbox {
     } );
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonCheckbox', SolarSystemCommonCheckbox );

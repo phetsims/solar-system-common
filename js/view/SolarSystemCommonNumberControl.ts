@@ -19,7 +19,6 @@ import ValueChangeSoundPlayer from '../../../tambo/js/sound-generators/ValueChan
 import soundManager from '../../../tambo/js/soundManager.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import brightMarimba_mp3 from '../../sounds/brightMarimba_mp3.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
@@ -98,5 +97,3 @@ export default class SolarSystemCommonNumberControl extends NumberControl {
     super( '', valueProperty, range, options );
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonNumberControl', SolarSystemCommonNumberControl );

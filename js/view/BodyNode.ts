@@ -36,7 +36,6 @@ import Bodies_Flute_g3_mp3 from '../../sounds/Bodies_Flute_g3_mp3.js';
 import Bodies_Strings_e3_v2_mp3 from '../../sounds/Bodies_Strings_e3_v2_mp3.js';
 import Bodies_Woodwinds_e3_mp3 from '../../sounds/Bodies_Woodwinds_e3_mp3.js';
 import Body from '../model/Body.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import CueingArrowsNode from './CueingArrowsNode.js';
 import ExplosionNode from './ExplosionNode.js';
@@ -274,5 +273,3 @@ export default class BodyNode extends InteractiveHighlighting( ShadedSphereNode 
     this.soundClip.stop();
   }
 }
-
-solarSystemCommon.register( 'BodyNode', BodyNode );

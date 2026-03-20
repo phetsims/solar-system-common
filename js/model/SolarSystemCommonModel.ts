@@ -24,7 +24,6 @@ import ProfileColorProperty from '../../../scenery/js/util/ProfileColorProperty.
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 import phetioStateSetEmitter from '../../../tandem/js/phetioStateSetEmitter.js';
 import ArrayIO from '../../../tandem/js/types/ArrayIO.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 import Body from './Body.js';
 import BodyInfo from './BodyInfo.js';
@@ -287,5 +286,3 @@ export default abstract class SolarSystemCommonModel {
     }
   }
 }
-
-solarSystemCommon.register( 'SolarSystemCommonModel', SolarSystemCommonModel );

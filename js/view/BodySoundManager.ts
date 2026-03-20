@@ -17,7 +17,6 @@ import Mass_Selection_2_mp3 from '../../sounds/Mass_Selection_2_mp3.js';
 import Mass_Selection_3_mp3 from '../../sounds/Mass_Selection_3_mp3.js';
 import Mass_Selection_4_mp3 from '../../sounds/Mass_Selection_4_mp3.js';
 import SolarSystemCommonModel from '../model/SolarSystemCommonModel.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 const bodyNumberSounds = [
@@ -83,6 +82,3 @@ export default class BodySoundManager {
     this.bodyCollidedSoundClip.play();
   }
 }
-
-
-solarSystemCommon.register( 'BodySoundManager', BodySoundManager );

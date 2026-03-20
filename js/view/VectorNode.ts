@@ -15,7 +15,6 @@ import optionize from '../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import ArrowNode, { ArrowNodeOptions } from '../../../scenery-phet/js/ArrowNode.js';
 import Body from '../model/Body.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonConstants from '../SolarSystemCommonConstants.js';
 
 type SelfOptions = {
@@ -88,5 +87,3 @@ export default class VectorNode extends ArrowNode {
     } );
   }
 }
-
-solarSystemCommon.register( 'VectorNode', VectorNode );

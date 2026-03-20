@@ -16,7 +16,6 @@ import RichText, { RichTextOptions } from '../../../scenery/js/nodes/RichText.js
 import Text from '../../../scenery/js/nodes/Text.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import solarSystemCommon from '../solarSystemCommon.js';
 import SolarSystemCommonColors from '../SolarSystemCommonColors.js';
 import SolarSystemCommonStrings from '../SolarSystemCommonStrings.js';
 
@@ -83,5 +82,3 @@ export default class GravityForceZoomControl extends HBox {
     this.addLinkedElement( gravityForceScalePowerProperty );
   }
 }
-
-solarSystemCommon.register( 'GravityForceZoomControl', GravityForceZoomControl );

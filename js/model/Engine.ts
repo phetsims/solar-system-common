@@ -6,7 +6,6 @@
  * @author Agustín Vallejo (PhET Interactive Simulations)
  */
 
-import solarSystemCommon from '../solarSystemCommon.js';
 import Body from './Body.js';
 
 export default abstract class Engine {
@@ -32,5 +31,3 @@ export default abstract class Engine {
   // The child class should implement this method to reset the engine
   public abstract reset(): void;
 }
-
-solarSystemCommon.register( 'Engine', Engine );
