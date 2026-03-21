@@ -64,4 +64,6 @@ type StringsType = {
 
 const SolarSystemCommonStrings = getStringModule( 'SOLAR_SYSTEM_COMMON' ) as StringsType;
 
+solarSystemCommon.register( 'SolarSystemCommonStrings', SolarSystemCommonStrings );
+
 export default SolarSystemCommonStrings;
